@@ -57,7 +57,7 @@ public class WebServices {
             case PACS_IMAGE_DOWNLOAD:
                 apiService = WebServiceFactory.getInstancePACSURL(token, bearerToken);
                 break;
-            case PAYMENT_GATEWAY_URL:
+            case GET_EMP_DEPT_URL:
                 apiService = WebServiceFactory.getInstancePaymentGateway("");
         }
 
@@ -79,7 +79,7 @@ public class WebServices {
             case PACS_IMAGE_DOWNLOAD:
                 apiService = WebServiceFactory.getInstancePACSURL(token, bearerToken);
                 break;
-            case PAYMENT_GATEWAY_URL:
+            case GET_EMP_DEPT_URL:
                 apiService = WebServiceFactory.getInstancePaymentGateway("");
         }
 
@@ -563,30 +563,16 @@ public class WebServices {
 
     }
 
-    private void errorToastForArray(Response<WebResponse<ArrayList<JsonObject>>> response) {
-//        UIHelper.showShortToastInCenter(mContext, "API Error in RecordFound");
-    }
 
-    private void errorToastForObject(Response<WebResponse<JsonObject>> response) {
-//        String message = response.body().message != null ? response.body().message : response.errorBody().toString();
-//        UIHelper.showShortToastInCenter(mContext, "API Error in RecordFound");
-    }
-
-
-    public void webServicegetToken(final IRequestStringCallBack callBack) {
-
-
+    public void webServiceGetEmployeeDepartDetail() {
         try {
             if (Helper.isNetworkConnected(mContext, true)) {
-                WebServiceFactory.getInstance().getToken().enqueue(new Callback<String>() {
+                WebServiceFactory.getInstanceXML().getDeptEmpl().enqueue(new Callback<Object>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
+                    public void onResponse(Call<Object> call, Response<Object> response) {
                         dismissDialog();
-                        if (response != null && response.body() != null) {
-                            if (!response.body().isEmpty()) {
-                                if (callBack != null)
-                                    callBack.requestDataResponse(response.body());
-                            }
+                        if (response.body() != null) {
+                            UIHelper.showToast(mContext, "Some Response");
 
                         } else {
                             UIHelper.showToast(mContext, "Null Response");
@@ -594,19 +580,14 @@ public class WebServices {
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<Object> call, Throwable t) {
                         UIHelper.showShortToastInCenter(mContext, "Something went wrong, Please check your internet connection.");
                         dismissDialog();
-                        if (callBack != null) {
-                            callBack.onError();
-                        }
+
                     }
                 });
             } else {
                 dismissDialog();
-                if (callBack != null) {
-                    callBack.onError();
-                }
             }
 
         } catch (Exception e) {
@@ -628,6 +609,15 @@ public class WebServices {
         if (mDialog != null) {
             mDialog.dismiss();
         }
+    }
+
+    private void errorToastForArray(Response<WebResponse<ArrayList<JsonObject>>> response) {
+//        UIHelper.showShortToastInCenter(mContext, "API Error in RecordFound");
+    }
+
+    private void errorToastForObject(Response<WebResponse<JsonObject>> response) {
+//        String message = response.body().message != null ? response.body().message : response.errorBody().toString();
+//        UIHelper.showShortToastInCenter(mContext, "API Error in RecordFound");
     }
 
 

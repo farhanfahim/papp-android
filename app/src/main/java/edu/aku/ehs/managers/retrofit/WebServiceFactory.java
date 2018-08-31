@@ -1,10 +1,12 @@
 package edu.aku.ehs.managers.retrofit;
 
-import edu.aku.ehs.constatnts.WebServiceConstants;
+import org.simpleframework.xml.convert.AnnotationStrategy;
+import org.simpleframework.xml.core.Persister;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import edu.aku.ehs.constatnts.WebServiceConstants;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -12,6 +14,7 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 import static edu.aku.ehs.constatnts.WebServiceConstants.BASE_URL;
 
@@ -25,7 +28,7 @@ public class WebServiceFactory {
     private static Retrofit retrofitBase;
     private static Retrofit retrofitPACSViewer;
     private static Retrofit retrofitPaymentGateway;
-    private static Retrofit retrofitPACSToken;
+    private static Retrofit retrofitGETDeptEmployee;
     private static String staticToken = "";
 
     /***
@@ -185,9 +188,10 @@ public class WebServiceFactory {
         return retrofitPACSViewer.create(WebServiceProxy.class);
     }
 
-    public static WebServiceProxy getInstance() {
 
-        if (retrofitPACSToken == null) {
+    public static WebServiceProxy getInstanceXML() {
+
+        if (retrofitGETDeptEmployee == null) {
 
 
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -212,23 +216,22 @@ public class WebServiceFactory {
 
                     Request request = requestBuilder.build();
                     return chain.proceed(request);
-
                 }
             });
-
 
             // add logging as last interceptor
 //            httpClient.addNetworkInterceptor(interceptor).addInterceptor(interceptor);  // <-- this is the important line!
             httpClient.addInterceptor(interceptor);  // <-- this is the important line!
-            retrofitPACSToken = new Retrofit.Builder()
-                    .baseUrl(WebServiceConstants.PACS_URL)
-                    .addConverterFactory(GsonConverterFactory.create(GsonFactory.getSimpleGson()))
+            retrofitGETDeptEmployee = new Retrofit.Builder()
+                    .baseUrl(WebServiceConstants.WS_AKU_DEPT_EMP_GET_URL)
+                    .addConverterFactory(
+                            SimpleXmlConverterFactory.createNonStrict(
+                                    new Persister(new AnnotationStrategy() // important part!
+                                    )))
                     .client(httpClient.build())
                     .build();
-
         }
 
-        return retrofitPACSToken.create(WebServiceProxy.class);
+        return retrofitGETDeptEmployee.create(WebServiceProxy.class);
     }
-
 }

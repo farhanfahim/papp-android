@@ -36,6 +36,21 @@ public class CustomViewPager extends ViewPager {
         return false;
     }
 
+
+    public void moveNext() {
+        //it doesn't matter if you're already in the last item
+        if (getCurrentItem() < getAdapter().getCount() - 1) {
+            setCurrentItem(getCurrentItem() + 1);
+        }
+    }
+
+    public void movePrevious() {
+        //it doesn't matter if you're already in the first item
+        if (getCurrentItem() > 0) {
+            setCurrentItem(getCurrentItem() - 1);
+        }
+    }
+
     public void setPagingEnabled(boolean enabled) {
         this.enabled = enabled;
     }

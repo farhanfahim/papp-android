@@ -9,13 +9,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 
-import java.util.Collection;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import edu.aku.ehs.R;
+import edu.aku.ehs.enums.SelectEmployeeActionType;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
 import edu.aku.ehs.widget.AnyEditTextView;
@@ -74,7 +73,7 @@ public class EmailFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-     }
+    }
 
     @Override
     public void setListeners() {
@@ -85,7 +84,7 @@ public class EmailFragment extends BaseFragment {
                 UIHelper.showToast(getContext(), "Clicked");
             }
         });
-     }
+    }
 
     @Override
     public void onClick(View view) {
@@ -111,7 +110,7 @@ public class EmailFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.btnSend, R.id.btnCancel})
+    @OnClick({R.id.btnSend, R.id.btnCancel, R.id.imgSearchEmployees})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnSend:
@@ -121,6 +120,12 @@ public class EmailFragment extends BaseFragment {
             case R.id.btnCancel:
                 popBackStack();
                 break;
+
+            case R.id.imgSearchEmployees:
+                getBaseActivity().addDockableFragment(SearchFragment.newInstance(SelectEmployeeActionType.SENDEMAIL), false);
+                break;
         }
     }
+
+
 }

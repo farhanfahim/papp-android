@@ -10,7 +10,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import edu.aku.ehs.R;
+import edu.aku.ehs.enums.BaseURLTypes;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
+import edu.aku.ehs.managers.retrofit.WebServices;
 import edu.aku.ehs.widget.TitleBar;
 
 /**
@@ -92,7 +94,13 @@ public class HomeFragment extends BaseFragment {
                 getBaseActivity().addDockableFragment(SessionListFragment.newInstance(), true);
                 break;
             case R.id.contStats:
-                getBaseActivity().addDockableFragment(StatsFragment.newInstance(), true);
+//                getBaseActivity().addDockableFragment(StatsFragment.newInstance(), true);
+
+
+                new WebServices(getContext(),
+                        "",
+                        BaseURLTypes.GET_EMP_DEPT_URL, false)
+                        .webServiceGetEmployeeDepartDetail();
                 break;
         }
     }

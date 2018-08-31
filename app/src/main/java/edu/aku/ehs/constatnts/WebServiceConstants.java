@@ -50,11 +50,12 @@ public class WebServiceConstants {
 
     public static String PACS_VIEWER_URL = "https://pacsviewer.aku.edu/api/PACSViewer/";
     public static String PACS_URL = "https://pacsviewer.aku.edu/api/";
-    //    public static String PAYMENT_GATEWAY_URL = "https://testsecureacceptance.cybersource.com/pay/";
+    //    public static String GET_EMP_DEPT_URL = "https://testsecureacceptance.cybersource.com/pay/";
     public static String PAYMENT_GATEWAY_URL = "https://testsecureacceptance.cybersource.com/token/create/";
 
     public static final String WS_KEY_GET_TOKEN = "getToken";
-    public static final String WS_KEY_GET_REQUESTOR = "Requestor: aku.edu";
+    public static final String WS_TOKEN_CONSTANT = "Authorization: Basic QUtVX1RMX1JFU1RfRU1QX0RFUFQ6ezVDNEY0MkIzLUYyRDktNzQ1Ny0yQURDLTM5RTcxNDYyMDJCMn0=";
+    public static final String WS_AKU_DEPT_EMP_GET_URL = "https://uerpdmo.aku.edu/PSIGW/RESTListeningConnector/PSFT_HR/AKU_DEPT_EMPS_GET.v1/SHARE/M/510-29-10/";
 
     /**
      * API PARAMS

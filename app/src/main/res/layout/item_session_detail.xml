@@ -179,7 +179,7 @@
                         android:layout_marginRight="@dimen/x3dp"
                         android:layout_weight="1"
                         app:stpi_labelColor="@color/txtBlue"
-                        app:stpi_labels="@array/session_employee_steps"
+                        app:stpi_labels="@array/sessionEmployeeSteps"
                         app:stpi_showDoneIcon="true"
                         app:stpi_showLabels="true"
                         app:stpi_stepCount="4" />

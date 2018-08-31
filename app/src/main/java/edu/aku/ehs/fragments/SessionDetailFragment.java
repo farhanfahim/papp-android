@@ -73,6 +73,8 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
     Button btnAddSchedule;
     @BindView(R.id.btnAddEmployees)
     Button btnAddEmployees;
+    @BindView(R.id.btnGetLabs)
+    Button btnGetLabs;
     @BindView(R.id.contSelection)
     LinearLayout contSelection;
 
@@ -210,7 +212,6 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
     }
 
 
-
     private void bindView() {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getBaseActivity());
         recylerView.setLayoutManager(mLayoutManager);
@@ -246,6 +247,8 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
                 if (isSelectingEmployeesForSchedule) {
                     arrData.get(position).setSelected(!arrData.get(position).isSelected());
                     adapter.notifyItemChanged(position);
+                } else {
+                    getBaseActivity().addDockableFragment(EmployeeAssessmentListFragment.newInstance(), false);
                 }
 
                 break;
@@ -296,7 +299,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
         }
     }
 
-    @OnClick({R.id.btnAddEmail, R.id.btnAddSchedule, R.id.btnAddEmployees, R.id.fab})
+    @OnClick({R.id.btnGetLabs, R.id.btnAddEmail, R.id.btnAddSchedule, R.id.btnAddEmployees, R.id.fab})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnAddEmail:
@@ -314,6 +317,10 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
 
                 break;
             case R.id.btnAddEmployees:
+                getBaseActivity().addDockableFragment(SearchFragment.newInstance(SelectEmployeeActionType.ADDEMPLOYEE), false);
+                break;
+
+            case R.id.btnGetLabs:
                 getBaseActivity().addDockableFragment(SearchFragment.newInstance(SelectEmployeeActionType.ADDEMPLOYEE), false);
                 break;
 

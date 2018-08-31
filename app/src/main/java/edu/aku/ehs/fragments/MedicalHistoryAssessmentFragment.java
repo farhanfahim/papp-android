@@ -12,12 +12,8 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-
-import com.github.clans.fab.FloatingActionButton;
-import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 
 import java.util.ArrayList;
 
@@ -26,50 +22,45 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import edu.aku.ehs.R;
-import edu.aku.ehs.adapters.recyleradapters.SessionAdapter;
+import edu.aku.ehs.adapters.recyleradapters.AssessmentQuestionAdapter;
 import edu.aku.ehs.callbacks.OnItemClickListener;
+import edu.aku.ehs.callbacks.SwitchMultiButtonAdapterListner;
+import edu.aku.ehs.enums.QuestionTypeEnum;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
-import edu.aku.ehs.models.SessionModel;
-import edu.aku.ehs.widget.AnyEditTextView;
+import edu.aku.ehs.models.AssessmentQuestionModel;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
 
-/**
- * Created by hamza.ahmed on 7/23/2018.
- */
-
-public class SessionListFragment extends BaseFragment implements OnItemClickListener {
+public class MedicalHistoryAssessmentFragment extends BaseFragment implements OnItemClickListener {
 
     Unbinder unbinder;
-    @BindView(R.id.imgBanner)
-    ImageView imgBanner;
-    @BindView(R.id.empty_view)
-    AnyTextView emptyView;
-    @BindView(R.id.imgSearch)
-    ImageView imgSearch;
-    @BindView(R.id.edtSearchBar)
-    AnyEditTextView edtSearchBar;
-    @BindView(R.id.contSearch)
-    RoundKornerLinearLayout contSearch;
+    @BindView(R.id.txtQuestionTitle)
+    AnyTextView txtQuestionTitle;
+    @BindView(R.id.txtQuestionSubTitle)
+    AnyTextView txtQuestionSubTitle;
     @BindView(R.id.recylerView)
     RecyclerView recylerView;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
-    @BindView(R.id.contParent)
-    RelativeLayout contParent;
-    @BindView(R.id.contOptionButtons)
-    LinearLayout contOptionButtons;
+    @BindView(R.id.imgBack)
+    ImageView imgBack;
+    @BindView(R.id.imgNext)
+    ImageView imgNext;
+    @BindView(R.id.btnDone)
+    Button btnDone;
 
 
-    private ArrayList<SessionModel> arrData;
-    private SessionAdapter adapter;
+    private ArrayList<AssessmentQuestionModel> arrData;
+    private AssessmentQuestionAdapter adapter;
+    private SwitchMultiButtonAdapterListner onSwitchListener1;
+    private SwitchMultiButtonAdapterListner onSwitchListener2;
+
+    NewAssessmentViewPagerFragment parentFragment;
 
 
-    public static SessionListFragment newInstance() {
+    public static MedicalHistoryAssessmentFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        SessionListFragment fragment = new SessionListFragment();
+        MedicalHistoryAssessmentFragment fragment = new MedicalHistoryAssessmentFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -81,16 +72,16 @@ public class SessionListFragment extends BaseFragment implements OnItemClickList
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_general_recyler_view;
+        return R.layout.fragment_assessment_question_list;
     }
 
     @Override
     public void setTitlebar(TitleBar titleBar) {
         titleBar.resetViews();
         titleBar.setVisibility(View.VISIBLE);
-        titleBar.setTitle("Sessions");
-        titleBar.showBackButton(getBaseActivity());
         titleBar.showHome(getBaseActivity());
+        titleBar.setTitle("Employee Assessment");
+        titleBar.showBackButton(getBaseActivity());
     }
 
     @Override
@@ -108,13 +99,37 @@ public class SessionListFragment extends BaseFragment implements OnItemClickList
 
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        arrData = new ArrayList<SessionModel>();
-        adapter = new SessionAdapter(getBaseActivity(), arrData, this);
+        initSwitchListener();
+
+        arrData = new ArrayList<AssessmentQuestionModel>();
+        adapter = new AssessmentQuestionAdapter(getBaseActivity(), arrData, this, onSwitchListener1, onSwitchListener2);
+    }
+
+    private void initSwitchListener() {
+        onSwitchListener1 = (position, tabText, adapterPosition) -> {
+            if (position == 0) {
+                arrData.get(adapterPosition).setAnswer1(true);
+                adapter.notifyItemChanged(adapterPosition);
+            } else {
+                arrData.get(adapterPosition).setAnswer1(false);
+                adapter.notifyItemChanged(adapterPosition);
+            }
+        };
+
+
+        onSwitchListener2 = (position, tabText, adapterPosition) -> {
+            if (position == 0) {
+                arrData.get(adapterPosition).setAnswer2(true);
+                adapter.notifyItemChanged(adapterPosition);
+            } else {
+                arrData.get(adapterPosition).setAnswer2(false);
+                adapter.notifyItemChanged(adapterPosition);
+            }
+        };
     }
 
     @Override
@@ -128,20 +143,21 @@ public class SessionListFragment extends BaseFragment implements OnItemClickList
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        fab.setVisibility(View.VISIBLE);
-        contSearch.setVisibility(View.VISIBLE);
-        imgBanner.setVisibility(View.VISIBLE);
+        parentFragment = (NewAssessmentViewPagerFragment) getParentFragment();
+        txtQuestionTitle.setText("Medical History");
+        txtQuestionSubTitle.setText("Do you have any of the following Disease?");
 
+        imgBack.setVisibility(View.GONE);
         bindView();
-
         bindData();
     }
 
     private void bindData() {
         arrData.clear();
-        for (int i = 0; i < 10; i++) {
-            SessionModel sessionModel = new SessionModel("Session - IT Department " + i, "", "");
-            arrData.add(sessionModel);
+        AssessmentQuestionModel model;
+        for (String s : getBaseActivity().getResources().getStringArray(R.array.medicalHistoryQuestions)) {
+            model = new AssessmentQuestionModel(s, QuestionTypeEnum.MEDICALHISTORY);
+            arrData.add(model);
         }
         adapter.notifyDataSetChanged();
     }
@@ -157,20 +173,28 @@ public class SessionListFragment extends BaseFragment implements OnItemClickList
         recylerView.setAdapter(adapter);
     }
 
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-
     @Override
     public void onItemClick(int position, Object object, View view) {
-        getBaseActivity().addDockableFragment(SessionDetailFragment.newInstance((SessionModel) object), false);
+
     }
 
-    @OnClick(R.id.fab)
-    public void onViewClicked() {
-        getBaseActivity().addDockableFragment(AddSessionFragment.newInstance(), false);
+    @OnClick({R.id.imgBack, R.id.imgNext, R.id.btnDone})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.imgBack:
+                break;
+            case R.id.imgNext:
+                parentFragment.viewpager.moveNext();
+                break;
+            case R.id.btnDone:
+                break;
+        }
     }
 }

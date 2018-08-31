@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <declare-styleable name="SlideShowView">
-            <attr name="selector" format="reference" />
+    <declare-styleable name="SlideShowView">
+        <attr name="selector" format="reference" />
 
-            <!-- PLAYLIST -->
-            <attr name="playlist" format="enum">
-                <enum name="sequential" value="1" />
-                <enum name="random" value="2" />
-            </attr>
-            <attr name="slideDuration" format="integer" />
-            <attr name="loop" format="boolean" />
-            <attr name="enableAutoAdvance" format="boolean" />
+        <!-- PLAYLIST -->
+        <attr name="playlist" format="enum">
+            <enum name="sequential" value="1" />
+            <enum name="random" value="2" />
+        </attr>
+        <attr name="slideDuration" format="integer" />
+        <attr name="loop" format="boolean" />
+        <attr name="enableAutoAdvance" format="boolean" />
 
-            <!-- TRANSITIONS -->
-            <attr name="transition" format="enum">
-                <enum name="none" value="1" />
-                <enum name="random" value="2" />
-                <enum name="fade" value="3" />
-                <enum name="zoom" value="4" />
-                <enum name="slideAndZoom" value="5" />
-                <enum name="flipHorizontal" value="6" />
-                <enum name="flipVertical" value="7" />
-            </attr>
-            <attr name="transitionDuration" format="integer" />
-        </declare-styleable>
+        <!-- TRANSITIONS -->
+        <attr name="transition" format="enum">
+            <enum name="none" value="1" />
+            <enum name="random" value="2" />
+            <enum name="fade" value="3" />
+            <enum name="zoom" value="4" />
+            <enum name="slideAndZoom" value="5" />
+            <enum name="flipHorizontal" value="6" />
+            <enum name="flipVertical" value="7" />
+        </attr>
+        <attr name="transitionDuration" format="integer" />
+    </declare-styleable>
 
 
     <declare-styleable name="AnyTextView">
-        <attr name="typeface" format="string"/>
+        <attr name="typeface" format="string" />
     </declare-styleable>
 
     <declare-styleable name="PinEntryEditText">
@@ -45,5 +45,15 @@
         <attr name="pinLineColors" format="color" />
         <attr name="pinBackgroundDrawable" format="reference" />
         <attr name="pinBackgroundIsSquare" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SwitchMultiButton">
+        <attr name="strokeRadius" format="dimension" />
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="textSize" format="dimension" />
+        <attr name="selectedTab" format="integer" />
+        <attr name="selectedColor" format="color" />
+        <attr name="switchTabs" format="reference" />
+        <attr name="typeface2" format="string" />
     </declare-styleable>
 </resources>

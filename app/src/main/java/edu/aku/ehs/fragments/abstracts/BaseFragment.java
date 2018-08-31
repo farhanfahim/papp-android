@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
@@ -79,8 +80,8 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getBaseActivity().getTitleBar().resetViews();
-        getBaseActivity().getDrawerLayout().setDrawerLockMode(getDrawerLockMode());
-        getBaseActivity().getDrawerLayout().closeDrawer(Gravity.LEFT);
+        getBaseActivity().getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);   // Default Locked in this project
+        getBaseActivity().getDrawerLayout().closeDrawer(Gravity.START);
 
         subscribeToNewPacket(this);
 

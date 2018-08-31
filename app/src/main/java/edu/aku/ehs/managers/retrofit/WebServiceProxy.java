@@ -63,7 +63,7 @@ public interface WebServiceProxy {
     );
 
 
-    @Headers(WebServiceConstants.WS_KEY_GET_REQUESTOR)
+    @Headers("Requestor: aku.edu")
     @GET(WebServiceConstants.WS_KEY_GET_TOKEN)
     Call<String> getToken();
 
@@ -105,6 +105,12 @@ public interface WebServiceProxy {
 
 
     );
+
+
+
+    @Headers(WebServiceConstants.WS_TOKEN_CONSTANT)
+    @GET("./")
+    Call<Object> getDeptEmpl();
 
 }
 

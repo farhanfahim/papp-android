@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -23,28 +25,34 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import edu.aku.ehs.R;
-import edu.aku.ehs.adapters.recyleradapters.SessionAdapter;
+import edu.aku.ehs.adapters.recyleradapters.EmployeeAssessmentAdapter;
 import edu.aku.ehs.callbacks.OnItemClickListener;
+import edu.aku.ehs.enums.EmployeeAssessmentState;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
-import edu.aku.ehs.models.SessionModel;
+import edu.aku.ehs.models.EmployeeAssessmentModel;
 import edu.aku.ehs.widget.AnyEditTextView;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
 
-/**
- * Created by hamza.ahmed on 7/23/2018.
- */
-
-public class SessionListFragment extends BaseFragment implements OnItemClickListener {
-
-    Unbinder unbinder;
-    @BindView(R.id.imgBanner)
-    ImageView imgBanner;
+public class EmployeeAssessmentListFragment extends BaseFragment implements OnItemClickListener {
     @BindView(R.id.empty_view)
     AnyTextView emptyView;
+    @BindView(R.id.imgBanner)
+    ImageView imgBanner;
+    @BindView(R.id.btnAddEmail)
+    Button btnAddEmail;
+    @BindView(R.id.btnAddSchedule)
+    Button btnAddSchedule;
+    @BindView(R.id.btnAddEmployees)
+    Button btnAddEmployees;
+    @BindView(R.id.contOptionButtons)
+    LinearLayout contOptionButtons;
+    @BindView(R.id.cbSelectAll)
+    CheckBox cbSelectAll;
+    @BindView(R.id.contSelection)
+    LinearLayout contSelection;
     @BindView(R.id.imgSearch)
     ImageView imgSearch;
     @BindView(R.id.edtSearchBar)
@@ -57,19 +65,17 @@ public class SessionListFragment extends BaseFragment implements OnItemClickList
     FloatingActionButton fab;
     @BindView(R.id.contParent)
     RelativeLayout contParent;
-    @BindView(R.id.contOptionButtons)
-    LinearLayout contOptionButtons;
+    Unbinder unbinder;
 
 
-    private ArrayList<SessionModel> arrData;
-    private SessionAdapter adapter;
+    private ArrayList<EmployeeAssessmentModel> arrData;
+    private EmployeeAssessmentAdapter adapter;
 
-
-    public static SessionListFragment newInstance() {
+    public static EmployeeAssessmentListFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        SessionListFragment fragment = new SessionListFragment();
+        EmployeeAssessmentListFragment fragment = new EmployeeAssessmentListFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -88,14 +94,15 @@ public class SessionListFragment extends BaseFragment implements OnItemClickList
     public void setTitlebar(TitleBar titleBar) {
         titleBar.resetViews();
         titleBar.setVisibility(View.VISIBLE);
-        titleBar.setTitle("Sessions");
-        titleBar.showBackButton(getBaseActivity());
         titleBar.showHome(getBaseActivity());
+        titleBar.setTitle("Employee Assessment");
+        titleBar.showBackButton(getBaseActivity());
     }
 
     @Override
     public void setListeners() {
 
+        fab.setOnClickListener(view -> getBaseActivity().addDockableFragment(NewAssessmentViewPagerFragment.newInstance(), false));
     }
 
     @Override
@@ -108,13 +115,12 @@ public class SessionListFragment extends BaseFragment implements OnItemClickList
 
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        arrData = new ArrayList<SessionModel>();
-        adapter = new SessionAdapter(getBaseActivity(), arrData, this);
+        arrData = new ArrayList<EmployeeAssessmentModel>();
+        adapter = new EmployeeAssessmentAdapter(getBaseActivity(), arrData, this);
     }
 
     @Override
@@ -129,19 +135,22 @@ public class SessionListFragment extends BaseFragment implements OnItemClickList
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fab.setVisibility(View.VISIBLE);
-        contSearch.setVisibility(View.VISIBLE);
-        imgBanner.setVisibility(View.VISIBLE);
 
         bindView();
-
         bindData();
     }
 
     private void bindData() {
         arrData.clear();
-        for (int i = 0; i < 10; i++) {
-            SessionModel sessionModel = new SessionModel("Session - IT Department " + i, "", "");
-            arrData.add(sessionModel);
+        EmployeeAssessmentModel model;
+
+        for (int i = 0; i < 5; i++) {
+            if (i < 2) {
+                model = new EmployeeAssessmentModel("Assessment " + i, i + " October, 2018", EmployeeAssessmentState.INPROGRESS);
+            } else {
+                model = new EmployeeAssessmentModel("Assessment " + i, i + " October, 2018", EmployeeAssessmentState.COMPLETED);
+            }
+            arrData.add(model);
         }
         adapter.notifyDataSetChanged();
     }
@@ -157,20 +166,15 @@ public class SessionListFragment extends BaseFragment implements OnItemClickList
         recylerView.setAdapter(adapter);
     }
 
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-
     @Override
     public void onItemClick(int position, Object object, View view) {
-        getBaseActivity().addDockableFragment(SessionDetailFragment.newInstance((SessionModel) object), false);
-    }
-
-    @OnClick(R.id.fab)
-    public void onViewClicked() {
-        getBaseActivity().addDockableFragment(AddSessionFragment.newInstance(), false);
+        getBaseActivity().addDockableFragment(NewAssessmentViewPagerFragment.newInstance(), false);
     }
 }

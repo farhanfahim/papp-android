@@ -1,9 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="session_employee_steps">
+
+
+    <array name="sessionEmployeeSteps">
         <item>Enrolled</item>
         <item>Lab Test</item>
         <item>Scheduled</item>
         <item>Referred</item>
     </array>
+
+
+    <array name="arrYesNo">
+        <item>Yes</item>
+        <item>No</item>
+    </array>
+
+
+    <string-array name="medicalHistoryQuestions">
+        <item>High Blood Pressure</item>
+        <item>Heart Disease</item>
+        <item>Psychiatric Illness</item>
+        <item>Hepatitis B</item>
+        <item>Hepatitis C</item>
+        <item>Diabetes</item>
+    </string-array>
+
+
+    <string-array name="familyHistoryQuestions">
+        <item>High Blood Pressure</item>
+        <item>Heart Disease</item>
+        <item>Diabetes</item>
+    </string-array>
+
+
+    <string-array name="pschosocialHistoryQuestions">
+        <item>Little interest or pleasure in doing things</item>
+        <item>Have you felt down , depressed or hopeless</item>
+    </string-array>
+
+
+    <string-array name="smokingBehaviorsQuestions">
+        <item>Do you smoke (including ciggratees, e cigg, shicha etc)?</item>
+        <item>Do you use any smokeless tobacco (Pan, Chalia, Gutka, Gem etc.)?</item>
+        <item>Have you thought of quitting?</item>
+    </string-array>
+
 </resources>

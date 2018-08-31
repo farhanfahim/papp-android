@@ -27,43 +27,49 @@
             android:textSize="@dimen/s10"
             app:typeface="@string/font_bold" />
 
-        <!--<edu.aku.ehs.widget.AnyEditTextView-->
-        <!--android:id="@+id/edtEmailAddress"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="#fff"-->
-        <!--android:ellipsize="end"-->
-        <!--android:hint="Enter Email Address"-->
-        <!--android:maxLines="6"-->
-        <!--android:padding="@dimen/x3dp"-->
-        <!--android:text=""-->
-        <!--android:textColor="@color/txtDarkGrey"-->
-        <!--android:textSize="@dimen/s12"-->
-        <!--app:typeface="@string/font_regular" />-->
-
-
-        <mabbas007.tagsedittext.TagsEditText
-            android:id="@+id/edtEmailAddress"
+        <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#fff"
-            android:ellipsize="end"
-            android:hint="Enter Email Address"
-            android:imeOptions="actionNext"
-            android:maxLines="6"
+            android:background="@color/c_white"
             android:padding="@dimen/x3dp"
-            android:textColor="@color/txtDarkGrey"
-            android:textSize="@dimen/s12"
-            app:allowSpaceInTag="false"
-            app:tagsBackground="@drawable/rounded_box_filled_columbia_blue"
-            app:tagsCloseImagePadding="@dimen/defaultTagsCloseImagePadding"
-            app:tagsCloseImageRight="@drawable/tag_close"
-            app:tagsPaddingBottom="@dimen/x3dp"
-            app:tagsPaddingLeft="@dimen/x3dp"
-            app:tagsPaddingRight="@dimen/x3dp"
-            app:tagsPaddingTop="@dimen/x3dp"
-            app:tagsTextColor="@color/c_white"
-            app:tagsTextSize="@dimen/s12" />
+            app:corner_radius="@dimen/x4dp">
+
+            <mabbas007.tagsedittext.TagsEditText
+                android:id="@+id/edtEmailAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#fff"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:hint="Enter Email Address"
+                android:imeOptions="actionNext"
+                android:maxLines="6"
+                android:padding="@dimen/x3dp"
+                android:textColor="@color/txtDarkGrey"
+                android:textSize="@dimen/s12"
+                app:allowSpaceInTag="false"
+                app:tagsBackground="@drawable/rounded_box_filled_columbia_blue"
+                app:tagsCloseImagePadding="@dimen/defaultTagsCloseImagePadding"
+                app:tagsCloseImageRight="@drawable/tag_close"
+                app:tagsPaddingBottom="@dimen/x3dp"
+                app:tagsPaddingLeft="@dimen/x3dp"
+                app:tagsPaddingRight="@dimen/x3dp"
+                app:tagsPaddingTop="@dimen/x3dp"
+                app:tagsTextColor="@color/c_white"
+                app:tagsTextSize="@dimen/s12"
+                />
+
+            <ImageView
+                android:id="@+id/imgSearchEmployees"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/circle_green"
+                android:backgroundTint="@color/colorPrimary"
+                android:padding="@dimen/x3dp"
+                android:src="@drawable/ic_search" />
+        </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
 
         <edu.aku.ehs.widget.AnyTextView
@@ -77,20 +83,30 @@
             android:textSize="@dimen/s10"
             app:typeface="@string/font_bold" />
 
-        <edu.aku.ehs.widget.AnyEditTextView
-            android:id="@+id/edtEmailSubject"
+
+        <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#fff"
-            android:ellipsize="end"
-            android:hint="Enter Subject"
-            android:maxLength="100"
-            android:maxLines="1"
             android:padding="@dimen/x3dp"
-            android:singleLine="true"
-            android:textColor="@color/txtDarkGrey"
-            android:textSize="@dimen/s12"
-            app:typeface="@string/font_regular" />
+            app:corner_radius="@dimen/x4dp">
+
+            <edu.aku.ehs.widget.AnyEditTextView
+                android:id="@+id/edtEmailSubject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:ellipsize="end"
+                android:hint="Enter Subject"
+                android:maxLength="100"
+                android:maxLines="1"
+                android:padding="@dimen/x3dp"
+                android:singleLine="true"
+                android:textColor="@color/txtDarkGrey"
+                android:textSize="@dimen/s12"
+                app:typeface="@string/font_regular" />
+
+        </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
 
     </LinearLayout>

@@ -128,7 +128,7 @@
             android:layout_marginTop="@dimen/x55dp"
             android:background="@color/c_white"
             android:elevation="@dimen/x10dp"
-            android:visibility="visible"
+            android:visibility="gone"
             app:corner_radius="@dimen/x15dp">
 
             <ImageView
@@ -158,15 +158,22 @@
         </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recylerView"
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/pagerIndicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/contSearch"
-            android:layout_marginTop="@dimen/x5dp">
+            android:padding="@dimen/x10dp"
+            app:centered="true"
+            app:fillColor="@color/colorAccent"
+            app:pageColor="#EEE" />
 
-        </android.support.v7.widget.RecyclerView>
+        <edu.aku.ehs.widget.CustomViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/pagerIndicator" />
+
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab"

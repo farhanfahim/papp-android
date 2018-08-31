@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jcminarro.roundkornerlayout.RoundKornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+   android:id="@+id/contParent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/x10dp"
+    android:layout_marginLeft="@dimen/x20dp"
+    android:layout_marginRight="@dimen/x20dp"
+    android:layout_marginTop="@dimen/x10dp"
+    android:background="@color/pastel_blue"
+    android:elevation="@dimen/x3dp"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/x4dp"
+    android:paddingTop="@dimen/x4dp"
+    app:corner_radius="@dimen/x10dp">
+
+
+    <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+        android:id="@+id/contListItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/c_white"
+        android:orientation="vertical"
+        android:padding="@dimen/x8dp"
+        app:corner_radius="@dimen/x10dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+
+            <edu.aku.ehs.widget.AnyTextView
+                android:id="@+id/txtAssessmentName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:padding="@dimen/x3dp"
+                android:singleLine="true"
+                android:text="Assessment1"
+                android:textColor="@color/txtBlue"
+                android:textSize="@dimen/s14"
+                app:typeface="@string/font_medium" />
+
+            <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+
+                <ImageView
+                    android:id="@+id/imgStatus"
+                    android:layout_width="@dimen/x8dp"
+                    android:layout_height="@dimen/x8dp"
+                    android:layout_marginRight="@dimen/x3dp"
+                    android:layout_marginTop="@dimen/x1dp"
+                    android:src="@drawable/curve_edges_square_bullet"
+                    android:tint="@color/pastel_cyan" />
+
+                <edu.aku.ehs.widget.AnyTextView
+                    android:id="@+id/txtStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:padding="@dimen/x3dp"
+                    android:singleLine="true"
+                    android:text="Status"
+                    android:textColor="@color/pastel_cyan"
+                    android:textSize="@dimen/s11"
+                    app:typeface="@string/font_medium" />
+
+            </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+        </LinearLayout>
+
+
+        <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            app:corner_radius="@dimen/x10dp">
+
+
+            <ImageView
+                android:layout_width="@dimen/x25dp"
+                android:layout_height="@dimen/x25dp"
+                android:padding="@dimen/x4dp"
+                android:src="@drawable/calendar_input_icon"
+                android:tint="@color/c_gray" />
+
+            <edu.aku.ehs.widget.AnyTextView
+                android:id="@+id/txtDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:padding="@dimen/x2dp"
+                android:singleLine="true"
+                android:text=" 10 August, 2018"
+                android:textColor="@color/txtGrey"
+                android:textSize="@dimen/s12"
+                app:typeface="@string/font_medium" />
+
+
+            <ImageView
+                android:id="@+id/imgNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_next_arrow"
+                android:tint="@color/base_dark_gray" />
+
+
+        </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+    </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+</com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
