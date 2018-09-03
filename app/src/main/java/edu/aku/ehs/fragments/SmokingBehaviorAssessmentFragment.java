@@ -198,8 +198,8 @@ public class SmokingBehaviorAssessmentFragment extends BaseFragment implements O
                 parentFragment.viewpager.moveNext();
                 break;
             case R.id.btnDone:
-                UIHelper.showToast(getContext(), "Thanks..");
                 getBaseActivity().popBackStack();
+                getBaseActivity().addDockableFragment(EmployeeAnthropometricMeasurmentsFragment.newInstance(),false);
                 break;
         }
     }
