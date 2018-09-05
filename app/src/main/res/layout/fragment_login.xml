@@ -94,7 +94,6 @@
                     app:iconSignifier="@drawable/user_icon"
                     app:isResponsiveIconColor="true"
                     app:labelText="User Name"
-                    app:maxCharacters="30"
                     app:primaryColor="@color/c_navy_blue"
                     app:secondaryColor="@color/colorAccent">
 
@@ -104,7 +103,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
-                        android:maxLength="31"
+                        android:maxLength="30"
                         android:singleLine="true"
                         android:textColor="@color/txtBlack" />
 
@@ -119,7 +118,6 @@
                     app:iconSignifier="@drawable/password_icon"
                     app:isResponsiveIconColor="true"
                     app:labelText="Password"
-                    app:maxCharacters="30"
                     app:primaryColor="@color/c_navy_blue"
                     app:secondaryColor="@color/colorAccent">
 
@@ -129,7 +127,7 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
                         android:inputType="textPassword"
-                        android:maxLength="31"
+                        android:maxLength="30"
                         android:singleLine="true"
                         android:textColor="@color/txtBlack" />
 

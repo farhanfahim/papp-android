@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/c_white"
-    android:fillViewport="true"
-    android:orientation="vertical">
+    android:background="@color/c_white">
 
     <!--android:background="@drawable/test2"-->
     <RelativeLayout
@@ -13,19 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <edu.aku.ehs.widget.AnyTextView
-            android:id="@+id/empty_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/background_gray"
-            android:gravity="center"
-            android:padding="@dimen/x10dp"
-            android:text="No Item Found"
-            android:textColor="@color/txtBlue"
-            android:textSize="@dimen/s15"
-            android:visibility="gone"
-            app:typeface="@string/font_bold" />
 
         <ImageView
             android:id="@+id/imgBanner"
@@ -35,507 +20,411 @@
             android:src="@drawable/img_banner"
             android:visibility="visible" />
 
-
-        <LinearLayout
-            android:id="@+id/contOptionButtons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:visibility="gone">
-
-
-            <Button
-                android:id="@+id/btnGetLabs"
-                android:layout_width="@dimen/x100dp"
-                android:layout_height="@dimen/x25dp"
-                android:layout_margin="@dimen/x10dp"
-                android:background="@drawable/img_button_white"
-                android:elevation="@dimen/x10dp"
-                android:text="Get Labs" />
-
-
-            <Button
-                android:id="@+id/btnAddEmail"
-                android:layout_width="@dimen/x100dp"
-                android:layout_height="@dimen/x25dp"
-                android:layout_margin="@dimen/x10dp"
-                android:background="@drawable/img_button_white"
-                android:elevation="@dimen/x10dp"
-                android:text="Send Email" />
-
-            <Button
-                android:id="@+id/btnAddSchedule"
-                android:layout_width="@dimen/x100dp"
-                android:layout_height="@dimen/x25dp"
-                android:layout_margin="@dimen/x10dp"
-                android:background="@drawable/img_button_white"
-                android:elevation="@dimen/x10dp"
-                android:text="Add Schedule"
-
-                android:textColor="@color/txtBlue" />
-
-
-            <Button
-                android:id="@+id/btnAddEmployees"
-                android:layout_width="@dimen/x100dp"
-                android:layout_height="@dimen/x25dp"
-                android:layout_margin="@dimen/x10dp"
-                android:background="@drawable/img_button_white"
-                android:elevation="@dimen/x10dp"
-                android:text="Add Employees" />
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/contSelection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="@dimen/x10dp"
-            android:layout_marginTop="@dimen/x10dp"
-            android:gravity="right|center_vertical"
-            android:visibility="gone">
-
-
-            <edu.aku.ehs.widget.AnyTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="@dimen/x10dp"
-                android:gravity="center"
-                android:text="Select All"
-                android:textColor="@color/c_white"
-                android:textSize="@dimen/s14" />
-
-            <CheckBox
-                android:id="@+id/cbSelectAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/c_white" />
-
-
-        </LinearLayout>
-
-
-        <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
-            android:id="@+id/contSearch"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/x30dp"
-            android:layout_alignParentTop="true"
-            android:layout_below="@+id/imgBanner"
-            android:layout_marginLeft="@dimen/x40dp"
-            android:layout_marginRight="@dimen/x40dp"
-            android:layout_marginTop="@dimen/x55dp"
-            android:background="@color/c_white"
-            android:elevation="@dimen/x10dp"
-            android:visibility="gone"
-            app:corner_radius="@dimen/x15dp">
-
-            <ImageView
-                android:id="@+id/imgSearch"
-                android:layout_width="@dimen/x25dp"
-                android:layout_height="@dimen/x25dp"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/x4dp"
-                android:padding="@dimen/x5dp"
-                android:src="@drawable/search2"
-                android:tint="@color/txtBlue" />
-
-            <edu.aku.ehs.widget.AnyEditTextView
-                android:id="@+id/edtSearchBar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/x5dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/transparent"
-                android:hint="@string/search"
-                android:maxLength="30"
-                android:maxLines="1"
-                android:padding="@dimen/x5dp"
-                android:textSize="@dimen/s12" />
-
-
-        </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
-
-
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/contSearch"
-            android:orientation="vertical">
+            android:layout_above="@id/btnDone"
+            android:layout_below="@+id/imgBanner"
+            android:fillViewport="true">
 
 
-            <edu.aku.ehs.widget.AnyTextView
-                android:id="@+id/btnRecordMenually"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingBottom="@dimen/x5dp"
-                android:paddingLeft="@dimen/x10dp"
-                android:paddingRight="@dimen/x10dp"
-                android:paddingTop="@dimen/x5dp"
-                android:text="Record Manually"
-                android:textColor="@color/txtBlue"
-                android:textSize="@dimen/s15"
-                app:typeface="@string/font_bold" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
 
-            <LinearLayout
-                android:id="@+id/contHeight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/x10dp"
-                android:background="@drawable/rounded_box_light_green"
-                android:orientation="vertical"
-                android:padding="@dimen/x1dp">
-
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_box_light_grey"
-                    android:padding="@dimen/x5dp">
+                    android:gravity="center_vertical">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:id="@+id/btnRecordMenually"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/x5dp">
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/x5dp"
+                        android:paddingLeft="@dimen/x10dp"
+                        android:paddingRight="@dimen/x10dp"
+                        android:paddingTop="@dimen/x5dp"
+                        android:text="Record Following Measurements"
+                        android:textColor="@color/txtBlue"
+                        android:textSize="@dimen/s15"
+                        app:typeface="@string/font_bold" />
 
-
-                        <edu.aku.ehs.widget.AnyTextView
-                            android:id="@+id/txtHeightDesc"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/x5dp"
-                            android:layout_marginTop="@dimen/x5dp"
-                            android:text="Height (cm)"
-                            android:textColor="@color/txtBlue"
-                            android:textSize="@dimen/s14"
-                            app:typeface="@string/font_bold" />
-
-                        <com.shawnlin.numberpicker.NumberPicker
-                            android:id="@+id/pickerHeight"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/txtHeightDesc"
-                            android:layout_centerInParent="true"
-                            app:np_dividerColor="@color/base_gray"
-                            app:np_dividerThickness="@dimen/x1dp"
-                            app:np_formatter=""
-                            app:np_max="250"
-                            app:np_min="60"
-                            app:np_orientation="horizontal"
-                            app:np_selectedTextColor="@color/base_green_light"
-                            app:np_selectedTextSize="@dimen/s17"
-                            app:np_textColor="@color/base_green_light"
-                            app:np_textSize="@dimen/s14"
-                            app:np_typeface="@string/font_regular"
-                            app:np_value="50"
-                            app:np_wheelItemCount="15"
-                            app:np_width="180dp"
-                            app:np_wrapSelectorWheel="false" />
-
-                    </RelativeLayout>
-                </FrameLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/contWaist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/x10dp"
-                android:background="@drawable/rounded_box_light_green"
-                android:orientation="vertical"
-                android:padding="@dimen/x1dp">
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_box_light_grey"
-                    android:padding="@dimen/x5dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/x5dp">
-
-
-                        <edu.aku.ehs.widget.AnyTextView
-                            android:id="@+id/txtWeightDesc"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/x5dp"
-                            android:layout_marginTop="@dimen/x5dp"
-                            android:text="Weight (kgs)"
-                            android:textColor="@color/txtBlue"
-                            android:textSize="@dimen/s14"
-                            app:typeface="@string/font_bold" />
-
-                        <com.shawnlin.numberpicker.NumberPicker
-                            android:id="@+id/pickerWeight"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/txtWeightDesc"
-                            android:layout_centerInParent="true"
-                            app:np_dividerColor="@color/base_gray"
-                            app:np_dividerThickness="@dimen/x1dp"
-                            app:np_formatter=""
-                            app:np_max="200"
-                            app:np_min="0"
-                            app:np_orientation="horizontal"
-                            app:np_selectedTextColor="@color/base_green_light"
-                            app:np_selectedTextSize="@dimen/s17"
-                            app:np_textColor="@color/base_green_light"
-                            app:np_textSize="@dimen/s14"
-                            app:np_typeface="@string/font_regular"
-                            app:np_value="0"
-                            app:np_wheelItemCount="15"
-                            app:np_width="180dp"
-                            app:np_wrapSelectorWheel="false" />
-
-                    </RelativeLayout>
-                </FrameLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/contBMI"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/x10dp"
-                android:background="@drawable/rounded_box_light_green"
-                android:orientation="vertical"
-                android:padding="@dimen/x1dp">
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_box_light_grey"
-                    android:padding="@dimen/x5dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:id="@+id/contBMI"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:padding="@dimen/x5dp">
+                        android:layout_margin="@dimen/x10dp"
+                        android:background="@drawable/rounded_box_filled_base_amber"
+                        android:orientation="vertical"
+                        android:padding="@dimen/x1dp">
 
-
-                        <edu.aku.ehs.widget.AnyTextView
-                            android:layout_width="0dp"
+                        <FrameLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                             android:layout_weight="1"
-                            android:text="BMI (Auto Calculate)"
-                            android:textColor="@color/txtBlue"
-                            android:textSize="@dimen/s14"
-                            app:typeface="@string/font_bold" />
+                            android:background="@drawable/rounded_box_light_grey"
+                            android:padding="@dimen/x3dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:padding="@dimen/x5dp">
 
 
-                        <edu.aku.ehs.widget.AnyTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/x5dp"
-                            android:text="2.1"
-                            android:textColor="@color/txtBlue"
-                            android:textSize="@dimen/s22"
-                            app:typeface="@string/font_bold" />
+                                <edu.aku.ehs.widget.AnyTextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="@dimen/x5dp"
+                                    android:layout_weight="1"
+                                    android:text="BMI (Auto Calculate)"
+                                    android:textColor="@color/txtBlue"
+                                    android:textSize="@dimen/s14"
+                                    app:typeface="@string/font_bold" />
 
 
+                                <edu.aku.ehs.widget.AnyTextView
+                                    android:id="@+id/txtBMI"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="@dimen/x5dp"
+                                    android:text="2.1"
+                                    android:textColor="@color/txtBlue"
+                                    android:textSize="@dimen/s22"
+                                    app:typeface="@string/font_bold" />
+
+
+                            </LinearLayout>
+                        </FrameLayout>
                     </LinearLayout>
-                </FrameLayout>
-            </LinearLayout>
+
+                </LinearLayout>
 
 
-
-            <LinearLayout
-                android:id="@+id/contWeight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/x10dp"
-                android:background="@drawable/rounded_box_light_green"
-                android:orientation="vertical"
-                android:padding="@dimen/x1dp">
-
-                <FrameLayout
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:id="@+id/contHeight"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_box_light_grey"
-                    android:padding="@dimen/x5dp">
+                    android:layout_margin="@dimen/x10dp"
+                    android:background="@drawable/rounded_box_light_green"
+                    android:orientation="vertical"
+                    android:padding="@dimen/x1dp">
 
-                    <RelativeLayout
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_box_light_grey"
                         android:padding="@dimen/x5dp">
 
-
-                        <edu.aku.ehs.widget.AnyTextView
-                            android:id="@+id/txtWaistDesc"
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/x5dp"
-                            android:layout_marginTop="@dimen/x5dp"
-                            android:text="Waist (cm)"
-                            android:textColor="@color/txtBlue"
-                            android:textSize="@dimen/s14"
-                            app:typeface="@string/font_bold" />
-
-                        <com.shawnlin.numberpicker.NumberPicker
-                            android:id="@+id/pickerWaist"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/txtWaistDesc"
-                            android:layout_centerInParent="true"
-                            app:np_dividerColor="@color/base_gray"
-                            app:np_dividerThickness="@dimen/x1dp"
-                            app:np_formatter=""
-                            app:np_max="200"
-                            app:np_min="10"
-                            app:np_orientation="horizontal"
-                            app:np_selectedTextColor="@color/base_green_light"
-                            app:np_selectedTextSize="@dimen/s17"
-                            app:np_textColor="@color/base_green_light"
-                            app:np_textSize="@dimen/s14"
-                            app:np_typeface="@string/font_regular"
-                            app:np_value="10"
-                            app:np_wheelItemCount="15"
-                            app:np_width="180dp"
-                            app:np_wrapSelectorWheel="false" />
-
-                    </RelativeLayout>
-                </FrameLayout>
-            </LinearLayout>
+                            android:padding="@dimen/x5dp">
 
 
+                            <edu.aku.ehs.widget.AnyTextView
+                                android:id="@+id/txtHeightDesc"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/x5dp"
+                                android:layout_marginTop="@dimen/x5dp"
+                                android:text="Height (cm)"
+                                android:textColor="@color/txtBlue"
+                                android:textSize="@dimen/s14"
+                                app:typeface="@string/font_medium" />
 
-            <LinearLayout
-                android:id="@+id/contSystolicBP"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/x10dp"
-                android:background="@drawable/rounded_box_light_blue"
-                android:orientation="vertical"
-                android:padding="@dimen/x1dp">
+                            <com.shawnlin.numberpicker.NumberPicker
+                                android:id="@+id/pickerHeight"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/txtHeightDesc"
+                                android:layout_centerInParent="true"
+                                app:np_dividerColor="@color/base_gray"
+                                app:np_dividerThickness="@dimen/x1dp"
+                                app:np_formatter=""
+                                app:np_max="250"
+                                app:np_min="60"
+                                app:np_orientation="horizontal"
+                                app:np_selectedTextColor="@color/base_green_light"
+                                app:np_selectedTextSize="@dimen/s17"
+                                app:np_textColor="@color/base_green_light"
+                                app:np_textSize="@dimen/s14"
+                                app:np_typeface="@string/font_regular"
+                                app:np_value="150"
+                                app:np_wheelItemCount="15"
+                                app:np_width="180dp"
+                                app:np_wrapSelectorWheel="false" />
 
-                <FrameLayout
-                    android:layout_width="match_parent"
+                        </RelativeLayout>
+                    </FrameLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/contWaist"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_box_light_grey"
+                    android:layout_margin="@dimen/x10dp"
+                    android:background="@drawable/rounded_box_light_green"
+                    android:orientation="vertical"
+                    android:padding="@dimen/x1dp">
 
-                    android:padding="@dimen/x5dp">
-
-                    <RelativeLayout
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_box_light_grey"
                         android:padding="@dimen/x5dp">
 
-                        <edu.aku.ehs.widget.AnyTextView
-                            android:id="@+id/txtBPsystolicDes"
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/x5dp"
-                            android:layout_marginLeft="@dimen/x5dp"
-                            android:layout_marginTop="@dimen/x5dp"
-                            android:text="Systolic Blood Pressure"
-                            android:textColor="@color/txtBlue"
-                            android:textSize="@dimen/s14"
-                            app:typeface="@string/font_bold" />
+                            android:padding="@dimen/x5dp">
 
-                        <com.shawnlin.numberpicker.NumberPicker
-                            android:id="@+id/pickerSystolic"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/txtBPsystolicDes"
-                            android:layout_centerInParent="true"
-                            app:np_dividerColor="@color/base_gray"
-                            app:np_formatter=""
-                            app:np_max="200"
-                            app:np_dividerThickness="@dimen/x1dp"
 
-                            app:np_min="0"
-                            app:np_orientation="horizontal"
-                            app:np_selectedTextColor="@color/base_blue_light"
-                            app:np_selectedTextSize="@dimen/s17"
-                            app:np_textColor="@color/base_blue_light"
-                            app:np_textSize="@dimen/s13"
-                            app:np_typeface="@string/font_regular"
-                            app:np_value="0"
-                            app:np_wheelItemCount="10"
-                            app:np_width="180dp"
-                            app:np_wrapSelectorWheel="false" />
+                            <edu.aku.ehs.widget.AnyTextView
+                                android:id="@+id/txtWeightDesc"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/x5dp"
+                                android:layout_marginTop="@dimen/x5dp"
+                                android:text="Weight (kgs)"
+                                android:textColor="@color/txtBlue"
+                                android:textSize="@dimen/s14"
+                                app:typeface="@string/font_medium" />
 
-                    </RelativeLayout>
-                </FrameLayout>
-            </LinearLayout>
+                            <com.shawnlin.numberpicker.NumberPicker
+                                android:id="@+id/pickerWeight"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/txtWeightDesc"
+                                android:layout_centerInParent="true"
+                                app:np_dividerColor="@color/base_gray"
+                                app:np_dividerThickness="@dimen/x1dp"
+                                app:np_formatter=""
+                                app:np_max="200"
+                                app:np_min="0"
+                                app:np_orientation="horizontal"
+                                app:np_selectedTextColor="@color/base_green_light"
+                                app:np_selectedTextSize="@dimen/s17"
+                                app:np_textColor="@color/base_green_light"
+                                app:np_textSize="@dimen/s14"
+                                app:np_typeface="@string/font_regular"
+                                app:np_value="50"
+                                app:np_wheelItemCount="15"
+                                app:np_width="180dp"
+                                app:np_wrapSelectorWheel="false" />
 
-            <LinearLayout
-                android:id="@+id/contDystolicBP"
+                        </RelativeLayout>
+                    </FrameLayout>
+                </LinearLayout>
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/x10dp"
-                android:background="@drawable/rounded_box_light_blue"
-                android:orientation="vertical"
-                android:padding="@dimen/x1dp">
 
-                <FrameLayout
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:id="@+id/contWeight"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_box_light_grey"
+                    android:layout_margin="@dimen/x10dp"
+                    android:background="@drawable/rounded_box_filled_base_red"
+                    android:orientation="vertical"
+                    android:padding="@dimen/x1dp">
 
-                    android:padding="@dimen/x5dp">
-
-                    <RelativeLayout
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_box_light_grey"
                         android:padding="@dimen/x5dp">
 
-
-                        <edu.aku.ehs.widget.AnyTextView
-                            android:id="@+id/txtBPDiastolicDes"
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/x5dp"
-                            android:layout_marginLeft="@dimen/x5dp"
-                            android:layout_marginTop="@dimen/x5dp"
-                            android:text="Diastolic Blood Pressure"
-                            android:textColor="@color/txtBlue"
-                            android:textSize="@dimen/s14"
-                            app:typeface="@string/font_bold" />
+                            android:padding="@dimen/x5dp">
 
-                        <com.shawnlin.numberpicker.NumberPicker
-                            android:id="@+id/pickerDiastolic"
+
+                            <edu.aku.ehs.widget.AnyTextView
+                                android:id="@+id/txtWaistDesc"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/x5dp"
+                                android:layout_marginTop="@dimen/x5dp"
+                                android:text="Waist (cm)"
+                                android:textColor="@color/txtBlue"
+                                android:textSize="@dimen/s14"
+                                app:typeface="@string/font_medium" />
+
+                            <com.shawnlin.numberpicker.NumberPicker
+                                android:id="@+id/pickerWaist"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/txtWaistDesc"
+                                android:layout_centerInParent="true"
+                                app:np_dividerColor="@color/base_gray"
+                                app:np_dividerThickness="@dimen/x1dp"
+                                app:np_formatter=""
+                                app:np_max="200"
+                                app:np_min="10"
+                                app:np_orientation="horizontal"
+                                app:np_selectedTextColor="@color/base_reddish_light"
+                                app:np_selectedTextSize="@dimen/s17"
+                                app:np_textColor="@color/base_reddish_light"
+                                app:np_textSize="@dimen/s14"
+                                app:np_typeface="@string/font_regular"
+                                app:np_value="60"
+                                app:np_wheelItemCount="15"
+                                app:np_width="180dp"
+                                app:np_wrapSelectorWheel="false" />
+
+                        </RelativeLayout>
+                    </FrameLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/contSystolicBP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/x10dp"
+                    android:background="@drawable/rounded_box_light_blue"
+                    android:orientation="vertical"
+                    android:padding="@dimen/x1dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_box_light_grey"
+
+                        android:padding="@dimen/x5dp">
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/txtBPDiastolicDes"
-                            android:layout_centerInParent="true"
-                            app:np_dividerColor="@color/base_gray"
-                            app:np_formatter=""
-                            app:np_max="200"
-                            app:np_min="0"
-                            app:np_dividerThickness="@dimen/x1dp"
-                            app:np_orientation="horizontal"
-                            app:np_selectedTextColor="@color/base_blue_light"
-                            app:np_selectedTextSize="@dimen/s17"
-                            app:np_textColor="@color/base_blue_light"
-                            app:np_textSize="@dimen/s13"
-                            app:np_typeface="@string/font_regular"
-                            app:np_value="0"
-                            app:np_wheelItemCount="10"
-                            app:np_width="180dp"
-                            app:np_wrapSelectorWheel="false" />
+                            android:padding="@dimen/x5dp">
 
-                    </RelativeLayout>
-                </FrameLayout>
+                            <edu.aku.ehs.widget.AnyTextView
+                                android:id="@+id/txtBPsystolicDes"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/x5dp"
+                                android:layout_marginLeft="@dimen/x5dp"
+                                android:layout_marginTop="@dimen/x5dp"
+                                android:text="Systolic Blood Pressure"
+                                android:textColor="@color/txtBlue"
+                                android:textSize="@dimen/s14"
+                                app:typeface="@string/font_medium" />
+
+                            <com.shawnlin.numberpicker.NumberPicker
+                                android:id="@+id/pickerSystolic"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/txtBPsystolicDes"
+                                android:layout_centerInParent="true"
+                                app:np_dividerColor="@color/base_gray"
+                                app:np_dividerThickness="@dimen/x1dp"
+                                app:np_formatter=""
+                                app:np_max="200"
+
+                                app:np_min="0"
+                                app:np_orientation="horizontal"
+                                app:np_selectedTextColor="@color/base_blue_light"
+                                app:np_selectedTextSize="@dimen/s17"
+                                app:np_textColor="@color/base_blue_light"
+                                app:np_textSize="@dimen/s13"
+                                app:np_typeface="@string/font_regular"
+                                app:np_value="100"
+                                app:np_wheelItemCount="15"
+                                app:np_width="180dp"
+                                app:np_wrapSelectorWheel="false" />
+
+                        </RelativeLayout>
+                    </FrameLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/contDystolicBP"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/x10dp"
+                    android:background="@drawable/rounded_box_light_blue"
+                    android:orientation="vertical"
+                    android:padding="@dimen/x1dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_box_light_grey"
+
+                        android:padding="@dimen/x5dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/x5dp">
+
+
+                            <edu.aku.ehs.widget.AnyTextView
+                                android:id="@+id/txtBPDiastolicDes"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/x5dp"
+                                android:layout_marginLeft="@dimen/x5dp"
+                                android:layout_marginTop="@dimen/x5dp"
+                                android:text="Diastolic Blood Pressure"
+                                android:textColor="@color/txtBlue"
+                                android:textSize="@dimen/s14"
+                                app:typeface="@string/font_medium" />
+
+                            <com.shawnlin.numberpicker.NumberPicker
+                                android:id="@+id/pickerDiastolic"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/txtBPDiastolicDes"
+                                android:layout_centerInParent="true"
+                                app:np_dividerColor="@color/base_gray"
+                                app:np_dividerThickness="@dimen/x1dp"
+                                app:np_formatter=""
+                                app:np_max="200"
+                                app:np_min="0"
+                                app:np_orientation="horizontal"
+                                app:np_selectedTextColor="@color/base_blue_light"
+                                app:np_selectedTextSize="@dimen/s17"
+                                app:np_textColor="@color/base_blue_light"
+                                app:np_textSize="@dimen/s13"
+                                app:np_typeface="@string/font_regular"
+                                app:np_value="100"
+                                app:np_wheelItemCount="15"
+                                app:np_width="180dp"
+                                app:np_wrapSelectorWheel="false" />
+
+                        </RelativeLayout>
+                    </FrameLayout>
+                </LinearLayout>
+
+
             </LinearLayout>
 
+        </ScrollView>
 
 
+        <Button
+            android:id="@+id/btnDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/x8dp"
+            android:background="@drawable/img_button_clr"
+            android:text="Done"
+            android:textColor="@color/c_white"
+            android:textSize="@dimen/s16"
+            android:visibility="visible" />
 
-
-
-        </LinearLayout>
 
     </RelativeLayout>
 
-</ScrollView>
+</RelativeLayout>
 
