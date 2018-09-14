@@ -87,7 +87,7 @@ public class EmployeeAssessmentListFragment extends BaseFragment implements OnIt
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_general_recyler_view;
+        return R.layout.fragment_general_recyler_view_with_header;
     }
 
     @Override

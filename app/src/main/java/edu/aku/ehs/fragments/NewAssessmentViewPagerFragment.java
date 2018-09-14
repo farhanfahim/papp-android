@@ -24,6 +24,7 @@ import edu.aku.ehs.R;
 import edu.aku.ehs.adapters.EmployeeAssessmentPagerAdapter;
 import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
+import edu.aku.ehs.models.SessionDetailModel;
 import edu.aku.ehs.widget.AnyEditTextView;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.CustomViewPager;
@@ -65,6 +66,8 @@ public class NewAssessmentViewPagerFragment extends BaseFragment implements OnIt
     @BindView(R.id.contParent)
     RelativeLayout contParent;
 
+    SessionDetailModel sessionDetailModel;
+
 
     private EmployeeAssessmentPagerAdapter adapter;
 
@@ -94,6 +97,7 @@ public class NewAssessmentViewPagerFragment extends BaseFragment implements OnIt
         titleBar.showHome(getBaseActivity());
         titleBar.setTitle("Employee Assessment");
         titleBar.showBackButton(getBaseActivity());
+        titleBar.setEmployeeHeader(sessionDetailModel, getContext());
     }
 
     @Override

@@ -77,6 +77,8 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
     Button btnGetLabs;
     @BindView(R.id.contSelection)
     LinearLayout contSelection;
+    @BindView(R.id.txtSessionName)
+    AnyTextView txtSessionName;
 
     private ArrayList<SessionDetailModel> arrData;
     private SessionDetailAdapter adapter;
@@ -103,7 +105,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_general_recyler_view;
+        return R.layout.fragment_general_recyler_view_with_option_buttons;
     }
 
     @Override
@@ -174,6 +176,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
         contSearch.setVisibility(View.VISIBLE);
         imgBanner.setVisibility(View.VISIBLE);
         contOptionButtons.setVisibility(View.VISIBLE);
+
         bindView();
 
         bindData();
@@ -181,6 +184,8 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
 
     private void bindData() {
         arrData.clear();
+        txtSessionName.setVisibility(View.INVISIBLE);
+
         SessionDetailModel sessionDetailModel;
 
         for (int i = 0; i < 8; i++) {
@@ -243,12 +248,11 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
                 break;
 
             case R.id.contListItem:
-
                 if (isSelectingEmployeesForSchedule) {
                     arrData.get(position).setSelected(!arrData.get(position).isSelected());
                     adapter.notifyItemChanged(position);
                 } else {
-                    getBaseActivity().addDockableFragment(EmployeeAssessmentListFragment.newInstance(), false);
+                    getBaseActivity().addDockableFragment(EmployeeAssessmentDashboardFragment.newInstance(), false);
                 }
 
                 break;
@@ -303,13 +307,15 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnAddEmail:
-                getBaseActivity().addDockableFragment(EmailFragment.newInstance(), false);
+                getBaseActivity().addDockableFragment(EmailFragment.newInstance(sessionModel), false);
 
                 break;
             case R.id.btnAddSchedule:
                 fab.setVisibility(View.VISIBLE);
                 isSelectingEmployeesForSchedule = true;
                 getBaseActivity().getTitleBar().setTitle("Select Employees");
+                txtSessionName.setVisibility(View.VISIBLE);
+                txtSessionName.setText(sessionModel.getSessionName());
                 contOptionButtons.setVisibility(View.GONE);
                 bindOnlyEnrolledData();
                 contSelection.setVisibility(View.VISIBLE);
@@ -317,16 +323,15 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
 
                 break;
             case R.id.btnAddEmployees:
-                getBaseActivity().addDockableFragment(SearchFragment.newInstance(SelectEmployeeActionType.ADDEMPLOYEE), false);
+                getBaseActivity().addDockableFragment(SearchFragment.newInstance(SelectEmployeeActionType.ADDEMPLOYEE, sessionModel), false);
                 break;
 
             case R.id.btnGetLabs:
-                getBaseActivity().addDockableFragment(SearchFragment.newInstance(SelectEmployeeActionType.ADDEMPLOYEE), false);
+                UIHelper.showToast(getContext(), "Get Lab Webservice will be available in Beta version");
                 break;
 
 
             case R.id.fab:
-
                 UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Schedule", "Do you want to Add Schedule?", "Add", "Cancel",
                         () -> {
                             genericDialogFragment.dismiss();
@@ -334,8 +339,6 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
                         }, () -> {
                             genericDialogFragment.dismiss();
                         }, false, true);
-
-
                 break;
         }
     }

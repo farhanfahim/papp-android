@@ -33,6 +33,7 @@ import edu.aku.ehs.enums.SelectEmployeeActionType;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.fragments.abstracts.GenericDialogFragment;
 import edu.aku.ehs.models.EmployeeModel;
+import edu.aku.ehs.models.SessionModel;
 import edu.aku.ehs.widget.AnyEditTextView;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
@@ -72,6 +73,8 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
     Button btnAddEmployees;
     @BindView(R.id.contSelection)
     LinearLayout contSelection;
+    @BindView(R.id.txtSessionName)
+    AnyTextView txtSessionName;
 
     private ArrayList<EmployeeModel> arrData;
     private SelectEmployeesAdapter adapter;
@@ -80,14 +83,16 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
 
     GenericDialogFragment genericDialogFragment = GenericDialogFragment.newInstance();
     private SelectEmployeeActionType selectEmployeeActionType;
+    SessionModel sessionModel;
 
 
-    public static SelectEmployeeFragment newInstance(String searchKeyword, SelectEmployeeActionType selectEmployeeActionType) {
+    public static SelectEmployeeFragment newInstance(String searchKeyword, SelectEmployeeActionType selectEmployeeActionType, SessionModel sessionModel) {
         Bundle args = new Bundle();
 
         SelectEmployeeFragment fragment = new SelectEmployeeFragment();
         fragment.searchKeyword = searchKeyword;
         fragment.selectEmployeeActionType = selectEmployeeActionType;
+        fragment.sessionModel = sessionModel;
         fragment.setArguments(args);
         return fragment;
     }
@@ -99,7 +104,7 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_general_recyler_view;
+        return R.layout.fragment_general_recyler_view_with_option_buttons;
     }
 
     @Override
@@ -167,6 +172,8 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
         contSearch.setVisibility(View.VISIBLE);
         imgBanner.setVisibility(View.VISIBLE);
         contSelection.setVisibility(View.VISIBLE);
+        txtSessionName.setVisibility(View.VISIBLE);
+        txtSessionName.setText(sessionModel.getSessionName());
         fab.setVisibility(View.VISIBLE);
         fab.setImageResource(R.drawable.ic_done_white_18dp);
 
@@ -223,8 +230,16 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
     }
 
 
-    @OnClick(R.id.contSelection)
-    public void onViewClicked() {
-        cbSelectAll.performClick();
+    @OnClick({R.id.contSelection, R.id.fab})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.contSelection:
+                cbSelectAll.performClick();
+                break;
+            case R.id.fab:
+                getBaseActivity().popBackStack();
+                getBaseActivity().popBackStack();
+                break;
+        }
     }
 }

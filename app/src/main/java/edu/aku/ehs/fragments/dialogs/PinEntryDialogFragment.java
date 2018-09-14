@@ -105,6 +105,17 @@ public class PinEntryDialogFragment extends DialogFragment {
             }
         });
 
+
+        txtPinCode.setOnPinEnteredListener(str -> {
+            if (txtPinCode.getText().toString().length() == 4) {
+                onNextButtonClick.onClick(view);
+                KeyboardHelper.hideSoftKeyboard(getContext(), txtPinCode);
+            } else {
+                txtWrongPinNumber.setVisibility(View.VISIBLE);
+                txtPinCode.setText("");
+            }
+        });
+
         KeyboardHelper.showSoftKeyboard(getContext(), txtPinCode);
 //        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 //        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -114,7 +125,7 @@ public class PinEntryDialogFragment extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-     }
+    }
 
     private void bindData() {
         txtTitle.setText(getTitle());

@@ -30,6 +30,7 @@ import edu.aku.ehs.enums.SelectEmployeeActionType;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.fragments.abstracts.GenericDialogFragment;
 import edu.aku.ehs.models.DepartmentModel;
+import edu.aku.ehs.models.SessionModel;
 import edu.aku.ehs.widget.AnyEditTextView;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
@@ -65,6 +66,8 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
     RecyclerView recylerView;
     @BindView(R.id.contParent)
     RelativeLayout contParent;
+    @BindView(R.id.txtSessionName)
+    AnyTextView txtSessionName;
 
 
     private ArrayList<DepartmentModel> arrData;
@@ -72,12 +75,14 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
     private SelectEmployeeActionType selectEmployeeActionType;
 
     GenericDialogFragment genericDialogFragment = GenericDialogFragment.newInstance();
+    SessionModel sessionModel;
 
 
-    public static SearchFragment newInstance(SelectEmployeeActionType selectEmployeeActionType) {
+    public static SearchFragment newInstance(SelectEmployeeActionType selectEmployeeActionType, SessionModel sessionModel) {
         Bundle args = new Bundle();
         SearchFragment fragment = new SearchFragment();
         fragment.selectEmployeeActionType = selectEmployeeActionType;
+        fragment.sessionModel = sessionModel;
         fragment.setArguments(args);
         return fragment;
     }
@@ -138,10 +143,9 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
         super.onViewCreated(view, savedInstanceState);
         contSearch.setVisibility(View.VISIBLE);
         imgBanner.setVisibility(View.VISIBLE);
-
+        txtSessionName.setText(sessionModel.getSessionName());
 
         bindView();
-
         bindData();
     }
 
@@ -188,13 +192,13 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
 
         switch (view.getId()) {
             case R.id.contListItem:
-                getBaseActivity().addDockableFragment(SelectEmployeeFragment.newInstance(model.getDeptName(), selectEmployeeActionType), false);
+                getBaseActivity().addDockableFragment(SelectEmployeeFragment.newInstance(model.getDeptName(), selectEmployeeActionType, sessionModel), false);
                 break;
         }
     }
 
     @OnClick(R.id.imgSearchEmployee)
     public void onViewClicked() {
-        getBaseActivity().addDockableFragment(SelectEmployeeFragment.newInstance(edtSearchEmployee.getStringTrimmed(), selectEmployeeActionType), false);
+        getBaseActivity().addDockableFragment(SelectEmployeeFragment.newInstance(edtSearchEmployee.getStringTrimmed(), selectEmployeeActionType, sessionModel), false);
     }
 }

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -33,6 +34,7 @@ import edu.aku.ehs.models.SessionModel;
 import edu.aku.ehs.widget.AnyEditTextView;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
+import info.hoang8f.widget.FButton;
 
 /**
  * Created by hamza.ahmed on 7/23/2018.
@@ -41,10 +43,24 @@ import edu.aku.ehs.widget.TitleBar;
 public class SessionListFragment extends BaseFragment implements OnItemClickListener {
 
     Unbinder unbinder;
-    @BindView(R.id.imgBanner)
-    ImageView imgBanner;
     @BindView(R.id.empty_view)
     AnyTextView emptyView;
+    @BindView(R.id.imgBanner)
+    ImageView imgBanner;
+    @BindView(R.id.btnGetLabs)
+    FButton btnGetLabs;
+    @BindView(R.id.btnAddEmail)
+    FButton btnAddEmail;
+    @BindView(R.id.btnAddSchedule)
+    FButton btnAddSchedule;
+    @BindView(R.id.btnAddEmployees)
+    FButton btnAddEmployees;
+    @BindView(R.id.contOptionButtons)
+    LinearLayout contOptionButtons;
+    @BindView(R.id.cbSelectAll)
+    CheckBox cbSelectAll;
+    @BindView(R.id.contSelection)
+    LinearLayout contSelection;
     @BindView(R.id.imgSearch)
     ImageView imgSearch;
     @BindView(R.id.edtSearchBar)
@@ -57,8 +73,6 @@ public class SessionListFragment extends BaseFragment implements OnItemClickList
     FloatingActionButton fab;
     @BindView(R.id.contParent)
     RelativeLayout contParent;
-    @BindView(R.id.contOptionButtons)
-    LinearLayout contOptionButtons;
 
 
     private ArrayList<SessionModel> arrData;
@@ -81,7 +95,7 @@ public class SessionListFragment extends BaseFragment implements OnItemClickList
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_general_recyler_view;
+        return R.layout.fragment_general_recyler_view_with_header;
     }
 
     @Override
@@ -162,7 +176,6 @@ public class SessionListFragment extends BaseFragment implements OnItemClickList
         super.onDestroyView();
         unbinder.unbind();
     }
-
 
     @Override
     public void onItemClick(int position, Object object, View view) {

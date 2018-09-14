@@ -3,6 +3,7 @@ package edu.aku.ehs.adapters.recyleradapters;
 import android.graphics.drawable.TransitionDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -111,6 +112,15 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
         holder.btnSchedule.setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
         holder.btnDelete.setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
         holder.contListItem.setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
+//        holder.stepView.setOnClickListener(view -> holder.contListItem.performClick());
+        holder.stepView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    return holder.contListItem.performClick();
+                } else return false;
+            }
+        });
     }
 
 

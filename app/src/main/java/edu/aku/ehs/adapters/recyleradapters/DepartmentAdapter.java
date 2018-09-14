@@ -1,6 +1,5 @@
 package edu.aku.ehs.adapters.recyleradapters;
 
-import android.graphics.drawable.TransitionDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +16,8 @@ import butterknife.ButterKnife;
 import edu.aku.ehs.R;
 import edu.aku.ehs.activities.BaseActivity;
 import edu.aku.ehs.callbacks.OnItemClickListener;
-import edu.aku.ehs.helperclasses.Helper;
-import edu.aku.ehs.helperclasses.ui.helper.AnimationHelper;
 import edu.aku.ehs.models.DepartmentModel;
 import edu.aku.ehs.widget.AnyTextView;
-
-import static android.view.View.VISIBLE;
 
 /**
  */
@@ -30,6 +25,7 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Vi
 
 
     private final OnItemClickListener onItemClick;
+
 
 
     private BaseActivity activity;
@@ -74,8 +70,6 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Vi
         AnyTextView txtDepartmentName;
         @BindView(R.id.txtDepartmentID)
         AnyTextView txtDepartmentID;
-        @BindView(R.id.txtNoOfEMployees)
-        AnyTextView txtNoOfEMployees;
         @BindView(R.id.contListItem)
         RoundKornerLinearLayout contListItem;
         @BindView(R.id.imgSelected)
@@ -84,6 +78,7 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Vi
         RoundKornerRelativeLayout contParent;
         @BindView(R.id.imgHighlight)
         ImageView imgHighlight;
+
 
         ViewHolder(View view) {
             super(view);

@@ -94,7 +94,7 @@ public class SelectEmployeesAdapter extends RecyclerView.Adapter<SelectEmployees
         AnyTextView txtEmployeeID;
         @BindView(R.id.txtEmailAddress)
         AnyTextView txtEmailAddress;
-        @BindView(R.id.txtDeptID)
+        @BindView(R.id.txtDeptName)
         AnyTextView txtDeptID;
         @BindView(R.id.contListItem)
         RoundKornerLinearLayout contListItem;

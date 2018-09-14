@@ -4,13 +4,10 @@
     android:id="@+id/contListItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/x8dp"
     android:background="#fff"
-    android:elevation="@dimen/x3dp"
     android:orientation="vertical"
     android:padding="@dimen/x5dp"
-    app:corner_radius="@dimen/x5dp"
-    >
+    app:corner_radius="@dimen/x5dp">
 
 
     <LinearLayout
@@ -57,7 +54,7 @@
         android:background="#eee"
         android:elevation="@dimen/x1dp"
         android:padding="@dimen/x5dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:corner_radius="@dimen/x5dp">
 
 

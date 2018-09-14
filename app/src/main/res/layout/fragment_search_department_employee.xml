@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/c_white"
+    android:background="@drawable/background_light"
     android:orientation="vertical">
 
     <!--android:background="@drawable/test2"-->
@@ -29,10 +29,13 @@
         <ImageView
             android:id="@+id/imgBanner"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/x180dp"
+            android:layout_height="@dimen/x150dp"
             android:scaleType="centerCrop"
             android:src="@drawable/img_banner"
             android:visibility="visible" />
+
+
+
 
 
         <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
@@ -40,10 +43,24 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x40dp"
             android:layout_marginRight="@dimen/x40dp"
-            android:layout_marginTop="@dimen/x50dp"
+            android:layout_marginTop="@dimen/x10dp"
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="visible">
+
+            <edu.aku.ehs.widget.AnyTextView
+                android:id="@+id/txtSessionName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/x10dp"
+                android:padding="@dimen/x3dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="Session Name: IT Session - 1"
+                android:textColor="@color/c_white"
+                android:textSize="@dimen/s14"
+                android:visibility="visible" />
 
             <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
                 android:id="@+id/contSearchByName"
@@ -136,7 +153,7 @@
             android:layout_below="@+id/imgBanner"
             android:layout_marginLeft="@dimen/x40dp"
             android:layout_marginRight="@dimen/x40dp"
-            android:layout_marginTop="@dimen/x165dp"
+            android:layout_marginTop="@dimen/x145dp"
             android:background="@color/c_white"
             android:elevation="@dimen/x10dp"
             android:visibility="visible"
@@ -144,8 +161,8 @@
 
             <ImageView
                 android:id="@+id/imgSearch"
-                android:layout_width="@dimen/x25dp"
-                android:layout_height="@dimen/x25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/x4dp"
                 android:padding="@dimen/x5dp"

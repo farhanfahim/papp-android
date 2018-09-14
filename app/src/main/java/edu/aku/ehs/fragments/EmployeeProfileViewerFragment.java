@@ -8,10 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import com.github.clans.fab.FloatingActionButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +21,7 @@ import butterknife.Unbinder;
 import edu.aku.ehs.R;
 import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
+import edu.aku.ehs.models.SessionDetailModel;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
 
@@ -74,9 +76,10 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
     @BindView(R.id.txtUnitHEPC)
     AnyTextView txtUnitHEPC;
     @BindView(R.id.btnDone)
-    Button btnDone;
+    FloatingActionButton btnDone;
     @BindView(R.id.contParent)
     RelativeLayout contParent;
+    SessionDetailModel sessionDetailModel;
 
 
     public static EmployeeProfileViewerFragment newInstance() {
@@ -105,6 +108,7 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
         titleBar.showHome(getBaseActivity());
         titleBar.setTitle("Employee Profile Viewer");
         titleBar.showBackButton(getBaseActivity());
+        titleBar.setEmployeeHeader(sessionDetailModel, getContext());
     }
 
     @Override
@@ -154,8 +158,6 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
 
     @OnClick(R.id.btnDone)
     public void onViewClicked() {
-        popBackStack();
-        popBackStack();
-        popBackStack();
+        getBaseActivity().popStackTill(EmployeeAssessmentDashboardFragment.class.getSimpleName());
     }
 }

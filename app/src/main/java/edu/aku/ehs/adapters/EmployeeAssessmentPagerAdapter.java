@@ -6,14 +6,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
-import edu.aku.ehs.fragments.FamilyHistoryAssessmentFragment;
+import edu.aku.ehs.fragments.OtherHistoryAssessmentFragment;
 import edu.aku.ehs.fragments.MedicalHistoryAssessmentFragment;
-import edu.aku.ehs.fragments.PsychosocialHistoryAssessmentFragment;
-import edu.aku.ehs.fragments.SmokingBehaviorAssessmentFragment;
 
 
 public class EmployeeAssessmentPagerAdapter extends FragmentStatePagerAdapter {
-
 
 
     public EmployeeAssessmentPagerAdapter(FragmentManager fm) {
@@ -39,11 +36,7 @@ public class EmployeeAssessmentPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return MedicalHistoryAssessmentFragment.newInstance();
             case 1:
-                return FamilyHistoryAssessmentFragment.newInstance();
-            case 2:
-                return PsychosocialHistoryAssessmentFragment.newInstance();
-            case 3:
-                return SmokingBehaviorAssessmentFragment.newInstance();
+                return OtherHistoryAssessmentFragment.newInstance();
             default:
                 return MedicalHistoryAssessmentFragment.newInstance();
         }
@@ -53,7 +46,7 @@ public class EmployeeAssessmentPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return 2;
     }
 
 }

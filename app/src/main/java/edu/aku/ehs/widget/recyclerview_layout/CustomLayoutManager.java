@@ -8,7 +8,7 @@ public class CustomLayoutManager extends LinearLayoutManager {
 
     // orientation should be LinearLayoutManager.VERTICAL or HORIZONTAL
     public CustomLayoutManager(Context context, int orientation, boolean isScrollEnabled) {
-        super(context, LinearLayoutManager.VERTICAL, false);
+        super(context, orientation, false);
         this.isScrollEnabled = isScrollEnabled;
     }
 

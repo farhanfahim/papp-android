@@ -7,12 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
-import com.shawnlin.numberpicker.NumberPicker;
 
 import java.text.DecimalFormat;
 
@@ -23,8 +20,11 @@ import butterknife.Unbinder;
 import edu.aku.ehs.R;
 import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
+import edu.aku.ehs.models.SessionDetailModel;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
+import edu.aku.ehs.widget.custom_seekbar.OnRangeChangedListener;
+import edu.aku.ehs.widget.custom_seekbar.RangeSeekBar;
 
 public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment implements OnItemClickListener {
 
@@ -38,40 +38,41 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
     AnyTextView txtBMI;
     @BindView(R.id.contBMI)
     LinearLayout contBMI;
-    @BindView(R.id.txtHeightDesc)
-    AnyTextView txtHeightDesc;
-    @BindView(R.id.pickerHeight)
-    NumberPicker pickerHeight;
+    @BindView(R.id.txtHeight)
+    AnyTextView txtHeight;
+    @BindView(R.id.sbHeight)
+    RangeSeekBar sbHeight;
     @BindView(R.id.contHeight)
     LinearLayout contHeight;
-    @BindView(R.id.txtWeightDesc)
-    AnyTextView txtWeightDesc;
-    @BindView(R.id.pickerWeight)
-    NumberPicker pickerWeight;
-    @BindView(R.id.contWaist)
-    LinearLayout contWaist;
-    @BindView(R.id.txtWaistDesc)
-    AnyTextView txtWaistDesc;
-    @BindView(R.id.pickerWaist)
-    NumberPicker pickerWaist;
+    @BindView(R.id.txtWeight)
+    AnyTextView txtWeight;
+    @BindView(R.id.sbWeight)
+    RangeSeekBar sbWeight;
     @BindView(R.id.contWeight)
     LinearLayout contWeight;
-    @BindView(R.id.txtBPsystolicDes)
-    AnyTextView txtBPsystolicDes;
-    @BindView(R.id.pickerSystolic)
-    NumberPicker pickerSystolic;
+    @BindView(R.id.txtWaist)
+    AnyTextView txtWaist;
+    @BindView(R.id.sbWaist)
+    RangeSeekBar sbWaist;
+    @BindView(R.id.contWaist)
+    LinearLayout contWaist;
+    @BindView(R.id.txtBPSystolic)
+    AnyTextView txtBPSystolic;
+    @BindView(R.id.sbSystolicBP)
+    RangeSeekBar sbSystolicBP;
     @BindView(R.id.contSystolicBP)
     LinearLayout contSystolicBP;
-    @BindView(R.id.txtBPDiastolicDes)
-    AnyTextView txtBPDiastolicDes;
-    @BindView(R.id.pickerDiastolic)
-    NumberPicker pickerDiastolic;
-    @BindView(R.id.contDystolicBP)
-    LinearLayout contDystolicBP;
-    @BindView(R.id.btnDone)
-    Button btnDone;
+    @BindView(R.id.txtBPDiastolic)
+    AnyTextView txtBPDiastolic;
+    @BindView(R.id.sbDiastolicBP)
+    RangeSeekBar sbDiastolicBP;
+    @BindView(R.id.contDiastolicBP)
+    LinearLayout contDiastolicBP;
     @BindView(R.id.contParent)
     RelativeLayout contParent;
+    int height = 60;
+    int weight = 0;
+    SessionDetailModel sessionDetailModel;
 
 
     public static EmployeeAnthropometricMeasurmentsFragment newInstance() {
@@ -90,7 +91,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_employee_anthropometric_measurements;
+        return R.layout.fragment_employee_anthropometric_measurements_v2;
     }
 
     @Override
@@ -100,13 +101,100 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
         titleBar.showHome(getBaseActivity());
         titleBar.setTitle("Employee Anthropometric Measurements");
         titleBar.showBackButton(getBaseActivity());
+        titleBar.setEmployeeHeader(sessionDetailModel, getContext());
     }
 
     @Override
     public void setListeners() {
 
-        pickerWeight.setOnValueChangedListener((picker, oldVal, newVal) -> setBMI());
-        pickerHeight.setOnValueChangedListener((picker, oldVal, newVal) -> setBMI());
+        sbHeight.setOnRangeChangedListener(new OnRangeChangedListener() {
+            @Override
+            public void onRangeChanged(RangeSeekBar view, float leftValue, float rightValue, boolean isFromUser) {
+                txtHeight.setText(String.valueOf(Math.round(leftValue)));
+                height = Math.round(leftValue);
+                setBMI();
+            }
+
+            @Override
+            public void onStartTrackingTouch(RangeSeekBar view, boolean isLeft) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(RangeSeekBar view, boolean isLeft) {
+
+            }
+        });
+
+        sbWeight.setOnRangeChangedListener(new OnRangeChangedListener() {
+            @Override
+            public void onRangeChanged(RangeSeekBar view, float leftValue, float rightValue, boolean isFromUser) {
+                txtWeight.setText(String.valueOf(Math.round(leftValue)));
+                weight = Math.round(leftValue);
+                setBMI();
+            }
+
+            @Override
+            public void onStartTrackingTouch(RangeSeekBar view, boolean isLeft) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(RangeSeekBar view, boolean isLeft) {
+
+            }
+        });
+
+        sbWaist.setOnRangeChangedListener(new OnRangeChangedListener() {
+            @Override
+            public void onRangeChanged(RangeSeekBar view, float leftValue, float rightValue, boolean isFromUser) {
+                txtWaist.setText(String.valueOf(Math.round(leftValue)));
+            }
+
+            @Override
+            public void onStartTrackingTouch(RangeSeekBar view, boolean isLeft) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(RangeSeekBar view, boolean isLeft) {
+
+            }
+        });
+
+        sbSystolicBP.setOnRangeChangedListener(new OnRangeChangedListener() {
+            @Override
+            public void onRangeChanged(RangeSeekBar view, float leftValue, float rightValue, boolean isFromUser) {
+                txtBPSystolic.setText(String.valueOf(Math.round(leftValue)));
+            }
+
+            @Override
+            public void onStartTrackingTouch(RangeSeekBar view, boolean isLeft) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(RangeSeekBar view, boolean isLeft) {
+
+            }
+        });
+
+        sbDiastolicBP.setOnRangeChangedListener(new OnRangeChangedListener() {
+            @Override
+            public void onRangeChanged(RangeSeekBar view, float leftValue, float rightValue, boolean isFromUser) {
+                txtBPDiastolic.setText(String.valueOf(Math.round(leftValue)));
+            }
+
+            @Override
+            public void onStartTrackingTouch(RangeSeekBar view, boolean isLeft) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(RangeSeekBar view, boolean isLeft) {
+
+            }
+        });
     }
 
     @Override
@@ -142,12 +230,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
     }
 
     private void setBMI() {
-        double heightInMeters = (pickerHeight.getValue() / 100f);
-        int weight = pickerWeight.getValue();
-
-
-//        double round = Math.sqrt((double) pickerHeight.getValue() * pickerWeight.getValue() / 3600);
-
+        double heightInMeters = (height / 100f);
 
         double result = (weight / (heightInMeters * heightInMeters));
         txtBMI.setText(new DecimalFormat("##.#").format(result));
@@ -165,7 +248,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
 
     }
 
-    @OnClick(R.id.btnDone)
+    @OnClick(R.id.fab)
     public void onViewClicked() {
         getBaseActivity().addDockableFragment(EmployeeProfileViewerFragment.newInstance(), false);
     }

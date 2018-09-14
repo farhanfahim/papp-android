@@ -43,9 +43,8 @@
         android:id="@+id/recylerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingTop="@dimen/x5dp"
-        android:background="#efefef"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:background="#fff" />
 
 
     <RelativeLayout
@@ -54,26 +53,34 @@
         android:padding="@dimen/x15dp">
 
 
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/x40dp"
-            android:layout_height="@dimen/x40dp"
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/shape_circle"
-            android:backgroundTint="@color/base_amber"
-            android:padding="@dimen/x5dp"
-            android:src="@drawable/ic_arrow_back" />
+            android:layout_marginBottom="@dimen/x8dp"
+            android:layout_marginRight="@dimen/x8dp"
+            android:src="@drawable/ic_arrow_back"
+            android:visibility="visible"
+            app:fab_colorNormal="@color/base_amber"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_colorRipple="@color/colorPrimary"
+            app:fab_size="normal" />
 
 
-        <ImageView
-            android:id="@+id/imgNext"
-            android:layout_width="@dimen/x40dp"
-            android:layout_height="@dimen/x40dp"
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:background="@drawable/shape_circle"
-            android:backgroundTint="@color/base_amber"
-            android:padding="@dimen/x5dp"
-            android:src="@drawable/ic_arrow_next" />
+            android:layout_marginBottom="@dimen/x8dp"
+            android:layout_marginRight="@dimen/x8dp"
+            android:src="@drawable/ic_arrow_next"
+            android:visibility="visible"
+            app:fab_colorNormal="@color/base_amber"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_colorRipple="@color/colorPrimary"
+            app:fab_size="normal" />
 
 
         <Button
@@ -83,9 +90,9 @@
             android:layout_centerInParent="true"
             android:background="@drawable/img_button_clr"
             android:text="Done"
-            android:visibility="gone"
             android:textColor="@color/c_white"
-            android:textSize="@dimen/s16" />
+            android:textSize="@dimen/s16"
+            android:visibility="gone" />
 
 
     </RelativeLayout>

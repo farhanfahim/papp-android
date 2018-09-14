@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.util.Pair;
@@ -20,29 +19,26 @@ import android.widget.TextView;
 
 import com.gdacciaro.iOSDialog.iOSDialogBuilder;
 
+import java.io.File;
+
+import edu.aku.ehs.BaseApplication;
 import edu.aku.ehs.R;
 import edu.aku.ehs.activities.BaseActivity;
 import edu.aku.ehs.activities.MainActivity;
 import edu.aku.ehs.callbacks.OnNewPacketReceivedListener;
 import edu.aku.ehs.constatnts.AppConstants;
 import edu.aku.ehs.helperclasses.ui.helper.KeyboardHelper;
-import edu.aku.ehs.widget.TitleBar;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
-import edu.aku.ehs.BaseApplication;
-
-import java.io.File;
-
 import edu.aku.ehs.managers.DateManager;
 import edu.aku.ehs.managers.FileManager;
 import edu.aku.ehs.managers.SharedPreferenceManager;
 import edu.aku.ehs.models.receiving_model.UserDetailModel;
 import edu.aku.ehs.models.wrappers.WebResponse;
+import edu.aku.ehs.widget.TitleBar;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-
-import static edu.aku.ehs.constatnts.Events.ON_SELECTED_USER_UPDATE;
 
 
 /**
@@ -139,31 +135,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         return (BaseActivity) getActivity();
     }
 
-
-    public void emptyBackStack() {
-        FragmentManager fm = getFragmentManager();
-        if (fm == null) return;
-        for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
-            fm.popBackStack();
-        }
-    }
-
-    public void popBackStack() {
-        if (getFragmentManager() == null) {
-            return;
-        } else {
-            getFragmentManager().popBackStack();
-        }
-    }
-
-    public void popStackTill(int stackNumber) {
-        FragmentManager fm = getFragmentManager();
-        if (fm == null) return;
-        for (int i = stackNumber; i < fm.getBackStackEntryCount(); i++) {
-            fm.popBackStack();
-        }
-    }
-
     public abstract void setTitlebar(TitleBar titleBar);
 
 
@@ -250,7 +221,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
         }
     }
-
 
 
     public static void logoutClick(final BaseFragment baseFragment) {

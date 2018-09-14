@@ -25,6 +25,7 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHold
     private final OnItemClickListener onItemClick;
 
 
+
     private BaseActivity activity;
     private ArrayList<SessionModel> arrData;
 
@@ -51,14 +52,8 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHold
     }
 
     private void setListener(final ViewHolder holder, final SessionModel model) {
-        holder.contListItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemClick.onItemClick(holder.getAdapterPosition(), model, v);
-            }
-        });
+        holder.contListItem.setOnClickListener(v -> onItemClick.onItemClick(holder.getAdapterPosition(), model, v));
     }
-
 
 
     @Override
@@ -70,6 +65,8 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHold
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.txtSessionName)
         AnyTextView txtSessionName;
+        @BindView(R.id.txtStatus)
+        AnyTextView txtStatus;
         @BindView(R.id.txtStartDate)
         AnyTextView txtStartDate;
         @BindView(R.id.txtEndDate)

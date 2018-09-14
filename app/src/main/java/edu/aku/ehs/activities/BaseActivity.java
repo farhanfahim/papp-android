@@ -190,6 +190,24 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+
+    public void popStackTill(String tag) {
+        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        if (fm == null) {
+            return;
+        }
+
+        int backStackEntryCount = fm.getBackStackEntryCount();
+        for (int i = backStackEntryCount - 1; i > 0; i--) {
+            if (fm.getBackStackEntryAt(i).getName().equalsIgnoreCase(tag)) {
+                return;
+            } else {
+                fm.popBackStack();
+            }
+        }
+    }
+
+
     public void notifyToAll(int event, Object data) {
         BaseApplication.getPublishSubject().onNext(new Pair<>(event, data));
     }

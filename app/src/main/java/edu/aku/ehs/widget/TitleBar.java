@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.view.GravityCompat;
-import android.text.style.AbsoluteSizeSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,15 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
-import de.hdodenhof.circleimageview.CircleImageView;
 import edu.aku.ehs.R;
 import edu.aku.ehs.activities.BaseActivity;
 import edu.aku.ehs.activities.HomeActivity;
-import edu.aku.ehs.helperclasses.Spanny;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
-import edu.aku.ehs.libraries.imageloader.ImageLoaderHelper;
-import edu.aku.ehs.models.receiving_model.UserDetailModel;
+import edu.aku.ehs.models.SessionDetailModel;
 
 import static edu.aku.ehs.constatnts.Events.ON_HOME_PRESSED;
 
@@ -33,9 +28,6 @@ import static edu.aku.ehs.constatnts.Events.ON_HOME_PRESSED;
 public class TitleBar extends RelativeLayout {
 
     public TextView txtCircle;
-    public CircleImageView circleImageView;
-    AnyTextView txtUserName;
-    AnyTextView txtMRN;
     RelativeLayout contDropDown;
 
 
@@ -85,17 +77,14 @@ public class TitleBar extends RelativeLayout {
         btnRight1 = findViewById(R.id.btnRight1);
         txtClearAll = findViewById(R.id.txtClearAll);
         txtCircle = findViewById(R.id.txtCircle);
-        circleImageView = findViewById(R.id.circleImageView);
         containerTitlebar1 = findViewById(R.id.containerTitlebar1);
         contDropDown = findViewById(R.id.contDropDown);
-        txtMRN = findViewById(R.id.txtMRN);
-        txtUserName = findViewById(R.id.txtUserName);
+
 
     }
 
     public void resetViews() {
         imgTitle.setVisibility(GONE);
-        circleImageView.setVisibility(GONE);
         txtTitle.setVisibility(GONE);
         btnLeft1.setVisibility(GONE);
         btnRight3.setVisibility(GONE);
@@ -152,7 +141,6 @@ public class TitleBar extends RelativeLayout {
     }
 
 
-
     public void showTitleImage() {
         this.imgTitle.setVisibility(VISIBLE);
         this.txtTitle.setVisibility(GONE);
@@ -188,35 +176,16 @@ public class TitleBar extends RelativeLayout {
         this.btnRight1.setOnClickListener(onClickListener);
     }
 
-    public void setUserDisplay(final UserDetailModel currentUser, Context context) {
-        this.circleImageView.setVisibility(VISIBLE);
-        this.txtMRN.setVisibility(VISIBLE);
+    public void setEmployeeHeader(final SessionDetailModel employee, Context context) {
 
-        if (currentUser == null) {
-            contDropDown.setVisibility(GONE);
-            UIHelper.showToast(context, "No user selected.");
-            return;
-        }
 
-        if (currentUser.getProfileImage() == null || currentUser.getProfileImage().isEmpty()) {
-            circleImageView.setImageResource(R.drawable.male_icon);
-        } else {
-            ImageLoaderHelper.loadImageWithConstantHeadersWithoutAnimation(context, circleImageView, currentUser.getProfileImage());
-        }
+//        if (employee == null) {
+//            contDropDown.setVisibility(GONE);
+//            UIHelper.showToast(context, "No Employee selected.");
+//            return;
+//        }
 
-        txtUserName.setText(currentUser.getName());
-
-        txtMRN.setText(currentUser.getMRNumber());
         contDropDown.setVisibility(VISIBLE);
-
-//        this.circleImageView.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                txtMRN.setText(currentUser.getMRNumber());
-//                txtUserName.setText(currentUser.getName());
-//                hideAndShowBottomBar();
-//            }
-//        });
     }
 
 

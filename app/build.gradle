@@ -112,6 +112,7 @@ dependencies {
     implementation 'com.github.badoualy:stepper-indicator:1.0.7'
     implementation 'com.github.mabbas007:TagsEditText:1.0.5'
     implementation 'com.shawnlin:number-picker:2.4.6'
+    implementation 'com.github.jd-alexander:android-flat-button:v1.1'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.9.3@aar') {
         transitive = true;

@@ -13,7 +13,8 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
+
+import com.github.clans.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -24,10 +25,11 @@ import butterknife.Unbinder;
 import edu.aku.ehs.R;
 import edu.aku.ehs.adapters.recyleradapters.AssessmentQuestionAdapter;
 import edu.aku.ehs.callbacks.OnItemClickListener;
-import edu.aku.ehs.callbacks.SwitchMultiButtonAdapterListner;
+import edu.aku.ehs.callbacks.RadioGroupAdapterListner;
 import edu.aku.ehs.enums.QuestionTypeEnum;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.models.AssessmentQuestionModel;
+import edu.aku.ehs.models.SessionDetailModel;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
 
@@ -40,20 +42,21 @@ public class MedicalHistoryAssessmentFragment extends BaseFragment implements On
     AnyTextView txtQuestionSubTitle;
     @BindView(R.id.recylerView)
     RecyclerView recylerView;
-    @BindView(R.id.imgBack)
-    ImageView imgBack;
-    @BindView(R.id.imgNext)
-    ImageView imgNext;
     @BindView(R.id.btnDone)
     Button btnDone;
+    @BindView(R.id.fabBack)
+    FloatingActionButton fabBack;
+    @BindView(R.id.fabNext)
+    FloatingActionButton fabNext;
 
 
     private ArrayList<AssessmentQuestionModel> arrData;
     private AssessmentQuestionAdapter adapter;
-    private SwitchMultiButtonAdapterListner onSwitchListener1;
-    private SwitchMultiButtonAdapterListner onSwitchListener2;
+    private RadioGroupAdapterListner onSwitchListener1;
+    private RadioGroupAdapterListner onSwitchListener2;
 
     NewAssessmentViewPagerFragment parentFragment;
+    private SessionDetailModel sessionDetailModel;
 
 
     public static MedicalHistoryAssessmentFragment newInstance() {
@@ -82,6 +85,8 @@ public class MedicalHistoryAssessmentFragment extends BaseFragment implements On
         titleBar.showHome(getBaseActivity());
         titleBar.setTitle("Employee Assessment");
         titleBar.showBackButton(getBaseActivity());
+        titleBar.setEmployeeHeader(sessionDetailModel, getContext());
+
     }
 
     @Override
@@ -110,8 +115,8 @@ public class MedicalHistoryAssessmentFragment extends BaseFragment implements On
     }
 
     private void initSwitchListener() {
-        onSwitchListener1 = (position, tabText, adapterPosition) -> {
-            if (position == 0) {
+        onSwitchListener1 = (radioGroup, i, adapterPosition) -> {
+            if (i == R.id.rbQues1Yes) {
                 arrData.get(adapterPosition).setAnswer1(true);
                 adapter.notifyItemChanged(adapterPosition);
             } else {
@@ -121,8 +126,8 @@ public class MedicalHistoryAssessmentFragment extends BaseFragment implements On
         };
 
 
-        onSwitchListener2 = (position, tabText, adapterPosition) -> {
-            if (position == 0) {
+        onSwitchListener2 = (radioGroup, i, adapterPosition) -> {
+            if (i == R.id.rbQues2Yes) {
                 arrData.get(adapterPosition).setAnswer2(true);
                 adapter.notifyItemChanged(adapterPosition);
             } else {
@@ -147,7 +152,7 @@ public class MedicalHistoryAssessmentFragment extends BaseFragment implements On
         txtQuestionTitle.setText("Medical History");
         txtQuestionSubTitle.setText("Do you have any of the following Disease?");
 
-        imgBack.setVisibility(View.GONE);
+        fabBack.setVisibility(View.GONE);
         bindView();
         bindData();
     }
@@ -185,12 +190,12 @@ public class MedicalHistoryAssessmentFragment extends BaseFragment implements On
 
     }
 
-    @OnClick({R.id.imgBack, R.id.imgNext, R.id.btnDone})
+    @OnClick({R.id.fabBack, R.id.fabNext, R.id.btnDone})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.imgBack:
+            case R.id.fabBack:
                 break;
-            case R.id.imgNext:
+            case R.id.fabNext:
                 parentFragment.viewpager.moveNext();
                 break;
             case R.id.btnDone:

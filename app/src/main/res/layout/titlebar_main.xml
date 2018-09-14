@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/containerTitlebar1"
-        android:visibility="visible">
+        android:visibility="gone">
 
-        <include layout="@layout/drop_down_user_info" />
+        <include layout="@layout/item_employee_header" />
 
     </RelativeLayout>
 
@@ -43,9 +43,9 @@
             android:drawablePadding="@dimen/x5dp"
             android:drawableStart="@drawable/ic_back"
             android:gravity="center"
+            android:padding="@dimen/x5dp"
             android:scaleX="1.5"
             android:scaleY="1.5"
-            android:padding="@dimen/x5dp"
             android:textColor="@color/c_white" />
 
 
@@ -114,10 +114,10 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/x8dp"
+            android:background="@color/transparent"
             android:drawableEnd="@drawable/b_home_icon"
             android:drawablePadding="@dimen/x5dp"
             android:gravity="center"
-            android:background="@color/transparent"
             android:padding="@dimen/x5dp"
             android:textColor="@color/c_white"
             android:visibility="visible" />

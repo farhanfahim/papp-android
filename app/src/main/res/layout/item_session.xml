@@ -93,10 +93,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:padding="@dimen/x3dp"
                 android:singleLine="true"
+                android:padding="@dimen/x3dp"
                 android:text="Start Date: 10 July, 2018"
-                android:textColor="@color/txtGrey"
+                android:textColor="@color/txtBlue"
                 android:textSize="@dimen/s12"
                 app:typeface="@string/font_medium" />
 
@@ -107,11 +107,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:gravity="end"
                 android:padding="@dimen/x3dp"
+                android:gravity="end"
                 android:singleLine="true"
                 android:text="End Date: 20 July, 2018"
-                android:textColor="@color/txtGrey"
+                android:textColor="@color/txtBlue"
                 android:textSize="@dimen/s12"
                 app:typeface="@string/font_medium" />
 
@@ -123,6 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="@dimen/x20dp"
+            android:layout_marginTop="@dimen/x1dp"
             android:layout_marginRight="@dimen/x20dp"
             android:background="@color/seperator_light_gray" />
 
@@ -135,7 +136,6 @@
             <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/x3dp"
                 android:layout_weight="1"
                 app:corner_radius="@dimen/x10dp">
 
@@ -145,67 +145,6 @@
                     android:background="@color/c_white"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="@dimen/x1dp"
-                    app:corner_radius="@dimen/x10dp">
-
-
-                    <edu.aku.ehs.widget.AnyTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:padding="@dimen/x3dp"
-                        android:singleLine="true"
-                        android:text="Total Employees"
-                        android:textColor="@color/txtGrey"
-                        android:textSize="@dimen/s10"
-                        app:typeface="@string/font_medium" />
-
-
-                    <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/pastel_blue"
-                        app:corner_radius="@dimen/x5dp">
-
-                        <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@color/pastel_blue"
-                            app:corner_radius="@dimen/x5dp">
-
-                            <edu.aku.ehs.widget.AnyTextView
-                                android:layout_width="@dimen/x40dp"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:gravity="center"
-                                android:padding="@dimen/x3dp"
-                                android:singleLine="true"
-                                android:text="50"
-                                android:textColor="@color/c_white"
-                                android:textSize="@dimen/s10"
-                                app:typeface="@string/font_bold" />
-
-                        </com.jcminarro.roundkornerlayout.RoundKornerFrameLayout>
-                    </com.jcminarro.roundkornerlayout.RoundKornerFrameLayout>
-
-                </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
-            </com.jcminarro.roundkornerlayout.RoundKornerFrameLayout>
-
-
-            <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/x3dp"
-                android:layout_weight="1"
-                app:corner_radius="@dimen/x10dp">
-
-                <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/c_white"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="@dimen/x1dp"
                     app:corner_radius="@dimen/x10dp">
 
 
@@ -257,7 +196,6 @@
             <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/x3dp"
                 android:layout_weight="1"
                 app:corner_radius="@dimen/x10dp">
 
@@ -267,7 +205,6 @@
                     android:background="@color/c_white"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="@dimen/x1dp"
                     app:corner_radius="@dimen/x10dp">
 
 
@@ -291,7 +228,7 @@
                         <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@color/pastel_pink"
+                            android:background="@color/pastel_blue"
                             app:corner_radius="@dimen/x5dp">
 
                             <edu.aku.ehs.widget.AnyTextView
@@ -319,7 +256,6 @@
             <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/x3dp"
                 android:layout_weight="1"
                 app:corner_radius="@dimen/x10dp">
 
@@ -329,7 +265,6 @@
                     android:background="@color/c_white"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="@dimen/x1dp"
                     app:corner_radius="@dimen/x10dp">
 
 
@@ -382,7 +317,6 @@
             <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/x3dp"
                 android:layout_weight="1"
                 app:corner_radius="@dimen/x10dp">
 
@@ -392,7 +326,6 @@
                     android:background="@color/c_white"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="@dimen/x1dp"
                     app:corner_radius="@dimen/x10dp">
 
 

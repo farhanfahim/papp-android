@@ -8,9 +8,12 @@
     <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/x20dp"
-        android:background="@color/panic_blue"
-        android:padding="@dimen/x2dp"
+        android:layout_marginBottom="@dimen/x10dp"
+        android:layout_marginLeft="@dimen/x20dp"
+        android:layout_marginRight="@dimen/x20dp"
+        android:layout_marginTop="@dimen/x10dp"
+        android:elevation="@dimen/x3dp"
+        android:background="@color/c_white"
         app:corner_radius="@dimen/x10dp">
 
 
@@ -36,11 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/user_icon"/>
+
 
 
                     <edu.aku.ehs.widget.AnyTextView
@@ -119,7 +118,7 @@
                         android:ellipsize="end"
                         android:padding="@dimen/x3dp"
                         android:singleLine="true"
-                        android:text="99 July 2099"
+                        android:text="20 July 2019"
                         android:textColor="@color/txtDarkGrey"
                         android:textSize="@dimen/s12"
                         app:typeface="@string/font_regular" />
@@ -181,7 +180,7 @@
                         app:stpi_labelColor="@color/txtBlue"
                         app:stpi_labels="@array/sessionEmployeeSteps"
                         app:stpi_showDoneIcon="true"
-                        app:stpi_showLabels="true"
+                         app:stpi_showLabels="true"
                         app:stpi_stepCount="4" />
 
 

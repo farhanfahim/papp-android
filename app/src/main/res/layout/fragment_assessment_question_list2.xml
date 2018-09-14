@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_white"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <edu.aku.ehs.widget.AnyTextView
+                    android:id="@+id/txtQuestionTitle1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#eee"
+                    android:gravity="center"
+                    android:padding="@dimen/x3dp"
+                    android:text="Medical History"
+                    android:textColor="@color/txtBlue"
+                    android:textSize="@dimen/s15"
+                    app:typeface="@string/font_bold" />
+
+                <edu.aku.ehs.widget.AnyTextView
+                    android:id="@+id/txtQuestionSubTitle1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/seperator_light_gray"
+                    android:gravity="center"
+                    android:padding="@dimen/x3dp"
+                    android:text="Specific to Mother, Father, Brother and Sister"
+                    android:textColor="@color/txtDarkGrey"
+                    android:textSize="@dimen/s12"
+                    app:typeface="@string/font_regular" />
+
+            </LinearLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recylerView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x10dp"
+                android:background="#fff" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <edu.aku.ehs.widget.AnyTextView
+                    android:id="@+id/txtQuestionTitle2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#eee"
+                    android:gravity="center"
+                    android:padding="@dimen/x3dp"
+                    android:text="Medical History"
+                    android:textColor="@color/txtBlue"
+                    android:textSize="@dimen/s15"
+                    app:typeface="@string/font_bold" />
+
+                <edu.aku.ehs.widget.AnyTextView
+                    android:id="@+id/txtQuestionSubTitle2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/seperator_light_gray"
+                    android:gravity="center"
+                    android:padding="@dimen/x3dp"
+                    android:text="Specific to Mother, Father, Brother and Sister"
+                    android:textColor="@color/txtDarkGrey"
+                    android:textSize="@dimen/s12"
+                    app:typeface="@string/font_regular" />
+
+            </LinearLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recylerView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x10dp"
+                android:background="#fff" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <edu.aku.ehs.widget.AnyTextView
+                    android:id="@+id/txtQuestionTitle3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#eee"
+                    android:gravity="center"
+                    android:padding="@dimen/x3dp"
+                    android:text="Medical History"
+                    android:textColor="@color/txtBlue"
+                    android:textSize="@dimen/s15"
+                    app:typeface="@string/font_bold" />
+
+                <edu.aku.ehs.widget.AnyTextView
+                    android:id="@+id/txtQuestionSubTitle3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/seperator_light_gray"
+                    android:gravity="center"
+                    android:padding="@dimen/x3dp"
+                    android:text="Specific to Mother, Father, Brother and Sister"
+                    android:textColor="@color/txtDarkGrey"
+                    android:textSize="@dimen/s12"
+                    app:typeface="@string/font_regular" />
+
+            </LinearLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recylerView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff" />
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/x15dp">
+
+
+
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="@dimen/x8dp"
+            android:layout_marginRight="@dimen/x8dp"
+            android:src="@drawable/ic_arrow_back"
+            android:visibility="visible"
+            app:fab_colorNormal="@color/base_amber"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_colorRipple="@color/colorPrimary"
+            app:fab_size="normal" />
+
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/x8dp"
+            android:layout_marginRight="@dimen/x8dp"
+            android:src="@drawable/ic_arrow_next"
+            android:visibility="visible"
+            app:fab_colorNormal="@color/base_amber"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_colorRipple="@color/colorPrimary"
+            app:fab_size="normal" />
+
+
+        <Button
+            android:id="@+id/btnDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/img_button_clr"
+            android:text="Done"
+            android:textColor="@color/c_white"
+            android:textSize="@dimen/s16"
+            android:visibility="gone" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
+

@@ -53,4 +53,14 @@
     <!--</style>-->
 
 
+    <style name="CheckboxStyle" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
+        // text
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        // Unchecked
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        // Checked
+    </style>
+
+
 </resources>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/c_white"
+    android:background="@drawable/background_light"
     android:orientation="vertical">
 
     <!--android:background="@drawable/test2"-->
@@ -29,7 +29,7 @@
         <ImageView
             android:id="@+id/imgBanner"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/x70dp"
+            android:layout_height="@dimen/x20dp"
             android:scaleType="centerCrop"
             android:src="@drawable/img_banner"
             android:visibility="visible" />
@@ -165,6 +165,7 @@
             android:layout_below="@+id/contSearch"
             android:padding="@dimen/x10dp"
             app:centered="true"
+            app:radius="@dimen/x5dp"
             app:fillColor="@color/colorAccent"
             app:pageColor="#EEE" />
 

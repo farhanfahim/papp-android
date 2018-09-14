@@ -134,6 +134,37 @@
                 </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x10dp"
+                    android:layout_marginBottom="@dimen/x5dp"
+                    android:baselineAligned="false"
+                    android:gravity="center">
+
+
+                    <CheckBox
+                        android:id="@+id/cbShowPassword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:theme="@style/CheckboxStyle"
+                        />
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Show Password"
+                        android:textColor="@color/c_navy_blue"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_regular" />
+
+
+                </LinearLayout>
+
+
+
                 <Button
                     android:id="@+id/btnLogin"
                     android:layout_width="wrap_content"

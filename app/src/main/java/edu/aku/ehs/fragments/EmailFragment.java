@@ -17,6 +17,7 @@ import edu.aku.ehs.R;
 import edu.aku.ehs.enums.SelectEmployeeActionType;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
+import edu.aku.ehs.models.SessionModel;
 import edu.aku.ehs.widget.AnyEditTextView;
 import edu.aku.ehs.widget.TitleBar;
 import mabbas007.tagsedittext.TagsEditText;
@@ -39,12 +40,14 @@ public class EmailFragment extends BaseFragment {
     Button btnCancel;
     @BindView(R.id.btnSend)
     Button btnSend;
+    SessionModel sessionModel;
 
-    public static EmailFragment newInstance() {
+    public static EmailFragment newInstance(SessionModel sessionModel) {
 
         Bundle args = new Bundle();
 
         EmailFragment fragment = new EmailFragment();
+        fragment.sessionModel = sessionModel;
         fragment.setArguments(args);
         return fragment;
     }
@@ -115,14 +118,14 @@ public class EmailFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.btnSend:
                 UIHelper.showToast(getContext(), "Email Sent!!!");
-                popBackStack();
+                getBaseActivity().popBackStack();
                 break;
             case R.id.btnCancel:
-                popBackStack();
+                getBaseActivity().popBackStack();
                 break;
 
             case R.id.imgSearchEmployees:
-                getBaseActivity().addDockableFragment(SearchFragment.newInstance(SelectEmployeeActionType.SENDEMAIL), false);
+                getBaseActivity().addDockableFragment(SearchFragment.newInstance(SelectEmployeeActionType.SENDEMAIL, sessionModel), false);
                 break;
         }
     }
