@@ -6,6 +6,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +15,20 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.google.gson.reflect.TypeToken;
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 
+import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,14 +38,22 @@ import edu.aku.ehs.R;
 import edu.aku.ehs.adapters.recyleradapters.SessionDetailAdapter;
 import edu.aku.ehs.callbacks.GenericClickableInterface;
 import edu.aku.ehs.callbacks.OnItemClickListener;
+import edu.aku.ehs.constatnts.AppConstants;
+import edu.aku.ehs.constatnts.WebServiceConstants;
+import edu.aku.ehs.enums.BaseURLTypes;
 import edu.aku.ehs.enums.EmployeeSessionState;
 import edu.aku.ehs.enums.SelectEmployeeActionType;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.fragments.abstracts.GenericDialogFragment;
+import edu.aku.ehs.helperclasses.ui.helper.KeyboardHelper;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
 import edu.aku.ehs.managers.DateManager;
+import edu.aku.ehs.managers.retrofit.GsonFactory;
+import edu.aku.ehs.managers.retrofit.WebServices;
 import edu.aku.ehs.models.SessionDetailModel;
 import edu.aku.ehs.models.SessionModel;
+import edu.aku.ehs.models.sending_model.SearchSendingModel;
+import edu.aku.ehs.models.wrappers.WebResponse;
 import edu.aku.ehs.widget.AnyEditTextView;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
@@ -79,6 +95,10 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
     LinearLayout contSelection;
     @BindView(R.id.txtSessionName)
     AnyTextView txtSessionName;
+    @BindView(R.id.cbSelectAll)
+    CheckBox cbSelectAll;
+    @BindView(R.id.imgClose)
+    ImageView imgClose;
 
     private ArrayList<SessionDetailModel> arrData;
     private SessionDetailAdapter adapter;
@@ -86,6 +106,8 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
     GenericDialogFragment genericDialogFragment = GenericDialogFragment.newInstance();
     private SessionModel sessionModel;
     public static boolean isSelectingEmployeesForSchedule = false;
+    private String scheduledDateInSendingFormat;
+    private String scheduledDateInShowFormat;
 
 
     public static SessionDetailFragment newInstance(SessionModel sessionModel) {
@@ -116,30 +138,55 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
     private void resetTitlebar(TitleBar titleBar) {
         titleBar.resetViews();
         titleBar.setVisibility(View.VISIBLE);
-        titleBar.setTitle(sessionModel.getSessionName());
+        titleBar.setTitle(sessionModel.getDescription());
         titleBar.showBackButton(getBaseActivity());
         titleBar.showHome(getBaseActivity());
     }
 
     @Override
     public void setListeners() {
+        cbSelectAll.setOnCheckedChangeListener((compoundButton, b) -> {
+                    if (b) {
+                        for (int i = 0; i < arrData.size(); i++) {
+                            arrData.get(i).setSelected(true);
+                        }
+                    } else {
+                        for (int i = 0; i < arrData.size(); i++) {
+                            arrData.get(i).setSelected(false);
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+        );
 
         getBaseActivity().setGenericClickableInterface(new GenericClickableInterface() {
             @Override
             public void click() {
-                onBackPressed();
+                unFilterEnrolledData();
             }
         });
 
-    }
+        edtSearchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-    private void onBackPressed() {
-        isSelectingEmployeesForSchedule = false;
-        resetTitlebar(getBaseActivity().getTitleBar());
-        fab.setVisibility(View.GONE);
-        contOptionButtons.setVisibility(View.VISIBLE);
-        bindData();
-        contSelection.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                adapter.getFilter().filter(charSequence);
+                if (edtSearchBar.getStringTrimmed().length() == 0) {
+                    imgClose.setVisibility(View.GONE);
+                } else {
+                    imgClose.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @Override
@@ -179,41 +226,47 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
 
         bindView();
 
-        bindData();
-    }
 
-    private void bindData() {
-        arrData.clear();
-        txtSessionName.setVisibility(View.INVISIBLE);
-
-        SessionDetailModel sessionDetailModel;
-
-        for (int i = 0; i < 8; i++) {
-            if (i < 2) {
-                sessionDetailModel = new SessionDetailModel("Hamza Ahmed Khan", EmployeeSessionState.ENROLLED);
-            } else if (i >= 2 && i < 4) {
-                sessionDetailModel = new SessionDetailModel("Haris Maaz ", EmployeeSessionState.SCHEDULED);
-            } else if (i >= 4 && i < 6) {
-                sessionDetailModel = new SessionDetailModel("Aqsa Sarwar ", EmployeeSessionState.INPROGRESS);
-            } else {
-                sessionDetailModel = new SessionDetailModel("Mahrukh Mehmood ", EmployeeSessionState.CLOSED);
-
+        if (onCreated) {
+            if (AppConstants.isForcedResetFragment) {
+                AppConstants.isForcedResetFragment = false;
+                SearchSendingModel searchSendingModel = new SearchSendingModel();
+                searchSendingModel.setSessionID(sessionModel.getSessionId());
+                getSessionEmployeesCall(searchSendingModel);
             }
-            arrData.add(sessionDetailModel);
+        } else {
+            SearchSendingModel searchSendingModel = new SearchSendingModel();
+            searchSendingModel.setSessionID(sessionModel.getSessionId());
+            getSessionEmployeesCall(searchSendingModel);
         }
-        adapter.notifyDataSetChanged();
     }
 
-    private void bindOnlyEnrolledData() {
-        arrData.clear();
-        SessionDetailModel sessionDetailModel;
+    private void unFilterEnrolledData() {
+        isSelectingEmployeesForSchedule = false;
+        resetTitlebar(getBaseActivity().getTitleBar());
+        fab.setVisibility(View.GONE);
+        contOptionButtons.setVisibility(View.VISIBLE);
+        txtSessionName.setVisibility(View.INVISIBLE);
+        contSearch.setVisibility(View.VISIBLE);
 
-        for (int i = 0; i < 4; i++) {
-            sessionDetailModel = new SessionDetailModel("Hamza Ahmed Khan", EmployeeSessionState.ENROLLED);
-            sessionDetailModel.setInSelectionMode(true);
-            arrData.add(sessionDetailModel);
+        for (int i = 0; i < arrData.size(); i++) {
+            arrData.get(i).setSelected(false);
         }
-        adapter.notifyDataSetChanged();
+
+        adapter.getFilter().filter("");
+        contSelection.setVisibility(View.GONE);
+    }
+
+    private void filterOnlyEnrolledData() {
+        fab.setVisibility(View.VISIBLE);
+        isSelectingEmployeesForSchedule = true;
+        contSearch.setVisibility(View.INVISIBLE);
+        getBaseActivity().getTitleBar().setTitle("Select Employees");
+        txtSessionName.setVisibility(View.VISIBLE);
+        txtSessionName.setText(sessionModel.getDescription());
+        contOptionButtons.setVisibility(View.GONE);
+        contSelection.setVisibility(View.VISIBLE);
+        adapter.getFilter().filter(EmployeeSessionState.ENROLLED.canonicalForm());
     }
 
 
@@ -240,7 +293,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
 
         switch (view.getId()) {
             case R.id.btnSchedule:
-                editSchedule(sessionDetailModel);
+                editSingleEmployeeSchedule(sessionDetailModel);
                 break;
 
             case R.id.btnDelete:
@@ -264,43 +317,86 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
         UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Remove", "Do you want to remove " + sessionDetailModel.getEmployeeName() + " ?", "Remove", "Cancel",
                 () -> {
                     genericDialogFragment.dismiss();
-                    arrData.remove(position);
-                    adapter.notifyDataSetChanged();
+                    pickScheduleDate(false, sessionDetailModel, EmployeeSessionState.CANCELLED);
                 }, () -> {
                     genericDialogFragment.dismiss();
                 }, false, true);
     }
 
-    private void editSchedule(SessionDetailModel sessionDetailModel) {
+    private void editSingleEmployeeSchedule(final SessionDetailModel sessionDetailModel) {
 
-
-        switch (sessionDetailModel.getStatus()) {
+        switch (sessionDetailModel.getStatusEnum()) {
             case ENROLLED:
-                UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Schedule", "Do you want to add Schedule?", "Add", "Cancel",
+                UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Schedule", "Do you want to add Schedule for " + sessionDetailModel.getEmployeeName() + "?", "Add", "Cancel",
                         () -> {
                             genericDialogFragment.dismiss();
-                            DateManager.showDatePicker(getContext(), date -> UIHelper.showToast(getContext(), date), false, true);
-                        }, () -> {
-                            genericDialogFragment.dismiss();
-                        }, false, true);
+                            pickScheduleDate(false, sessionDetailModel, EmployeeSessionState.SCHEDULED);
+                        }, genericDialogFragment::dismiss, false, true);
                 break;
+
             case SCHEDULED:
-                UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Schedule", "Do you want to update Schedule?", "Update", "Cancel",
+                UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Schedule", "Do you want to update Schedule " + sessionDetailModel.getEmployeeName() + "?", "Update", "Cancel",
                         () -> {
                             genericDialogFragment.dismiss();
-                            DateManager.showDatePicker(getContext(), date -> UIHelper.showToast(getContext(), date), false, true);
-                        }, () -> {
-                            genericDialogFragment.dismiss();
-                        }, false, true);
+                            pickScheduleDate(false, sessionDetailModel, EmployeeSessionState.SCHEDULED);
+                        }, genericDialogFragment::dismiss, false, true);
 
                 break;
-            case INPROGRESS:
-                UIHelper.showIOSPopup(getContext(), "Cancel Schedule", "Do you really want to cancel this schedule",
-                        "Yes", "No", dialog -> {
-                        }, dialog -> {
-                        });
-                break;
+
         }
+    }
+
+    private void pickScheduleDate(boolean showDialogeAfter, SessionDetailModel sessionDetailModel, EmployeeSessionState state) {
+        DateManager.showDatePicker(getContext(), null, AppConstants.FORMAT_DATE_SHOW, (datePicker, i, i1, i2) -> {
+            final Calendar myCalendar = Calendar.getInstance();
+            myCalendar.set(Calendar.YEAR, i);
+            myCalendar.set(Calendar.MONTH, i1);
+            myCalendar.set(Calendar.DAY_OF_MONTH, i2);
+//                    myCalendar.set(Calendar.HOUR_OF_DAY, 0);
+//                    myCalendar.set(Calendar.MINUTE, 0);
+//                    myCalendar.set(Calendar.SECOND, 0);
+
+            String myFormat = AppConstants.FORMAT_DATE_SEND; // In which you need put here
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+            scheduledDateInSendingFormat = sdf.format(myCalendar.getTime());
+
+            String showFormat = AppConstants.FORMAT_DATE_SHOW; // In which you need put here
+            SimpleDateFormat sdfShow = new SimpleDateFormat(showFormat, Locale.US);
+            scheduledDateInShowFormat = sdfShow.format(myCalendar.getTime());
+
+            if (showDialogeAfter) {
+                ArrayList<SessionDetailModel> selectedArray;
+                selectedArray = getSelectedArray(state);
+                UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Schedule", "You are about to schedule " + selectedArray.size() + " employee for " + scheduledDateInShowFormat + ".", "Add", "Cancel",
+                        () -> {
+                            genericDialogFragment.dismiss();
+                            updateSelectedEmployees(selectedArray);
+                        }, genericDialogFragment::dismiss, false, true);
+
+            } else {
+                ArrayList<SessionDetailModel> arrayList = new ArrayList<>();
+                arrayList.add(sessionDetailModel);
+                updateSelectedEmployees(arrayList);
+            }
+
+
+        }, false, true, null);
+    }
+
+    private ArrayList<SessionDetailModel> getSelectedArray(EmployeeSessionState state) {
+        ArrayList<SessionDetailModel> arrayList = new ArrayList<>();
+        for (SessionDetailModel sessionDetailModel : arrData) {
+            if (sessionDetailModel.isSelected()) {
+                sessionDetailModel.setStatusID(state.canonicalForm());
+                sessionDetailModel.setScheduledDTTM(scheduledDateInSendingFormat);
+                sessionDetailModel.setScheduledBy(AppConstants.tempUserName);
+
+                sessionDetailModel.setLastFileUser(AppConstants.tempUserName);
+                arrayList.add(sessionDetailModel);
+            }
+        }
+
+        return arrayList;
     }
 
     @OnClick({R.id.btnGetLabs, R.id.btnAddEmail, R.id.btnAddSchedule, R.id.btnAddEmployees, R.id.fab})
@@ -311,15 +407,8 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
 
                 break;
             case R.id.btnAddSchedule:
-                fab.setVisibility(View.VISIBLE);
-                isSelectingEmployeesForSchedule = true;
-                getBaseActivity().getTitleBar().setTitle("Select Employees");
-                txtSessionName.setVisibility(View.VISIBLE);
-                txtSessionName.setText(sessionModel.getSessionName());
-                contOptionButtons.setVisibility(View.GONE);
-                bindOnlyEnrolledData();
-                contSelection.setVisibility(View.VISIBLE);
 
+                filterOnlyEnrolledData();
 
                 break;
             case R.id.btnAddEmployees:
@@ -332,14 +421,85 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
 
 
             case R.id.fab:
-                UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Schedule", "Do you want to Add Schedule?", "Add", "Cancel",
-                        () -> {
-                            genericDialogFragment.dismiss();
-                            DateManager.showDatePicker(getContext(), date -> onBackPressed(), false, true);
-                        }, () -> {
-                            genericDialogFragment.dismiss();
-                        }, false, true);
+                pickScheduleDate(true, null, EmployeeSessionState.SCHEDULED);
                 break;
         }
+    }
+
+    private void getSessionEmployeesCall(SearchSendingModel searchSendingModel) {
+        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+                .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_GET_SESSION_EMPLOYEES, searchSendingModel.toString(),
+                        new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                            @Override
+                            public void requestDataResponse(WebResponse<Object> webResponse) {
+                                if (webResponse.result instanceof ArrayList) {
+
+                                    Type type = new TypeToken<ArrayList<SessionDetailModel>>() {
+                                    }.getType();
+                                    ArrayList<SessionDetailModel> arrayList = GsonFactory.getSimpleGson()
+                                            .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                                    , type);
+
+                                    arrData.clear();
+                                    arrData.addAll(arrayList);
+                                    adapter.notifyDataSetChanged();
+                                    if (arrData.size() > 0) {
+                                        emptyView.setVisibility(View.GONE);
+                                    } else {
+                                        emptyView.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onError(Object object) {
+                                emptyView.setVisibility(View.VISIBLE);
+                                if (object instanceof String) {
+                                    UIHelper.showToast(getContext(), (String) object);
+                                }
+                            }
+                        });
+    }
+
+
+    @OnClick(R.id.imgClose)
+    public void onViewClicked() {
+        edtSearchBar.setText("");
+        KeyboardHelper.hideSoftKeyboard(getContext(), edtSearchBar);
+    }
+
+
+    private void updateSelectedEmployees(ArrayList<SessionDetailModel> arrData) {
+        ArrayList<SessionDetailModel> sessionDetailModelArrayList = arrData;
+
+        if (sessionDetailModelArrayList == null || sessionDetailModelArrayList.isEmpty()) {
+            sessionDetailModelArrayList = new ArrayList<>();
+        }
+
+        String jsonArrayData = GsonFactory.getConfiguredGson().toJson(sessionDetailModelArrayList);
+        updateEmployeesInSessionCall(jsonArrayData);
+    }
+
+
+    private void updateEmployeesInSessionCall(String jsonArrayData) {
+        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+                .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_UPDATE_SESSION_EMPLOYEE, jsonArrayData,
+                        new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                            @Override
+                            public void requestDataResponse(WebResponse<Object> webResponse) {
+                                UIHelper.showToast(getContext(), webResponse.responseMessage);
+                                SearchSendingModel searchSendingModel = new SearchSendingModel();
+                                searchSendingModel.setSessionID(sessionModel.getSessionId());
+                                getSessionEmployeesCall(searchSendingModel);
+                            }
+
+                            @Override
+                            public void onError(Object object) {
+                                emptyView.setVisibility(View.VISIBLE);
+                                if (object instanceof String) {
+                                    UIHelper.showToast(getContext(), (String) object);
+                                }
+                            }
+                        });
     }
 }

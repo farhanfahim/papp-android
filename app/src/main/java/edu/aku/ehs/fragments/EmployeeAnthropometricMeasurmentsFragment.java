@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.github.clans.fab.FloatingActionButton;
+
 import java.text.DecimalFormat;
 
 import butterknife.BindView;
@@ -21,6 +23,7 @@ import edu.aku.ehs.R;
 import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.models.SessionDetailModel;
+import edu.aku.ehs.widget.AnyEditTextView;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
 import edu.aku.ehs.widget.custom_seekbar.OnRangeChangedListener;
@@ -30,6 +33,10 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
 
 
     Unbinder unbinder;
+
+    int height = 60;
+    int weight = 0;
+    SessionDetailModel sessionDetailModel;
     @BindView(R.id.imgBanner)
     ImageView imgBanner;
     @BindView(R.id.btnRecordMenually)
@@ -39,40 +46,39 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
     @BindView(R.id.contBMI)
     LinearLayout contBMI;
     @BindView(R.id.txtHeight)
-    AnyTextView txtHeight;
+    AnyEditTextView txtHeight;
     @BindView(R.id.sbHeight)
     RangeSeekBar sbHeight;
     @BindView(R.id.contHeight)
     LinearLayout contHeight;
     @BindView(R.id.txtWeight)
-    AnyTextView txtWeight;
+    AnyEditTextView txtWeight;
     @BindView(R.id.sbWeight)
     RangeSeekBar sbWeight;
     @BindView(R.id.contWeight)
     LinearLayout contWeight;
     @BindView(R.id.txtWaist)
-    AnyTextView txtWaist;
+    AnyEditTextView txtWaist;
     @BindView(R.id.sbWaist)
     RangeSeekBar sbWaist;
     @BindView(R.id.contWaist)
     LinearLayout contWaist;
     @BindView(R.id.txtBPSystolic)
-    AnyTextView txtBPSystolic;
+    AnyEditTextView txtBPSystolic;
     @BindView(R.id.sbSystolicBP)
     RangeSeekBar sbSystolicBP;
     @BindView(R.id.contSystolicBP)
     LinearLayout contSystolicBP;
     @BindView(R.id.txtBPDiastolic)
-    AnyTextView txtBPDiastolic;
+    AnyEditTextView txtBPDiastolic;
     @BindView(R.id.sbDiastolicBP)
     RangeSeekBar sbDiastolicBP;
     @BindView(R.id.contDiastolicBP)
     LinearLayout contDiastolicBP;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
     @BindView(R.id.contParent)
     RelativeLayout contParent;
-    int height = 60;
-    int weight = 0;
-    SessionDetailModel sessionDetailModel;
 
 
     public static EmployeeAnthropometricMeasurmentsFragment newInstance() {

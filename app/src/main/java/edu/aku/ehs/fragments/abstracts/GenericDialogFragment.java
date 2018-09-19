@@ -30,7 +30,7 @@ public class GenericDialogFragment extends DialogFragment implements View.OnClic
     GenericClickableInterface genericClickableInterfaceBtn2;
 
     public static final String KEY_TITLE = "title";
-    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_MESSAGE = "responseMessage";
 
     int VISIBILITY_BTN1 = GONE;
     int VISIBILITY_BTN2 = GONE;
@@ -59,7 +59,7 @@ public class GenericDialogFragment extends DialogFragment implements View.OnClic
 
         Bundle args = new Bundle();
 //        args.putString(KEY_TITLE, title);
-//        args.putString(KEY_MESSAGE,message);
+//        args.putString(KEY_MESSAGE,responseMessage);
         frag.setArguments(args);
 
         return frag;
@@ -71,7 +71,7 @@ public class GenericDialogFragment extends DialogFragment implements View.OnClic
                              Bundle savedInstanceState) {
 
 //        title = getArguments().getString(KEY_TITLE);
-//        message = getArguments().getString(KEY_MESSAGE);
+//        responseMessage = getArguments().getString(KEY_MESSAGE);
 
         return inflater.inflate(R.layout.fragment_generic_popup, container);
     }

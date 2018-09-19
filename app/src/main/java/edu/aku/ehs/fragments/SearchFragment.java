@@ -26,14 +26,25 @@ import butterknife.Unbinder;
 import edu.aku.ehs.R;
 import edu.aku.ehs.adapters.recyleradapters.DepartmentAdapter;
 import edu.aku.ehs.callbacks.OnItemClickListener;
+import edu.aku.ehs.constatnts.AppConstants;
+import edu.aku.ehs.enums.BaseURLTypes;
+import edu.aku.ehs.enums.SearchByType;
 import edu.aku.ehs.enums.SelectEmployeeActionType;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
-import edu.aku.ehs.fragments.abstracts.GenericDialogFragment;
-import edu.aku.ehs.models.DepartmentModel;
+import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
+import edu.aku.ehs.libraries.maskformatter.MaskFormatter;
+import edu.aku.ehs.managers.retrofit.WebServices;
+import edu.aku.ehs.models.IntWrapper;
 import edu.aku.ehs.models.SessionModel;
+import edu.aku.ehs.models.SpinnerModel;
+import edu.aku.ehs.models.peoplesoft.department.DEPT;
+import edu.aku.ehs.models.peoplesoft.department.DepartmentWrapper;
 import edu.aku.ehs.widget.AnyEditTextView;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
+
+import static edu.aku.ehs.constatnts.WebServiceConstants.DIV_KEY;
+import static edu.aku.ehs.constatnts.WebServiceConstants.GET_ALL_KEY;
 
 /**
  * Created by hamza.ahmed on 7/23/2018.
@@ -46,12 +57,20 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
     AnyTextView emptyView;
     @BindView(R.id.imgBanner)
     ImageView imgBanner;
-    @BindView(R.id.edtSearchEmployee)
-    AnyEditTextView edtSearchEmployee;
-    @BindView(R.id.imgSearchEmployee)
-    ImageView imgSearchEmployee;
-    @BindView(R.id.contSearchByName)
-    RoundKornerLinearLayout contSearchByName;
+    @BindView(R.id.txtSessionName)
+    AnyTextView txtSessionName;
+    @BindView(R.id.edtMRNumber)
+    AnyEditTextView edtMRNumber;
+    @BindView(R.id.imgSearchByMR)
+    ImageView imgSearchByMR;
+    @BindView(R.id.contSearchByMR)
+    RoundKornerLinearLayout contSearchByMR;
+    @BindView(R.id.edtEmployeeID)
+    AnyEditTextView edtEmployeeID;
+    @BindView(R.id.imgSearchByEmplID)
+    ImageView imgSearchByEmplID;
+    @BindView(R.id.contSearchByEmplID)
+    RoundKornerLinearLayout contSearchByEmplID;
     @BindView(R.id.txtSelectDivision)
     AnyTextView txtSelectDivision;
     @BindView(R.id.contSelectDivision)
@@ -66,15 +85,18 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
     RecyclerView recylerView;
     @BindView(R.id.contParent)
     RelativeLayout contParent;
-    @BindView(R.id.txtSessionName)
-    AnyTextView txtSessionName;
 
 
-    private ArrayList<DepartmentModel> arrData;
+    private ArrayList<DEPT> arrDivisions;
+
+    private ArrayList<DEPT> arrDept;
     private DepartmentAdapter adapter;
     private SelectEmployeeActionType selectEmployeeActionType;
+    ;
+    private SpinnerModel tempSpinnerModel;
+    private IntWrapper currentDivisionPosition = new IntWrapper(-1);
+    private ArrayList<SpinnerModel> arrDivisionSpinner;
 
-    GenericDialogFragment genericDialogFragment = GenericDialogFragment.newInstance();
     SessionModel sessionModel;
 
 
@@ -126,8 +148,11 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        arrData = new ArrayList<DepartmentModel>();
-        adapter = new DepartmentAdapter(getBaseActivity(), arrData, this);
+        arrDivisions = new ArrayList<DEPT>();
+        arrDept = new ArrayList<DEPT>();
+        arrDivisionSpinner = new ArrayList<>();
+        adapter = new DepartmentAdapter(getBaseActivity(), arrDept, this);
+
     }
 
     @Override
@@ -143,30 +168,78 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
         super.onViewCreated(view, savedInstanceState);
         contSearch.setVisibility(View.VISIBLE);
         imgBanner.setVisibility(View.VISIBLE);
-        txtSessionName.setText(sessionModel.getSessionName());
+        txtSessionName.setText(sessionModel.getDescription());
+        edtMRNumber.addTextChangedListener(new MaskFormatter(AppConstants.MR_NUMBER_MASK, edtMRNumber, '-'));
+        if (tempSpinnerModel != null) {
+            txtSelectDivision.setText(tempSpinnerModel.getText());
+        }
 
         bindView();
-        bindData();
+
+
+        if (onCreated) {
+            return;
+        }
+
+        emptyView.setVisibility(View.VISIBLE);
+        getAllDivisionsCall();
     }
 
-    private void bindData() {
-        arrData.clear();
-        DepartmentModel sessionDetailModel;
+    private void getAllDivisionsCall() {
+        new WebServices(getContext(),
+                "",
+                BaseURLTypes.GET_EMP_DEPT_URL, true)
+                .webServiceGetDeptDiv(DIV_KEY, GET_ALL_KEY, new WebServices.IRequestWebResponseDeptDivList() {
+                    @Override
+                    public void requestDataResponse(DepartmentWrapper webResponse) {
 
-        for (int i = 0; i < 8; i++) {
-            if (i < 2) {
-                sessionDetailModel = new DepartmentModel("IT HIS");
-            } else if (i >= 2 && i < 4) {
-                sessionDetailModel = new DepartmentModel("NICU");
-            } else if (i >= 4 && i < 6) {
-                sessionDetailModel = new DepartmentModel("Administration");
-            } else {
-                sessionDetailModel = new DepartmentModel("HR department");
+                        if (webResponse.getAKU_WA_DEPT_EMPS().getDEPT() != null && !webResponse.getAKU_WA_DEPT_EMPS().getDEPT().isEmpty()) {
+                            arrDivisions.clear();
+                            arrDivisions.addAll(webResponse.getAKU_WA_DEPT_EMPS().getDEPT());
 
-            }
-            arrData.add(sessionDetailModel);
-        }
-        adapter.notifyDataSetChanged();
+
+                            for (int i = 0; i < arrDivisions.size(); i++) {
+                                arrDivisionSpinner.add(new SpinnerModel(arrDivisions.get(i).getDESCR()));
+                            }
+
+
+                        } else {
+                            UIHelper.showToast(getContext(), "No Data Division List");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
+    }
+
+
+    private void getDepartmentsCall(String value) {
+        new WebServices(getContext(),
+                "",
+                BaseURLTypes.GET_EMP_DEPT_URL, true)
+                .webServiceGetDeptDiv(DIV_KEY, value, new WebServices.IRequestWebResponseDeptDivList() {
+                    @Override
+                    public void requestDataResponse(DepartmentWrapper webResponse) {
+
+                        if (webResponse.getAKU_WA_DEPT_EMPS().getDEPT() != null && !webResponse.getAKU_WA_DEPT_EMPS().getDEPT().isEmpty()) {
+                            arrDept.clear();
+                            arrDept.addAll(webResponse.getAKU_WA_DEPT_EMPS().getDEPT());
+                            adapter.notifyDataSetChanged();
+                            emptyView.setVisibility(View.GONE);
+                        } else {
+                            emptyView.setVisibility(View.VISIBLE);
+                            UIHelper.showToast(getContext(), "No Data on Division Code: " + value);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+                        emptyView.setVisibility(View.VISIBLE);
+                    }
+                });
     }
 
 
@@ -188,17 +261,59 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
 
     @Override
     public void onItemClick(int position, Object object, View view) {
-        DepartmentModel model = (DepartmentModel) object;
+        DEPT model = (DEPT) object;
 
         switch (view.getId()) {
             case R.id.contListItem:
-                getBaseActivity().addDockableFragment(SelectEmployeeFragment.newInstance(model.getDeptName(), selectEmployeeActionType, sessionModel), false);
+                getBaseActivity().addDockableFragment(SelectEmployeeFragment.newInstance(model.getDESCR(), selectEmployeeActionType, SearchByType.DEPARTMENT, sessionModel, model, arrDivisions.get(currentDivisionPosition.value)), false);
                 break;
         }
     }
 
-    @OnClick(R.id.imgSearchEmployee)
-    public void onViewClicked() {
-        getBaseActivity().addDockableFragment(SelectEmployeeFragment.newInstance(edtSearchEmployee.getStringTrimmed(), selectEmployeeActionType, sessionModel), false);
+    @OnClick({R.id.imgSearchByMR, R.id.imgSearchByEmplID, R.id.contSelectDivision})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.imgSearchByMR:
+                getBaseActivity().addDockableFragment(SelectEmployeeFragment.newInstance(edtMRNumber.getStringTrimmed(), selectEmployeeActionType, SearchByType.MRNUMBER, sessionModel, null, null), false);
+                break;
+            case R.id.imgSearchByEmplID:
+                getBaseActivity().addDockableFragment(SelectEmployeeFragment.newInstance(edtEmployeeID.getStringTrimmed(), selectEmployeeActionType, SearchByType.EMPLOYEENUMBER, sessionModel, null, null), false);
+                break;
+            case R.id.contSelectDivision:
+                showSpinner();
+                break;
+        }
     }
+
+    private void showSpinner() {
+        UIHelper.showSpinnerDialog(this, arrDivisionSpinner, "Select Division", txtSelectDivision, (position, object, adapter) -> {
+            tempSpinnerModel = (SpinnerModel) object;
+            tempSpinnerModel.setPositionInList(position);
+
+            for (SpinnerModel arrDatum : adapter.getArrData()) {
+                arrDatum.setSelected(false);
+            }
+            adapter.getArrData().get(position).setSelected(true);
+            adapter.notifyDataSetChanged();
+        }, data -> {
+            if (tempSpinnerModel == null) {
+                return;
+            }
+            txtSelectDivision.setText(tempSpinnerModel.getText());
+            for (SpinnerModel arrDatum : arrDivisionSpinner) {
+                arrDatum.setSelected(false);
+            }
+            arrDivisionSpinner.get(tempSpinnerModel.getPositionInList()).setSelected(true);
+            currentDivisionPosition.value = tempSpinnerModel.getPositionInList();
+
+            if (arrDivisions.get(currentDivisionPosition.value) != null) {
+                getDepartmentsCall(arrDivisions.get(currentDivisionPosition.value).getDEPTID());
+            } else {
+                UIHelper.showToast(getContext(), "Wrong position");
+            }
+
+        }, currentDivisionPosition);
+    }
+
+
 }

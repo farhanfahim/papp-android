@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contParent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/x10dp"
@@ -49,6 +50,32 @@
                 android:textSize="@dimen/s14"
                 app:typeface="@string/font_medium" />
 
+
+            <ImageView
+                android:id="@+id/btnClose"
+                android:layout_width="@dimen/x30dp"
+                android:layout_height="@dimen/x30dp"
+                android:layout_marginRight="@dimen/x5dp"
+                android:ellipsize="end"
+                android:padding="@dimen/x5dp"
+                android:src="@drawable/img_close_96"
+                android:textAllCaps="false"
+                android:textSize="@dimen/s10"
+                android:visibility="visible" />
+
+
+            <ImageView
+                android:id="@+id/btnSchedule"
+                android:layout_width="@dimen/x30dp"
+                android:layout_height="@dimen/x30dp"
+                android:layout_marginRight="@dimen/x15dp"
+                android:ellipsize="end"
+                android:padding="@dimen/x5dp"
+                android:src="@drawable/img_edit_96"
+                android:textAllCaps="false"
+                android:textSize="@dimen/s10"
+                android:visibility="visible" />
+
             <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -56,6 +83,7 @@
 
 
                 <ImageView
+                    android:id="@+id/imgStatus"
                     android:layout_width="@dimen/x8dp"
                     android:layout_height="@dimen/x8dp"
                     android:layout_marginRight="@dimen/x3dp"
@@ -93,8 +121,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:singleLine="true"
                 android:padding="@dimen/x3dp"
+                android:singleLine="true"
                 android:text="Start Date: 10 July, 2018"
                 android:textColor="@color/txtBlue"
                 android:textSize="@dimen/s12"
@@ -107,8 +135,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:padding="@dimen/x3dp"
                 android:gravity="end"
+                android:padding="@dimen/x3dp"
                 android:singleLine="true"
                 android:text="End Date: 20 July, 2018"
                 android:textColor="@color/txtBlue"
@@ -123,8 +151,8 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="@dimen/x20dp"
-            android:layout_marginTop="@dimen/x1dp"
             android:layout_marginRight="@dimen/x20dp"
+            android:layout_marginTop="@dimen/x1dp"
             android:background="@color/seperator_light_gray" />
 
         <LinearLayout
@@ -172,6 +200,7 @@
                             app:corner_radius="@dimen/x5dp">
 
                             <edu.aku.ehs.widget.AnyTextView
+                                android:id="@+id/txtEnrolledNumber"
                                 android:layout_width="@dimen/x40dp"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
@@ -232,6 +261,8 @@
                             app:corner_radius="@dimen/x5dp">
 
                             <edu.aku.ehs.widget.AnyTextView
+                                android:id="@+id/txtLabTestNumber"
+
                                 android:layout_width="@dimen/x40dp"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
@@ -289,10 +320,12 @@
                         <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@color/pastel_peach"
+                            android:background="@color/pastel_pink"
                             app:corner_radius="@dimen/x5dp">
 
                             <edu.aku.ehs.widget.AnyTextView
+                                android:id="@+id/txtInProgressNumber"
+
                                 android:layout_width="@dimen/x40dp"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
@@ -354,6 +387,7 @@
                             app:corner_radius="@dimen/x5dp">
 
                             <edu.aku.ehs.widget.AnyTextView
+                                android:id="@+id/txtAssessedNumber"
                                 android:layout_width="@dimen/x40dp"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
@@ -376,6 +410,7 @@
 
 
             <ImageView
+                android:id="@+id/imgNext"
                 android:layout_width="@dimen/x25dp"
                 android:layout_height="@dimen/x25dp"
                 android:layout_gravity="bottom"

@@ -12,8 +12,8 @@
         android:layout_marginLeft="@dimen/x20dp"
         android:layout_marginRight="@dimen/x20dp"
         android:layout_marginTop="@dimen/x10dp"
-        android:elevation="@dimen/x3dp"
         android:background="@color/c_white"
+        android:elevation="@dimen/x3dp"
         app:corner_radius="@dimen/x10dp">
 
 
@@ -40,15 +40,13 @@
                     android:layout_height="wrap_content">
 
 
-
-
                     <edu.aku.ehs.widget.AnyTextView
                         android:id="@+id/txtEmployeeName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:maxLines="2"
                         android:gravity="center"
+                        android:maxLines="2"
                         android:padding="@dimen/x3dp"
                         android:text="Employee Name"
                         android:textColor="@color/txtBlue"
@@ -57,33 +55,100 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:id="@+id/txtEmployeeGender"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="right"
+                        android:padding="@dimen/x3dp"
+                        android:singleLine="true"
+                        android:text="Male"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_medium" />
 
 
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:padding="@dimen/x3dp"
+                        android:singleLine="true"
+                        android:text="|"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_medium" />
 
-                <edu.aku.ehs.widget.AnyTextView
-                    android:id="@+id/txtEmployeeGender"
-                    android:layout_width="wrap_content"
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:id="@+id/txtEmployeeAge"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:padding="@dimen/x3dp"
+                        android:singleLine="true"
+                        android:text="25y"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_medium" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:padding="@dimen/x3dp"
-                    android:singleLine="true"
-                    android:text="Male | 25y"
-                    android:textColor="@color/txtDarkGrey"
-                    android:textSize="@dimen/s12"
-                    app:typeface="@string/font_medium" />
+                    android:gravity="center">
 
 
-                <edu.aku.ehs.widget.AnyTextView
-                    android:id="@+id/txtMRN"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:padding="@dimen/x3dp"
-                    android:singleLine="true"
-                    android:text="400-40-40"
-                    android:textColor="@color/txtDarkGrey"
-                    android:textSize="@dimen/s12"
-                    app:typeface="@string/font_medium" />
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:id="@+id/txtMRN"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="right"
+                        android:padding="@dimen/x3dp"
+                        android:singleLine="true"
+                        android:text="400-40-40"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_medium" />
+
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:padding="@dimen/x3dp"
+                        android:singleLine="true"
+                        android:text="|"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_medium" />
+
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:id="@+id/txtEmployeeID"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:padding="@dimen/x3dp"
+                        android:singleLine="true"
+                        android:text="202011"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_medium" />
+
+
+                </LinearLayout>
 
 
             </LinearLayout>
@@ -110,7 +175,7 @@
 
 
                     <edu.aku.ehs.widget.AnyTextView
-                        android:id="@+id/txDate"
+                        android:id="@+id/txtDepartmentName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/x3dp"
@@ -118,7 +183,7 @@
                         android:ellipsize="end"
                         android:padding="@dimen/x3dp"
                         android:singleLine="true"
-                        android:text="20 July 2019"
+                        android:text="Department Name"
                         android:textColor="@color/txtDarkGrey"
                         android:textSize="@dimen/s12"
                         app:typeface="@string/font_regular" />
@@ -141,12 +206,12 @@
 
                             <edu.aku.ehs.widget.AnyTextView
                                 android:id="@+id/txtStatus"
-                                android:layout_width="@dimen/x100dp"
+                                android:layout_width="@dimen/x80dp"
                                 android:layout_height="@dimen/x20dp"
                                 android:ellipsize="end"
                                 android:gravity="center"
                                 android:singleLine="true"
-                                android:text="Enrolled"
+                                android:text="In Progress"
                                 android:textColor="@color/txtBlue"
                                 android:textSize="@dimen/s12"
                                 app:typeface="@string/font_medium" />
@@ -171,6 +236,38 @@
                     android:gravity="center_vertical">
 
 
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5">
+
+
+                        <me.grantland.widget.AutofitLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical">
+
+                            <edu.aku.ehs.widget.AnyTextView
+                                android:id="@+id/txDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="@dimen/x3dp"
+                                android:gravity="center_vertical"
+                                android:singleLine="true"
+                                android:text="Scheduled Date: 20 July 2019 00:00:00"
+                                android:textColor="@color/txtDarkGrey"
+                                android:textSize="@dimen/s12" />
+
+
+                        </me.grantland.widget.AutofitLayout>
+
+
+                    </LinearLayout>
+
+
                     <com.badoualy.stepperindicator.StepperIndicator
                         android:id="@+id/stepView"
                         android:layout_width="0dp"
@@ -180,8 +277,9 @@
                         app:stpi_labelColor="@color/txtBlue"
                         app:stpi_labels="@array/sessionEmployeeSteps"
                         app:stpi_showDoneIcon="true"
-                         app:stpi_showLabels="true"
-                        app:stpi_stepCount="4" />
+                        app:stpi_showLabels="true"
+                        app:stpi_stepCount="2" />
+
 
 
                     <ImageView
@@ -191,11 +289,9 @@
                         android:ellipsize="end"
                         android:padding="@dimen/x5dp"
                         android:singleLine="true"
-                        android:src="@drawable/img_delete"
+                        android:src="@drawable/img_delete_96"
                         android:textAllCaps="false"
-                        android:textColor="@color/c_white"
                         android:textSize="@dimen/s10"
-                        android:tint="@color/c_gray"
                         android:visibility="visible" />
 
 
@@ -206,19 +302,15 @@
                         android:ellipsize="end"
                         android:padding="@dimen/x5dp"
                         android:singleLine="true"
-                        android:src="@drawable/img_edit"
+                        android:src="@drawable/img_edit_96"
                         android:textAllCaps="false"
-                        android:textColor="@color/c_white"
                         android:textSize="@dimen/s10"
-                        android:tint="@color/c_gray"
                         android:visibility="visible" />
 
                 </LinearLayout>
 
 
             </LinearLayout>
-
-
 
 
         </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
@@ -237,9 +329,7 @@
             android:visibility="gone" />
 
 
-
     </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
-
 
 
 </RelativeLayout>

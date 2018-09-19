@@ -134,16 +134,16 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
     }
 
 
-    @OnClick({R.id.btnAssessment, R.id.btnMeasurements, R.id.btnRefer})
+    @OnClick({R.id.contAssessment, R.id.contMeasurements, R.id.contRefer})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.btnAssessment:
+            case R.id.contAssessment:
                 getBaseActivity().addDockableFragment(NewAssessmentViewPagerFragment.newInstance(), false);
                 break;
-            case R.id.btnMeasurements:
+            case R.id.contMeasurements:
                 getBaseActivity().addDockableFragment(EmployeeAnthropometricMeasurmentsFragment.newInstance(), false);
                 break;
-            case R.id.btnRefer:
+            case R.id.contRefer:
                 getBaseActivity().addDockableFragment(EmployeeProfileViewerFragment.newInstance(), false);
                 break;
         }

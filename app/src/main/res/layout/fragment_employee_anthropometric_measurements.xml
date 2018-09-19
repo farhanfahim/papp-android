@@ -65,7 +65,7 @@
                         android:padding="@dimen/x1dp">
 
                         <FrameLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="@dimen/x220dp"
                             android:layout_height="wrap_content"
                             android:background="@drawable/rounded_box_light_grey"
                             android:padding="@dimen/x3dp">

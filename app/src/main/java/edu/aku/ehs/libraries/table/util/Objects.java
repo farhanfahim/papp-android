@@ -103,7 +103,7 @@ public final class Objects {
 
   /**
    * Returns {@code o} if non-null, or throws {@code NullPointerException}
-   * with the given detail message.
+   * with the given detail responseMessage.
    */
   public static <T> T requireNonNull(T o, String message) {
     if (o == null) {

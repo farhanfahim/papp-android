@@ -19,7 +19,7 @@ import edu.aku.ehs.activities.BaseActivity;
 import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.helperclasses.Helper;
 import edu.aku.ehs.helperclasses.ui.helper.AnimationHelper;
-import edu.aku.ehs.models.EmployeeModel;
+import edu.aku.ehs.models.peoplesoft.employee.EMPLOYEE;
 import edu.aku.ehs.widget.AnyTextView;
 
 import static android.view.View.VISIBLE;
@@ -33,9 +33,9 @@ public class SelectEmployeesAdapter extends RecyclerView.Adapter<SelectEmployees
 
 
     private BaseActivity activity;
-    private ArrayList<EmployeeModel> arrData;
+    private ArrayList<EMPLOYEE> arrData;
 
-    public SelectEmployeesAdapter(BaseActivity activity, ArrayList<EmployeeModel> arrData, OnItemClickListener onItemClickListener) {
+    public SelectEmployeesAdapter(BaseActivity activity, ArrayList<EMPLOYEE> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
@@ -52,8 +52,12 @@ public class SelectEmployeesAdapter extends RecyclerView.Adapter<SelectEmployees
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        EmployeeModel model = arrData.get(i);
-        holder.txtEmployeeName.setText(model.getEmployeeName());
+        EMPLOYEE model = arrData.get(i);
+        holder.txtEmployeeName.setText(model.getNAME());
+        holder.txtDeptName.setText(model.getDESCR());
+        holder.txtDesignationAndGrade.setText(model.getTITLE() + " | " + model.getGRADE());
+        holder.txtEmployeeID.setText(model.getEMPLID());
+        holder.txtMRN.setText(model.getAKU_MRNO());
 
         TransitionDrawable td = (TransitionDrawable) holder.contListItem.getBackground();
 
@@ -70,7 +74,7 @@ public class SelectEmployeesAdapter extends RecyclerView.Adapter<SelectEmployees
         setListener(holder, model);
     }
 
-    private void setListener(final ViewHolder holder, final EmployeeModel model) {
+    private void setListener(final ViewHolder holder, final EMPLOYEE model) {
         holder.contListItem.setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
     }
 
@@ -84,18 +88,14 @@ public class SelectEmployeesAdapter extends RecyclerView.Adapter<SelectEmployees
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.txtEmployeeName)
         AnyTextView txtEmployeeName;
-        @BindView(R.id.txtEmployeeGender)
-        AnyTextView txtEmployeeGender;
         @BindView(R.id.txtMRN)
         AnyTextView txtMRN;
         @BindView(R.id.txtDesignationAndGrade)
         AnyTextView txtDesignationAndGrade;
         @BindView(R.id.txtEmployeeID)
         AnyTextView txtEmployeeID;
-        @BindView(R.id.txtEmailAddress)
-        AnyTextView txtEmailAddress;
         @BindView(R.id.txtDeptName)
-        AnyTextView txtDeptID;
+        AnyTextView txtDeptName;
         @BindView(R.id.contListItem)
         RoundKornerLinearLayout contListItem;
         @BindView(R.id.imgSelected)

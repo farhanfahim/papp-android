@@ -93,7 +93,7 @@ public class GenericContentFragment extends BaseFragment {
 //                            txtViewContent.setText(Html.fromHtml(responseCode.body().result.content));
 //                            dismissProgress();
 //                        } else {
-//                            UIHelper.showToast(getContext(), responseCode.body().message);
+//                            UIHelper.showToast(getContext(), responseCode.body().responseMessage);
 //                            dismissProgress();
 //                        }
 //

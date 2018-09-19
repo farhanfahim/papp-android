@@ -42,7 +42,7 @@ public class WebServiceConstants {
 
 
     // UAT
-    public static final String BASE_URL = "https://familyhifazatmobileapiuat.aku.edu/api/";
+    public static final String BASE_URL = "http://ehsapi.aku.edu/api/";
     public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapiuat.aku.edu/getimage?path=";
     // LIVE
 //    public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapi.aku.edu/getimage?path=";
@@ -54,14 +54,26 @@ public class WebServiceConstants {
     public static String PAYMENT_GATEWAY_URL = "https://testsecureacceptance.cybersource.com/token/create/";
 
     public static final String WS_KEY_GET_TOKEN = "getToken";
+
+    // People soft
     public static final String WS_TOKEN_CONSTANT = "Authorization: Basic QUtVX1RMX1JFU1RfRU1QX0RFUFQ6ezVDNEY0MkIzLUYyRDktNzQ1Ny0yQURDLTM5RTcxNDYyMDJCMn0=";
-    public static final String WS_AKU_DEPT_EMP_GET_URL = "https://uerpdmo.aku.edu/PSIGW/RESTListeningConnector/PSFT_HR/AKU_DEPT_EMPS_GET.v1/SHARE/M/510-29-10/";
+    public static final String WS_AKU_DEPT_EMP_GET_BASE_URL = "https://uerpdmo.aku.edu/PSIGW/RESTListeningConnector/PSFT_HR/AKU_DEPT_EMPS_GET.v1/";
+    public static final String WS_AKU_DEPT_EMP_PART = "SHARE/{type}/{value}";
+
+
 
     /**
      * API PARAMS
      */
-    public static final String PARAMS_REQUEST_METHOD = "RequestMethod";
-    public static final String PARAMS_REQUEST_DATA = "RequestData";
+    public static final String PARAMS_REQUEST_METHOD = "requestmethod";
+    public static final String PARAMS_REQUEST_DATA = "requestdata";
+
+    // People soft API Params
+    public static final String DIV_KEY = "2V";
+    public static final String DEPT_KEY = "1D";
+    public static final String EMPLOYEE_NO_KEY = "1E";
+    public static final String MR_NO_KEY = "1M";
+    public static final String GET_ALL_KEY = "*";
 
 
     /**
@@ -83,65 +95,19 @@ public class WebServiceConstants {
      */
 
     // UserManager
-    public static final String METHOD_USER_GET_REGISTER_VM = "UserManager.GetRegisterVM";
     public static final String METHOD_USER_LOGIN = "UserManager.Login";
-    public static final String METHOD_CARD_MEMBER = "UserManager.GetRegisteredCardAndMembers";
-    public static final String METHOD_USER_UPLOAD_REQUEST_FILE = "UserManager.UploadRequestFile";
-    public static final String METHOD_USER_UPLOAD_PROFILE_PICTURE = "UserManager.UploadProfilePicture";
     public static final String METHOD_USER_GET_USER_IMAGE = "UserManager.GetUserImage";
-    public static final String METHOD_USER_INSERT_REGISTERED_DEVICE = "UserManager.InsertRegisteredDevice";
-    public static final String METHOD_USER_GENERATE_RESET = "UserManager.GeneratePasswordResetCodeAndEmail";
-    public static final String METHOD_USER_VERIFY_AND_UPDATE = "UserManager.VerifyPasswordResetCodeAndUpdatePassword";
-    public static final String METHOD_USER_GET_APPLICATION_PARAMETER = "SharedManager.GetApplicationParameter";
-    public static final String METHOD_USER_SAVE_ACCESS_LOG = "UserManager.SaveAccessLogAuto";
 
+    //DictionaryManager
+    public static final String METHOD_ADD_SESSION = "DictionaryManager.AddSession";
+    public static final String METHOD_UPDATE_SESSION = "DictionaryManager.UpdateSession";
 
-    public static final String METHOD_GET_RADIOLOGY_EXAMS = "RadiologyManager.GetRadiologyExams";
-    public static final String METHOD_GET_RADIOLOGY_GET_EXAM_DETAIL = "RadiologyManager.GetExamDetail";
-    public static final String METHOD_GET_RADIOLOGY_GET_REPORT = "RadiologyManager.ShowReport";
+    //SessionManager
+    public static final String METHOD_GET_SESSION_LIST = "SessionManager.GetSessionList";
+    public static final String METHOD_GET_SESSION_EMPLOYEES = "SessionManager.GetSessionEmp";
+    public static final String METHOD_ADD_SESSION_EMPLOYEE = "SessionManager.AddSessionEmp";
+    public static final String METHOD_UPDATE_SESSION_EMPLOYEE = "SessionManager.UpdateSessionEmp";
 
-    public static final String METHOD_NEUROPHIOLOGY = "NeurophysiologyManager.GetNeurophysiologyExam";
-    public static final String METHOD_NEUROPHIOLOGY_SHOW_REPORT = "NeurophysiologyManager.ShowReport";
-
-    public static final String METHOD_CARDIO = "CardiopulmonaryManager.GetCardiopulmonaryExam";
-    public static final String METHOD_CARDIO_SHOW_REPORT = "CardiopulmonaryManager.ShowReport";
-    public static final String METHOD_CARDIO_SHOW_GRAPH = "CardiopulmonaryManager.ShowGraph";
-
-    public static final String METHOD_CLINICAL_LAB = "LaboratoryManager.GetLabSpecimenList";
-    public static final String METHOD_CLINICAL_LAB_DETAILS = "LaboratoryManager.GetLabSpecimenDetails";
-    public static final String METHOD_CLINICAL_LAB_REPORT = "LaboratoryManager.GetLabSpecimenReport";
-    public static final String METHOD_CLINICAL_LAB_RESULT_HISTORY = "LaboratoryManager.GetLabResultHistory";
-
-    public static final String METHOD_SHOW_REPORT_DS = "PatientManager.ShowReport";
-    public static final String METHOD_GET_PATIENT_VISIT = "PatientManager.GetPatientVisit";
-    public static final String METHOD_DISCHARGE_SUMMARY_LIST = "PatientManager.GetDischargeSummaryList";
-
-    public static final String METHOD_GET_ENDOSCOPY_LIST = "PatientManager.GetEndoscopyList";
-    public static final String METHOD_GET_ENDOSCOPY_REPORT = "SharedManager.GetReport";
-
-    public static final String METHOD_IMMUNIZATION_VACCINE_SCHEDULE = "PharmacyManager.VaccineSchedule";
-    public static final String METHOD_IMMUNIZATION_UPDATE_VACCINE = "PharmacyManager.UpdateVaccine";
-    public static final String METHOD_IMMUNIZATION_ADD_VACCINE = "PharmacyManager.AddVaccine";
-    public static final String METHOD_IMMUNIZATION_VACCINE_IDS = "PharmacyManager.GetVaccineIDs";
-    public static final String METHOD_IMMUNIZATION_ROUTE_IDS = "PharmacyManager.GetRouteIDs";
-    public static final String METHOD_IMMUNIZATION_RECORD_EXIST = "PharmacyManager.ImmunizationRecordExists";
-
-    public static final String METHOD_CURRENT_MEDICATION = "PharmacyManager.GetCurrentMedicine";
-    public static final String METHOD_PREVIOUS_MEDICATION = "PharmacyManager.GetPreviousProfileMedications";
-    public static final String METHOD_ADD_MEDICINE = "PharmacyManager.AddMedicine";
-    public static final String METHOD_FREQUENCY_IDS = "PharmacyManager.GetFrequencyIDs";
-
-    public static final String METHOD_PATIENT_HEALTH_SUMMARY = "SharedManager.GetPatientHealthSummary";
-    public static final String METHOD_DETAIL_HEALTH_SUMMARY = "SharedManager.GetHealthSummary";
-    public static final String METHOD_SAVE_HEALTH_SUMMARY_DETAILS = "SharedManager.SaveHealthIndicatorDetails";
-
-    public static final String METHOD_PACS_MANAGER = "PACSManager.GetPacs";
-    public static final String METHOD_PACS_ACCESSIONS = "{\"PACS_Accessions\":[";
-    public static final String METHOD_PACS_ACCESSIONS_end = "]}";
-
-    public static final String SHARED_MANAGER_GET_VISIT_MENU_LIST = "SharedManager.GetVisitMenuList";
-    public static final String METHOD_UPDATE_PROFILE = "UserManager.UpdateCardMemberVM";
-    public static final String METHOD_GET_EDIT_CARD = "UserManager.GetEditCardMemberVM";
 
     public static final String METHOD_GET_ONE_TIME_TOKEN = "SharedManager.GetOneTimeCode";
 

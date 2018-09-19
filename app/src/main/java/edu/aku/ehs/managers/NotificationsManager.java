@@ -80,7 +80,7 @@
 //    }
 //
 //    private static String getSummary(int messageCount, int chatsCount) {
-//        return messageCount + " new message" + (messageCount > 1 ? "s" : "") + (chatsCount > 1 ? " from " + chatsCount + " chats" : "");
+//        return messageCount + " new responseMessage" + (messageCount > 1 ? "s" : "") + (chatsCount > 1 ? " from " + chatsCount + " chats" : "");
 //    }
 //
 //    private static NotificationCompat.InboxStyle getMessagesInboxStyle(RealmResults<ChatModel> chats, RealmResults<MessageModel> messages, boolean multipleChats) {
@@ -89,10 +89,10 @@
 //        int limit = 7;
 //
 //        for (int i = (size > limit) ? (size - limit) : 0; i < size; i++) {
-//            MessageModel message = messages.get(i);
-//            ChatModel chatModel = chats.where().equalTo("id", message.getChatId()).findFirst();
+//            MessageModel responseMessage = messages.get(i);
+//            ChatModel chatModel = chats.where().equalTo("id", responseMessage.getChatId()).findFirst();
 //            String type = "";
-//            switch (message.getMessageType()) {
+//            switch (responseMessage.getMessageType()) {
 //                case MEDIA_IMAGE:
 //                    type += "Photo";
 //                    break;
@@ -114,18 +114,18 @@
 //
 //            switch (chatModel.getType()) {
 //                case SINGLE:
-//                    inboxStyle.addLine((multipleChats ? chatModel.getContactDetail().getName() + ": " : "") + type + message.getText());
+//                    inboxStyle.addLine((multipleChats ? chatModel.getContactDetail().getName() + ": " : "") + type + responseMessage.getText());
 //                    break;
 //                case GROUP:
 //                    ContactDetailModel memberDetail =
-//                            chatModel.getGroupDetailModel().getParticipantModels().where().equalTo("contactDetailModel.UserName", message.getRemoteJid()).findFirst() != null  //Accessing getContactDetailModel on a NullObject Causes NullPointerException
-//                                    ? chatModel.getGroupDetailModel().getParticipantModels().where().equalTo("contactDetailModel.UserName", message.getRemoteJid()).findFirst().getContactDetailModel()
+//                            chatModel.getGroupDetailModel().getParticipantModels().where().equalTo("contactDetailModel.UserName", responseMessage.getRemoteJid()).findFirst() != null  //Accessing getContactDetailModel on a NullObject Causes NullPointerException
+//                                    ? chatModel.getGroupDetailModel().getParticipantModels().where().equalTo("contactDetailModel.UserName", responseMessage.getRemoteJid()).findFirst().getContactDetailModel()
 //                                    : null;
 //
 //                    inboxStyle.addLine(
 //                            (multipleChats ? chatModel.getGroupDetailModel().getChatName() + ": " : "")  //GROUP 1:  USER1 : Message
 //                                    + getName(memberDetail)
-//                                    + type + message.getText()
+//                                    + type + responseMessage.getText()
 //                    );
 //                    break;
 //            }

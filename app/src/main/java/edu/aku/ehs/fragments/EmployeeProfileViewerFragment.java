@@ -3,16 +3,16 @@ package edu.aku.ehs.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-
-import com.github.clans.fab.FloatingActionButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +21,7 @@ import butterknife.Unbinder;
 import edu.aku.ehs.R;
 import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
+import edu.aku.ehs.helperclasses.Helper;
 import edu.aku.ehs.models.SessionDetailModel;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
@@ -29,6 +30,7 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
 
 
     Unbinder unbinder;
+    SessionDetailModel sessionDetailModel;
     @BindView(R.id.imgBanner)
     ImageView imgBanner;
     @BindView(R.id.txtHeight)
@@ -49,8 +51,6 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
     AnyTextView txtBPSystolic;
     @BindView(R.id.txtBPDiastolic)
     AnyTextView txtBPDiastolic;
-    @BindView(R.id.cardMeasurement)
-    CardView cardMeasurement;
     @BindView(R.id.txtResultHB)
     AnyTextView txtResultHB;
     @BindView(R.id.txtUnitHB)
@@ -75,11 +75,38 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
     AnyTextView txtResultHEPC;
     @BindView(R.id.txtUnitHEPC)
     AnyTextView txtUnitHEPC;
+    @BindView(R.id.txtMedicalNone)
+    AnyTextView txtMedicalNone;
+    @BindView(R.id.contMedicalHistory)
+    LinearLayout contMedicalHistory;
+    @BindView(R.id.txtQuestionTitle)
+    AnyTextView txtQuestionTitle;
+    @BindView(R.id.txtFamilyNone)
+    AnyTextView txtFamilyNone;
+    @BindView(R.id.contFamilyHistory)
+    LinearLayout contFamilyHistory;
+    @BindView(R.id.txtPsycosocialNone)
+    AnyTextView txtPsycosocialNone;
+    @BindView(R.id.contPsychosocialHistory)
+    LinearLayout contPsychosocialHistory;
+    @BindView(R.id.txtSmokingBehaviors)
+    AnyTextView txtSmokingBehaviors;
+    @BindView(R.id.contSmokingBehaviors)
+    LinearLayout contSmokingBehaviors;
+    @BindView(R.id.rbYes)
+    RadioButton rbYes;
+    @BindView(R.id.rbNo)
+    RadioButton rbNo;
+    @BindView(R.id.rgYesNoRecommend)
+    RadioGroup rgYesNoRecommend;
+    @BindView(R.id.contReferredTo)
+    LinearLayout contReferredTo;
     @BindView(R.id.btnDone)
-    FloatingActionButton btnDone;
+    Button btnDone;
+    @BindView(R.id.contBelow)
+    LinearLayout contBelow;
     @BindView(R.id.contParent)
     RelativeLayout contParent;
-    SessionDetailModel sessionDetailModel;
 
 
     public static EmployeeProfileViewerFragment newInstance() {
@@ -98,7 +125,7 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_patient_profile_viewer;
+        return R.layout.fragment_patient_profile_viewer_v2;
     }
 
     @Override
@@ -113,7 +140,17 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
 
     @Override
     public void setListeners() {
+        rgYesNoRecommend.setOnCheckedChangeListener((radioGroup, i) -> {
+            switch (i) {
+                case R.id.rbYes:
+                    contReferredTo.setVisibility(View.VISIBLE);
+                    break;
 
+                case R.id.rbNo:
+                    contReferredTo.setVisibility(View.GONE);
+                    break;
+            }
+        });
     }
 
     @Override
@@ -143,6 +180,28 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        txtPsycosocialNone.setVisibility(View.VISIBLE);
+
+// Medical History\
+        Helper.addTextView(getContext(), contMedicalHistory, "High Blood Pressure (Treated)",
+                (int) getBaseActivity().getResources().getDimension(R.dimen.s10), getBaseActivity().getResources().getColor(R.color.txtBlue));
+        Helper.addTextView(getContext(), contMedicalHistory, "Hep B (Not Treated)",
+                (int) getBaseActivity().getResources().getDimension(R.dimen.s10), getBaseActivity().getResources().getColor(R.color.txtBlue));
+
+// Smoking Behaviors
+        Helper.addTextView(getContext(), contSmokingBehaviors, "Smoker",
+                (int) getBaseActivity().getResources().getDimension(R.dimen.s10), getBaseActivity().getResources().getColor(R.color.txtBlue));
+        Helper.addTextView(getContext(), contSmokingBehaviors, "Thought of Quitting",
+                (int) getBaseActivity().getResources().getDimension(R.dimen.s10), getBaseActivity().getResources().getColor(R.color.txtBlue));
+
+// Family History
+        Helper.addTextView(getContext(), contFamilyHistory, "High Blood Pressure",
+                (int) getBaseActivity().getResources().getDimension(R.dimen.s10), getBaseActivity().getResources().getColor(R.color.txtBlue));
+        Helper.addTextView(getContext(), contFamilyHistory, "Diabetes",
+                (int) getBaseActivity().getResources().getDimension(R.dimen.s10), getBaseActivity().getResources().getColor(R.color.txtBlue));
+
+
     }
 
     @Override

@@ -63,4 +63,12 @@
     </style>
 
 
+
+    <style name="RadioButtonStyle" parent="AppBaseTheme">
+        <item name="colorControlNormal">@color/c_white</item> // unchecked
+        <item name="colorControlActivated">@color/base_amber</item> // checked
+        <item name="android:textColorSecondary">@color/c_white</item> // text color
+    </style>
+
+
 </resources>

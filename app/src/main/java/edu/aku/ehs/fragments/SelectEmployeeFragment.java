@@ -29,11 +29,23 @@ import butterknife.Unbinder;
 import edu.aku.ehs.R;
 import edu.aku.ehs.adapters.recyleradapters.SelectEmployeesAdapter;
 import edu.aku.ehs.callbacks.OnItemClickListener;
+import edu.aku.ehs.constatnts.AppConstants;
+import edu.aku.ehs.constatnts.WebServiceConstants;
+import edu.aku.ehs.enums.BaseURLTypes;
+import edu.aku.ehs.enums.EmployeeSessionState;
+import edu.aku.ehs.enums.SearchByType;
 import edu.aku.ehs.enums.SelectEmployeeActionType;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.fragments.abstracts.GenericDialogFragment;
-import edu.aku.ehs.models.EmployeeModel;
+import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
+import edu.aku.ehs.managers.retrofit.GsonFactory;
+import edu.aku.ehs.managers.retrofit.WebServices;
+import edu.aku.ehs.models.SessionDetailModel;
 import edu.aku.ehs.models.SessionModel;
+import edu.aku.ehs.models.peoplesoft.department.DEPT;
+import edu.aku.ehs.models.peoplesoft.employee.EMPLOYEE;
+import edu.aku.ehs.models.peoplesoft.employee.EmployeeWrapper;
+import edu.aku.ehs.models.wrappers.WebResponse;
 import edu.aku.ehs.widget.AnyEditTextView;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
@@ -76,7 +88,7 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
     @BindView(R.id.txtSessionName)
     AnyTextView txtSessionName;
 
-    private ArrayList<EmployeeModel> arrData;
+    private ArrayList<EMPLOYEE> arrData;
     private SelectEmployeesAdapter adapter;
     private String searchKeyword = "";
 
@@ -84,18 +96,25 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
     GenericDialogFragment genericDialogFragment = GenericDialogFragment.newInstance();
     private SelectEmployeeActionType selectEmployeeActionType;
     SessionModel sessionModel;
+    private SearchByType searchByType;
+    private DEPT deptModel;
+    private DEPT division;
 
 
-    public static SelectEmployeeFragment newInstance(String searchKeyword, SelectEmployeeActionType selectEmployeeActionType, SessionModel sessionModel) {
+    public static SelectEmployeeFragment newInstance(String searchKeyword, SelectEmployeeActionType selectEmployeeActionType, SearchByType searchByType, SessionModel sessionModel, DEPT dept, DEPT division) {
         Bundle args = new Bundle();
 
         SelectEmployeeFragment fragment = new SelectEmployeeFragment();
         fragment.searchKeyword = searchKeyword;
         fragment.selectEmployeeActionType = selectEmployeeActionType;
+        fragment.searchByType = searchByType;
         fragment.sessionModel = sessionModel;
+        fragment.deptModel = dept;
+        fragment.division = division;
         fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public int getDrawerLockMode() {
@@ -154,7 +173,7 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        arrData = new ArrayList<EmployeeModel>();
+        arrData = new ArrayList<EMPLOYEE>();
         adapter = new SelectEmployeesAdapter(getBaseActivity(), arrData, this);
     }
 
@@ -173,33 +192,24 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
         imgBanner.setVisibility(View.VISIBLE);
         contSelection.setVisibility(View.VISIBLE);
         txtSessionName.setVisibility(View.VISIBLE);
-        txtSessionName.setText(sessionModel.getSessionName());
+        txtSessionName.setText(sessionModel.getDescription());
         fab.setVisibility(View.VISIBLE);
         fab.setImageResource(R.drawable.ic_done_white_18dp);
 
         bindView();
 
-        bindData();
-    }
-
-    private void bindData() {
-        arrData.clear();
-        EmployeeModel sessionDetailModel;
-
-        for (int i = 0; i < 8; i++) {
-            if (i < 2) {
-                sessionDetailModel = new EmployeeModel("Hamza Ahmed Khan");
-            } else if (i >= 2 && i < 4) {
-                sessionDetailModel = new EmployeeModel("Haris Maaz");
-            } else if (i >= 4 && i < 6) {
-                sessionDetailModel = new EmployeeModel("Aqsa Sarwar");
-            } else {
-                sessionDetailModel = new EmployeeModel("Mahrukh Mehmood");
-
-            }
-            arrData.add(sessionDetailModel);
+        switch (searchByType) {
+            case MRNUMBER:
+                getEmployeeListCall(WebServiceConstants.MR_NO_KEY, searchKeyword);
+                break;
+            case EMPLOYEENUMBER:
+                getEmployeeListCall(WebServiceConstants.EMPLOYEE_NO_KEY, searchKeyword);
+                break;
+            case DEPARTMENT:
+                getEmployeeListCall(WebServiceConstants.DEPT_KEY, deptModel.getDEPTID());
+                break;
         }
-        adapter.notifyDataSetChanged();
+
     }
 
 
@@ -237,9 +247,101 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
                 cbSelectAll.performClick();
                 break;
             case R.id.fab:
-                getBaseActivity().popBackStack();
-                getBaseActivity().popBackStack();
+                switch (selectEmployeeActionType) {
+                    case SENDEMAIL:
+                        getBaseActivity().popStackTill(EmailFragment.class.getSimpleName());
+                        break;
+                    case ADDEMPLOYEE:
+                        addSelectedEmployees();
+                        break;
+                }
+
                 break;
         }
     }
+
+    private void addSelectedEmployees() {
+        ArrayList<SessionDetailModel> sessionDetailModelArrayList = new ArrayList<>();
+        for (EMPLOYEE employee : arrData) {
+            if (employee.isSelected()) {
+                SessionDetailModel sessionDetailModel = new SessionDetailModel();
+                sessionDetailModel.setSessionID(sessionModel.getSessionId());
+                sessionDetailModel.setEmployeeNo(employee.getEMPLID());
+                sessionDetailModel.setMedicalRecordNo(employee.getAKU_MRNO());
+                sessionDetailModel.setStatusID(EmployeeSessionState.ENROLLED.canonicalForm());
+                sessionDetailModel.setDepartmentID(employee.getDEPTID());
+                sessionDetailModel.setDepartmentName(employee.getDESCR());
+
+
+                if (division != null) {
+                    sessionDetailModel.setDivisionID(division.getDEPTID());
+                    sessionDetailModel.setDivisionName(division.getDESCR());
+                }
+                sessionDetailModel.setEnrolledBy(AppConstants.tempUserName);
+                sessionDetailModel.setLastFileUser(AppConstants.tempUserName);
+
+                sessionDetailModelArrayList.add(sessionDetailModel);
+            }
+        }
+
+        String jsonArrayData = GsonFactory.getConfiguredGson().toJson(sessionDetailModelArrayList);
+        addEmployeesInSessionCall(jsonArrayData);
+    }
+
+
+    private void getEmployeeListCall(String type, String value) {
+        new WebServices(getContext(),
+                "",
+                BaseURLTypes.GET_EMP_DEPT_URL, true)
+                .webServiceGetEmployees(type, value, new WebServices.IRequestWebResponseEmployeeList() {
+                    @Override
+                    public void requestDataResponse(EmployeeWrapper webResponse) {
+
+                        if (webResponse.getAKU_WA_DEPT_EMPS().getEMPLOYEE() != null && !webResponse.getAKU_WA_DEPT_EMPS().getEMPLOYEE().isEmpty()) {
+                            arrData.clear();
+                            arrData.addAll(webResponse.getAKU_WA_DEPT_EMPS().getEMPLOYEE());
+                            adapter.notifyDataSetChanged();
+                            emptyView.setVisibility(View.GONE);
+
+                        } else {
+                            showEmptyView("No Record Found");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                        showEmptyView("No Record Found");
+                    }
+                });
+    }
+
+
+    private void addEmployeesInSessionCall(String jsonArrayData) {
+        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+                .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_ADD_SESSION_EMPLOYEE, jsonArrayData,
+                        new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                            @Override
+                            public void requestDataResponse(WebResponse<Object> webResponse) {
+                                UIHelper.showToast(getContext(), webResponse.responseMessage);
+                                AppConstants.isForcedResetFragment = true;
+                                getBaseActivity().popStackTill(SessionDetailFragment.class.getSimpleName());
+                            }
+
+                            @Override
+                            public void onError(Object object) {
+                                emptyView.setVisibility(View.VISIBLE);
+                                if (object instanceof String) {
+                                    UIHelper.showToast(getContext(), (String) object);
+                                }
+                            }
+                        });
+    }
+
+
+    private void showEmptyView(String text) {
+        emptyView.setText(text);
+        emptyView.setVisibility(View.VISIBLE);
+    }
+
 }

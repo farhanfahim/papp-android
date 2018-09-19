@@ -54,7 +54,7 @@ import edu.aku.ehs.R;
 import edu.aku.ehs.activities.BaseActivity;
 import edu.aku.ehs.adapters.SpinnerDialogAdapter;
 import edu.aku.ehs.callbacks.GenericClickableInterface;
-import edu.aku.ehs.callbacks.OnItemSelectListner;
+import edu.aku.ehs.callbacks.OnSpinnerOKPressedListener;
 import edu.aku.ehs.callbacks.OnSpinnerItemClickListener;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.fragments.abstracts.GenericDialogFragment;
@@ -627,7 +627,7 @@ public class UIHelper {
 
 
     public static void showSpinnerDialog(BaseFragment fragment, final ArrayList<SpinnerModel> arrData, String title, final TextView textView,
-                                         OnSpinnerItemClickListener onSpinnerItemClick, OnItemSelectListner onItemSelectListner, final IntWrapper positionToScroll) {
+                                         OnSpinnerItemClickListener onSpinnerItemClick, OnSpinnerOKPressedListener onSpinnerOKPressedListener, final IntWrapper positionToScroll) {
         final SpinnerDialogFragment dialogFragment;
 
         String s = GsonFactory.getSimpleGson().toJson(arrData);
@@ -655,9 +655,9 @@ public class UIHelper {
                         positionToScroll.value = position;
                     }
                 }
-            }, onItemSelectListner, positionToScroll.value);
+            }, onSpinnerOKPressedListener, positionToScroll.value);
         } else {
-            dialogFragment = SpinnerDialogFragment.newInstance(title, listCopy, onSpinnerItemClick, onItemSelectListner, positionToScroll.value);
+            dialogFragment = SpinnerDialogFragment.newInstance(title, listCopy, onSpinnerItemClick, onSpinnerOKPressedListener, positionToScroll.value);
         }
         dialogFragment.show(fragment.getFragmentManager(), null);
     }

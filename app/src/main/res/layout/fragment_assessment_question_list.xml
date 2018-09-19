@@ -16,19 +16,19 @@
             android:id="@+id/txtQuestionTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#eee"
+            android:background="@color/question_header"
             android:gravity="center"
             android:padding="@dimen/x3dp"
             android:text="Medical History"
             android:textColor="@color/txtBlue"
             android:textSize="@dimen/s15"
-            app:typeface="@string/font_bold" />
+            app:typeface="@string/font_medium" />
 
         <edu.aku.ehs.widget.AnyTextView
             android:id="@+id/txtQuestionSubTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/seperator_light_gray"
+            android:background="@color/question_subheader"
             android:gravity="center"
             android:padding="@dimen/x3dp"
             android:text="Specific to Mother, Father, Brother and Sister"

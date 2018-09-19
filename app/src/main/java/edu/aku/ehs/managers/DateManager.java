@@ -7,17 +7,17 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import edu.aku.ehs.callbacks.OnCalendarUpdate;
-import edu.aku.ehs.callbacks.OnDatePicked;
-import edu.aku.ehs.constatnts.AppConstants;
-import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import edu.aku.ehs.callbacks.OnCalendarUpdate;
+import edu.aku.ehs.callbacks.OnDatePicked;
+import edu.aku.ehs.constatnts.AppConstants;
+import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
 
 /**
  * Created by muhammadmuzammil on 4/20/2017.
@@ -69,6 +69,29 @@ public class DateManager {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    public static long getTimeInMillis(String date, String format) {
+        if (date == null || date.isEmpty()) return 0;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.US);
+        try {
+            return simpleDateFormat.parse(date).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+
+    public static long getTimeInMillis(SimpleDateFormat simpleDateFormat, String date) {
+        try {
+            return simpleDateFormat.parse(date).getTime();
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public static String getTime(long millisecond) {
@@ -385,6 +408,40 @@ public class DateManager {
     }
 
 
+    public static void showDatePicker(final Context context, final TextView textView, final String customDateFormatToShow, final DatePickerDialog.OnDateSetListener onDateSetListener, boolean isCurrentDateMaxiumum, boolean isCurrentDateMinimum, Date dateToOpen) {
+            final Calendar myCalendar;
+            myCalendar = Calendar.getInstance();
+            if (dateToOpen != null) {
+                myCalendar.setTime(dateToOpen);
+            }
+            DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                String myFormat = customDateFormatToShow; // In which you need put here
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                //UIHelper.showLongToastInCenter(context, sdf.format(myCalendar.getTime()));
+                if (textView != null) {
+                    textView.setText(sdf.format(myCalendar.getTime()));
+                }
+                if (onDateSetListener != null) {
+                    onDateSetListener.onDateSet(view, year, monthOfYear, dayOfMonth);
+                }
+            };
+            DatePickerDialog datePickerDialog = new DatePickerDialog(context, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+            if (isCurrentDateMaxiumum) {
+                datePickerDialog.getDatePicker().setMaxDate(myCalendar.getTimeInMillis());
+            }
+            if (isCurrentDateMinimum) {
+                datePickerDialog.getDatePicker().setMinDate(myCalendar.getTimeInMillis());
+            }
+            datePickerDialog.show();
+    }
+
+
+
+
     public static void showDatePicker(final Context context, final TextView textView, final DatePickerDialog.OnDateSetListener onDateSetListener, boolean isCurrentDateMaxiumum) {
 
         if (textView != null) {
@@ -498,16 +555,4 @@ public class DateManager {
             UIHelper.showLongToastInCenter(context, "Unable to show Date picker");
         }
     }
-
-
-    public static long getTimeInMillis(SimpleDateFormat simpleDateFormat, String date) {
-        try {
-            return simpleDateFormat.parse(date).getTime();
-        } catch (ParseException e) {
-
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
 }

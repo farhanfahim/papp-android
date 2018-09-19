@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_light">
+
     <RelativeLayout
         android:id="@+id/contParent"
         android:layout_width="match_parent"
@@ -57,7 +58,7 @@
 
                     <LinearLayout
                         android:id="@+id/contBMI"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/x180dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_box_filled_columbia_blue"
                         android:orientation="vertical"
@@ -141,13 +142,15 @@
                             android:padding="@dimen/x3dp"
                             app:corner_radius="@dimen/x5dp">
 
-                            <edu.aku.ehs.widget.AnyTextView
+                            <edu.aku.ehs.widget.AnyEditTextView
                                 android:id="@+id/txtHeight"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:background="@null"
                                 android:gravity="center"
+                                android:imeOptions="actionNext"
+                                android:inputType="number"
                                 android:lines="1"
                                 android:maxLength="3"
                                 android:maxLines="1"
@@ -217,14 +220,17 @@
                             android:padding="@dimen/x3dp"
                             app:corner_radius="@dimen/x5dp">
 
-                            <edu.aku.ehs.widget.AnyTextView
+                            <edu.aku.ehs.widget.AnyEditTextView
                                 android:id="@+id/txtWeight"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:background="@null"
                                 android:gravity="center"
+                                android:imeOptions="actionNext"
+                                android:inputType="number"
                                 android:lines="1"
+
                                 android:maxLength="3"
                                 android:maxLines="1"
                                 android:text="0"
@@ -290,16 +296,18 @@
                             android:layout_margin="@dimen/x1dp"
                             android:background="@color/pastel_cyan"
                             android:elevation="@dimen/x1dp"
+                            android:imeOptions="actionNext"
                             android:padding="@dimen/x3dp"
                             app:corner_radius="@dimen/x5dp">
 
-                            <edu.aku.ehs.widget.AnyTextView
+                            <edu.aku.ehs.widget.AnyEditTextView
                                 android:id="@+id/txtWaist"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:background="@null"
                                 android:gravity="center"
+                                android:inputType="number"
                                 android:lines="1"
                                 android:maxLength="3"
                                 android:maxLines="1"
@@ -369,13 +377,15 @@
                             android:padding="@dimen/x3dp"
                             app:corner_radius="@dimen/x5dp">
 
-                            <edu.aku.ehs.widget.AnyTextView
+                            <edu.aku.ehs.widget.AnyEditTextView
                                 android:id="@+id/txtBPSystolic"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:background="@null"
                                 android:gravity="center"
+                                android:imeOptions="actionNext"
+                                android:inputType="number"
                                 android:lines="1"
                                 android:maxLength="3"
                                 android:maxLines="1"
@@ -443,16 +453,18 @@
                             android:layout_margin="@dimen/x1dp"
                             android:background="@color/pastel_cyan"
                             android:elevation="@dimen/x1dp"
+                            android:inputType="number"
                             android:padding="@dimen/x3dp"
                             app:corner_radius="@dimen/x5dp">
 
-                            <edu.aku.ehs.widget.AnyTextView
+                            <edu.aku.ehs.widget.AnyEditTextView
                                 android:id="@+id/txtBPDiastolic"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:background="@null"
                                 android:gravity="center"
+                                android:imeOptions="actionDone"
                                 android:lines="1"
                                 android:maxLength="3"
                                 android:maxLines="1"

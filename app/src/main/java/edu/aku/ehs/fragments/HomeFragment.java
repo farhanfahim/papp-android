@@ -94,13 +94,7 @@ public class HomeFragment extends BaseFragment {
                 getBaseActivity().addDockableFragment(SessionListFragment.newInstance(), true);
                 break;
             case R.id.contStats:
-//                getBaseActivity().addDockableFragment(StatsFragment.newInstance(), true);
-
-
-                new WebServices(getContext(),
-                        "",
-                        BaseURLTypes.GET_EMP_DEPT_URL, false)
-                        .webServiceGetEmployeeDepartDetail();
+                getBaseActivity().addDockableFragment(StatsFragment.newInstance(), true);
                 break;
         }
     }

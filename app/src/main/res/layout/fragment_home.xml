@@ -67,7 +67,7 @@
             android:layout_margin="@dimen/x10dp"
             android:background="@drawable/shape_circle"
             android:gravity="center"
-            android:elevation="@dimen/x10dp"
+            android:elevation="@dimen/x5dp"
             android:orientation="vertical">
 
             <ImageView
@@ -126,7 +126,7 @@
             android:layout_margin="@dimen/x10dp"
             android:background="@drawable/shape_circle"
             android:gravity="center"
-            android:elevation="@dimen/x10dp"
+            android:elevation="@dimen/x5dp"
             android:orientation="vertical">
 
             <ImageView

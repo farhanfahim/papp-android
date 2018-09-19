@@ -29,11 +29,15 @@ import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -83,7 +87,7 @@ public class Helper {
     }
 
     public static void changeTransitionDrawableColor(TransitionDrawable td, int color, int index) {
-         td.getDrawable(index).setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+        td.getDrawable(index).setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
     }
 
     public static ProgressDialog getLoader(Context context) {
@@ -539,5 +543,21 @@ public class Helper {
         } catch (android.content.ActivityNotFoundException anfe) {
             activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
         }
+    }
+
+
+    public static void addTextView(Context context, LinearLayout linearLayout, String text, int size, int color) {
+
+        TextView textView = new TextView(context);
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
+//        layoutParams.gravity = Gravity.RIGHT;
+//        layoutParams.setMargins(10, 10, 10, 10); // (left, top, right, bottom)
+        textView.setLayoutParams(layoutParams);
+        textView.setText(text);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+//        textView.setBackgroundColor(color); // hex color 0xAARRGGBB
+        textView.setTextColor(color);
+        linearLayout.addView(textView);
     }
 }

@@ -4,10 +4,11 @@ public enum EmployeeSessionState {
     ENROLLED,
     SCHEDULED,
     INPROGRESS,
-    CLOSED;
+    COMPLETED,
+    CANCELLED;
 
     public String canonicalForm() {
-        return this.name().toLowerCase();
+        return this.name().toUpperCase();
     }
 
     public static EmployeeSessionState fromCanonicalForm(String canonical) {

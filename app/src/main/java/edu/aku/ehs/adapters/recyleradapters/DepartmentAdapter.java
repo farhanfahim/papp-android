@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 import edu.aku.ehs.R;
 import edu.aku.ehs.activities.BaseActivity;
 import edu.aku.ehs.callbacks.OnItemClickListener;
-import edu.aku.ehs.models.DepartmentModel;
+import edu.aku.ehs.models.peoplesoft.department.DEPT;
 import edu.aku.ehs.widget.AnyTextView;
 
 /**
@@ -27,11 +27,10 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Vi
     private final OnItemClickListener onItemClick;
 
 
-
     private BaseActivity activity;
-    private ArrayList<DepartmentModel> arrData;
+    private ArrayList<DEPT> arrData;
 
-    public DepartmentAdapter(BaseActivity activity, ArrayList<DepartmentModel> arrData, OnItemClickListener onItemClickListener) {
+    public DepartmentAdapter(BaseActivity activity, ArrayList<DEPT> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
@@ -48,13 +47,14 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        DepartmentModel model = arrData.get(i);
-        holder.txtDepartmentName.setText(model.getDeptName());
+        DEPT model = arrData.get(i);
+        holder.txtDepartmentName.setText(model.getDESCR());
+        holder.txtDepartmentID.setText(model.getDEPTID());
 
         setListener(holder, model);
     }
 
-    private void setListener(final ViewHolder holder, final DepartmentModel model) {
+    private void setListener(final ViewHolder holder, final DEPT model) {
         holder.contListItem.setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
     }
 

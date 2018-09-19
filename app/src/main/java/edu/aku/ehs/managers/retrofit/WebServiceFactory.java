@@ -223,7 +223,7 @@ public class WebServiceFactory {
 //            httpClient.addNetworkInterceptor(interceptor).addInterceptor(interceptor);  // <-- this is the important line!
             httpClient.addInterceptor(interceptor);  // <-- this is the important line!
             retrofitGETDeptEmployee = new Retrofit.Builder()
-                    .baseUrl(WebServiceConstants.WS_AKU_DEPT_EMP_GET_URL)
+                    .baseUrl(WebServiceConstants.WS_AKU_DEPT_EMP_GET_BASE_URL)
                     .addConverterFactory(
                             SimpleXmlConverterFactory.createNonStrict(
                                     new Persister(new AnnotationStrategy() // important part!

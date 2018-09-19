@@ -11,8 +11,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 import java.security.MessageDigest;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import edu.aku.ehs.BaseApplication;
@@ -28,6 +26,10 @@ import static android.provider.Settings.Secure.getString;
  */
 
 public class AppConstants {
+
+    // Temporary User
+    public static String tempUserName = "Developer/Tester";
+
 
     /**
      * Static Booleans
@@ -51,6 +53,8 @@ public class AppConstants {
     // Custom For AKUH
     public static final String INPUT_DATE_FORMAT_IMMUNIZATION = "dd/MM/yyyy";
     public static final String GENERAL_DATE_FORMAT = "dd-MM-yy";
+    public static final String FORMAT_DATE_SHOW = "MMM dd, yyyy";
+    public static final String FORMAT_DATE_SEND = "dd/MM/yyyy HH:mm:ss";
 
 
     /**
@@ -74,9 +78,6 @@ public class AppConstants {
     public static final String CARD_MASK = "9999-9999-9999";
     //    public static final String CARD_MASK = "wwww-wwww-wwww";
     public static final String MR_NUMBER_MASK = "999-99-99";
-
-
-    public static final int REQUEST_TIME_OUT = 25 * 1000;
 
 
     /*************** INTENT DATA KEYS **************/
@@ -107,14 +108,6 @@ public class AppConstants {
 
 
     /**
-     * Vaccines Types
-     */
-    public static final String schedule = "Scheduled";
-    public static final String vaccinated = "Vaccinated";
-    public static final String due = "Due";
-    public static final String over_due = "Overdue";
-
-    /**
      * File Name initials if user download the pdf
      */
     public static String FILE_NAME = "AKUH-PatientReport";
@@ -127,15 +120,8 @@ public class AppConstants {
     public static String AboutUs = "<B>Family Hifazat</B> is a product of Aga Khan University Hospital Karachi. It provides discounts on medical services as well as patients’ access to their personal health records through web portal and mobile applications." + "<BR><BR>" +
             "The <B>Family Hifazat</B> “Patient Portal” is secure, confidential and easy to use web portal &amp; mobile apps to provide AKUH patients 24 hour access to their personal health records including diagnostic results, imaging, medications, vaccines and discharge summaries.";
 
-    public static String NO_CURRENT_MEDICATION_MESSAGE = "No Current Medication Exists";
-    public static String NO_MEDICATION_HISTORY_MESSAGE = "No Current Medication Exists";
-    public static String NO_DISCHARGE_SUMMARY_MESSAGE = "No Discharge Summary Exists";
-    public static String NO_VACCINATION_MESSAGE = "No Vaccination Record Exists";
-
 
     public static String DEVICE_OS_ANDROID = "ANDROID";
-    public static String ENTRY_SOURCE = "Manual";
-    public static String ACCESS_LOGIN_DONE = "Access_Login_Done";
 
 
     private static String getDeviceID(Context context) {
@@ -330,18 +316,5 @@ return Return_DeviceID;*/
 
     }
 
-
-    public static List<String> getLstSessionEmployeeState() {
-        if (lstSessionEmployeeState == null) {
-            lstSessionEmployeeState = new ArrayList<>();
-            lstSessionEmployeeState.add("Enrolled");
-            lstSessionEmployeeState.add("Lab Test");
-            lstSessionEmployeeState.add("Scheduled");
-            lstSessionEmployeeState.add("Referred");
-        }
-        return lstSessionEmployeeState;
-    }
-
-    private static List<String> lstSessionEmployeeState;
 
 }

@@ -3,9 +3,7 @@
 
 
     <array name="sessionEmployeeSteps">
-        <item>Enrolled</item>
         <item>Lab Test</item>
-        <item>Scheduled</item>
         <item>Referred</item>
     </array>
 

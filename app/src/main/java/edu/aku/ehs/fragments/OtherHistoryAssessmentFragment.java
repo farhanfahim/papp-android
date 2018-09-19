@@ -325,3 +325,4 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
         }
     }
 }
+

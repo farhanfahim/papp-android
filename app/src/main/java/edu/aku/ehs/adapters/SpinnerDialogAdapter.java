@@ -5,8 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 
 import java.util.ArrayList;
 
@@ -50,9 +50,9 @@ public class SpinnerDialogAdapter extends RecyclerView.Adapter<SpinnerDialogAdap
 
         holder.txtChoice.setText(model.getText());
         if (model.isSelected()) {
-            holder.checkbox.setChecked(true);
+            holder.radioButton.setChecked(true);
         } else {
-            holder.checkbox.setChecked(false);
+            holder.radioButton.setChecked(false);
         }
         holder.contParentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,8 +79,8 @@ public class SpinnerDialogAdapter extends RecyclerView.Adapter<SpinnerDialogAdap
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.checkbox)
-        CheckBox checkbox;
+        @BindView(R.id.radioButton)
+        RadioButton radioButton;
         @BindView(R.id.txtChoice)
         AnyTextView txtChoice;
         @BindView(R.id.contParentLayout)

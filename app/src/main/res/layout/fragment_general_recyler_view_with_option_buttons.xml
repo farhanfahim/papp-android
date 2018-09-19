@@ -17,8 +17,7 @@
             android:id="@+id/empty_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/background_gray"
-            android:gravity="center"
+             android:gravity="center"
             android:padding="@dimen/x10dp"
             android:text="No Item Found"
             android:textColor="@color/txtBlue"
@@ -185,6 +184,18 @@
                 android:maxLines="1"
                 android:padding="@dimen/x5dp"
                 android:textSize="@dimen/s12" />
+
+            <ImageView
+                android:id="@+id/imgClose"
+                android:layout_width="@dimen/x25dp"
+                android:layout_height="@dimen/x25dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/x4dp"
+                android:padding="@dimen/x5dp"
+                android:src="@drawable/tag_close"
+                android:visibility="gone"
+                android:tint="@color/txtBlue" />
+
 
 
         </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>

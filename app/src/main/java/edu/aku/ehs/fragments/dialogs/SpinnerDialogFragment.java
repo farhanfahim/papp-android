@@ -13,9 +13,6 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 
-import edu.aku.ehs.callbacks.OnItemSelectListner;
-import edu.aku.ehs.widget.AnyTextView;
-
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -25,7 +22,9 @@ import butterknife.Unbinder;
 import edu.aku.ehs.R;
 import edu.aku.ehs.adapters.SpinnerDialogAdapter;
 import edu.aku.ehs.callbacks.OnSpinnerItemClickListener;
+import edu.aku.ehs.callbacks.OnSpinnerOKPressedListener;
 import edu.aku.ehs.models.SpinnerModel;
+import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.recyclerview_layout.CustomLayoutManager;
 
 /**
@@ -49,14 +48,14 @@ public class SpinnerDialogFragment extends DialogFragment {
     private ArrayList<SpinnerModel> arrData;
 
     private OnSpinnerItemClickListener onItemClickListener;
-    private OnItemSelectListner onItemSelectListner;
+    private OnSpinnerOKPressedListener onSpinnerOKPressedListener;
     private int scrollToPosition;
 
     public SpinnerDialogFragment() {
     }
 
     public static SpinnerDialogFragment newInstance(String title, ArrayList<SpinnerModel> arrData,
-                                                    OnSpinnerItemClickListener onItemClickListener, OnItemSelectListner onItemSelectListner, int scrollToPosition) {
+                                                    OnSpinnerItemClickListener onItemClickListener, OnSpinnerOKPressedListener onSpinnerOKPressedListener, int scrollToPosition) {
         SpinnerDialogFragment frag = new SpinnerDialogFragment();
 
         Bundle args = new Bundle();
@@ -64,7 +63,7 @@ public class SpinnerDialogFragment extends DialogFragment {
         frag.arrData = arrData;
         frag.onItemClickListener = onItemClickListener;
         frag.scrollToPosition = scrollToPosition;
-        frag.onItemSelectListner = onItemSelectListner;
+        frag.onSpinnerOKPressedListener = onSpinnerOKPressedListener;
         frag.setArguments(args);
 
         return frag;
@@ -140,8 +139,9 @@ public class SpinnerDialogFragment extends DialogFragment {
                 this.dismiss();
                 break;
             case R.id.txtOK:
-                if (onItemSelectListner != null) {
-                    onItemSelectListner.onItemSelect(null);
+                if (onSpinnerOKPressedListener != null) {
+                    onSpinnerOKPressedListener.onItemSelect(null);
+                    this.dismiss();
                 }
                 this.dismiss();
                 break;

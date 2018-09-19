@@ -2,7 +2,7 @@ package edu.aku.ehs.enums;
 
 public enum BaseURLTypes {
     PACS_VIEWER,
-    AHFA_BASE_URL,
+    EHS_BASE_URL,
     PACS_IMAGE_DOWNLOAD,
     GET_EMP_DEPT_URL;
 

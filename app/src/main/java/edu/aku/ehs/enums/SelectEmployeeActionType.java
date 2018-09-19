@@ -2,8 +2,7 @@ package edu.aku.ehs.enums;
 
 public enum SelectEmployeeActionType {
     SENDEMAIL,
-    ADDEMPLOYEE,
-    ADDSCHEDULE;
+    ADDEMPLOYEE;
 
     public String canonicalForm() {
         return this.name().toLowerCase();

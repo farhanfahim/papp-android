@@ -449,7 +449,7 @@
 //    }
 //
 //    /*
-//    * For broadcast message
+//    * For broadcast responseMessage
 //    * @param from
 //    */
 //
@@ -528,7 +528,7 @@
 //    }
 //
 //    public static void markAllMessagesSeen(Integer chatId, boolean myMessages) {
-//        // TODO: 9/5/2017 mark only those message as seen which has delivered
+//        // TODO: 9/5/2017 mark only those responseMessage as seen which has delivered
 //        RealmResults<MessageModel> messages = RealmManager.getInstance().getData(MessageModel.class).equalTo("isMyMessage", myMessages).equalTo("chatId", chatId).equalTo("status", MessageStatus.DELIVERED.getValue()).findAll();
 //        if (messages.size() > 0) {
 //            Realm realm = Realm.getDefaultInstance();
@@ -626,7 +626,7 @@
 //
 //    public static long getAllUnseenCount() {
 //
-//        /*Getting All The Messages , We cannot identify directly if message is of Broadcast, so taking a result instead */
+//        /*Getting All The Messages , We cannot identify directly if responseMessage is of Broadcast, so taking a result instead */
 //        RealmResults<MessageModel> realmResults = RealmManager.getInstance().getData(MessageModel.class)
 //                .equalTo("isMyMessage", false)
 //                .notEqualTo("status", MessageStatus.SEEN.getValue())
@@ -831,7 +831,7 @@
 //
 //        ChatModel chatModel = RealmManager.getInstance().getData(ChatModel.class).equalTo("username", username).findFirst();
 //
-//        if (chatModel == null) // When anonymous person sent message
+//        if (chatModel == null) // When anonymous person sent responseMessage
 //        {
 //            createChat(username, ChatType.SINGLE);
 //            chatModel = RealmManager.getInstance().getData(ChatModel.class).equalTo("username", username).findFirst();
@@ -843,7 +843,7 @@
 //        // // FIXME: 8/29/2017
 //        ChatModel chatModel = RealmManager.getInstance().getData(ChatModel.class).equalTo("username", username).findFirst();
 //
-//        if (chatModel == null) // When anonymous person sent message
+//        if (chatModel == null) // When anonymous person sent responseMessage
 //        {
 //            createChat(username, ChatType.SINGLE);
 //            chatModel = RealmManager.getInstance().getData(ChatModel.class).equalTo("username", username).findFirst();
@@ -856,7 +856,7 @@
 //        // // FIXME: 8/29/2017
 //        ChatModel chatModel = RealmManager.getInstance().getData(ChatModel.class).equalTo("username", username).findFirst();
 //
-//        if (chatModel == null) // When anonymous person sent message
+//        if (chatModel == null) // When anonymous person sent responseMessage
 //        {
 //            createChat(username, ChatType.GROUP);
 //            chatModel = RealmManager.getInstance().getData(ChatModel.class).equalTo("username", username).findFirst();
@@ -1504,7 +1504,7 @@
 //    }
 //
 //    /**
-//     * Soft Deleting the message
+//     * Soft Deleting the responseMessage
 //     *
 //     * @param msgId
 //     */

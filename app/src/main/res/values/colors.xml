@@ -123,6 +123,8 @@
 
     <color name="selected_item">#a8d3f5</color>
     <color name="background_color">#effbff</color>
+    <color name="question_header">#F5B195</color>
+    <color name="question_subheader">#FCE4DB</color>
 
 
 

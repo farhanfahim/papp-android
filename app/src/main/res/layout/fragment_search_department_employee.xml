@@ -17,10 +17,9 @@
             android:id="@+id/empty_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/background_gray"
             android:gravity="center"
             android:padding="@dimen/x10dp"
-            android:text="No Item Found"
+            android:text="No Department Found. Please Select Division to Search Departments."
             android:textColor="@color/txtBlue"
             android:textSize="@dimen/s15"
             android:visibility="gone"
@@ -29,13 +28,10 @@
         <ImageView
             android:id="@+id/imgBanner"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/x150dp"
+            android:layout_height="@dimen/x165dp"
             android:scaleType="centerCrop"
             android:src="@drawable/img_banner"
             android:visibility="visible" />
-
-
-
 
 
         <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
@@ -52,55 +48,111 @@
                 android:id="@+id/txtSessionName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginBottom="@dimen/x10dp"
-                android:padding="@dimen/x3dp"
                 android:ellipsize="end"
+                android:gravity="center"
+                android:padding="@dimen/x3dp"
                 android:singleLine="true"
                 android:text="Session Name: IT Session - 1"
                 android:textColor="@color/c_white"
                 android:textSize="@dimen/s14"
                 android:visibility="visible" />
 
-            <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
-                android:id="@+id/contSearchByName"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/c_white"
-                android:elevation="@dimen/x3dp"
-                android:gravity="center"
-                android:visibility="visible"
-                app:corner_radius="@dimen/x15dp">
+                android:layout_height="wrap_content">
+
+                <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+                    android:id="@+id/contSearchByMR"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x5dp"
+                    android:layout_weight="1"
+                    android:background="@color/c_white"
+                    android:elevation="@dimen/x3dp"
+                    android:gravity="center"
+                    android:visibility="visible"
+                    app:corner_radius="@dimen/x15dp">
 
 
-                <edu.aku.ehs.widget.AnyEditTextView
-                    android:id="@+id/edtSearchEmployee"
+                    <edu.aku.ehs.widget.AnyEditTextView
+                        android:id="@+id/edtMRNumber"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x5dp"
+                        android:layout_marginRight="@dimen/x5dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/transparent"
+                        android:hint="Enter MR Number"
+                        android:inputType="number"
+                        android:maxLength="9"
+                        android:maxLines="1"
+                        android:padding="@dimen/x8dp"
+                        android:textColor="@color/txtBlue"
+                        android:textColorHint="@color/txtDarkGrey"
+                        android:textSize="@dimen/s12" />
+
+                    <ImageView
+                        android:id="@+id/imgSearchByMR"
+                        android:layout_width="@dimen/x25dp"
+                        android:layout_height="@dimen/x25dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/x5dp"
+                        android:background="@drawable/circle_green"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:padding="@dimen/x3dp"
+                        android:src="@drawable/ic_search" />
+
+
+                </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+                <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+                    android:id="@+id/contSearchByEmplID"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/x5dp"
-                    android:layout_marginRight="@dimen/x5dp"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/transparent"
-                    android:hint="Enter Employee's MR Number"
-                    android:inputType="number"
-                    android:maxLength="30"
-                    android:maxLines="1"
-                    android:padding="@dimen/x8dp"
-                    android:textSize="@dimen/s12" />
-
-                <ImageView
-                    android:id="@+id/imgSearchEmployee"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="@dimen/x5dp"
-                    android:background="@drawable/circle_green"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:padding="@dimen/x3dp"
-                    android:src="@drawable/ic_next_arrow" />
+                    android:background="@color/c_white"
+                    android:elevation="@dimen/x3dp"
+                    android:gravity="center"
+                    android:visibility="visible"
+                    app:corner_radius="@dimen/x15dp">
 
 
-            </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+                    <edu.aku.ehs.widget.AnyEditTextView
+                        android:id="@+id/edtEmployeeID"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x5dp"
+                        android:layout_marginRight="@dimen/x5dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/transparent"
+                        android:hint="Enter Employee ID"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:maxLines="1"
+                        android:padding="@dimen/x8dp"
+                        android:textColor="@color/txtBlue"
+                        android:textColorHint="@color/txtDarkGrey"
+                        android:textSize="@dimen/s12" />
+
+                    <ImageView
+                        android:id="@+id/imgSearchByEmplID"
+                        android:layout_width="@dimen/x25dp"
+                        android:layout_height="@dimen/x25dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/x5dp"
+                        android:background="@drawable/circle_green"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:padding="@dimen/x3dp"
+                        android:src="@drawable/ic_search" />
+
+
+                </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+            </LinearLayout>
 
 
             <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
@@ -127,6 +179,8 @@
                     android:maxLength="30"
                     android:maxLines="1"
                     android:padding="@dimen/x8dp"
+                    android:textColor="@color/txtBlue"
+                    android:textColorHint="@color/txtDarkGrey"
                     android:textSize="@dimen/s12"
                     app:typeface="@string/font_regular" />
 
@@ -180,6 +234,8 @@
                 android:maxLength="30"
                 android:maxLines="1"
                 android:padding="@dimen/x5dp"
+                android:textColor="@color/txtBlue"
+                android:textColorHint="@color/txtDarkGrey"
                 android:textSize="@dimen/s12" />
 
 

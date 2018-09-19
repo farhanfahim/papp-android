@@ -3,35 +3,24 @@ package edu.aku.ehs.activities;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.google.gson.JsonObject;
 
-import edu.aku.ehs.constatnts.AppConstants;
-import edu.aku.ehs.constatnts.WebServiceConstants;
-import edu.aku.ehs.enums.BaseURLTypes;
-import edu.aku.ehs.fragments.abstracts.GenericDialogFragment;
-import edu.aku.ehs.fragments.dialogs.PinEntryDialogFragment;
-import edu.aku.ehs.helperclasses.Helper;
-import edu.aku.ehs.helperclasses.ui.helper.AnimationHelper;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import edu.aku.ehs.R;
+import edu.aku.ehs.constatnts.AppConstants;
+import edu.aku.ehs.helperclasses.ui.helper.AnimationHelper;
 import edu.aku.ehs.managers.SharedPreferenceManager;
-import edu.aku.ehs.managers.retrofit.GsonFactory;
-import edu.aku.ehs.managers.retrofit.WebServices;
-import edu.aku.ehs.models.sending_model.AppVersionModel;
 import edu.aku.ehs.models.wrappers.WebResponse;
 import retrofit2.Call;
 
-import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 public class SplashActivity extends AppCompatActivity {
@@ -84,7 +73,7 @@ public class SplashActivity extends AppCompatActivity {
                 if (showLoginScreen) {
                     translateAnimation();
                 } else {
-                    updateAppOrChangeActivity(HomeActivity.class);
+//                    updateAppOrChangeActivity(HomeActivity.class);
                 }
             }
 
@@ -117,7 +106,8 @@ public class SplashActivity extends AppCompatActivity {
                     public void onAnimationEnd(Animator animator) {
                         contParentLayout.setTranslationY(0);
                         contParentLayout.setAlpha(1);
-                        updateAppOrChangeActivity(MainActivity.class);
+//                        updateAppOrChangeActivity(MainActivity.class);
+                        changeActivity(MainActivity.class);
                     }
 
                     @Override
@@ -137,66 +127,66 @@ public class SplashActivity extends AppCompatActivity {
     }
 
 
-    private void updateAppOrChangeActivity(final Class activityClass) {
+//    private void updateAppOrChangeActivity(final Class activityClass) {
+//
+//        AppVersionModel appVersionModel = new AppVersionModel();
+//        PackageManager packageManager = getApplicationContext().getPackageManager();
+//        String packageName = getApplicationContext().getPackageName();
+//
+//        String myVersionName = ""; // initialize String
+//        int versionCode = 0; // initialize Integer
+//
+//        try {
+//            myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
+//            versionCode = packageManager.getPackageInfo(packageName, 0).versionCode;
+//        } catch (PackageManager.NameNotFoundException e) {
+//            Log.d(TAG, "updateAppOrChangeActivity: " + e.getLocalizedMessage());
+//        }
+//        appVersionModel.setAndappversioncode(versionCode);
+//        appVersionModel.setAndappversionname(myVersionName);
+//        isUpdateAvailable(appVersionModel, activityClass, "");
+//
+//        try {
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (!isUpdateCallBackRecieved) {
+//                        pinVerification(activityClass);
+//                    }
+//                }
+//            }, 10000);
+//        } catch (Exception e) {
+//            Log.d(TAG, "updateAppOrChangeActivity: " + e.getLocalizedMessage());
+//        }
+//    }
 
-        AppVersionModel appVersionModel = new AppVersionModel();
-        PackageManager packageManager = getApplicationContext().getPackageManager();
-        String packageName = getApplicationContext().getPackageName();
-
-        String myVersionName = ""; // initialize String
-        int versionCode = 0; // initialize Integer
-
-        try {
-            myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
-            versionCode = packageManager.getPackageInfo(packageName, 0).versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.d(TAG, "updateAppOrChangeActivity: " + e.getLocalizedMessage());
-        }
-        appVersionModel.setAndappversioncode(versionCode);
-        appVersionModel.setAndappversionname(myVersionName);
-        isUpdateAvailable(appVersionModel, activityClass, "");
-
-        try {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (!isUpdateCallBackRecieved) {
-                        pinVerification(activityClass);
-                    }
-                }
-            }, 10000);
-        } catch (Exception e) {
-            Log.d(TAG, "updateAppOrChangeActivity: " + e.getLocalizedMessage());
-        }
-    }
-
-    private void pinVerification(final Class activityClass) {
-
-        if (activityClass == MainActivity.class) {
-            changeActivity(activityClass);
-        } else {
-            boolean isPinEnabled = SharedPreferenceManager.getInstance(getApplicationContext()).getBoolean(AppConstants.KEY_IS_PIN_ENABLE);
-            if (isPinEnabled) {
-                try {
-                    showPinVerificationDialog(activityClass);
-                } catch (IllegalStateException e) {
-                    changeActivity(activityClass);
-                }
-            } else {
-                changeActivity(activityClass);
-            }
-        }
-
-
-    }
+//    private void pinVerification(final Class activityClass) {
+//
+//        if (activityClass == MainActivity.class) {
+//            changeActivity(activityClass);
+//        } else {
+//            boolean isPinEnabled = SharedPreferenceManager.getInstance(getApplicationContext()).getBoolean(AppConstants.KEY_IS_PIN_ENABLE);
+//            if (isPinEnabled) {
+//                try {
+//                    showPinVerificationDialog(activityClass);
+//                } catch (IllegalStateException e) {
+//                    changeActivity(activityClass);
+//                }
+//            } else {
+//                changeActivity(activityClass);
+//            }
+//        }
+//
+//
+//    }
 
     private void changeActivity(Class activityClass) {
         new Handler().postDelayed(new Runnable() {
 
-    /*
-     * Showing splash screen with a timer. This will be useful when you
-     * want to show case your app logo / company
-     */
+            /*
+             * Showing splash screen with a timer. This will be useful when you
+             * want to show case your app logo / company
+             */
 
             @Override
             public void run() {
@@ -214,55 +204,55 @@ public class SplashActivity extends AppCompatActivity {
         }, ANIMATIONS_TIME_OUT);
     }
 
-    private void showPinVerificationDialog(final Class activityClass) {
-        final PinEntryDialogFragment pinEntryDialogFragment = PinEntryDialogFragment.newInstance(view -> {
-            //Success
-            changeActivity(activityClass);
-        }, view -> {
-            //Logout
-            SharedPreferenceManager.getInstance(this).clearDB();
-            changeActivity(MainActivity.class);
-        });
-        pinEntryDialogFragment.setTitle("Enter PIN");
-        pinEntryDialogFragment.setCancelable(false);
-        pinEntryDialogFragment.show(getSupportFragmentManager(), null);
-    }
+//    private void showPinVerificationDialog(final Class activityClass) {
+//        final PinEntryDialogFragment pinEntryDialogFragment = PinEntryDialogFragment.newInstance(view -> {
+//            //Success
+//            changeActivity(activityClass);
+//        }, view -> {
+//            //Logout
+//            SharedPreferenceManager.getInstance(this).clearDB();
+//            changeActivity(MainActivity.class);
+//        });
+//        pinEntryDialogFragment.setTitle("Enter PIN");
+//        pinEntryDialogFragment.setCancelable(false);
+//        pinEntryDialogFragment.show(getSupportFragmentManager(), null);
+//    }
 
-    public void updateApp(final Class activityClass, AppVersionModel appVersionModel) {
-        int button2Visiblity;
-        String message;
-        String button1Text;
-
-        if (appVersionModel.getAndallowoldversion().equals("Y")) {
-            button2Visiblity = VISIBLE;
-            message = "An update of Family Hifazat App (v" + appVersionModel.getAndappversionname() + ") is available to download.\n" + "Do you want to update it now?";
-            button1Text = "Yes";
-        } else {
-            message = "An update of Family Hifazat App (v" + appVersionModel.getAndappversionname() + ") is available to download.";
-            button2Visiblity = GONE;
-            button1Text = "Update";
-        }
-
-        final GenericDialogFragment genericDialogFragment = GenericDialogFragment.newInstance();
-
-        genericDialogFragment.setTitle("Update App");
-        genericDialogFragment.setMessage(message);
-        genericDialogFragment.setButton1(button1Text, () -> {
-            genericDialogFragment.getDialog().dismiss();
-            Helper.openPlayStore(SplashActivity.this);
-        });
-
-        genericDialogFragment.setButton2("Not Now", () -> {
-            genericDialogFragment.getDialog().dismiss();
-            pinVerification(activityClass);
-        });
-
-        genericDialogFragment.setButton2Visibility(button2Visiblity);
-        genericDialogFragment.setCancelable(false);
-        genericDialogFragment.show(getSupportFragmentManager(), null);
-
-
-    }
+//    public void updateApp(final Class activityClass, AppVersionModel appVersionModel) {
+//        int button2Visiblity;
+//        String responseMessage;
+//        String button1Text;
+//
+//        if (appVersionModel.getAndallowoldversion().equals("Y")) {
+//            button2Visiblity = VISIBLE;
+//            responseMessage = "An update of Family Hifazat App (v" + appVersionModel.getAndappversionname() + ") is available to download.\n" + "Do you want to update it now?";
+//            button1Text = "Yes";
+//        } else {
+//            responseMessage = "An update of Family Hifazat App (v" + appVersionModel.getAndappversionname() + ") is available to download.";
+//            button2Visiblity = GONE;
+//            button1Text = "Update";
+//        }
+//
+//        final GenericDialogFragment genericDialogFragment = GenericDialogFragment.newInstance();
+//
+//        genericDialogFragment.setTitle("Update App");
+//        genericDialogFragment.setMessage(responseMessage);
+//        genericDialogFragment.setButton1(button1Text, () -> {
+//            genericDialogFragment.getDialog().dismiss();
+//            Helper.openPlayStore(SplashActivity.this);
+//        });
+//
+//        genericDialogFragment.setButton2("Not Now", () -> {
+//            genericDialogFragment.getDialog().dismiss();
+//            pinVerification(activityClass);
+//        });
+//
+//        genericDialogFragment.setButton2Visibility(button2Visiblity);
+//        genericDialogFragment.setCancelable(false);
+//        genericDialogFragment.show(getSupportFragmentManager(), null);
+//
+//
+//    }
 
 
     @Override
@@ -272,30 +262,33 @@ public class SplashActivity extends AppCompatActivity {
             hasAnimationStarted = true;
 
 
-            if (SharedPreferenceManager.getInstance(getApplicationContext()).getString(AppConstants.KEY_CARD_NUMBER) == null
-                    || SharedPreferenceManager.getInstance(getApplicationContext()).getString(AppConstants.KEY_CARD_NUMBER).isEmpty()) {
+            animateSplashLayout(true);
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        animateSplashLayout(true);
-                    }
-                }, ANIMATIONS_DELAY);
 
-            } else {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        animateSplashLayout(false);
-                    }
-                }, ANIMATIONS_DELAY);
-            }
+//            if (SharedPreferenceManager.getInstance(getApplicationContext()).getString(AppConstants.KEY_CARD_NUMBER) == null
+//                    || SharedPreferenceManager.getInstance(getApplicationContext()).getString(AppConstants.KEY_CARD_NUMBER).isEmpty()) {
+//
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        animateSplashLayout(true);
+//                    }
+//                }, ANIMATIONS_DELAY);
+//
+//            } else {
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        animateSplashLayout(false);
+//                    }
+//                }, ANIMATIONS_DELAY);
+//            }
         }
     }
 
 
 //    private void getOneTimeTokenService(final AppVersionModel appVersionModel, final Class activityClass) {
-//        getOneTimeTokenService = new WebServices(this, "", BaseURLTypes.AHFA_BASE_URL, false)
+//        getOneTimeTokenService = new WebServices(this, "", BaseURLTypes.EHS_BASE_URL, false)
 //                .webServiceRequestAPIForJsonObject(WebServiceConstants.METHOD_GET_ONE_TIME_TOKEN,
 //                        "",
 //                        new WebServices.IRequestJsonDataCallBack() {
@@ -316,32 +309,32 @@ public class SplashActivity extends AppCompatActivity {
 //    }
 
 
-    private void isUpdateAvailable(final AppVersionModel appVersionModel, final Class activityClass, String token) {
-        isUpdateAvailableCall = new WebServices(this,
-                token,
-                BaseURLTypes.AHFA_BASE_URL, false)
-                .webServiceRequestAPIForJsonObject(WebServiceConstants.METHOD_USER_GET_APPLICATION_PARAMETER,
-                        appVersionModel.toString(),
-                        new WebServices.IRequestJsonDataCallBack() {
-                            @Override
-                            public void requestDataResponse(WebResponse<JsonObject> webResponse) {
-                                isUpdateCallBackRecieved = true;
-                                AppVersionModel appVersionModelReceiving = GsonFactory.getSimpleGson().fromJson(webResponse.result, AppVersionModel.class);
-
-                                if (appVersionModel.getAndappversioncode() < appVersionModelReceiving.getAndappversioncode()) {
-                                    updateApp(activityClass, appVersionModelReceiving);
-                                } else {
-                                    pinVerification(activityClass);
-                                }
-                            }
-
-                            @Override
-                            public void onError() {
-                                 isUpdateCallBackRecieved = true;
-                                pinVerification(activityClass);
-                            }
-                        });
-    }
+//    private void isUpdateAvailable(final AppVersionModel appVersionModel, final Class activityClass, String token) {
+//        isUpdateAvailableCall = new WebServices(this,
+//                token,
+//                BaseURLTypes.EHS_BASE_URL, false)
+//                .webServiceRequestAPIForJsonObject(WebServiceConstants.METHOD_USER_GET_APPLICATION_PARAMETER,
+//                        appVersionModel.toString(),
+//                        new WebServices.IRequestJsonDataCallBack() {
+//                            @Override
+//                            public void requestDataResponse(WebResponse<JsonObject> webResponse) {
+//                                isUpdateCallBackRecieved = true;
+//                                AppVersionModel appVersionModelReceiving = GsonFactory.getSimpleGson().fromJson(webResponse.result, AppVersionModel.class);
+//
+//                                if (appVersionModel.getAndappversioncode() < appVersionModelReceiving.getAndappversioncode()) {
+//                                    updateApp(activityClass, appVersionModelReceiving);
+//                                } else {
+//                                    pinVerification(activityClass);
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onError() {
+//                                 isUpdateCallBackRecieved = true;
+//                                pinVerification(activityClass);
+//                            }
+//                        });
+//    }
 
     @Override
     protected void onDestroy() {

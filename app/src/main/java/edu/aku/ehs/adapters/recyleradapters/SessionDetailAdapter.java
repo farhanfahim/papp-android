@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 
 import com.badoualy.stepperindicator.StepperIndicator;
@@ -18,6 +19,7 @@ import butterknife.ButterKnife;
 import edu.aku.ehs.R;
 import edu.aku.ehs.activities.BaseActivity;
 import edu.aku.ehs.callbacks.OnItemClickListener;
+import edu.aku.ehs.enums.EmployeeSessionState;
 import edu.aku.ehs.helperclasses.Helper;
 import edu.aku.ehs.helperclasses.ui.helper.AnimationHelper;
 import edu.aku.ehs.models.SessionDetailModel;
@@ -32,12 +34,14 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
 
     private final OnItemClickListener onItemClick;
 
-
+    private ArrayList<SessionDetailModel> filteredData;
+    private Filter mFilter = new ItemFilter();
     private BaseActivity activity;
     private ArrayList<SessionDetailModel> arrData;
 
     public SessionDetailAdapter(BaseActivity activity, ArrayList<SessionDetailModel> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
+        this.filteredData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
     }
@@ -53,25 +57,36 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        SessionDetailModel model = arrData.get(i);
+        SessionDetailModel model = filteredData.get(i);
         holder.txtEmployeeName.setText(model.getEmployeeName());
-        holder.txtStatus.setText(model.getStatus().canonicalForm());
+        holder.txtStatus.setText(model.getStatusID());
+        holder.txtEmployeeGender.setText(model.getGender());
+        holder.txtEmployeeAge.setText(model.getAge() + "Y");
+        holder.txtMRN.setText(model.getMedicalRecordNo());
+        holder.txtEmployeeID.setText(model.getEmployeeNo());
+        holder.txtDepartmentName.setText(model.getDepartmentName());
+        holder.txDate.setText(model.getDisplayScheduledDTTM());
 
-        holder.btnSchedule.setVisibility(View.VISIBLE);
-        holder.btnDelete.setVisibility(View.VISIBLE);
-        switch (model.getStatus()) {
+        if (model.getHasLabResult().equalsIgnoreCase("Y")) {
+            if (model.getStatusID().equalsIgnoreCase(EmployeeSessionState.COMPLETED.canonicalForm())) {
+                holder.stepView.setCurrentStep(2);
+            } else {
+                holder.stepView.setCurrentStep(1);
+            }
+        } else {
+            holder.stepView.setCurrentStep(0);
+        }
+
+
+        switch (model.getStatusEnum()) {
             case ENROLLED:
-//                holder.btnSchedule.setText("Set Schedule");
-                break;
             case SCHEDULED:
-//                holder.btnSchedule.setText("Update Schedule");
+                holder.btnSchedule.setVisibility(View.VISIBLE);
+                holder.btnDelete.setVisibility(View.VISIBLE);
                 break;
             case INPROGRESS:
-//                holder.btnSchedule.setText("Cancel Schedule");
-                holder.btnSchedule.setVisibility(View.GONE);
-                holder.btnDelete.setVisibility(View.GONE);
-                break;
-            case CLOSED:
+            case COMPLETED:
+            case CANCELLED:
                 holder.btnSchedule.setVisibility(View.GONE);
                 holder.btnDelete.setVisibility(View.GONE);
                 break;
@@ -97,12 +112,7 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
         if (model.isInSelectionMode()) {
             holder.btnDelete.setVisibility(View.GONE);
             holder.btnSchedule.setVisibility(View.GONE);
-        } else {
-            holder.btnDelete.setVisibility(View.VISIBLE);
-            holder.btnSchedule.setVisibility(View.VISIBLE);
         }
-
-        holder.stepView.setCurrentStep(2);
 
 
         setListener(holder, model);
@@ -113,20 +123,17 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
         holder.btnDelete.setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
         holder.contListItem.setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
 //        holder.stepView.setOnClickListener(view -> holder.contListItem.performClick());
-        holder.stepView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    return holder.contListItem.performClick();
-                } else return false;
-            }
+        holder.stepView.setOnTouchListener((View view, MotionEvent motionEvent) -> {
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                return holder.contListItem.performClick();
+            } else return false;
         });
     }
 
 
     @Override
     public int getItemCount() {
-        return arrData.size();
+        return filteredData.size();
     }
 
 
@@ -135,12 +142,18 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
         AnyTextView txtEmployeeName;
         @BindView(R.id.txtEmployeeGender)
         AnyTextView txtEmployeeGender;
+        @BindView(R.id.txtEmployeeAge)
+        AnyTextView txtEmployeeAge;
+        @BindView(R.id.txtEmployeeID)
+        AnyTextView txtEmployeeID;
         @BindView(R.id.txtMRN)
         AnyTextView txtMRN;
         @BindView(R.id.txDate)
         AnyTextView txDate;
         @BindView(R.id.txtStatus)
         AnyTextView txtStatus;
+        @BindView(R.id.txtDepartmentName)
+        AnyTextView txtDepartmentName;
         @BindView(R.id.stepView)
         StepperIndicator stepView;
         @BindView(R.id.btnDelete)
@@ -157,5 +170,68 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+
+    public Filter getFilter() {
+
+        return mFilter;
+    }
+
+
+    private class ItemFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String filterString = constraint.toString().toLowerCase();
+
+            FilterResults results = new FilterResults();
+
+            final ArrayList<SessionDetailModel> list = arrData;
+
+            int count = list.size();
+
+//            final ArrayList<String> nlist = new ArrayList<String>(count);
+            final ArrayList<SessionDetailModel> filterData = new ArrayList<SessionDetailModel>();
+
+            String filterableString1;
+            String filterableString2;
+            String filterableString3;
+            String filterableString4;
+            String filterableString5;
+
+            for (int i = 0; i < count; i++) {
+                filterableString1 = list.get(i).getStatusID();
+                filterableString2 = list.get(i).getDepartmentName();
+                filterableString3 = list.get(i).getEmployeeName();
+                filterableString4 = list.get(i).getEmployeeNo();
+                filterableString5 = list.get(i).getMedicalRecordNo();
+                if (filterableString1.toLowerCase().contains(filterString)
+                        || filterableString2.toLowerCase().contains(filterString)
+                        || filterableString3.toLowerCase().contains(filterString)
+                        || filterableString4.toLowerCase().contains(filterString)
+                        || filterableString5.toLowerCase().contains(filterString)
+                        ) {
+//                    nlist.add(filterableString);
+                    filterData.add(list.get(i));
+                }
+            }
+
+            results.values = filterData;
+            results.count = filterData.size();
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredData = (ArrayList<SessionDetailModel>) results.values;
+            notifyDataSetChanged();
+        }
+
+    }
+
+    public SessionDetailModel getItem(int position) {
+        return filteredData.get(position);
     }
 }
