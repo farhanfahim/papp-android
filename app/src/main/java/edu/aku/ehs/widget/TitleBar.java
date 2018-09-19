@@ -19,7 +19,6 @@ import edu.aku.ehs.activities.HomeActivity;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
 import edu.aku.ehs.models.SessionDetailModel;
 
-import static edu.aku.ehs.constatnts.Events.ON_HOME_PRESSED;
 
 /**
  * Created by khanhamza on 02-Mar-17.
@@ -270,7 +269,7 @@ public class TitleBar extends RelativeLayout {
                 if (activity instanceof HomeActivity) {
 //                    activity.reload();
                     activity.popStackTill(1);
-                    activity.notifyToAll(ON_HOME_PRESSED, TitleBar.this);
+//                    activity.notifyToAll(ON_HOME_PRESSED, TitleBar.this);
 
                 } else {
                     activity.clearAllActivitiesExceptThis(HomeActivity.class);

@@ -220,12 +220,12 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         contSearch.setVisibility(View.VISIBLE);
         imgBanner.setVisibility(View.VISIBLE);
         contOptionButtons.setVisibility(View.VISIBLE);
 
         bindView();
-
 
         if (onCreated) {
             if (AppConstants.isForcedResetFragment) {
@@ -317,7 +317,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
         UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Remove", "Do you want to remove " + sessionDetailModel.getEmployeeName() + " ?", "Remove", "Cancel",
                 () -> {
                     genericDialogFragment.dismiss();
-                    pickScheduleDate(false, sessionDetailModel, EmployeeSessionState.CANCELLED);
+                    updateSelectedEmployees(getSingleEmployeeArray(sessionDetailModel, EmployeeSessionState.CANCELLED));
                 }, () -> {
                     genericDialogFragment.dismiss();
                 }, false, true);
@@ -366,31 +366,32 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
 
             if (showDialogeAfter) {
                 ArrayList<SessionDetailModel> selectedArray;
-                selectedArray = getSelectedArray(state);
-                UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Schedule", "You are about to schedule " + selectedArray.size() + " employee for " + scheduledDateInShowFormat + ".", "Add", "Cancel",
+                selectedArray = getSelectedEmployeesArray(state);
+                String employeekeyword = "employees";
+                if (selectedArray.size() <= 1) {
+                    employeekeyword = "employee";
+                }
+                UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Schedule", "You are about to schedule " + selectedArray.size() + " " + employeekeyword + " for " + scheduledDateInShowFormat + ".", "Add", "Cancel",
                         () -> {
                             genericDialogFragment.dismiss();
                             updateSelectedEmployees(selectedArray);
                         }, genericDialogFragment::dismiss, false, true);
 
             } else {
-                ArrayList<SessionDetailModel> arrayList = new ArrayList<>();
-                arrayList.add(sessionDetailModel);
-                updateSelectedEmployees(arrayList);
+                updateSelectedEmployees(getSingleEmployeeArray(sessionDetailModel, state));
             }
 
 
         }, false, true, null);
     }
 
-    private ArrayList<SessionDetailModel> getSelectedArray(EmployeeSessionState state) {
+    private ArrayList<SessionDetailModel> getSelectedEmployeesArray(EmployeeSessionState state) {
         ArrayList<SessionDetailModel> arrayList = new ArrayList<>();
         for (SessionDetailModel sessionDetailModel : arrData) {
             if (sessionDetailModel.isSelected()) {
                 sessionDetailModel.setStatusID(state.canonicalForm());
                 sessionDetailModel.setScheduledDTTM(scheduledDateInSendingFormat);
                 sessionDetailModel.setScheduledBy(AppConstants.tempUserName);
-
                 sessionDetailModel.setLastFileUser(AppConstants.tempUserName);
                 arrayList.add(sessionDetailModel);
             }
@@ -399,15 +400,30 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
         return arrayList;
     }
 
+
+    private ArrayList<SessionDetailModel> getSingleEmployeeArray(SessionDetailModel sessionDetailModel, EmployeeSessionState state) {
+        ArrayList<SessionDetailModel> arrayList = new ArrayList<>();
+        sessionDetailModel.setStatusID(state.canonicalForm());
+        switch (state) {
+            case SCHEDULED:
+                sessionDetailModel.setScheduledDTTM(scheduledDateInSendingFormat);
+                sessionDetailModel.setScheduledBy(AppConstants.tempUserName);
+                break;
+        }
+        sessionDetailModel.setLastFileUser(AppConstants.tempUserName);
+        arrayList.add(sessionDetailModel);
+
+        return arrayList;
+    }
+
     @OnClick({R.id.btnGetLabs, R.id.btnAddEmail, R.id.btnAddSchedule, R.id.btnAddEmployees, R.id.fab})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnAddEmail:
-                getBaseActivity().addDockableFragment(EmailFragment.newInstance(sessionModel), false);
+                getBaseActivity().addDockableFragment(EmailFragment.newInstance(sessionModel, arrData), false);
 
                 break;
             case R.id.btnAddSchedule:
-
                 filterOnlyEnrolledData();
 
                 break;
@@ -442,7 +458,14 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
 
                                     arrData.clear();
                                     arrData.addAll(arrayList);
-                                    adapter.notifyDataSetChanged();
+
+                                    if (isSelectingEmployeesForSchedule) {
+                                        unFilterEnrolledData();
+                                    } else {
+                                        adapter.notifyDataSetChanged();
+                                    }
+
+
                                     if (arrData.size() > 0) {
                                         emptyView.setVisibility(View.GONE);
                                     } else {
@@ -477,6 +500,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
         }
 
         String jsonArrayData = GsonFactory.getConfiguredGson().toJson(sessionDetailModelArrayList);
+
         updateEmployeesInSessionCall(jsonArrayData);
     }
 
@@ -491,11 +515,11 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
                                 SearchSendingModel searchSendingModel = new SearchSendingModel();
                                 searchSendingModel.setSessionID(sessionModel.getSessionId());
                                 getSessionEmployeesCall(searchSendingModel);
+
                             }
 
                             @Override
                             public void onError(Object object) {
-                                emptyView.setVisibility(View.VISIBLE);
                                 if (object instanceof String) {
                                     UIHelper.showToast(getContext(), (String) object);
                                 }

@@ -6,9 +6,6 @@ package edu.aku.ehs.constatnts;
 
 public class Events {
 
-    public static final int ON_CARD_MODEL_UPDATE = 100;
-    public static final int ON_SELECTED_USER_UPDATE = 101;
-    public static final int ON_EDIT_PROFILE_INFO = 102;
-    public static final int ON_HOME_PRESSED = 103;
+    public static final int ON_EMPLOYEES_SELECTED_FOR_EMAIL = 100;
 
 }

@@ -107,6 +107,7 @@ public class WebServiceConstants {
     public static final String METHOD_GET_SESSION_EMPLOYEES = "SessionManager.GetSessionEmp";
     public static final String METHOD_ADD_SESSION_EMPLOYEE = "SessionManager.AddSessionEmp";
     public static final String METHOD_UPDATE_SESSION_EMPLOYEE = "SessionManager.UpdateSessionEmp";
+    public static final String METHOD_EMAIL_SESSION = "SessionManager.EmailSession";
 
 
     public static final String METHOD_GET_ONE_TIME_TOKEN = "SharedManager.GetOneTimeCode";

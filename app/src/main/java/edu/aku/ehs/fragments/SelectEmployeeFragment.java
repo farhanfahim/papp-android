@@ -30,6 +30,7 @@ import edu.aku.ehs.R;
 import edu.aku.ehs.adapters.recyleradapters.SelectEmployeesAdapter;
 import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.constatnts.AppConstants;
+import edu.aku.ehs.constatnts.Events;
 import edu.aku.ehs.constatnts.WebServiceConstants;
 import edu.aku.ehs.enums.BaseURLTypes;
 import edu.aku.ehs.enums.EmployeeSessionState;
@@ -249,6 +250,14 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
             case R.id.fab:
                 switch (selectEmployeeActionType) {
                     case SENDEMAIL:
+
+                        ArrayList<String> arrayList = new ArrayList<>();
+                        for (EMPLOYEE employee : arrData) {
+                            if (employee.isSelected()) {
+                                arrayList.add(employee.getEMAIL_ADDR());
+                            }
+                        }
+                        notifyToAll(Events.ON_EMPLOYEES_SELECTED_FOR_EMAIL, arrayList);
                         getBaseActivity().popStackTill(EmailFragment.class.getSimpleName());
                         break;
                     case ADDEMPLOYEE:

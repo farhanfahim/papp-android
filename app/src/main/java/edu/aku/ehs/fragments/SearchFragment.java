@@ -166,6 +166,7 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         contSearch.setVisibility(View.VISIBLE);
         imgBanner.setVisibility(View.VISIBLE);
         txtSessionName.setText(sessionModel.getDescription());
@@ -260,6 +261,13 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
     }
 
     @Override
+    public void onDestroy() {
+         super.onDestroy();
+
+
+    }
+
+    @Override
     public void onItemClick(int position, Object object, View view) {
         DEPT model = (DEPT) object;
 
@@ -314,6 +322,8 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
 
         }, currentDivisionPosition);
     }
+
+
 
 
 }

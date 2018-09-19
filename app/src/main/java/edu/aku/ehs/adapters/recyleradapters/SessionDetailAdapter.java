@@ -65,7 +65,11 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
         holder.txtMRN.setText(model.getMedicalRecordNo());
         holder.txtEmployeeID.setText(model.getEmployeeNo());
         holder.txtDepartmentName.setText(model.getDepartmentName());
-        holder.txDate.setText(model.getDisplayScheduledDTTM());
+        if (model.getStatusEnum() == EmployeeSessionState.SCHEDULED) {
+            holder.txDate.setText("Scheduled Date: " + model.getDisplayScheduledDTTM());
+        } else {
+            holder.txDate.setText("");
+        }
 
         if (model.getHasLabResult().equalsIgnoreCase("Y")) {
             if (model.getStatusID().equalsIgnoreCase(EmployeeSessionState.COMPLETED.canonicalForm())) {
