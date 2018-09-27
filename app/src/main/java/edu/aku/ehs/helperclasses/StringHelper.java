@@ -379,4 +379,10 @@ public final class StringHelper {
 
     }
 
+
+    public static boolean checkNotNullAndNotEmpty(String value) {
+        return value != null && !value.isEmpty();
+    }
+
+
 }

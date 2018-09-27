@@ -38,7 +38,7 @@ public class WebServiceConstants {
      * BaseApplication Fabric enable
      */
 
-    public static final String BASE_URL_LOCAL = "http://ahfapidev.aku.edu/api/";
+    public static final String BASE_URL_LOGIN = "https://userauthentication.aku.edu/api/";
 
 
     // UAT
@@ -59,7 +59,6 @@ public class WebServiceConstants {
     public static final String WS_TOKEN_CONSTANT = "Authorization: Basic QUtVX1RMX1JFU1RfRU1QX0RFUFQ6ezVDNEY0MkIzLUYyRDktNzQ1Ny0yQURDLTM5RTcxNDYyMDJCMn0=";
     public static final String WS_AKU_DEPT_EMP_GET_BASE_URL = "https://uerpdmo.aku.edu/PSIGW/RESTListeningConnector/PSFT_HR/AKU_DEPT_EMPS_GET.v1/";
     public static final String WS_AKU_DEPT_EMP_PART = "SHARE/{type}/{value}";
-
 
 
     /**
@@ -101,6 +100,8 @@ public class WebServiceConstants {
     //DictionaryManager
     public static final String METHOD_ADD_SESSION = "DictionaryManager.AddSession";
     public static final String METHOD_UPDATE_SESSION = "DictionaryManager.UpdateSession";
+    public static final String METHOD_GET_ACTIVE_QUESTION_LIST = "DictionaryManager.GetActiveQuestionList";
+    public static final String METHOD_GET_ACTIVE_MEASUREMENTS_LIST = "DictionaryManager.GetActiveMeasurementsList";
 
     //SessionManager
     public static final String METHOD_GET_SESSION_LIST = "SessionManager.GetSessionList";
@@ -108,8 +109,13 @@ public class WebServiceConstants {
     public static final String METHOD_ADD_SESSION_EMPLOYEE = "SessionManager.AddSessionEmp";
     public static final String METHOD_UPDATE_SESSION_EMPLOYEE = "SessionManager.UpdateSessionEmp";
     public static final String METHOD_EMAIL_SESSION = "SessionManager.EmailSession";
+    public static final String METHOD_GET_EMPLOYEE_MEASUREMENTS = "SessionManager.GetEmployeeMeasurement";
+    public static final String METHOD_SAVE_EMPLOYEE_MEASUREMENTS = "SessionManager.SaveEmployeeMeasurement";
+    public static final String METHOD_GET_EMPLOYEE_ASSESSMENTS = "SessionManager.GetEmployeeAssessment";
+    public static final String METHOD_SAVE_EMPLOYEE_ASSESSMENT = "SessionManager.SaveEmployeeAssessment";
 
 
+    public static final String WS_KEY_AUTHENTICATE_USER = "AuthenticateUser";
     public static final String METHOD_GET_ONE_TIME_TOKEN = "SharedManager.GetOneTimeCode";
 
 }

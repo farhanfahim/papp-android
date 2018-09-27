@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import edu.aku.ehs.R;
 import edu.aku.ehs.callbacks.GenericClickableInterface;
-import edu.aku.ehs.widget.AnyTextView;
+import info.hoang8f.widget.FButton;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -39,8 +39,8 @@ public class GenericDialogFragment extends DialogFragment implements View.OnClic
     private String title;
     private String message;
 
-    private AnyTextView btn1;
-    private AnyTextView btn2;
+    private FButton btn1;
+    private FButton btn2;
 
     String btn1Caption = "";
     String btn2Caption = "";
@@ -89,12 +89,12 @@ public class GenericDialogFragment extends DialogFragment implements View.OnClic
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        txtViewMessage = (TextView) view.findViewById(R.id.txtMessage);
-        txtViewTitle = (TextView) view.findViewById(R.id.txtTitle);
-        imgSeperatorLine = (ImageView) view.findViewById(R.id.imgSeperatorLine);
+        txtViewMessage = view.findViewById(R.id.txtMessage);
+        txtViewTitle = view.findViewById(R.id.txtTitle);
+        imgSeperatorLine = view.findViewById(R.id.imgSeperatorLine);
 
-        btn1 = (AnyTextView) view.findViewById(R.id.btnButton1);
-        btn2 = (AnyTextView) view.findViewById(R.id.btnButton2);
+        btn1 = view.findViewById(R.id.btnButton1);
+        btn2 = view.findViewById(R.id.btnButton2);
 
 
         bindData(title, message);

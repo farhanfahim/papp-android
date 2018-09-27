@@ -26,7 +26,6 @@ import edu.aku.ehs.R;
 import edu.aku.ehs.adapters.recyleradapters.AssessmentQuestionAdapter;
 import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.callbacks.RadioGroupAdapterListner;
-import edu.aku.ehs.enums.QuestionTypeEnum;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.models.AssessmentQuestionModel;
 import edu.aku.ehs.models.SessionDetailModel;
@@ -59,11 +58,12 @@ public class MedicalHistoryAssessmentFragment extends BaseFragment implements On
     private SessionDetailModel sessionDetailModel;
 
 
-    public static MedicalHistoryAssessmentFragment newInstance() {
+    public static MedicalHistoryAssessmentFragment newInstance(SessionDetailModel sessionDetailModel) {
 
         Bundle args = new Bundle();
 
         MedicalHistoryAssessmentFragment fragment = new MedicalHistoryAssessmentFragment();
+        fragment.sessionDetailModel = sessionDetailModel;
         fragment.setArguments(args);
         return fragment;
     }
@@ -109,9 +109,6 @@ public class MedicalHistoryAssessmentFragment extends BaseFragment implements On
         super.onCreate(savedInstanceState);
 
         initSwitchListener();
-
-        arrData = new ArrayList<AssessmentQuestionModel>();
-        adapter = new AssessmentQuestionAdapter(getBaseActivity(), arrData, this, onSwitchListener1, onSwitchListener2);
     }
 
     private void initSwitchListener() {
@@ -145,12 +142,25 @@ public class MedicalHistoryAssessmentFragment extends BaseFragment implements On
         return rootView;
     }
 
+    public ArrayList<AssessmentQuestionModel> getArrData() {
+        return arrData;
+    }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         parentFragment = (NewAssessmentViewPagerFragment) getParentFragment();
+        arrData = parentFragment.getArrMedicalHistory();
+        adapter = new AssessmentQuestionAdapter(getBaseActivity(), arrData, this, onSwitchListener1, onSwitchListener2);
+
+
         txtQuestionTitle.setText("Medical History");
-        txtQuestionSubTitle.setText("Do you have any of the following Disease?");
+
+        if (!arrData.isEmpty()) {
+            txtQuestionSubTitle.setText(arrData.get(0).getCategoryDescription());
+        } else {
+            txtQuestionSubTitle.setText("");
+        }
 
         fabBack.setVisibility(View.GONE);
         bindView();
@@ -158,12 +168,6 @@ public class MedicalHistoryAssessmentFragment extends BaseFragment implements On
     }
 
     private void bindData() {
-        arrData.clear();
-        AssessmentQuestionModel model;
-        for (String s : getBaseActivity().getResources().getStringArray(R.array.medicalHistoryQuestions)) {
-            model = new AssessmentQuestionModel(s, QuestionTypeEnum.MEDICALHISTORY);
-            arrData.add(model);
-        }
         adapter.notifyDataSetChanged();
     }
 

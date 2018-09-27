@@ -261,7 +261,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
         fab.setVisibility(View.VISIBLE);
         isSelectingEmployeesForSchedule = true;
         contSearch.setVisibility(View.INVISIBLE);
-        getBaseActivity().getTitleBar().setTitle("Select Employees");
+        getBaseActivity().getTitleBar().setTitle("Add Schedule");
         txtSessionName.setVisibility(View.VISIBLE);
         txtSessionName.setText(sessionModel.getDescription());
         contOptionButtons.setVisibility(View.GONE);
@@ -305,7 +305,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
                     arrData.get(position).setSelected(!arrData.get(position).isSelected());
                     adapter.notifyItemChanged(position);
                 } else {
-                    getBaseActivity().addDockableFragment(EmployeeAssessmentDashboardFragment.newInstance(), false);
+                    getBaseActivity().addDockableFragment(EmployeeAssessmentDashboardFragment.newInstance(sessionDetailModel), false);
                 }
 
                 break;
@@ -314,7 +314,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
     }
 
     private void deleteEmployee(SessionDetailModel sessionDetailModel, int position) {
-        UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Remove", "Do you want to remove " + sessionDetailModel.getEmployeeName() + " ?", "Remove", "Cancel",
+        UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Cancel", "Do you want to cancel " + sessionDetailModel.getEmployeeName() + " ?", "Yes", "No",
                 () -> {
                     genericDialogFragment.dismiss();
                     updateSelectedEmployees(getSingleEmployeeArray(sessionDetailModel, EmployeeSessionState.CANCELLED));
@@ -432,7 +432,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
                 break;
 
             case R.id.btnGetLabs:
-                UIHelper.showToast(getContext(), "Get Lab Webservice will be available in Beta version");
+                UIHelper.showToast(getContext(), "Get Lab Webservice is in progress.");
                 break;
 
 

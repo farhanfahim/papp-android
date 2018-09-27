@@ -109,11 +109,12 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
     RelativeLayout contParent;
 
 
-    public static EmployeeProfileViewerFragment newInstance() {
+    public static EmployeeProfileViewerFragment newInstance(SessionDetailModel sessionDetailModel) {
 
         Bundle args = new Bundle();
 
         EmployeeProfileViewerFragment fragment = new EmployeeProfileViewerFragment();
+        fragment.sessionDetailModel = sessionDetailModel;
         fragment.setArguments(args);
         return fragment;
     }
@@ -185,21 +186,21 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
 
 // Medical History\
         Helper.addTextView(getContext(), contMedicalHistory, "High Blood Pressure (Treated)",
-                (int) getBaseActivity().getResources().getDimension(R.dimen.s10), getBaseActivity().getResources().getColor(R.color.txtBlue));
+                (int) getBaseActivity().getResources().getDimension(R.dimen.s7), getBaseActivity().getResources().getColor(R.color.txtBlue));
         Helper.addTextView(getContext(), contMedicalHistory, "Hep B (Not Treated)",
-                (int) getBaseActivity().getResources().getDimension(R.dimen.s10), getBaseActivity().getResources().getColor(R.color.txtBlue));
+                (int) getBaseActivity().getResources().getDimension(R.dimen.s7), getBaseActivity().getResources().getColor(R.color.txtBlue));
 
 // Smoking Behaviors
         Helper.addTextView(getContext(), contSmokingBehaviors, "Smoker",
-                (int) getBaseActivity().getResources().getDimension(R.dimen.s10), getBaseActivity().getResources().getColor(R.color.txtBlue));
+                (int) getBaseActivity().getResources().getDimension(R.dimen.s7), getBaseActivity().getResources().getColor(R.color.txtBlue));
         Helper.addTextView(getContext(), contSmokingBehaviors, "Thought of Quitting",
-                (int) getBaseActivity().getResources().getDimension(R.dimen.s10), getBaseActivity().getResources().getColor(R.color.txtBlue));
+                (int) getBaseActivity().getResources().getDimension(R.dimen.s7), getBaseActivity().getResources().getColor(R.color.txtBlue));
 
 // Family History
         Helper.addTextView(getContext(), contFamilyHistory, "High Blood Pressure",
-                (int) getBaseActivity().getResources().getDimension(R.dimen.s10), getBaseActivity().getResources().getColor(R.color.txtBlue));
+                (int) getBaseActivity().getResources().getDimension(R.dimen.s7), getBaseActivity().getResources().getColor(R.color.txtBlue));
         Helper.addTextView(getContext(), contFamilyHistory, "Diabetes",
-                (int) getBaseActivity().getResources().getDimension(R.dimen.s10), getBaseActivity().getResources().getColor(R.color.txtBlue));
+                (int) getBaseActivity().getResources().getDimension(R.dimen.s7), getBaseActivity().getResources().getColor(R.color.txtBlue));
 
 
     }

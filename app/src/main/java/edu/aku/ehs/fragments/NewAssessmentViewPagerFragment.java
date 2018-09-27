@@ -14,8 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.google.gson.reflect.TypeToken;
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 import com.viewpagerindicator.CirclePageIndicator;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,8 +27,17 @@ import butterknife.Unbinder;
 import edu.aku.ehs.R;
 import edu.aku.ehs.adapters.EmployeeAssessmentPagerAdapter;
 import edu.aku.ehs.callbacks.OnItemClickListener;
+import edu.aku.ehs.constatnts.WebServiceConstants;
+import edu.aku.ehs.enums.BaseURLTypes;
+import edu.aku.ehs.enums.CategoryType;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
+import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
+import edu.aku.ehs.managers.retrofit.GsonFactory;
+import edu.aku.ehs.managers.retrofit.WebServices;
+import edu.aku.ehs.models.AssessmentQuestionModel;
 import edu.aku.ehs.models.SessionDetailModel;
+import edu.aku.ehs.models.sending_model.EmployeeSendingModel;
+import edu.aku.ehs.models.wrappers.WebResponse;
 import edu.aku.ehs.widget.AnyEditTextView;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.CustomViewPager;
@@ -70,12 +83,17 @@ public class NewAssessmentViewPagerFragment extends BaseFragment implements OnIt
 
 
     private EmployeeAssessmentPagerAdapter adapter;
+    private ArrayList<AssessmentQuestionModel> arrMedicalHistory;
+    private ArrayList<AssessmentQuestionModel> arrFamilyHistory;
+    private ArrayList<AssessmentQuestionModel> arrSocialHistory;
+    private ArrayList<AssessmentQuestionModel> arrSmokingBehavior;
 
-    public static NewAssessmentViewPagerFragment newInstance() {
+    public static NewAssessmentViewPagerFragment newInstance(SessionDetailModel sessionDetailModel) {
 
         Bundle args = new Bundle();
 
         NewAssessmentViewPagerFragment fragment = new NewAssessmentViewPagerFragment();
+        fragment.sessionDetailModel = sessionDetailModel;
         fragment.setArguments(args);
         return fragment;
     }
@@ -119,6 +137,10 @@ public class NewAssessmentViewPagerFragment extends BaseFragment implements OnIt
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        arrFamilyHistory = new ArrayList<>();
+        arrMedicalHistory = new ArrayList<>();
+        arrSmokingBehavior = new ArrayList<>();
+        arrSocialHistory = new ArrayList<>();
 
     }
 
@@ -133,11 +155,19 @@ public class NewAssessmentViewPagerFragment extends BaseFragment implements OnIt
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setViewPagerAdapter();
+        if (onCreated) {
+            setViewPagerAdapter();
+            return;
+        }
+
+        EmployeeSendingModel model = new EmployeeSendingModel();
+        model.setEmployeeNo(sessionDetailModel.getEmployeeNo());
+        model.setSessionID(sessionDetailModel.getSessionID());
+        getEmployeeAssessmentList(model);
     }
 
     private void setViewPagerAdapter() {
-        adapter = new EmployeeAssessmentPagerAdapter(getChildFragmentManager());
+        adapter = new EmployeeAssessmentPagerAdapter(getChildFragmentManager(), sessionDetailModel);
         viewpager.setAdapter(adapter);
         pagerIndicator.setViewPager(viewpager);
     }
@@ -151,5 +181,118 @@ public class NewAssessmentViewPagerFragment extends BaseFragment implements OnIt
     @Override
     public void onItemClick(int position, Object object, View view) {
 
+    }
+
+
+    private void getEmployeeAssessmentList(EmployeeSendingModel model) {
+        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+                .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_GET_EMPLOYEE_ASSESSMENTS, model.toString(),
+                        new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                            @Override
+                            public void requestDataResponse(WebResponse<Object> webResponse) {
+                                if (webResponse.result instanceof ArrayList) {
+
+                                    Type type = new TypeToken<ArrayList<AssessmentQuestionModel>>() {
+                                    }.getType();
+                                    ArrayList<AssessmentQuestionModel> arrayList = GsonFactory.getSimpleGson()
+                                            .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                                    , type);
+
+                                    for (AssessmentQuestionModel assessmentQuestionModel : arrayList) {
+                                        assessmentQuestionModel.setCategoryType(CategoryType.fromCanonicalForm(assessmentQuestionModel.getCategoryID()));
+                                        assessmentQuestionModel.setSessionID(sessionDetailModel.getSessionID());
+                                        assessmentQuestionModel.setEmployeeNo(sessionDetailModel.getEmployeeNo());
+                                        switch (assessmentQuestionModel.getCategoryType()) {
+                                            case MEDICALHISTORY:
+                                                arrMedicalHistory.add(assessmentQuestionModel);
+                                                break;
+                                            case FAMILYHISTORY:
+                                                arrFamilyHistory.add(assessmentQuestionModel);
+                                                break;
+                                            case SOCIALHISTORY:
+                                                arrSocialHistory.add(assessmentQuestionModel);
+                                                break;
+                                            case SMOKINGBEHAVIOR:
+                                                arrSmokingBehavior.add(assessmentQuestionModel);
+                                                break;
+                                        }
+                                    }
+                                    setViewPagerAdapter();
+
+                                }
+                            }
+
+                            @Override
+                            public void onError(Object object) {
+                                if (object instanceof String) {
+                                    UIHelper.showToast(getContext(), (String) object);
+                                }
+                                getActiveQuestionList();
+                            }
+                        });
+    }
+
+    private void getActiveQuestionList() {
+        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+                .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_GET_ACTIVE_QUESTION_LIST, "",
+                        new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                            @Override
+                            public void requestDataResponse(WebResponse<Object> webResponse) {
+                                if (webResponse.result instanceof ArrayList) {
+
+                                    Type type = new TypeToken<ArrayList<AssessmentQuestionModel>>() {
+                                    }.getType();
+                                    ArrayList<AssessmentQuestionModel> arrayList = GsonFactory.getSimpleGson()
+                                            .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                                    , type);
+
+                                    for (AssessmentQuestionModel assessmentQuestionModel : arrayList) {
+                                        assessmentQuestionModel.setCategoryType(CategoryType.fromCanonicalForm(assessmentQuestionModel.getCategoryID()));
+                                        assessmentQuestionModel.setSessionID(sessionDetailModel.getSessionID());
+                                        assessmentQuestionModel.setEmployeeNo(sessionDetailModel.getEmployeeNo());
+                                        switch (assessmentQuestionModel.getCategoryType()) {
+                                            case MEDICALHISTORY:
+                                                arrMedicalHistory.add(assessmentQuestionModel);
+                                                break;
+                                            case FAMILYHISTORY:
+                                                arrFamilyHistory.add(assessmentQuestionModel);
+                                                break;
+                                            case SOCIALHISTORY:
+                                                arrSocialHistory.add(assessmentQuestionModel);
+                                                break;
+                                            case SMOKINGBEHAVIOR:
+                                                arrSmokingBehavior.add(assessmentQuestionModel);
+                                                break;
+                                        }
+                                    }
+                                    setViewPagerAdapter();
+                                }
+                            }
+
+                            @Override
+                            public void onError(Object object) {
+                                if (object instanceof String) {
+                                    UIHelper.showToast(getContext(), (String) object);
+                                }
+
+                            }
+                        });
+    }
+
+
+    public ArrayList<AssessmentQuestionModel> getArrMedicalHistory() {
+        return arrMedicalHistory;
+    }
+
+    public ArrayList<AssessmentQuestionModel> getArrFamilyHistory() {
+        return arrFamilyHistory;
+    }
+
+    public ArrayList<AssessmentQuestionModel> getArrSocialHistory() {
+        return arrSocialHistory;
+    }
+
+    public ArrayList<AssessmentQuestionModel> getArrSmokingBehavior() {
+        return arrSmokingBehavior;
     }
 }

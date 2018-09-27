@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contParent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -51,30 +52,35 @@
                 app:typeface="@string/font_medium" />
 
 
-            <ImageView
+            <info.hoang8f.widget.FButton
                 android:id="@+id/btnClose"
-                android:layout_width="@dimen/x30dp"
-                android:layout_height="@dimen/x30dp"
+                android:layout_width="@dimen/x50dp"
+                android:layout_height="@dimen/x20dp"
                 android:layout_marginRight="@dimen/x5dp"
-                android:ellipsize="end"
-                android:padding="@dimen/x5dp"
-                android:src="@drawable/img_close_96"
-                android:textAllCaps="false"
-                android:textSize="@dimen/s10"
-                android:visibility="visible" />
+                android:text="Close"
+                android:textColor="@color/c_white"
+                app:cornerRadius="@dimen/x10dp"
+                app:fButtonColor="@color/colorPrimaryDark"
+                app:shadowColor="#3000"
+                app:shadowEnabled="true"
+                android:alpha="0.8"
+                app:shadowHeight="1dp" />
 
 
-            <ImageView
+            <info.hoang8f.widget.FButton
                 android:id="@+id/btnSchedule"
-                android:layout_width="@dimen/x30dp"
-                android:layout_height="@dimen/x30dp"
-                android:layout_marginRight="@dimen/x15dp"
-                android:ellipsize="end"
-                android:padding="@dimen/x5dp"
-                android:src="@drawable/img_edit_96"
-                android:textAllCaps="false"
+                android:layout_width="@dimen/x50dp"
+                android:layout_height="@dimen/x20dp"
+                android:layout_marginRight="@dimen/x10dp"
+                android:text="Edit"
+                android:textColor="@color/c_white"
                 android:textSize="@dimen/s10"
-                android:visibility="visible" />
+                app:cornerRadius="@dimen/x10dp"
+                app:fButtonColor="@color/colorPrimaryDark"
+                app:shadowColor="#3000"
+                app:shadowEnabled="true"
+                android:alpha="0.8"
+                app:shadowHeight="1dp" />
 
             <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
                 android:layout_width="wrap_content"

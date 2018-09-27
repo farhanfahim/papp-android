@@ -45,6 +45,20 @@
     </style>
 
 
+    <style name="Item.padding" parent="Theme.AppCompat">
+        <item name="android:paddingRight">@dimen/x4dp</item>
+        <item name="android:paddingLeft">@dimen/x4dp</item>
+        <item name="android:paddingBottom">@dimen/x2dp</item>
+        <item name="android:paddingTop">@dimen/x2dp</item>
+    </style>
+
+    <style name="Item.padding_form_field" parent="Theme.AppCompat">
+        <item name="android:paddingRight">@dimen/x5dp</item>
+        <item name="android:paddingLeft">@dimen/x5dp</item>
+        <item name="android:paddingBottom">@dimen/x8dp</item>
+        <item name="android:paddingTop">@dimen/x8dp</item>
+    </style>
+
     <!--Rating Bar-->
 
     <!--<style name="RatingBar" parent="Theme.AppCompat">-->
@@ -56,7 +70,7 @@
     <style name="CheckboxStyle" parent="AppTheme">
         <item name="android:textColorSecondary">@color/colorPrimary</item>
         // text
-        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/txtBlue</item>
         // Unchecked
         <item name="colorControlActivated">@color/colorPrimaryDark</item>
         // Checked

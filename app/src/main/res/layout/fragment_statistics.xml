@@ -48,20 +48,39 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:paddingTop="@dimen/x50dp">
+        android:orientation="vertical"
+        android:paddingTop="@dimen/x20dp">
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Statistics Screen"
-            android:textSize="@dimen/s16" />
+        <!--<me.ithebk.barchart.BarChart-->
+            <!--android:id="@+id/bar_chart_vertical"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="@dimen/x300dp"-->
+            <!--app:bar_color="@color/colorPrimary"-->
+            <!--app:bar_max_value="100"-->
+            <!--app:bar_show_animation="true"-->
+            <!--app:bar_show_auto_color="false"-->
+            <!--app:bar_show_value="true"-->
+            <!--app:bar_spaces="0dp"-->
+            <!--app:bar_text_color="#808080"-->
+            <!--app:bar_text_size="10sp"-->
+            <!--app:bar_type="vertical"-->
+            <!--app:bar_width="15dp" />-->
 
-    </LinearLayout>
+        <edu.aku.ehs.libraries.mpchart.charts.BarChart
+            android:id="@+id/chart1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/x30dp"
+            android:background="@android:color/white"  />
+
+
+
+    </RelativeLayout>
 
 
 </LinearLayout>

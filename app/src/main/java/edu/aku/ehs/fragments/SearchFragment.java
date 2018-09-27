@@ -123,7 +123,7 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
     public void setTitlebar(TitleBar titleBar) {
         titleBar.resetViews();
         titleBar.setVisibility(View.VISIBLE);
-        titleBar.setTitle("Search");
+        titleBar.setTitle("Add Employees");
         titleBar.showBackButton(getBaseActivity());
         titleBar.showHome(getBaseActivity());
     }
@@ -262,7 +262,7 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
 
     @Override
     public void onDestroy() {
-         super.onDestroy();
+        super.onDestroy();
 
 
     }
@@ -322,8 +322,6 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
 
         }, currentDivisionPosition);
     }
-
-
 
 
 }

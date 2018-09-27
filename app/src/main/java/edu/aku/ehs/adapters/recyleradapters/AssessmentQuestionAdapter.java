@@ -18,7 +18,6 @@ import edu.aku.ehs.R;
 import edu.aku.ehs.activities.BaseActivity;
 import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.callbacks.RadioGroupAdapterListner;
-import edu.aku.ehs.enums.QuestionTypeEnum;
 import edu.aku.ehs.models.AssessmentQuestionModel;
 import edu.aku.ehs.widget.AnyTextView;
 
@@ -55,29 +54,32 @@ public class AssessmentQuestionAdapter extends RecyclerView.Adapter<AssessmentQu
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
         AssessmentQuestionModel model = arrData.get(i);
-        holder.txtQuestion.setText(model.getQuestion1());
-
+        holder.txtQuestion.setText(model.getQuestionDescription());
 
         if (model.isAnswer1()) {
-            if (model.getQuestionTypeEnum() == QuestionTypeEnum.MEDICALHISTORY) {
+            if (model.getAskIsUnderTreatment() != null && model.getAskIsUnderTreatment().equalsIgnoreCase("Y")) {
                 holder.contQuestion2.setVisibility(View.VISIBLE);
+            } else {
+                holder.contQuestion2.setVisibility(View.GONE);
             }
-//            holder.switchQuestion1.setSelectedColor(activity.getResources().getColor(R.color.base_reddish));
+
+
+            holder.rbQues1Yes.setChecked(true);
+
+            if (model.isAnswer2()) {
+                holder.rbQues2Yes.setChecked(true);
+            } else {
+                if (!(model.getIsUnderTreatment() == null || model.getIsUnderTreatment().isEmpty()))  {
+                    holder.rbQues2No.setChecked(true);
+                }
+            }
+
         } else {
             holder.contQuestion2.setVisibility(View.GONE);
-//            holder.switchQuestion1.setSelectedColor(activity.getResources().getColor(R.color.base_green));
+            if (!(model.getIsAnswerYes() == null || model.getIsAnswerYes().isEmpty())) {
+                holder.rbQues1No.setChecked(true);
+            }
         }
-
-//        if (holder.contQuestion2.getVisibility() == View.VISIBLE) {
-//
-//            if (model.isAnswer2()) {
-//                holder.switchQuestion2.setSelectedColor(activity.getResources().getColor(R.color.base_green));
-//            } else {
-//                holder.switchQuestion2.setSelectedColor(activity.getResources().getColor(R.color.base_reddish));
-//
-//            }
-//
-//        }
 
         setListener(holder, model);
     }
@@ -88,6 +90,13 @@ public class AssessmentQuestionAdapter extends RecyclerView.Adapter<AssessmentQu
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 onSwitchListener1.onSwitch(radioGroup, i, holder.getAdapterPosition());
+            }
+        });
+
+        holder.rgQues2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                onSwitchListener2.onSwitch(radioGroup, i, holder.getAdapterPosition());
             }
         });
     }
@@ -110,6 +119,8 @@ public class AssessmentQuestionAdapter extends RecyclerView.Adapter<AssessmentQu
         RadioButton rbQues1No;
         @BindView(R.id.contQuestion1)
         LinearLayout contQuestion1;
+        @BindView(R.id.rgQues2)
+        RadioGroup rgQues2;
         @BindView(R.id.rbQues2Yes)
         RadioButton rbQues2Yes;
         @BindView(R.id.rbQues2No)

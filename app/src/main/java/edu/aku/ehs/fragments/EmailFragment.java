@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -57,8 +58,10 @@ public class EmailFragment extends BaseFragment implements OnNewPacketReceivedLi
     @BindView(R.id.btnSend)
     Button btnSend;
     SessionModel sessionModel;
+    @BindView(R.id.imgSearchEmployees)
+    ImageView imgSearchEmployees;
     private ArrayList<SessionDetailModel> arrSessioDetailModel;
-    private ArrayList<String> newTags = new ArrayList<>();
+//    private ArrayList<String> newTags = new ArrayList<>();
 
     public static EmailFragment newInstance(SessionModel sessionModel, ArrayList<SessionDetailModel> arrSessioDetailModel) {
 
@@ -97,22 +100,24 @@ public class EmailFragment extends BaseFragment implements OnNewPacketReceivedLi
         super.onViewCreated(view, savedInstanceState);
         subscribeToNewPacket(this);
 
+        imgSearchEmployees.setVisibility(View.GONE);
+
         StringBuilder employeeNames = new StringBuilder();
         for (SessionDetailModel sessionDetailModel : arrSessioDetailModel) {
             employeeNames.append(sessionDetailModel.getEmployeeName()).append("\n");
         }
         String bodyText = "Please get lab tests of the following employees:" + "\n" + employeeNames;
         edtEmailBody.setText(bodyText);
- 
-        if (!newTags.isEmpty()) {
-            List<String> list = edtEmailAddress.getTags();
-            list.addAll(newTags);
 
-            CharSequence[] cs = list.toArray(new CharSequence[list.size()]);
-
-            edtEmailAddress.setTags(cs);
-            list.clear();
-        }
+//        if (!newTags.isEmpty()) {
+////            List<String> list = edtEmailAddress.getTags();
+////            list.addAll(newTags);
+//
+//            CharSequence[] cs = newTags.toArray(new CharSequence[newTags.size()]);
+//
+//            edtEmailAddress.setTags(cs);
+//            newTags.clear();
+//        }
     }
 
     @Override
@@ -209,13 +214,13 @@ public class EmailFragment extends BaseFragment implements OnNewPacketReceivedLi
         switch (event) {
             case ON_EMPLOYEES_SELECTED_FOR_EMAIL:
 
-                if (data instanceof ArrayList) {
-                    Type type = new TypeToken<List<String>>() {
-                    }.getType();
-                    newTags = GsonFactory.getSimpleGson()
-                            .fromJson(GsonFactory.getSimpleGson().toJson(data)
-                                    , type);
-                }
+//                if (data instanceof ArrayList) {
+//                    Type type = new TypeToken<List<String>>() {
+//                    }.getType();
+//                    newTags = GsonFactory.getSimpleGson()
+//                            .fromJson(GsonFactory.getSimpleGson().toJson(data)
+//                                    , type);
+//                }
 
                 break;
         }

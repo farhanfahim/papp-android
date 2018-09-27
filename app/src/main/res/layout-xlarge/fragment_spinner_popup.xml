@@ -77,7 +77,7 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/rounded_box_filled_base_amber"
             android:gravity="center"
-            android:padding="10dp"
+            android:padding="@dimen/x8dp"
             android:text="@string/Ok"
             android:textColor="@color/c_white"
             android:textSize="14sp" />

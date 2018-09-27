@@ -21,6 +21,7 @@ import edu.aku.ehs.activities.BaseActivity;
 import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.enums.EmployeeSessionState;
 import edu.aku.ehs.helperclasses.Helper;
+import edu.aku.ehs.helperclasses.StringHelper;
 import edu.aku.ehs.helperclasses.ui.helper.AnimationHelper;
 import edu.aku.ehs.models.SessionDetailModel;
 import edu.aku.ehs.widget.AnyTextView;
@@ -60,11 +61,23 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
         SessionDetailModel model = filteredData.get(i);
         holder.txtEmployeeName.setText(model.getEmployeeName());
         holder.txtStatus.setText(model.getStatusID());
-        holder.txtEmployeeGender.setText(model.getGender());
         holder.txtEmployeeAge.setText(model.getAge() + "Y");
         holder.txtMRN.setText(model.getMedicalRecordNo());
         holder.txtEmployeeID.setText(model.getEmployeeNo());
         holder.txtDepartmentName.setText(model.getDepartmentName());
+
+
+        if (StringHelper.checkNotNullAndNotEmpty(model.getGender())) {
+            if (model.getGender().equalsIgnoreCase("M")) {
+                holder.txtEmployeeGender.setText("Male");
+            } else {
+                holder.txtEmployeeGender.setText("Female");
+            }
+        } else {
+            holder.txtEmployeeGender.setText("N/A");
+        }
+
+
         if (model.getStatusEnum() == EmployeeSessionState.SCHEDULED) {
             holder.txDate.setText("Scheduled Date: " + model.getDisplayScheduledDTTM());
         } else {

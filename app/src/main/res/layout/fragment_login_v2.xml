@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/akuh_bg1"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:src="@drawable/login_background" />-->
+
+        <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/x180dp"
+            android:layout_marginLeft="@dimen/x80dp"
+            android:layout_marginRight="@dimen/x80dp"
+            android:layout_marginTop="@dimen/x180dp"
+            android:background="#afff"
+            app:corner_radius="@dimen/x10dp"
+            android:elevation="@dimen/x10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="@dimen/x10dp"
+                    android:layout_marginLeft="@dimen/x20dp"
+                    android:layout_marginRight="@dimen/x20dp"
+                    android:layout_marginTop="@dimen/x10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <edu.aku.ehs.widget.AnyTextView
+                            android:id="@+id/textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="EHS "
+                            android:textColor="#2C4E6D"
+                            android:textSize="@dimen/s25"
+                            app:typeface="@string/font_bold" />
+
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="@dimen/x30dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:src="@drawable/logo" />
+
+
+                    </LinearLayout>
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:text="Employee Health Screening"
+                        android:textColor="@color/c_black"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_medium" />
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/x10dp"
+                        android:text="@string/login_text"
+                        android:textColor="@color/c_black"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_medium" />
+
+                    <LinearLayout
+                        android:id="@+id/contContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <edu.aku.ehs.widget.AnyEditTextView
+                            android:id="@+id/edtUserName"
+                            style="@style/Item.padding_form_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/x15dp"
+                            android:background="@drawable/rounded_box"
+                            android:drawableLeft="@drawable/user_icon"
+                            android:drawablePadding="@dimen/x5dp"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:hint="User ID"
+                            android:maxLength="30"
+                            android:singleLine="true"
+                            android:textColor="@color/txtBlue"
+                            android:textColorHint="@color/text_hint"
+                            android:textSize="@dimen/s14"
+                            app:testType="nocheck">
+
+                        </edu.aku.ehs.widget.AnyEditTextView>
+
+
+                        <edu.aku.ehs.widget.AnyEditTextView
+                            android:id="@+id/edtPassword"
+                            style="@style/Item.padding_form_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/x5dp"
+                            android:background="@drawable/rounded_box"
+                            android:drawableLeft="@drawable/password_icon"
+                            android:drawablePadding="@dimen/x5dp"
+                            android:hint="@string/password"
+                            android:inputType="textPassword"
+                            android:maxLength="30"
+                            android:singleLine="true"
+                            android:textColor="@color/txtBlue"
+                            android:textColorHint="@color/text_hint"
+                            android:textSize="@dimen/s14"
+                            app:testType="nocheck" />
+
+                        <CheckBox
+                            android:id="@+id/cbShowPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/x3dp"
+                            android:layout_marginTop="@dimen/x3dp"
+                            android:text="Show Password"
+                            android:textColor="@color/c_black"
+                            android:theme="@style/CheckboxStyle" />
+
+                        <edu.aku.ehs.widget.AnyTextView
+                            android:id="@+id/btnLogin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="@dimen/x10dp"
+                            android:layout_marginTop="@dimen/x5dp"
+                            android:background="@drawable/rounded_box_filled_base_amber"
+                            android:gravity="center"
+                            android:padding="@dimen/x8dp"
+                            android:text="@string/login"
+                            android:textColor="@color/c_white"
+                            android:textSize="@dimen/s17"
+                            app:typeface="@string/font_bold" />
+
+
+                    </LinearLayout>
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/x20dp"
+                        android:text="@string/org_name"
+                        android:textColor="@color/c_black"
+                        android:textSize="@dimen/s14"
+                        app:typeface="@string/font_medium" />
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/x2dp"
+                        android:text="@string/org_info"
+                        android:textColor="@color/c_black"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_medium" />
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/org_info1"
+                        android:textColor="@color/c_black"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_medium" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/x1dp"
+                        android:background="@color/c_black" />
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/x1dp"
+                        android:paddingTop="@dimen/x5dp"
+                        android:text="Information Technology, Aga Khan University."
+                        android:textColor="@color/c_black"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_medium" />
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/x5dp"
+                        android:paddingTop="@dimen/x1dp"
+                        android:text="© Intellectual property rights 2018. All rights reserved."
+                        android:textColor="@color/c_black"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_medium" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </com.jcminarro.roundkornerlayout.RoundKornerFrameLayout>
+
+
+    </RelativeLayout>
+</LinearLayout>
+
+

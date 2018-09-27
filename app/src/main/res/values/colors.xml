@@ -34,7 +34,7 @@
     <color name="summary_green">#A4FFB8</color>
 
     <color name="button_color1">#40C4FF</color>
-    <color name="button_color2">#FFAB40</color>
+    <color name="button_color2">#ffab40</color>
 
     <!--TIMELINE-->
     <color name="timeline_expire_dark">#7F7F7F</color>
@@ -121,7 +121,7 @@
     <color name="fbutton_color_asbestos">#7f8c8d</color>
 
 
-    <color name="selected_item">#a8d3f5</color>
+    <color name="selected_item">#cbe5f9</color>
     <color name="background_color">#effbff</color>
     <color name="question_header">#F5B195</color>
     <color name="question_subheader">#FCE4DB</color>

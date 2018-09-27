@@ -56,7 +56,9 @@ public class WebServices {
                 apiService = WebServiceFactory.getInstancePACSURL(token, bearerToken);
                 break;
             case GET_EMP_DEPT_URL:
-                apiService = WebServiceFactory.getInstancePaymentGateway("");
+                apiService = WebServiceFactory.getInstanceXML();
+            case AUTHENTICATE_USER_URL:
+                apiService = WebServiceFactory.getInstanceAuthenicateUser();
         }
 
 
@@ -78,7 +80,9 @@ public class WebServices {
                 apiService = WebServiceFactory.getInstancePACSURL(token, bearerToken);
                 break;
             case GET_EMP_DEPT_URL:
-                apiService = WebServiceFactory.getInstancePaymentGateway("");
+                apiService = WebServiceFactory.getInstanceXML();
+            case AUTHENTICATE_USER_URL:
+                apiService = WebServiceFactory.getInstanceAuthenicateUser();
         }
 
 
@@ -432,6 +436,78 @@ public class WebServices {
     }
 
 
+    public void webServiceAuthenticateUser(String userName, String password, IRequestWebResponseJustObjectCallBack iRequestWebResponseJustObjectCallBack) {
+        try {
+            if (Helper.isNetworkConnected(mContext, true)) {
+                WebServiceFactory.getInstanceAuthenicateUser().authenticateUser(userName, password, "PCIWEB", "localhost").enqueue(new Callback<Object>() {
+                    @Override
+                    public void onResponse(Call<Object> call, Response<Object> response) {
+                        dismissDialog();
+                        if (response.body() == null) {
+                            iRequestWebResponseJustObjectCallBack.onError(call);
+                        } else {
+                            iRequestWebResponseJustObjectCallBack.requestDataResponse(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Object> call, Throwable t) {
+                        iRequestWebResponseJustObjectCallBack.onError(call);
+                        UIHelper.showShortToastInCenter(mContext, "Something went wrong, Please check your internet connection.");
+                        dismissDialog();
+
+                    }
+                });
+            } else {
+                dismissDialog();
+            }
+
+        } catch (Exception e) {
+            dismissDialog();
+            e.printStackTrace();
+
+        }
+
+    }
+
+
+
+    public void webServiceGetAuthenticatedUserDetail(String userName, IRequestWebResponseJustObjectCallBack iRequestWebResponseJustObjectCallBack) {
+        try {
+            if (Helper.isNetworkConnected(mContext, true)) {
+                WebServiceFactory.getInstanceAuthenicateUser().getAuthenticatedUserDetails(userName,  "PCIWEB").enqueue(new Callback<Object>() {
+                    @Override
+                    public void onResponse(Call<Object> call, Response<Object> response) {
+                        dismissDialog();
+                        if (response.body() == null) {
+                            iRequestWebResponseJustObjectCallBack.onError(call);
+                        } else {
+                            iRequestWebResponseJustObjectCallBack.requestDataResponse(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Object> call, Throwable t) {
+                        iRequestWebResponseJustObjectCallBack.onError(call);
+                        UIHelper.showShortToastInCenter(mContext, "Something went wrong, Please check your internet connection.");
+                        dismissDialog();
+
+                    }
+                });
+            } else {
+                dismissDialog();
+            }
+
+        } catch (Exception e) {
+            dismissDialog();
+            e.printStackTrace();
+
+        }
+
+    }
+
+
+
     @NonNull
     public RequestBody getRequestBody(MediaType form, String trim) {
         return RequestBody.create(
@@ -461,6 +537,12 @@ public class WebServices {
 
     public interface IRequestWebResponseAnyObjectCallBack {
         void requestDataResponse(WebResponse<Object> webResponse);
+
+        void onError(Object object);
+    }
+
+    public interface IRequestWebResponseJustObjectCallBack {
+        void requestDataResponse(Object webResponse);
 
         void onError(Object object);
     }

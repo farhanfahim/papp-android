@@ -8,6 +8,15 @@
     </array>
 
 
+    <array name="stats_xAxis">
+        <item>Total Employees</item>
+        <item>Hep C</item>
+        <item>Social Problem</item>
+        <item>Diabtese</item>
+        <item>Test 1</item>
+    </array>
+
+
     <array name="arrYesNo">
         <item>Yes</item>
         <item>No</item>

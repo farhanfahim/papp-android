@@ -142,4 +142,11 @@ Enim vitae euismod eu velit pede eu, sodales malesuada sit fermentum ut dictum d
     <string name="card_number">Card Number</string>
     <string name="logout_underline"><u>Logout</u></string>
 
+    <string name="password">Password</string>
+    <string name="org_name"> Aga Khan University Hospital</string>
+    <string name="org_info"> Stadium Road, Garden, Karimabad,</string>
+    <string name="org_info1"> Kharadar and Hyderabad,</string>
+    <string name="portal_info"> A Portal For Healthcare Providers</string>
+    <string name="login_text"> --------------- Log In ---------------</string>
+
 </resources>

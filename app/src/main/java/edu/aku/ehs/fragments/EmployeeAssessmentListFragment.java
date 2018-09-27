@@ -32,6 +32,7 @@ import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.enums.EmployeeAssessmentState;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.models.EmployeeAssessmentModel;
+import edu.aku.ehs.models.SessionDetailModel;
 import edu.aku.ehs.widget.AnyEditTextView;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
@@ -70,12 +71,14 @@ public class EmployeeAssessmentListFragment extends BaseFragment implements OnIt
 
     private ArrayList<EmployeeAssessmentModel> arrData;
     private EmployeeAssessmentAdapter adapter;
+    private SessionDetailModel sessionDetailModel;
 
-    public static EmployeeAssessmentListFragment newInstance() {
+    public static EmployeeAssessmentListFragment newInstance(SessionDetailModel sessionDetailModel) {
 
         Bundle args = new Bundle();
 
         EmployeeAssessmentListFragment fragment = new EmployeeAssessmentListFragment();
+        fragment.sessionDetailModel = sessionDetailModel;
         fragment.setArguments(args);
         return fragment;
     }
@@ -102,7 +105,7 @@ public class EmployeeAssessmentListFragment extends BaseFragment implements OnIt
     @Override
     public void setListeners() {
 
-        fab.setOnClickListener(view -> getBaseActivity().addDockableFragment(NewAssessmentViewPagerFragment.newInstance(), false));
+        fab.setOnClickListener(view -> getBaseActivity().addDockableFragment(NewAssessmentViewPagerFragment.newInstance(sessionDetailModel), false));
     }
 
     @Override
@@ -175,6 +178,6 @@ public class EmployeeAssessmentListFragment extends BaseFragment implements OnIt
 
     @Override
     public void onItemClick(int position, Object object, View view) {
-        getBaseActivity().addDockableFragment(NewAssessmentViewPagerFragment.newInstance(), false);
+        getBaseActivity().addDockableFragment(NewAssessmentViewPagerFragment.newInstance(sessionDetailModel), false);
     }
 }

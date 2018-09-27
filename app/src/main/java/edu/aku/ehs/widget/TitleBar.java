@@ -188,41 +188,6 @@ public class TitleBar extends RelativeLayout {
     }
 
 
-//    public void setUserTimeLineDisplay(final UserDetailModel currentUser, Context context, TimelineModel timelineModel) {
-//        this.circleImageView.setVisibility(VISIBLE);
-//
-//        if (currentUser == null) {
-//            contDropDown.setVisibility(GONE);
-//            UIHelper.showToast(context, "No user selected.");
-//            return;
-//        }
-//
-//        if (currentUser.getProfileImage() == null || currentUser.getProfileImage().isEmpty()) {
-//            circleImageView.setImageResource(R.drawable.male_icon);
-//        } else {
-//            ImageLoaderHelper.loadImageWithConstantHeadersWithoutAnimation(context, circleImageView, currentUser.getProfileImage());
-//        }
-//
-//        Spanny visitiTimeLineTag = new Spanny(currentUser.getName() + " (" + currentUser.getMRNumber() + ") " + "visited " + timelineModel.getPatientVisitDoctorName() +
-//                " on " + timelineModel.getPatientVisitDateTime() + " at " + timelineModel.getPatientVisitHospitalLocation()
-//                + " (" + timelineModel.getPatientVisitLocation() + ")", new AbsoluteSizeSpan(context.getResources().getDimensionPixelSize(R.dimen.s12)));
-////        txtUserName.setText(currentUser.getName() + " (" + currentUser.getMRNumber() + ") " + "visited " + "Dr." + timelineModel.getPatientVisitDoctorName() +
-////                " on " + timelineModel.getPatientVisitDateTime() + " at " + timelineModel.getPatientVisitHospitalLocation()
-////                + " (" + timelineModel.getPatientVisitLocation() + ")");
-//        txtUserName.setText(visitiTimeLineTag);
-//        txtMRN.setVisibility(GONE);
-//        contDropDown.setVisibility(VISIBLE);
-//
-////        this.circleImageView.setOnClickListener(new OnClickListener() {
-////            @Override
-////            public void onClick(View view) {
-////                txtMRN.setText(currentUser.getMRNumber());
-////                txtUserName.setText(currentUser.getName());
-////                hideAndShowBottomBar();
-////            }
-////        });
-//    }
-
 
     public void setRightButton(int drawable, OnClickListener onClickListener, int colorToTint) {
         this.btnRight1.setVisibility(VISIBLE);
