@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.google.gson.reflect.TypeToken;
@@ -26,6 +26,7 @@ import edu.aku.ehs.R;
 import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.constatnts.WebServiceConstants;
 import edu.aku.ehs.enums.BaseURLTypes;
+import edu.aku.ehs.enums.EmployeeSessionState;
 import edu.aku.ehs.enums.MeasurementsType;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
@@ -49,6 +50,8 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
     int height = 60;
     int weight = 0;
     SessionDetailModel sessionDetailModel;
+
+    ArrayList<ActiveMeasurementsModel> arrData;
     @BindView(R.id.imgBanner)
     ImageView imgBanner;
     @BindView(R.id.btnRecordMenually)
@@ -57,51 +60,54 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
     AnyTextView txtBMI;
     @BindView(R.id.contBMI)
     LinearLayout contBMI;
+    @BindView(R.id.txtHeightDesc)
+    AnyTextView txtHeightDesc;
     @BindView(R.id.txtHeight)
     AnyEditTextView txtHeight;
     @BindView(R.id.sbHeight)
     RangeSeekBar sbHeight;
     @BindView(R.id.contHeight)
     LinearLayout contHeight;
+    @BindView(R.id.txtWeightDesc)
+    AnyTextView txtWeightDesc;
     @BindView(R.id.txtWeight)
     AnyEditTextView txtWeight;
     @BindView(R.id.sbWeight)
     RangeSeekBar sbWeight;
     @BindView(R.id.contWeight)
     LinearLayout contWeight;
+    @BindView(R.id.txtWaistDesc)
+    AnyTextView txtWaistDesc;
     @BindView(R.id.txtWaist)
     AnyEditTextView txtWaist;
     @BindView(R.id.sbWaist)
     RangeSeekBar sbWaist;
     @BindView(R.id.contWaist)
     LinearLayout contWaist;
+    @BindView(R.id.txtBPSystolicDesc)
+    AnyTextView txtBPSystolicDesc;
     @BindView(R.id.txtBPSystolic)
     AnyEditTextView txtBPSystolic;
     @BindView(R.id.sbSystolicBP)
     RangeSeekBar sbSystolicBP;
     @BindView(R.id.contSystolicBP)
     LinearLayout contSystolicBP;
+    @BindView(R.id.txtBPDiastolicDesc)
+    AnyTextView txtBPDiastolicDesc;
     @BindView(R.id.txtBPDiastolic)
     AnyEditTextView txtBPDiastolic;
     @BindView(R.id.sbDiastolicBP)
     RangeSeekBar sbDiastolicBP;
     @BindView(R.id.contDiastolicBP)
     LinearLayout contDiastolicBP;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
+    @BindView(R.id.fabNext)
+    FloatingActionButton fabNext;
+    @BindView(R.id.btnCancel)
+    Button btnCancel;
+    @BindView(R.id.btnDone)
+    Button btnDone;
     @BindView(R.id.contParent)
-    RelativeLayout contParent;
-    @BindView(R.id.txtHeightDesc)
-    AnyTextView txtHeightDesc;
-    @BindView(R.id.txtWeightDesc)
-    AnyTextView txtWeightDesc;
-    @BindView(R.id.txtWaistDesc)
-    AnyTextView txtWaistDesc;
-    @BindView(R.id.txtBPSystolicDesc)
-    AnyTextView txtBPSystolicDesc;
-    @BindView(R.id.txtBPDiastolicDesc)
-    AnyTextView txtBPDiastolicDesc;
-    ArrayList<ActiveMeasurementsModel> arrData;
+    LinearLayout contParent;
 
 
     public static EmployeeAnthropometricMeasurmentsFragment newInstance(SessionDetailModel sessionDetailModel) {
@@ -228,6 +234,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
 
 
         txtHeight.setOnFocusChangeListener((view, b) -> {
+            if (txtHeight == null) return;
             if (!b && !txtHeight.getStringTrimmed().isEmpty()) {
                 if (Float.valueOf(txtHeight.getStringTrimmed()) > sbHeight.getMaxProgress()) {
                     txtHeight.setText("" + (int) sbHeight.getMaxProgress());
@@ -244,6 +251,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
 
 
         txtWeight.setOnFocusChangeListener((view, b) -> {
+            if (txtWeight == null) return;
             if (!b && !txtWeight.getStringTrimmed().isEmpty()) {
                 if (Float.valueOf(txtWeight.getStringTrimmed()) > sbWeight.getMaxProgress()) {
                     txtWeight.setText("" + (int) sbWeight.getMaxProgress());
@@ -260,6 +268,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
 
 
         txtWaist.setOnFocusChangeListener((view, b) -> {
+            if (txtWaist == null) return;
             if (!b && !txtWaist.getStringTrimmed().isEmpty()) {
                 if (Float.valueOf(txtWaist.getStringTrimmed()) > sbWaist.getMaxProgress()) {
                     txtWaist.setText("" + (int) sbWaist.getMaxProgress());
@@ -276,6 +285,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
 
 
         txtBPSystolic.setOnFocusChangeListener((view, b) -> {
+            if (txtBPSystolic == null) return;
             if (!b && !txtBPSystolic.getStringTrimmed().isEmpty()) {
                 if (Float.valueOf(txtBPSystolic.getStringTrimmed()) > sbSystolicBP.getMaxProgress()) {
                     txtBPSystolic.setText("" + (int) sbSystolicBP.getMaxProgress());
@@ -292,6 +302,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
 
 
         txtBPDiastolic.setOnFocusChangeListener((view, b) -> {
+            if (txtBPDiastolic == null) return;
             if (!b && !txtBPDiastolic.getStringTrimmed().isEmpty()) {
                 if (Float.valueOf(txtBPDiastolic.getStringTrimmed()) > sbDiastolicBP.getMaxProgress()) {
                     txtBPDiastolic.setText("" + (int) sbDiastolicBP.getMaxProgress());
@@ -364,10 +375,16 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
 
     }
 
-    @OnClick(R.id.fab)
-    public void onViewClicked() {
-        ArrayList arrMeasurementToSend = new ArrayList();
+
+    private void onDonePressed() {
+        ArrayList<ActiveMeasurementsModel> arrMeasurementToSend = new ArrayList<>();
         if (txtHeight.testValidity() && txtWeight.testValidity() && txtWaist.testValidity() && txtBPSystolic.testValidity() && txtBPDiastolic.testValidity()) {
+
+            if (Integer.valueOf(txtBPSystolic.getStringTrimmed()) < Integer.valueOf(txtBPDiastolic.getStringTrimmed())) {
+                UIHelper.showShortToastInCenter(getContext(), "Systolic should be greater than Diastolic BP.");
+                return;
+            }
+
             for (ActiveMeasurementsModel activeMeasurementsModel : arrData) {
                 activeMeasurementsModel.setSessionID(sessionDetailModel.getSessionID());
                 activeMeasurementsModel.setEmployeeNo(sessionDetailModel.getEmployeeNo());
@@ -389,15 +406,12 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
                         break;
                 }
                 arrMeasurementToSend.add(activeMeasurementsModel);
-
-                String jsonArrayData = GsonFactory.getConfiguredGson().toJson(arrMeasurementToSend);
-
-                saveEmployeeMeasurements(jsonArrayData);
-
             }
 
-        }
+            String jsonArrayData = GsonFactory.getConfiguredGson().toJson(arrMeasurementToSend);
+            saveEmployeeMeasurements(jsonArrayData);
 
+        }
     }
 
 
@@ -421,23 +435,29 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
                                             case WAIST:
                                                 txtWaistDesc.setText(activeMeasurementsModel.getDescription() + " (" + activeMeasurementsModel.getUnitofMeasure() + ")");
                                                 sbWaist.setRange(activeMeasurementsModel.getMinRange(), activeMeasurementsModel.getMaxRange());
-
+                                                txtWaist.setText(activeMeasurementsModel.getMinRange() + "");
                                                 break;
                                             case SBP:
                                                 txtBPSystolicDesc.setText(activeMeasurementsModel.getDescription() + " (" + activeMeasurementsModel.getUnitofMeasure() + ")");
                                                 sbSystolicBP.setRange(activeMeasurementsModel.getMinRange(), activeMeasurementsModel.getMaxRange());
+                                                txtBPSystolic.setText(activeMeasurementsModel.getMinRange() + "");
                                                 break;
                                             case DBP:
                                                 txtBPDiastolicDesc.setText(activeMeasurementsModel.getDescription() + " (" + activeMeasurementsModel.getUnitofMeasure() + ")");
                                                 sbDiastolicBP.setRange(activeMeasurementsModel.getMinRange(), activeMeasurementsModel.getMaxRange());
+                                                txtBPDiastolic.setText(activeMeasurementsModel.getMinRange() + "");
                                                 break;
                                             case HEIGHT:
                                                 txtHeightDesc.setText(activeMeasurementsModel.getDescription() + " (" + activeMeasurementsModel.getUnitofMeasure() + ")");
                                                 sbHeight.setRange(activeMeasurementsModel.getMinRange(), activeMeasurementsModel.getMaxRange());
+                                                txtHeight.setText(activeMeasurementsModel.getMinRange() + "");
+                                                height = activeMeasurementsModel.getMinRange();
                                                 break;
                                             case WEIGHT:
                                                 txtWeightDesc.setText(activeMeasurementsModel.getDescription() + " (" + activeMeasurementsModel.getUnitofMeasure() + ")");
                                                 sbWeight.setRange(activeMeasurementsModel.getMinRange(), activeMeasurementsModel.getMaxRange());
+                                                txtWeight.setText(activeMeasurementsModel.getMinRange() + "");
+                                                weight = activeMeasurementsModel.getMinRange();
                                                 break;
                                         }
                                     }
@@ -511,9 +531,9 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
 
                             @Override
                             public void onError(Object object) {
-                                if (object instanceof String) {
-                                    UIHelper.showToast(getContext(), (String) object);
-                                }
+//                                if (object instanceof String) {
+//                                    UIHelper.showToast(getContext(), (String) object);
+//                                }
                                 getActiveMeasurementsList();
                             }
                         });
@@ -526,8 +546,19 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override
                             public void requestDataResponse(WebResponse<Object> webResponse) {
-                                UIHelper.showToast(getContext(), webResponse.responseMessage);
-                                getBaseActivity().addDockableFragment(EmployeeProfileViewerFragment.newInstance(sessionDetailModel), false);
+                                if (sessionDetailModel.getStatusEnum() != EmployeeSessionState.INPROGRESS) {
+                                    ArrayList<SessionDetailModel> sessionDetailModelArrayList = new ArrayList<>();
+
+                                    sessionDetailModel.setStatusID(EmployeeSessionState.INPROGRESS.canonicalForm());
+                                    sessionDetailModel.setLastFileUser(getCurrentUser().getName());
+
+                                    sessionDetailModelArrayList.add(sessionDetailModel);
+                                    String jsonArrayData = GsonFactory.getConfiguredGson().toJson(sessionDetailModelArrayList);
+                                    updateEmployeeInSessionCall(jsonArrayData);
+                                } else {
+                                    UIHelper.showToast(getContext(), webResponse.responseMessage);
+                                    getBaseActivity().popBackStack();
+                                }
                             }
 
                             @Override
@@ -537,5 +568,36 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
                                 }
                             }
                         });
+    }
+
+    private void updateEmployeeInSessionCall(String jsonArrayData) {
+        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+                .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_UPDATE_SESSION_EMPLOYEE, jsonArrayData,
+                        new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                            @Override
+                            public void requestDataResponse(WebResponse<Object> webResponse) {
+                                UIHelper.showToast(getContext(), webResponse.responseMessage);
+                                getBaseActivity().popBackStack();
+                            }
+
+                            @Override
+                            public void onError(Object object) {
+                                if (object instanceof String) {
+                                    UIHelper.showToast(getContext(), (String) object);
+                                }
+                            }
+                        });
+    }
+
+    @OnClick({R.id.btnCancel, R.id.btnDone})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btnCancel:
+                getBaseActivity().popBackStack();
+                break;
+            case R.id.btnDone:
+                onDonePressed();
+                break;
+        }
     }
 }

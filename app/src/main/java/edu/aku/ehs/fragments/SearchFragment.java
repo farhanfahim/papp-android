@@ -167,8 +167,6 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        contSearch.setVisibility(View.VISIBLE);
-        imgBanner.setVisibility(View.VISIBLE);
         txtSessionName.setText(sessionModel.getDescription());
         edtMRNumber.addTextChangedListener(new MaskFormatter(AppConstants.MR_NUMBER_MASK, edtMRNumber, '-'));
         if (tempSpinnerModel != null) {
@@ -296,12 +294,12 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
     private void showSpinner() {
         UIHelper.showSpinnerDialog(this, arrDivisionSpinner, "Select Division", txtSelectDivision, (position, object, adapter) -> {
             tempSpinnerModel = (SpinnerModel) object;
-            tempSpinnerModel.setPositionInList(position);
+            tempSpinnerModel.setPositionInList(adapter.getArrData().indexOf(tempSpinnerModel));
 
             for (SpinnerModel arrDatum : adapter.getArrData()) {
                 arrDatum.setSelected(false);
             }
-            adapter.getArrData().get(position).setSelected(true);
+            adapter.getArrData().get(tempSpinnerModel.getPositionInList()).setSelected(true);
             adapter.notifyDataSetChanged();
         }, data -> {
             if (tempSpinnerModel == null) {

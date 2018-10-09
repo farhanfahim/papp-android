@@ -118,8 +118,12 @@ public class MedicalHistoryAssessmentFragment extends BaseFragment implements On
                 adapter.notifyItemChanged(adapterPosition);
             } else {
                 arrData.get(adapterPosition).setAnswer1(false);
+                arrData.get(adapterPosition).setIsUnderTreatment("");
                 adapter.notifyItemChanged(adapterPosition);
+
             }
+            parentFragment.dirtyCheck = true;
+            ((OtherHistoryAssessmentFragment)parentFragment.getChildFragmentManager().getFragments().get(1)).btnDone.setAlpha(1f);
         };
 
 
@@ -131,6 +135,8 @@ public class MedicalHistoryAssessmentFragment extends BaseFragment implements On
                 arrData.get(adapterPosition).setAnswer2(false);
                 adapter.notifyItemChanged(adapterPosition);
             }
+            parentFragment.dirtyCheck = true;
+            ((OtherHistoryAssessmentFragment)parentFragment.getChildFragmentManager().getFragments().get(1)).btnDone.setAlpha(1f);
         };
     }
 

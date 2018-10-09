@@ -64,10 +64,6 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|stateVisible" />
 
-        <!-- FullScreenRotated Activity -->
-
-        <!-- ImagePreview Activity -->
-
         <!-- Home Activity -->
         <activity
             android:name="edu.aku.ehs.activities.HomeActivity"

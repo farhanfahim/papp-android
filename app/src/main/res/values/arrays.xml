@@ -10,10 +10,11 @@
 
     <array name="stats_xAxis">
         <item>Total Employees</item>
-        <item>Hep C</item>
-        <item>Social Problem</item>
-        <item>Diabtese</item>
-        <item>Test 1</item>
+        <item>Metabolic Syndrome</item>
+        <item>Referred</item>
+        <item>HEP C</item>
+        <item>Anemia</item>
+        <item>Psychosocial History</item>
     </array>
 
 

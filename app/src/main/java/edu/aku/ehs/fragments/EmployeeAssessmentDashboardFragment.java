@@ -8,11 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
-import com.badoualy.stepperindicator.StepperIndicator;
-import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,10 +16,18 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import edu.aku.ehs.R;
 import edu.aku.ehs.callbacks.OnItemClickListener;
+import edu.aku.ehs.constatnts.WebServiceConstants;
+import edu.aku.ehs.enums.BaseURLTypes;
+import edu.aku.ehs.enums.EmployeeSessionState;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
-import edu.aku.ehs.helperclasses.StringHelper;
+import edu.aku.ehs.fragments.dialogs.PinDialogFragment;
+import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
+import edu.aku.ehs.managers.retrofit.GsonFactory;
+import edu.aku.ehs.managers.retrofit.WebServices;
+import edu.aku.ehs.models.EmployeeSummaryDetailModel;
 import edu.aku.ehs.models.SessionDetailModel;
-import edu.aku.ehs.widget.AnyTextView;
+import edu.aku.ehs.models.sending_model.EmployeeSendingModel;
+import edu.aku.ehs.models.wrappers.WebResponse;
 import edu.aku.ehs.widget.TitleBar;
 
 public class EmployeeAssessmentDashboardFragment extends BaseFragment implements OnItemClickListener {
@@ -32,41 +36,32 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
     Unbinder unbinder;
     @BindView(R.id.imgBanner)
     ImageView imgBanner;
-    @BindView(R.id.txtEmployeeName)
-    AnyTextView txtEmployeeName;
-    @BindView(R.id.txtEmployeeGender)
-    AnyTextView txtEmployeeGender;
-    @BindView(R.id.txtMRN)
-    AnyTextView txtMRN;
-    @BindView(R.id.txDate)
-    AnyTextView txDate;
-    @BindView(R.id.txtStatus)
-    AnyTextView txtStatus;
-    @BindView(R.id.stepView)
-    StepperIndicator stepView;
-    @BindView(R.id.btnDelete)
-    ImageView btnDelete;
-    @BindView(R.id.btnSchedule)
-    ImageView btnSchedule;
-    @BindView(R.id.contListItem)
-    RoundKornerLinearLayout contListItem;
-    @BindView(R.id.imgSelected)
-    ImageView imgSelected;
+    @BindView(R.id.imgAssessmentDone)
+    ImageView imgAssessmentDone;
+    @BindView(R.id.contAssessment)
+    RelativeLayout contAssessment;
+    @BindView(R.id.imgMeasurementsDone)
+    ImageView imgMeasurementsDone;
+    @BindView(R.id.contMeasurements)
+    RelativeLayout contMeasurements;
+    @BindView(R.id.imgProfileDone)
+    ImageView imgProfileDone;
+    @BindView(R.id.contRefer)
+    RelativeLayout contRefer;
     @BindView(R.id.contParent)
     RelativeLayout contParent;
-    SessionDetailModel sessionDetailModel;
-    @BindView(R.id.txtEmployeeAge)
-    AnyTextView txtEmployeeAge;
-    @BindView(R.id.txtEmployeeID)
-    AnyTextView txtEmployeeID;
-    @BindView(R.id.txtDepartmentName)
-    AnyTextView txtDepartmentName;
-    @BindView(R.id.contAssessment)
-    LinearLayout contAssessment;
-    @BindView(R.id.contMeasurements)
-    LinearLayout contMeasurements;
-    @BindView(R.id.contRefer)
-    LinearLayout contRefer;
+    private PinDialogFragment pinDialogFragment;
+    int lastID = 0;
+
+
+    private SessionDetailModel sessionDetailModel;
+    EmployeeSummaryDetailModel employeeSummaryDetailModel;
+
+    boolean isAssessmentDone = false;
+    boolean isMeasurementDone = false;
+    boolean isLabDone = false;
+    boolean isCVDRiskExist = false;
+    boolean isMetabolicExist = false;
 
 
     public static EmployeeAssessmentDashboardFragment newInstance(SessionDetailModel sessionDetailModel) {
@@ -94,13 +89,30 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
         titleBar.resetViews();
         titleBar.setVisibility(View.VISIBLE);
         titleBar.showHome(getBaseActivity());
-        titleBar.setTitle("Employee Assessment Dashboard");
+        titleBar.setTitle("Employee Dashboard");
         titleBar.showBackButton(getBaseActivity());
         titleBar.setEmployeeHeader(sessionDetailModel, getContext());
     }
 
     @Override
     public void setListeners() {
+        pinDialogFragment = PinDialogFragment.newInstance(view -> {
+        }, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (lastID) {
+                    case R.id.contAssessment:
+                        getBaseActivity().addDockableFragment(NewAssessmentViewPagerFragment.newInstance(sessionDetailModel), false);
+                        break;
+                    case R.id.contMeasurements:
+                        getBaseActivity().addDockableFragment(EmployeeAnthropometricMeasurmentsFragment.newInstance(sessionDetailModel), false);
+                        break;
+                    case R.id.contRefer:
+                        getBaseActivity().addDockableFragment(EmployeeProfileViewerFragment.newInstance(sessionDetailModel, employeeSummaryDetailModel), false);
+                        break;
+                }
+            }
+        });
 
     }
 
@@ -132,37 +144,13 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        btnDelete.setVisibility(View.GONE);
-        btnSchedule.setVisibility(View.GONE);
-        txDate.setVisibility(View.GONE);
-        txtEmployeeName.setText(sessionDetailModel.getEmployeeName());
-        txtEmployeeAge.setText(sessionDetailModel.getAge() + "Y");
-        txtMRN.setText(sessionDetailModel.getMedicalRecordNo());
-        txtEmployeeID.setText(sessionDetailModel.getEmployeeNo());
-        txtEmployeeID.setText(sessionDetailModel.getEmployeeNo());
-        txtDepartmentName.setText(sessionDetailModel.getDepartmentName());
-        txtStatus.setText(sessionDetailModel.getStatusID());
 
 
-        if (StringHelper.checkNotNullAndNotEmpty(sessionDetailModel.getGender())) {
-            if (sessionDetailModel.getGender().equalsIgnoreCase("M")) {
-                txtEmployeeGender.setText("Male");
-            } else {
-                txtEmployeeGender.setText("Female");
-            }
-        } else {
-            txtEmployeeGender.setText("N/A");
-        }
+        EmployeeSendingModel model = new EmployeeSendingModel();
+        model.setSessionID(sessionDetailModel.getSessionID());
+        model.setEmployeeNo(sessionDetailModel.getEmployeeNo());
 
-        if (sessionDetailModel.getHasLabResult() != null && !sessionDetailModel.getHasLabResult().isEmpty() && sessionDetailModel.getHasLabResult().equalsIgnoreCase("Y")) {
-            if (sessionDetailModel.getIsReferred() != null && !sessionDetailModel.getIsReferred().isEmpty() && sessionDetailModel.getIsReferred().equalsIgnoreCase("Y")) {
-                stepView.setCurrentStep(2);
-            } else {
-                stepView.setCurrentStep(1);
-            }
-        } else {
-            stepView.setCurrentStep(0);
-        }
+        getEmployeeSummaryDetail(model);
     }
 
     @Override
@@ -181,14 +169,82 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.contAssessment:
-                getBaseActivity().addDockableFragment(NewAssessmentViewPagerFragment.newInstance(sessionDetailModel), false);
+                lastID = R.id.contAssessment;
+                showPin();
                 break;
             case R.id.contMeasurements:
-                getBaseActivity().addDockableFragment(EmployeeAnthropometricMeasurmentsFragment.newInstance(sessionDetailModel), false);
+                lastID = R.id.contMeasurements;
+                showPin();
                 break;
             case R.id.contRefer:
-                getBaseActivity().addDockableFragment(EmployeeProfileViewerFragment.newInstance(sessionDetailModel), false);
+                lastID = R.id.contRefer;
+                if (employeeSummaryDetailModel != null && isAssessmentDone && isCVDRiskExist && isLabDone && isMeasurementDone && isMetabolicExist) {
+                    showPin();
+                } else {
+                    UIHelper.showShortToastInCenter(getContext(), "Kindly complete all processes to view profile.");
+                }
                 break;
         }
+    }
+
+    private void showPin() {
+        pinDialogFragment.setTitle("Enter Pin");
+        pinDialogFragment.setCancelable(false);
+        pinDialogFragment.clearField();
+        pinDialogFragment.show(getBaseActivity().getSupportFragmentManager(), null);
+    }
+
+
+    private void getEmployeeSummaryDetail(EmployeeSendingModel model) {
+        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+                .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_GET_EMPLOYEE_SUMMARY_DETAIL, model.toString(),
+                        new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                            @Override
+                            public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                                employeeSummaryDetailModel = GsonFactory.getSimpleGson()
+                                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), EmployeeSummaryDetailModel.class);
+
+                                if (employeeSummaryDetailModel.getEmpMeasurements() != null && !employeeSummaryDetailModel.getEmpMeasurements().isEmpty()) {
+                                    isMeasurementDone = true;
+                                    imgMeasurementsDone.setVisibility(View.VISIBLE);
+                                } else {
+                                    imgMeasurementsDone.setVisibility(View.GONE);
+                                }
+
+                                if (employeeSummaryDetailModel.getEmpAssessments() != null && !employeeSummaryDetailModel.getEmpAssessments().isEmpty()) {
+                                    isAssessmentDone = true;
+                                    imgAssessmentDone.setVisibility(View.VISIBLE);
+                                } else {
+                                    imgAssessmentDone.setVisibility(View.GONE);
+                                }
+
+                                if (employeeSummaryDetailModel.getEmpLabs() != null && !employeeSummaryDetailModel.getEmpLabs().isEmpty()) {
+                                    isLabDone = sessionDetailModel.getisLabResultDone();
+                                }
+
+                                if (employeeSummaryDetailModel.getCVDRiskFactors() != null && !employeeSummaryDetailModel.getCVDRiskFactors().isEmpty()) {
+                                    isCVDRiskExist = true;
+                                }
+
+                                if (employeeSummaryDetailModel.getMetabolicSyndromeDetail().getMetabolicSyndromeRules() != null && !employeeSummaryDetailModel.getEmpLabs().isEmpty()) {
+                                    isMetabolicExist = true;
+                                }
+
+                                if (sessionDetailModel.getStatusEnum() == EmployeeSessionState.COMPLETED) {
+                                    imgProfileDone.setVisibility(View.VISIBLE);
+                                } else {
+                                    imgProfileDone.setVisibility(View.GONE);
+                                }
+
+                            }
+
+                            @Override
+                            public void onError(Object object) {
+                                if (object instanceof String) {
+                                    UIHelper.showToast(getContext(), (String) object);
+                                }
+                            }
+                        });
     }
 }

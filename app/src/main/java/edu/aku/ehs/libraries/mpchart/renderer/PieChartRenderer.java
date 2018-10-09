@@ -91,7 +91,7 @@ public class PieChartRenderer extends DataRenderer {
         mValuePaint.setTextAlign(Align.CENTER);
 
         mEntryLabelsPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mEntryLabelsPaint.setColor(Color.WHITE);
+        mEntryLabelsPaint.setColor(Color.BLACK);
         mEntryLabelsPaint.setTextAlign(Align.CENTER);
         mEntryLabelsPaint.setTextSize(Utils.convertDpToPixel(13f));
 

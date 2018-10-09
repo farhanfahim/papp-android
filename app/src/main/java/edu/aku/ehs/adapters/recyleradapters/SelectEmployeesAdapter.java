@@ -18,6 +18,7 @@ import edu.aku.ehs.R;
 import edu.aku.ehs.activities.BaseActivity;
 import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.helperclasses.Helper;
+import edu.aku.ehs.helperclasses.StringHelper;
 import edu.aku.ehs.helperclasses.ui.helper.AnimationHelper;
 import edu.aku.ehs.models.peoplesoft.employee.EMPLOYEE;
 import edu.aku.ehs.widget.AnyTextView;
@@ -63,12 +64,19 @@ public class SelectEmployeesAdapter extends RecyclerView.Adapter<SelectEmployees
 
         if (model.isSelected()) {
             Helper.changeTransitionDrawableColor(td, activity.getColor(R.color.selected_item), 1);
-            td.startTransition(400);
+            td.startTransition(200);
             AnimationHelper.fade(holder.imgSelected, 0, View.VISIBLE, VISIBLE, 1, 800);
         } else {
             Helper.changeTransitionDrawableColor(td, activity.getColor(R.color.c_white), 0);
             td.resetTransition();
             holder.imgSelected.setVisibility(View.GONE);
+        }
+
+
+        if (StringHelper.checkNotNullAndNotEmpty(model.getAKU_MRNO())) {
+            holder.contParent.setAlpha(1f);
+        } else {
+            holder.contParent.setAlpha(0.5f);
         }
 
         setListener(holder, model);

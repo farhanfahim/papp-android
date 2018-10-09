@@ -190,6 +190,7 @@
 
 
                     <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+                        android:id="@+id/contStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -236,8 +237,6 @@
                     android:gravity="center_vertical">
 
 
-
-
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -280,6 +279,18 @@
                         app:stpi_showLabels="true"
                         app:stpi_stepCount="2" />
 
+
+                    <ImageView
+                        android:id="@+id/imgViewProfile"
+                        android:layout_width="@dimen/x30dp"
+                        android:layout_height="@dimen/x30dp"
+                        android:ellipsize="end"
+                        android:padding="@dimen/x5dp"
+                        android:singleLine="true"
+                        android:src="@drawable/img_view_profile"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/s10"
+                        android:visibility="visible" />
 
 
                     <ImageView

@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/x10dp"
             app:labelText="Session ID"
-            app:maxCharacters="14"
+            app:maxCharacters="15"
             app:primaryColor="@color/c_navy_blue"
             app:secondaryColor="@color/colorAccent">
 
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/x10dp"
             app:labelText="Session Name"
-            app:maxCharacters="29"
+            app:maxCharacters="30"
             app:primaryColor="@color/c_navy_blue"
             app:secondaryColor="@color/colorAccent">
 
@@ -114,7 +114,10 @@
             android:id="@+id/tfStartDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/x10dp"
+            android:layout_marginBottom="@dimen/x20dp"
+            android:layout_marginLeft="@dimen/x10dp"
+            android:layout_marginRight="@dimen/x10dp"
+            android:layout_marginTop="@dimen/x10dp"
             app:labelText="Start Date"
             app:primaryColor="@color/c_navy_blue"
             app:secondaryColor="@color/colorAccent">
@@ -149,9 +152,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="false"
+                android:editable="false"
                 android:imeOptions="actionNext"
                 android:singleLine="true"
-                android:editable="false"
                 android:textColor="@color/txtBlack" />
 
 

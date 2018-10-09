@@ -19,8 +19,8 @@ public class CustomStringFormatter implements IAxisValueFormatter {
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
         int v = (int) value;
-        if (mContext.getResources().getStringArray(R.array.stats_xAxis).length >= v) {
-            return mContext.getResources().getStringArray(R.array.stats_xAxis)[v - 1];
+        if (mContext.getResources().getStringArray(R.array.stats_xAxis).length > v) {
+            return mContext.getResources().getStringArray(R.array.stats_xAxis)[v];
         } else {
             return "Unknown";
         }

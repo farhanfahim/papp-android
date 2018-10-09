@@ -54,7 +54,8 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
         SessionModel model = filteredData.get(i);
-        holder.txtSessionName.setText(model.getSessionId() + " - " + model.getDescription());
+//        holder.txtSessionName.setText(model.getSessionId() + " - " + model.getDescription());
+        holder.txtSessionName.setText(model.getDescription());
         holder.txtStartDate.setText("Start Date: " + model.getDisplayStartDate());
         holder.txtEndDate.setText("End Date: " + model.getDisplayEndDate());
         holder.txtStatus.setText(model.getStatusId());

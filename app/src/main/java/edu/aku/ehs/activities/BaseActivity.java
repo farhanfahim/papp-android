@@ -8,7 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Pair;
 import android.view.View;
-
+import android.view.WindowManager;
 
 import com.gdacciaro.iOSDialog.iOSDialogBuilder;
 
@@ -18,7 +18,6 @@ import edu.aku.ehs.callbacks.GenericClickableInterface;
 import edu.aku.ehs.fragments.LeftSideMenuFragment;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.widget.TitleBar;
-
 
 import static edu.aku.ehs.constatnts.AppConstants.IMAGE_PREVIEW_TITLE;
 import static edu.aku.ehs.constatnts.AppConstants.IMAGE_PREVIEW_URL;
@@ -40,6 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setAndBindTitleBar();
         drawerLayout = (DrawerLayout) findViewById(getDrawerLayoutId());
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         addDrawerFragment();
     }
 

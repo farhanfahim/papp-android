@@ -148,5 +148,22 @@ Enim vitae euismod eu velit pede eu, sodales malesuada sit fermentum ut dictum d
     <string name="org_info1"> Kharadar and Hyderabad,</string>
     <string name="portal_info"> A Portal For Healthcare Providers</string>
     <string name="login_text"> --------------- Log In ---------------</string>
+    <string name="email_text">Dear AKHMCF employee,\n\n
+Employee Health and Wellness and Human Resources are starting an initiative to ensure that all our employees are in their best health possible.\n\n
+We know that early identification and proper treatment of problems such as diabetes, high blood pressure, smoking, depression, decreases the risk of heart disease in the future.\n\n
+To provide this service, we ask you/or your employee to:\n\n
+1.	Get fasting blood tests from AKU lab by showing your AKU ID card/this email printout and package name\n
+2.	Set an appointment with the employee health nurse. The nurse will check your vital signs and ask you some questions. With this information, she will share with you your risk of developing diabetes and heart disease, and if you need to develop healthy habits such as stopping smoking and getting treatment for depression.\n
+3.	Based on your risks, she/he will make a referral for you to see either a family doctor at the CHC or a Family Medicine Consultant to discuss further treatment and plan.\n\n
+This initiative is provided at no cost to you. Your results will remain confidential and will only be discussed with you and the doctor that you are being referred to.\n\n
+We would like to analyze and publish results for the entire group without specific names. If you choose not to have your results be part of this bigger group, please let the nurse know. The nurse will print; have you sign a consent form when you come for your appointment.\n\n
+We hope that this experience informs you about your health and motivates you to take better care of yourself!\n\n
+For any questions, please contact Nurses Shehreen Ali or Arshnoor Barkatali 1490-91 or Dr. Unab Khan at 4842-4843\n\n\n\n
+
+Sincerely,\n\n
+Employee Health and Wellness Team\n\n
+Department of Family Medicine\n\n
+</string>
+
 
 </resources>

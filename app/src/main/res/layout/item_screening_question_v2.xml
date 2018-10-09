@@ -49,6 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/x10dp"
                     android:text="Yes"
+                    android:padding="@dimen/x5dp"
                     android:textSize="@dimen/s12" />
 
                 <RadioButton
@@ -57,7 +58,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/x10dp"
                     android:text="No"
-                    android:textSize="@dimen/s12" />
+                    android:padding="@dimen/x5dp"
+                     android:textSize="@dimen/s12" />
 
             </RadioGroup>
 
@@ -100,6 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/x10dp"
                     android:text="Yes"
+                    android:padding="@dimen/x5dp"
                     android:textSize="@dimen/s12" />
 
                 <RadioButton
@@ -107,6 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No"
+                    android:padding="@dimen/x5dp"
                     android:textSize="@dimen/s12" />
 
             </RadioGroup>

@@ -19,6 +19,7 @@ import edu.aku.ehs.activities.HomeActivity;
 import edu.aku.ehs.constatnts.AppConstants;
 import edu.aku.ehs.enums.BaseURLTypes;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
+import edu.aku.ehs.helperclasses.ui.helper.KeyboardHelper;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
 import edu.aku.ehs.managers.retrofit.GsonFactory;
 import edu.aku.ehs.managers.retrofit.WebServices;
@@ -35,8 +36,6 @@ public class LoginFragment extends BaseFragment {
 
 
     Unbinder unbinder;
-    @BindView(R.id.textView)
-    AnyTextView textView;
     @BindView(R.id.imageView)
     ImageView imageView;
     @BindView(R.id.edtUserName)
@@ -103,6 +102,13 @@ public class LoginFragment extends BaseFragment {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        KeyboardHelper.showSoftKeyboard(getContext(), edtUserName);
     }
 
     @Override

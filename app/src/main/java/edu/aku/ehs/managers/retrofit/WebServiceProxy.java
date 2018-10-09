@@ -100,5 +100,11 @@ public interface WebServiceProxy {
     );
 
 
+    @GET(WebServiceConstants.WS_KEY_AUTHENTICATE_USER)
+    Call<Object> getAuthenticateEmailValidations(
+            @Query("EmailRecepients") String emailAddresses
+    );
+
+
 }
 

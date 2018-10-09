@@ -3,59 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/akuh_bg1">
+    android:background="@color/c_black">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_placeholder_nurse" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/x30dp">
+        android:gravity="bottom"
+        android:orientation="vertical" >
 
         <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
             android:id="@+id/contParentLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/x10dp"
-            app:corner_radius="@dimen/x30dp">
+            android:layout_marginBottom="@dimen/x200dp"
+            android:orientation="vertical"  >
 
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:background="#9fff"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:corner_radius="@dimen/x5dp">
 
-                <edu.aku.ehs.widget.AnyTextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="EHS "
-                    android:textColor="@color/c_white"
-                    android:textSize="@dimen/s25"
-                    app:typeface="@string/font_bold" />
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="@dimen/x30dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:src="@drawable/logo" />
+                    android:src="@drawable/ehs_logo" />
 
 
-            </LinearLayout>
-
-            <edu.aku.ehs.widget.AnyTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:text="Employee Health Screening"
-                android:textColor="@color/c_white"
-                android:textSize="@dimen/s10"
-                app:typeface="@string/font_medium" />
+            </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
 
         </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
@@ -64,16 +54,16 @@
     </LinearLayout>
 
 
-    <ImageView
-        android:layout_width="@dimen/x280dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/x10dp"
-        android:padding="@dimen/x8dp"
-        android:scaleType="fitCenter"
-        android:visibility="gone"
-        android:src="@drawable/akuh_logo" />
+    <!--<ImageView-->
+    <!--android:layout_width="@dimen/x280dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_margin="@dimen/x10dp"-->
+    <!--android:padding="@dimen/x8dp"-->
+    <!--android:scaleType="fitCenter"-->
+    <!--android:src="@drawable/akuh_logo"-->
+    <!--android:visibility="gone" />-->
 
 
 </RelativeLayout>

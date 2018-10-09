@@ -2,6 +2,7 @@ package edu.aku.ehs.fragments.dialogs;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
@@ -17,7 +18,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import edu.aku.ehs.R;
+import edu.aku.ehs.helperclasses.StringHelper;
 import edu.aku.ehs.helperclasses.ui.helper.KeyboardHelper;
+import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
 import edu.aku.ehs.managers.SharedPreferenceManager;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.PinEntryEditText;
@@ -103,14 +106,25 @@ public class PinDialogFragment extends DialogFragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.toString().length() == 5) {
-                    if (charSequence.toString().equals("11111")) {
-                        onSaveClick.onClick(view);
-                        KeyboardHelper.hideSoftKeyboard(getContext(), view);
-                        dismiss();
+
+                    if (StringHelper.checkNotNullAndNotEmpty(SharedPreferenceManager.getInstance(getContext()).getCurrentUser().getPIN())) {
+                        if (charSequence.toString().equals(SharedPreferenceManager.getInstance(getContext()).getCurrentUser().getPIN())) {
+                            new Handler().postDelayed(() -> {
+                                onSaveClick.onClick(view);
+                                KeyboardHelper.hideSoftKeyboard(getContext(), view);
+                                dismiss();
+                            }, 300);
+                        } else {
+                            txtPinCode.setText("");
+                            txtWrongPinNumber.setVisibility(View.VISIBLE);
+                        }
                     } else {
+                        UIHelper.showShortToastInCenter(getContext(), "No PIN assigned to this user.");
                         txtPinCode.setText("");
                         txtWrongPinNumber.setVisibility(View.VISIBLE);
                     }
+
+
                 }
             }
 

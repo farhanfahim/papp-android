@@ -439,7 +439,7 @@ public class WebServices {
     public void webServiceAuthenticateUser(String userName, String password, IRequestWebResponseJustObjectCallBack iRequestWebResponseJustObjectCallBack) {
         try {
             if (Helper.isNetworkConnected(mContext, true)) {
-                WebServiceFactory.getInstanceAuthenicateUser().authenticateUser(userName, password, "PCIWEB", "localhost").enqueue(new Callback<Object>() {
+                WebServiceFactory.getInstanceAuthenicateUser().authenticateUser(userName, password, "EHS", "localhost").enqueue(new Callback<Object>() {
                     @Override
                     public void onResponse(Call<Object> call, Response<Object> response) {
                         dismissDialog();
@@ -469,13 +469,12 @@ public class WebServices {
         }
 
     }
-
 
 
     public void webServiceGetAuthenticatedUserDetail(String userName, IRequestWebResponseJustObjectCallBack iRequestWebResponseJustObjectCallBack) {
         try {
             if (Helper.isNetworkConnected(mContext, true)) {
-                WebServiceFactory.getInstanceAuthenicateUser().getAuthenticatedUserDetails(userName,  "PCIWEB").enqueue(new Callback<Object>() {
+                WebServiceFactory.getInstanceAuthenicateUser().getAuthenticatedUserDetails(userName, "EHS").enqueue(new Callback<Object>() {
                     @Override
                     public void onResponse(Call<Object> call, Response<Object> response) {
                         dismissDialog();
@@ -506,6 +505,40 @@ public class WebServices {
 
     }
 
+
+    public void webServiceAuthenicateValidationEmail(String emailAddresses, IRequestWebResponseJustObjectCallBack iRequestWebResponseJustObjectCallBack) {
+        try {
+            if (Helper.isNetworkConnected(mContext, true)) {
+                WebServiceFactory.getInstanceAuthenicateEmail().getAuthenticateEmailValidations(emailAddresses).enqueue(new Callback<Object>() {
+                    @Override
+                    public void onResponse(Call<Object> call, Response<Object> response) {
+                        dismissDialog();
+                        if (response.body() == null) {
+                            iRequestWebResponseJustObjectCallBack.onError(call);
+                        } else {
+                            iRequestWebResponseJustObjectCallBack.requestDataResponse(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Object> call, Throwable t) {
+                        iRequestWebResponseJustObjectCallBack.onError(call);
+                        UIHelper.showShortToastInCenter(mContext, "Something went wrong, Please check your internet connection.");
+                        dismissDialog();
+
+                    }
+                });
+            } else {
+                dismissDialog();
+            }
+
+        } catch (Exception e) {
+            dismissDialog();
+            e.printStackTrace();
+
+        }
+
+    }
 
 
     @NonNull

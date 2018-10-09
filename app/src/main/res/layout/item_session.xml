@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contParent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -57,13 +56,13 @@
                 android:layout_width="@dimen/x50dp"
                 android:layout_height="@dimen/x20dp"
                 android:layout_marginRight="@dimen/x5dp"
+                android:alpha="0.8"
                 android:text="Close"
                 android:textColor="@color/c_white"
                 app:cornerRadius="@dimen/x10dp"
                 app:fButtonColor="@color/colorPrimaryDark"
                 app:shadowColor="#3000"
                 app:shadowEnabled="true"
-                android:alpha="0.8"
                 app:shadowHeight="1dp" />
 
 
@@ -72,6 +71,7 @@
                 android:layout_width="@dimen/x50dp"
                 android:layout_height="@dimen/x20dp"
                 android:layout_marginRight="@dimen/x10dp"
+                android:alpha="0.8"
                 android:text="Edit"
                 android:textColor="@color/c_white"
                 android:textSize="@dimen/s10"
@@ -79,7 +79,6 @@
                 app:fButtonColor="@color/colorPrimaryDark"
                 app:shadowColor="#3000"
                 app:shadowEnabled="true"
-                android:alpha="0.8"
                 app:shadowHeight="1dp" />
 
             <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
@@ -186,9 +185,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="2"
                         android:padding="@dimen/x3dp"
-                        android:singleLine="true"
-                        android:text="Enrolled"
+                        android:text="Employees Enrolled"
                         android:textColor="@color/txtGrey"
                         android:textSize="@dimen/s10"
                         app:typeface="@string/font_medium" />
@@ -196,13 +196,14 @@
                     <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="@dimen/x2dp"
                         android:background="@color/pastel_cyan"
                         app:corner_radius="@dimen/x5dp">
 
                         <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@color/pastel_cyan"
+                            android:background="@color/c_white"
                             app:corner_radius="@dimen/x5dp">
 
                             <edu.aku.ehs.widget.AnyTextView
@@ -214,7 +215,7 @@
                                 android:padding="@dimen/x3dp"
                                 android:singleLine="true"
                                 android:text="50"
-                                android:textColor="@color/c_white"
+                                android:textColor="@color/txtBlue"
                                 android:textSize="@dimen/s10"
                                 app:typeface="@string/font_bold" />
 
@@ -247,8 +248,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="2"
                         android:padding="@dimen/x3dp"
-                        android:singleLine="true"
                         android:text="Lab Test"
                         android:textColor="@color/txtGrey"
                         android:textSize="@dimen/s10"
@@ -257,13 +259,14 @@
                     <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/pastel_cyan"
+                        android:background="@color/pastel_blue"
+                        android:padding="@dimen/x2dp"
                         app:corner_radius="@dimen/x5dp">
 
                         <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@color/pastel_blue"
+                            android:background="@color/c_white"
                             app:corner_radius="@dimen/x5dp">
 
                             <edu.aku.ehs.widget.AnyTextView
@@ -276,7 +279,7 @@
                                 android:padding="@dimen/x3dp"
                                 android:singleLine="true"
                                 android:text="50"
-                                android:textColor="@color/c_white"
+                                android:textColor="@color/txtBlue"
                                 android:textSize="@dimen/s10"
                                 app:typeface="@string/font_bold" />
 
@@ -309,9 +312,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="2"
+
                         android:padding="@dimen/x3dp"
-                        android:singleLine="true"
-                        android:text="In-Progress"
+                        android:text="Assessment in progress"
                         android:textColor="@color/txtGrey"
                         android:textSize="@dimen/s10"
                         app:typeface="@string/font_medium" />
@@ -321,12 +326,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/pastel_peach"
+                        android:padding="@dimen/x2dp"
                         app:corner_radius="@dimen/x5dp">
 
                         <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@color/pastel_pink"
+                            android:background="@color/c_white"
                             app:corner_radius="@dimen/x5dp">
 
                             <edu.aku.ehs.widget.AnyTextView
@@ -339,7 +345,7 @@
                                 android:padding="@dimen/x3dp"
                                 android:singleLine="true"
                                 android:text="50"
-                                android:textColor="@color/c_white"
+                                android:textColor="@color/txtBlue"
                                 android:textSize="@dimen/s10"
                                 app:typeface="@string/font_bold" />
 
@@ -372,9 +378,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="2"
+
                         android:padding="@dimen/x3dp"
-                        android:singleLine="true"
-                        android:text="Assessed"
+                        android:text="Assessment completed"
                         android:textColor="@color/txtGrey"
                         android:textSize="@dimen/s10"
                         app:typeface="@string/font_medium" />
@@ -384,12 +392,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/base_green"
+                        android:padding="@dimen/x2dp"
                         app:corner_radius="@dimen/x5dp">
 
                         <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@color/base_green"
+                            android:background="@color/c_white"
                             app:corner_radius="@dimen/x5dp">
 
                             <edu.aku.ehs.widget.AnyTextView
@@ -401,7 +410,7 @@
                                 android:padding="@dimen/x3dp"
                                 android:singleLine="true"
                                 android:text="50"
-                                android:textColor="@color/c_white"
+                                android:textColor="@color/txtBlue"
                                 android:textSize="@dimen/s10"
                                 app:typeface="@string/font_bold" />
 

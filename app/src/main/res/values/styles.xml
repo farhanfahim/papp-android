@@ -32,7 +32,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
-     </style>
+    </style>
     <!--<item name="android:windowIsTranslucent">true</item>-->
 
 
@@ -77,11 +77,13 @@
     </style>
 
 
-
     <style name="RadioButtonStyle" parent="AppBaseTheme">
-        <item name="colorControlNormal">@color/c_white</item> // unchecked
-        <item name="colorControlActivated">@color/base_amber</item> // checked
-        <item name="android:textColorSecondary">@color/c_white</item> // text color
+        <item name="colorControlNormal">@color/c_white</item>
+        // unchecked
+        <item name="colorControlActivated">@color/base_amber</item>
+        // checked
+        <item name="android:textColorSecondary">@color/c_white</item>
+        // text color
     </style>
 
 

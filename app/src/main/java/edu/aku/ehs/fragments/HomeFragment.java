@@ -105,7 +105,7 @@ public class HomeFragment extends BaseFragment {
         userModel = sharedPreferenceManager.getCurrentUser();
 
         txtNurseName.setText(userModel.getName());
-        txtNurseDesignation.setText(userModel.getRole() + " | " + userModel.getSpeciality());
+        txtNurseDesignation.setText(userModel.getRole() );
         if (userModel.getUserPictureExists()) {
             ImageLoaderHelper.loadBase64Image(getContext(), imgUser, userModel.getUserPicture());
         } else {
@@ -127,7 +127,7 @@ public class HomeFragment extends BaseFragment {
                 getBaseActivity().addDockableFragment(SessionListFragment.newInstance(), true);
                 break;
             case R.id.contStats:
-                getBaseActivity().addDockableFragment(StatsFragment.newInstance(), true);
+                getBaseActivity().addDockableFragment(StatsSessionFragment.newInstance(), true);
                 break;
         }
     }

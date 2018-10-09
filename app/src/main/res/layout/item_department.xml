@@ -14,10 +14,10 @@
         <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/x10dp"
+            android:layout_marginBottom="@dimen/x5dp"
             android:layout_marginLeft="@dimen/x20dp"
             android:layout_marginRight="@dimen/x20dp"
-            android:layout_marginTop="@dimen/x10dp"
+            android:layout_marginTop="@dimen/x5dp"
             android:background="@color/panic_blue"
             android:padding="@dimen/x1dp"
             app:corner_radius="@dimen/x10dp">

@@ -106,9 +106,9 @@ public class EmailFragment extends BaseFragment implements OnNewPacketReceivedLi
         for (SessionDetailModel sessionDetailModel : arrSessioDetailModel) {
             employeeNames.append(sessionDetailModel.getEmployeeName()).append("\n");
         }
-        String bodyText = "Please get lab tests of the following employees:" + "\n" + employeeNames;
+        String bodyText = getContext().getResources().getString(R.string.email_text) + "\n" + "\n" + "\n" + employeeNames;
         edtEmailBody.setText(bodyText);
-
+        edtEmailSubject.setText("Employee Health Screening");
 //        if (!newTags.isEmpty()) {
 ////            List<String> list = edtEmailAddress.getTags();
 ////            list.addAll(newTags);
@@ -154,7 +154,8 @@ public class EmailFragment extends BaseFragment implements OnNewPacketReceivedLi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnSend:
-                EmailModel emailModel = new EmailModel();
+
+                edtEmailAddress.append(" ");
 
                 if (edtEmailAddress.getTags().isEmpty()) {
                     UIHelper.showShortToastInCenter(getContext(), "Kindly write Email Address to Send Email");
@@ -172,11 +173,30 @@ public class EmailFragment extends BaseFragment implements OnNewPacketReceivedLi
                 }
 
 
-                emailModel.setReceipients(edtEmailAddress.getTags());
+                StringBuilder emailAddresses = null;
+                EmailModel emailModel = new EmailModel();
+                List<String> strings = new ArrayList<>();
+
+                for (String s : edtEmailAddress.getTags()) {
+                    if (!s.isEmpty()) {
+                        if (emailAddresses == null) {
+                            emailAddresses = new StringBuilder(s);
+                        } else {
+                            emailAddresses.append(";").append(s);
+                        }
+                        strings.add(s);
+                    }
+
+                }
+
+
+                emailModel.setReceipients(strings);
                 emailModel.setMessage(edtEmailBody.getStringTrimmed());
                 emailModel.setSubject(edtEmailSubject.getStringTrimmed());
 
-                sendEmailCall(emailModel);
+
+                validateEmailAddresses(emailAddresses.toString(), emailModel);
+
 
                 break;
             case R.id.btnCancel:
@@ -224,6 +244,34 @@ public class EmailFragment extends BaseFragment implements OnNewPacketReceivedLi
 
                 break;
         }
+    }
+
+    private void validateEmailAddresses(String emailAddresses, EmailModel emailModel) {
+        new WebServices(getContext(),
+                "",
+                BaseURLTypes.AUTHENTICATE_USER_URL, true)
+                .webServiceAuthenicateValidationEmail(emailAddresses, new WebServices.IRequestWebResponseJustObjectCallBack() {
+                    @Override
+                    public void requestDataResponse(Object webResponse) {
+                        Type type = new TypeToken<ArrayList<String>>() {
+                        }.getType();
+                        ArrayList<String> arrayList = GsonFactory.getSimpleGson()
+                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse)
+                                        , type);
+
+                        if (arrayList.isEmpty()) {
+                            sendEmailCall(emailModel);
+                        } else {
+                            UIHelper.showShortToastInCenter(getContext(), "Invalid Emails: " + arrayList.toString());
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+                        UIHelper.showShortToastInCenter(getContext(), "Something went wrong, API error");
+                    }
+                });
     }
 
 

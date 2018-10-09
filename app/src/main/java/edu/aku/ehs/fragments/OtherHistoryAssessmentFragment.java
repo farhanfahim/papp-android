@@ -26,6 +26,7 @@ import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.callbacks.RadioGroupAdapterListner;
 import edu.aku.ehs.constatnts.WebServiceConstants;
 import edu.aku.ehs.enums.BaseURLTypes;
+import edu.aku.ehs.enums.EmployeeSessionState;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.fragments.dialogs.PinDialogFragment;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
@@ -62,11 +63,9 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
     @BindView(R.id.recylerView3)
     RecyclerView recylerView3;
     @BindView(R.id.btnDone)
-    Button btnDone;
+    public Button btnDone;
     @BindView(R.id.fabBack)
     FloatingActionButton fabBack;
-    @BindView(R.id.fabNext)
-    FloatingActionButton fabNext;
 
 
     private ArrayList<AssessmentQuestionModel> arrFamilyHistory;
@@ -82,7 +81,6 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
     private RadioGroupAdapterListner onSwitchListener1_smoking;
     private RadioGroupAdapterListner onSwitchListener2_smoking;
     private SessionDetailModel sessionDetailModel;
-    private PinDialogFragment pinDialogFragment;
 
     ArrayList<AssessmentQuestionModel> dataArray = new ArrayList<>();
 
@@ -122,14 +120,7 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
     @Override
     public void setListeners() {
 
-        pinDialogFragment = PinDialogFragment.newInstance(view -> {
-        }, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String jsonArrayData = GsonFactory.getConfiguredGson().toJson(dataArray);
-                saveEmployeeAssessment(jsonArrayData);
-            }
-        });
+
 
     }
 
@@ -234,8 +225,11 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
                 adaptFamilyHistory.notifyItemChanged(adapterPosition);
             } else {
                 arrFamilyHistory.get(adapterPosition).setAnswer1(false);
+                arrFamilyHistory.get(adapterPosition).setIsUnderTreatment("");
                 adaptFamilyHistory.notifyItemChanged(adapterPosition);
             }
+            parentFragment.dirtyCheck = true;
+            btnDone.setAlpha(1f);
         };
 
         onSwitchListener2_family = (radioGroup, i, adapterPosition) -> {
@@ -246,6 +240,8 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
                 arrFamilyHistory.get(adapterPosition).setAnswer2(false);
                 adaptFamilyHistory.notifyItemChanged(adapterPosition);
             }
+            parentFragment.dirtyCheck = true;
+            btnDone.setAlpha(1f);
         };
 
         // For List 2
@@ -255,8 +251,11 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
                 adaptSocialHistory.notifyItemChanged(adapterPosition);
             } else {
                 arrSocialHistory.get(adapterPosition).setAnswer1(false);
+                arrSocialHistory.get(adapterPosition).setIsUnderTreatment("");
                 adaptSocialHistory.notifyItemChanged(adapterPosition);
             }
+            parentFragment.dirtyCheck = true;
+            btnDone.setAlpha(1f);
         };
 
         onSwitchListener2_social = (radioGroup, i, adapterPosition) -> {
@@ -267,6 +266,8 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
                 arrSocialHistory.get(adapterPosition).setAnswer2(false);
                 adaptSocialHistory.notifyItemChanged(adapterPosition);
             }
+            parentFragment.dirtyCheck = true;
+            btnDone.setAlpha(1f);
         };
 
 
@@ -277,8 +278,11 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
                 adaptSmokingBehavior.notifyItemChanged(adapterPosition);
             } else {
                 arrSmokingBehavior.get(adapterPosition).setAnswer1(false);
+                arrSmokingBehavior.get(adapterPosition).setIsUnderTreatment("");
                 adaptSmokingBehavior.notifyItemChanged(adapterPosition);
             }
+            parentFragment.dirtyCheck = true;
+            btnDone.setAlpha(1f);
         };
 
         onSwitchListener2_smoking = (radioGroup, i, adapterPosition) -> {
@@ -289,6 +293,8 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
                 arrSmokingBehavior.get(adapterPosition).setAnswer2(false);
                 adaptSmokingBehavior.notifyItemChanged(adapterPosition);
             }
+            parentFragment.dirtyCheck = true;
+            btnDone.setAlpha(1f);
         };
 
     }
@@ -308,7 +314,6 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
         getDataAndBindAdapter();
 
         setTitleData();
-        fabNext.setVisibility(View.GONE);
         btnDone.setVisibility(View.VISIBLE);
 
         bindView();
@@ -389,22 +394,24 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
     }
 
 
-    @OnClick({R.id.fabBack, R.id.fabNext, R.id.btnDone})
+    @OnClick({R.id.fabBack, R.id.btnCancel, R.id.btnDone})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fabBack:
                 parentFragment.viewpager.movePrevious();
                 break;
-            case R.id.fabNext:
-                parentFragment.viewpager.moveNext();
+            case R.id.btnCancel:
+                getBaseActivity().popBackStack();
                 break;
             case R.id.btnDone:
+                if (!parentFragment.dirtyCheck) return;
+
+
                 if (!validateQuestions(dataArray)) return;
 
-                pinDialogFragment.setTitle("Enter Pin");
-                pinDialogFragment.setCancelable(false);
-                pinDialogFragment.clearField();
-                pinDialogFragment.show(getBaseActivity().getSupportFragmentManager(), null);
+                String jsonArrayData = GsonFactory.getConfiguredGson().toJson(dataArray);
+                saveEmployeeAssessment(jsonArrayData);
+
                 break;
         }
     }
@@ -416,8 +423,22 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override
                             public void requestDataResponse(WebResponse<Object> webResponse) {
-                                UIHelper.showToast(getContext(), webResponse.responseMessage);
-                                getBaseActivity().addDockableFragment(EmployeeAnthropometricMeasurmentsFragment.newInstance(sessionDetailModel), false);
+
+
+                                if (sessionDetailModel.getStatusEnum() != EmployeeSessionState.INPROGRESS) {
+                                    ArrayList<SessionDetailModel> sessionDetailModelArrayList = new ArrayList<>();
+
+                                    sessionDetailModel.setStatusID(EmployeeSessionState.INPROGRESS.canonicalForm());
+                                    sessionDetailModel.setLastFileUser(getCurrentUser().getName());
+
+                                    sessionDetailModelArrayList.add(sessionDetailModel);
+                                    String jsonArrayData = GsonFactory.getConfiguredGson().toJson(sessionDetailModelArrayList);
+                                    updateEmployeeInSessionCall(jsonArrayData);
+                                } else {
+                                    UIHelper.showToast(getContext(), webResponse.responseMessage);
+                                    getBaseActivity().popBackStack();
+                                }
+
                             }
 
                             @Override
@@ -428,5 +449,27 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
                             }
                         });
     }
+
+
+    private void updateEmployeeInSessionCall(String jsonArrayData) {
+        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+                .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_UPDATE_SESSION_EMPLOYEE, jsonArrayData,
+                        new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                            @Override
+                            public void requestDataResponse(WebResponse<Object> webResponse) {
+                                UIHelper.showToast(getContext(), webResponse.responseMessage);
+                                getBaseActivity().popBackStack();
+                            }
+
+                            @Override
+                            public void onError(Object object) {
+                                if (object instanceof String) {
+                                    UIHelper.showToast(getContext(), (String) object);
+                                }
+                            }
+                        });
+    }
+
+
 }
 

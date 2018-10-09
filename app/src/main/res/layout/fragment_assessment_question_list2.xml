@@ -42,8 +42,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/question_subheader"
-                    android:gravity="center"
-                    android:padding="@dimen/x3dp"
+                    android:gravity="start"
+                    android:padding="@dimen/x8dp"
                     android:text="Specific to Mother, Father, Brother and Sister"
                     android:textColor="@color/txtDarkGrey"
                     android:textSize="@dimen/s12"
@@ -82,8 +82,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/question_subheader"
-                    android:gravity="center"
-                    android:padding="@dimen/x3dp"
+                    android:gravity="start"
+                    android:padding="@dimen/x8dp"
                     android:text="Specific to Mother, Father, Brother and Sister"
                     android:textColor="@color/txtDarkGrey"
                     android:textSize="@dimen/s12"
@@ -122,8 +122,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/question_subheader"
-                    android:gravity="center"
-                    android:padding="@dimen/x3dp"
+                    android:gravity="start"
+                    android:padding="@dimen/x8dp"
                     android:text="Specific to Mother, Father, Brother and Sister"
                     android:textColor="@color/txtDarkGrey"
                     android:textSize="@dimen/s12"
@@ -146,9 +146,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/x15dp">
+        android:background="@color/seperator_light_gray"
+        android:paddingBottom="@dimen/x3dp"
+        android:paddingLeft="@dimen/x15dp"
+        android:paddingRight="@dimen/x15dp"
+        android:paddingTop="@dimen/x3dp"
 
-
+        >
 
 
         <com.github.clans.fab.FloatingActionButton
@@ -156,8 +160,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginBottom="@dimen/x8dp"
-            android:layout_marginRight="@dimen/x8dp"
             android:src="@drawable/ic_arrow_back"
             android:visibility="visible"
             app:fab_colorNormal="@color/base_amber"
@@ -174,7 +176,7 @@
             android:layout_marginBottom="@dimen/x8dp"
             android:layout_marginRight="@dimen/x8dp"
             android:src="@drawable/ic_arrow_next"
-            android:visibility="visible"
+            android:visibility="gone"
             app:fab_colorNormal="@color/base_amber"
             app:fab_colorPressed="@color/colorAccent"
             app:fab_colorRipple="@color/colorPrimary"
@@ -182,15 +184,31 @@
 
 
         <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x10dp"
+            android:layout_toLeftOf="@id/btnDone"
+            android:background="@drawable/img_button_white"
+            android:text="Cancel"
+            android:textColor="@color/txtBlue"
+            android:textSize="@dimen/s14"
+            android:visibility="visible" />
+
+
+        <Button
             android:id="@+id/btnDone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
+            android:alpha="0.2"
             android:background="@drawable/img_button_clr"
-            android:text="Done"
+            android:text="SAVE"
             android:textColor="@color/c_white"
-            android:textSize="@dimen/s16"
-            android:visibility="gone" />
+            android:textSize="@dimen/s14"
+            android:visibility="visible" />
 
 
     </RelativeLayout>

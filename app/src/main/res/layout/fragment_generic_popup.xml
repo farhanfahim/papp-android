@@ -63,6 +63,23 @@
         android:orientation="horizontal">
 
 
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/btnButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x8dp"
+            android:layout_marginRight="@dimen/x8dp"
+            android:layout_weight="1"
+            android:text="No"
+            android:textColor="@color/c_white"
+            android:textSize="@dimen/s10"
+            app:cornerRadius="@dimen/x8dp"
+            app:fButtonColor="@color/button_color2"
+            app:shadowColor="#3000"
+            app:shadowEnabled="true"
+            app:shadowHeight="1dp" />
+
         <info.hoang8f.widget.FButton
             android:id="@+id/btnButton1"
             android:layout_width="match_parent"
@@ -80,21 +97,7 @@
             app:shadowHeight="1dp" />
 
 
-        <info.hoang8f.widget.FButton
-            android:id="@+id/btnButton2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x8dp"
-            android:layout_marginRight="@dimen/x8dp"
-            android:layout_weight="1"
-            android:text="No"
-            android:textColor="@color/c_white"
-            android:textSize="@dimen/s10"
-            app:cornerRadius="@dimen/x8dp"
-            app:fButtonColor="@color/button_color2"
-            app:shadowColor="#3000"
-            app:shadowEnabled="true"
-            app:shadowHeight="1dp" />
+
 
 
     </LinearLayout>

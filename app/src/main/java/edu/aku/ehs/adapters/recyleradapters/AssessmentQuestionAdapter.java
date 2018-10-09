@@ -69,8 +69,14 @@ public class AssessmentQuestionAdapter extends RecyclerView.Adapter<AssessmentQu
             if (model.isAnswer2()) {
                 holder.rbQues2Yes.setChecked(true);
             } else {
-                if (!(model.getIsUnderTreatment() == null || model.getIsUnderTreatment().isEmpty()))  {
+                if (!(model.getIsUnderTreatment() == null || model.getIsUnderTreatment().isEmpty())) {
                     holder.rbQues2No.setChecked(true);
+                } else {
+
+                    holder.rgQues2.setOnCheckedChangeListener(null);
+                    holder.rgQues2.clearCheck();
+                    setListener(holder, model);
+
                 }
             }
 
@@ -80,7 +86,7 @@ public class AssessmentQuestionAdapter extends RecyclerView.Adapter<AssessmentQu
                 holder.rbQues1No.setChecked(true);
             }
         }
-
+        
         setListener(holder, model);
     }
 

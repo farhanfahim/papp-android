@@ -80,6 +80,7 @@ public class NewAssessmentViewPagerFragment extends BaseFragment implements OnIt
     RelativeLayout contParent;
 
     SessionDetailModel sessionDetailModel;
+    public boolean dirtyCheck = false;
 
 
     private EmployeeAssessmentPagerAdapter adapter;
@@ -224,9 +225,9 @@ public class NewAssessmentViewPagerFragment extends BaseFragment implements OnIt
 
                             @Override
                             public void onError(Object object) {
-                                if (object instanceof String) {
-                                    UIHelper.showToast(getContext(), (String) object);
-                                }
+//                                if (object instanceof String) {
+//                                    UIHelper.showToast(getContext(), (String) object);
+//                                }
                                 getActiveQuestionList();
                             }
                         });
