@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
+import com.crashlytics.android.Crashlytics;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -105,20 +107,34 @@ public class HomeFragment extends BaseFragment {
         userModel = sharedPreferenceManager.getCurrentUser();
 
         txtNurseName.setText(userModel.getName());
-        txtNurseDesignation.setText(userModel.getRole() );
+        txtNurseDesignation.setText(userModel.getRole());
         if (userModel.getUserPictureExists()) {
             ImageLoaderHelper.loadBase64Image(getContext(), imgUser, userModel.getUserPicture());
         } else {
             imgUser.setImageResource(R.drawable.female_icon_filled);
         }
 
+        logUser();
+
     }
+
+    private void logUser() {
+        // TODO: Use the current user's information
+        // You can call any combination of these three methods
+        Crashlytics.setUserIdentifier(userModel.getUserID());
+//        Crashlytics.setUserEmail(userModel.);
+        Crashlytics.setUserName(userModel.getName());
+    }
+
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
+
 
     @OnClick({R.id.contSession, R.id.contStats})
     public void onViewClicked(View view) {
@@ -128,7 +144,7 @@ public class HomeFragment extends BaseFragment {
                 break;
             case R.id.contStats:
                 getBaseActivity().addDockableFragment(StatsSessionFragment.newInstance(), true);
-                break;
+                 break;
         }
     }
 }
