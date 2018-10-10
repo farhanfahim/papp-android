@@ -272,7 +272,7 @@ public class TitleBar extends RelativeLayout {
                 setStatusColor(R.color.fbutton_color_midnight_blue);
                 break;
             case INPROGRESS:
-                setStatusColor(R.color.pastel_peach);
+                setStatusColor(R.color.base_amber);
                 break;
             case COMPLETED:
                 setStatusColor(android.R.color.holo_green_dark);

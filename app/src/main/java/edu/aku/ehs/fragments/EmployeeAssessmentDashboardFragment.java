@@ -10,6 +10,12 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.google.gson.reflect.TypeToken;
+import com.kaopiz.kprogresshud.KProgressHUD;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -24,6 +30,7 @@ import edu.aku.ehs.fragments.dialogs.PinDialogFragment;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
 import edu.aku.ehs.managers.retrofit.GsonFactory;
 import edu.aku.ehs.managers.retrofit.WebServices;
+import edu.aku.ehs.models.AssessmentQuestionModel;
 import edu.aku.ehs.models.EmployeeSummaryDetailModel;
 import edu.aku.ehs.models.SessionDetailModel;
 import edu.aku.ehs.models.sending_model.EmployeeSendingModel;
@@ -60,9 +67,8 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
     boolean isAssessmentDone = false;
     boolean isMeasurementDone = false;
     boolean isLabDone = false;
-    boolean isCVDRiskExist = false;
-    boolean isMetabolicExist = false;
 
+    KProgressHUD dialog;
 
     public static EmployeeAssessmentDashboardFragment newInstance(SessionDetailModel sessionDetailModel) {
 
@@ -97,23 +103,19 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
     @Override
     public void setListeners() {
         pinDialogFragment = PinDialogFragment.newInstance(view -> {
-        }, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (lastID) {
-                    case R.id.contAssessment:
-                        getBaseActivity().addDockableFragment(NewAssessmentViewPagerFragment.newInstance(sessionDetailModel), false);
-                        break;
-                    case R.id.contMeasurements:
-                        getBaseActivity().addDockableFragment(EmployeeAnthropometricMeasurmentsFragment.newInstance(sessionDetailModel), false);
-                        break;
-                    case R.id.contRefer:
-                        getBaseActivity().addDockableFragment(EmployeeProfileViewerFragment.newInstance(sessionDetailModel, employeeSummaryDetailModel), false);
-                        break;
-                }
+        }, view -> {
+            switch (lastID) {
+                case R.id.contAssessment:
+                    getBaseActivity().addDockableFragment(NewAssessmentViewPagerFragment.newInstance(sessionDetailModel), false);
+                    break;
+                case R.id.contMeasurements:
+                    getBaseActivity().addDockableFragment(EmployeeAnthropometricMeasurmentsFragment.newInstance(sessionDetailModel), false);
+                    break;
+                case R.id.contRefer:
+                    getBaseActivity().addDockableFragment(EmployeeProfileViewerFragment.newInstance(sessionDetailModel, employeeSummaryDetailModel), false);
+                    break;
             }
         });
-
     }
 
     @Override
@@ -144,13 +146,18 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        dialog = UIHelper.getProgressHUD(getContext());
 
 
         EmployeeSendingModel model = new EmployeeSendingModel();
         model.setSessionID(sessionDetailModel.getSessionID());
         model.setEmployeeNo(sessionDetailModel.getEmployeeNo());
 
+        isLabDone = sessionDetailModel.getisLabResultDone();
+
+        dialog.show();
         getEmployeeSummaryDetail(model);
+
     }
 
     @Override
@@ -178,7 +185,7 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
                 break;
             case R.id.contRefer:
                 lastID = R.id.contRefer;
-                if (employeeSummaryDetailModel != null && isAssessmentDone && isCVDRiskExist && isLabDone && isMeasurementDone && isMetabolicExist) {
+                if (employeeSummaryDetailModel != null && isAssessmentDone && isLabDone && isMeasurementDone) {
                     showPin();
                 } else {
                     UIHelper.showShortToastInCenter(getContext(), "Kindly complete all processes to view profile.");
@@ -196,7 +203,7 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
 
 
     private void getEmployeeSummaryDetail(EmployeeSendingModel model) {
-        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, false)
                 .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_GET_EMPLOYEE_SUMMARY_DETAIL, model.toString(),
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override
@@ -205,6 +212,13 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
                                 employeeSummaryDetailModel = GsonFactory.getSimpleGson()
                                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), EmployeeSummaryDetailModel.class);
 
+                                if (sessionDetailModel.getStatusEnum() == EmployeeSessionState.COMPLETED) {
+                                    imgProfileDone.setVisibility(View.VISIBLE);
+                                } else {
+                                    imgProfileDone.setVisibility(View.GONE);
+                                }
+
+
                                 if (employeeSummaryDetailModel.getEmpMeasurements() != null && !employeeSummaryDetailModel.getEmpMeasurements().isEmpty()) {
                                     isMeasurementDone = true;
                                     imgMeasurementsDone.setVisibility(View.VISIBLE);
@@ -212,39 +226,55 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
                                     imgMeasurementsDone.setVisibility(View.GONE);
                                 }
 
-                                if (employeeSummaryDetailModel.getEmpAssessments() != null && !employeeSummaryDetailModel.getEmpAssessments().isEmpty()) {
-                                    isAssessmentDone = true;
-                                    imgAssessmentDone.setVisibility(View.VISIBLE);
-                                } else {
-                                    imgAssessmentDone.setVisibility(View.GONE);
-                                }
 
-                                if (employeeSummaryDetailModel.getEmpLabs() != null && !employeeSummaryDetailModel.getEmpLabs().isEmpty()) {
-                                    isLabDone = sessionDetailModel.getisLabResultDone();
-                                }
-
-                                if (employeeSummaryDetailModel.getCVDRiskFactors() != null && !employeeSummaryDetailModel.getCVDRiskFactors().isEmpty()) {
-                                    isCVDRiskExist = true;
-                                }
-
-                                if (employeeSummaryDetailModel.getMetabolicSyndromeDetail().getMetabolicSyndromeRules() != null && !employeeSummaryDetailModel.getEmpLabs().isEmpty()) {
-                                    isMetabolicExist = true;
-                                }
-
-                                if (sessionDetailModel.getStatusEnum() == EmployeeSessionState.COMPLETED) {
-                                    imgProfileDone.setVisibility(View.VISIBLE);
-                                } else {
-                                    imgProfileDone.setVisibility(View.GONE);
-                                }
+                                getEmployeeAssessmentList(model);
 
                             }
 
                             @Override
                             public void onError(Object object) {
+                                dialog.dismiss();
                                 if (object instanceof String) {
                                     UIHelper.showToast(getContext(), (String) object);
                                 }
                             }
                         });
     }
+
+    private void getEmployeeAssessmentList(EmployeeSendingModel model) {
+        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, false)
+                .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_GET_EMPLOYEE_ASSESSMENTS, model.toString(),
+                        new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                            @Override
+                            public void requestDataResponse(WebResponse<Object> webResponse) {
+                                if (webResponse.result instanceof ArrayList) {
+
+                                    Type type = new TypeToken<ArrayList<AssessmentQuestionModel>>() {
+                                    }.getType();
+                                    ArrayList<AssessmentQuestionModel> arrayList = GsonFactory.getSimpleGson()
+                                            .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                                    , type);
+
+
+                                    if (arrayList != null && !arrayList.isEmpty()) {
+                                        isAssessmentDone = true;
+                                        imgAssessmentDone.setVisibility(View.VISIBLE);
+                                    } else {
+                                        imgAssessmentDone.setVisibility(View.GONE);
+                                    }
+
+                                    dialog.dismiss();
+
+                                }
+                            }
+
+                            @Override
+                            public void onError(Object object) {
+                                dialog.dismiss();
+                                isAssessmentDone = false;
+                                imgAssessmentDone.setVisibility(View.GONE);
+                            }
+                        });
+    }
+
 }

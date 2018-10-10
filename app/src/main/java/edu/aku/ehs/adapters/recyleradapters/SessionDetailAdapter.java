@@ -114,7 +114,7 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
                 break;
             case INPROGRESS:
                 hideOptions(holder);
-                setStatusColor(holder, R.color.pastel_peach);
+                setStatusColor(holder, R.color.base_amber);
                 break;
             case COMPLETED:
                 holder.imgViewProfile.setVisibility(VISIBLE);

@@ -108,7 +108,9 @@ public class WebServiceConstants {
     public static final String METHOD_GET_SESSION_STATS = "ReportManager.GetSessionStats";
 
 
+
     public static final String WS_KEY_AUTHENTICATE_USER = "AuthenticateUser";
+
     public static final String METHOD_GET_ONE_TIME_TOKEN = "SharedManager.GetOneTimeCode";
 
 }

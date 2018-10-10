@@ -236,6 +236,8 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
 
                     @Override
                     public void onError(Object object) {
+                        arrDept.clear();
+                        adapter.notifyDataSetChanged();
                         emptyView.setVisibility(View.VISIBLE);
                     }
                 });

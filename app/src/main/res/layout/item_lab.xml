@@ -49,28 +49,30 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:orientation="horizontal">
 
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="@dimen/x10dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true">
+                     android:layout_centerInParent="true">
 
 
                     <edu.aku.ehs.widget.AnyTextView
                         android:id="@+id/txtResult"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         android:layout_marginRight="@dimen/x2dp"
-                        android:text="13.1"
+                        android:text="NON REACTIVE"
                         android:textColor="@color/txtBlue"
-                        android:textSize="@dimen/s12"
+                        android:textSize="@dimen/s13"
                         app:typeface="@string/font_medium" />
 
 
@@ -91,16 +93,19 @@
 
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
 
                 android:gravity="center">
 
                 <edu.aku.ehs.widget.AnyTextView
                     android:id="@+id/txtDate"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/x2dp"
+                    android:layout_marginLeft="@dimen/x3dp"
+                    android:layout_marginRight="@dimen/x3dp"
+                    android:gravity="right"
                     android:text="01-01-2099"
                     android:textColor="@color/txtBlue"
                     android:textSize="@dimen/s10"

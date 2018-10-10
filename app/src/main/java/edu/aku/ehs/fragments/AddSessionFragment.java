@@ -196,6 +196,8 @@ public class AddSessionFragment extends BaseFragment {
                     } else {
                         if (edtSessionID.getText().length() > 0 && edtSessionName.getText().length() > 0) {
                             if (isAddingNewSession) {
+
+                                String sessionID = edtSessionID.getText().toString().replaceAll("\\s+","");
                                 SessionModel sessionModel = new SessionModel();
                                 sessionModel.setActive("Y");
                                 sessionModel.setDescription(edtSessionName.getText().toString().trim());

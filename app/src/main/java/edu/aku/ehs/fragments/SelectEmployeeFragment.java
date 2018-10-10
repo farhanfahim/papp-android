@@ -351,7 +351,6 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
 
                             @Override
                             public void onError(Object object) {
-                                emptyView.setVisibility(View.VISIBLE);
                                 if (object instanceof String) {
                                     UIHelper.showToast(getContext(), (String) object);
                                 }

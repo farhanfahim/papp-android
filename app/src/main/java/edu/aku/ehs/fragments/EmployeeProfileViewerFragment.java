@@ -279,7 +279,7 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        contHistory.setVisibility(View.GONE);
+//        contHistory.setVisibility(View.GONE);
         contMeasurements.setVisibility(View.GONE);
         contLabs.setVisibility(View.GONE);
         contMetabolic.setVisibility(View.GONE);
@@ -356,7 +356,7 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
         }
 
 
-        if (model.getEmpAssessments() != null && !model.getEmpAssessments().isEmpty()) {
+        if (model.getEmpAssessments() != null) {
             setAssessments(model);
             contHistory.setVisibility(View.VISIBLE);
         }
