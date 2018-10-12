@@ -444,10 +444,10 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
         metabolicSyndromeAdapter.notifyDataSetChanged();
 
         if (model.isHasMetabolicSyndrome()) {
-            txtHasMetabolicSyndrom.setText("Has Metablic Syndrome");
+            txtHasMetabolicSyndrom.setText("Has Metabolic Syndrome");
         } else {
             txtHasMetabolicSyndrom.setTextColor(getContext().getColor(R.color.txtBlue));
-            txtHasMetabolicSyndrom.setText("No Metablic Syndrome");
+            txtHasMetabolicSyndrom.setText("No Metabolic Syndrome");
         }
     }
 
