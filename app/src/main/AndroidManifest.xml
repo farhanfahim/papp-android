@@ -64,10 +64,6 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|stateVisible" />
 
-        <!-- FullScreenRotated Activity -->
-
-        <!-- ImagePreview Activity -->
-
         <!-- Home Activity -->
         <activity
             android:name="edu.aku.ehs.activities.HomeActivity"
@@ -83,7 +79,8 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="e153816b605fc8b1f5ac29ef4b6396030911fc4e" />
+            android:value="5c95b2c3e27ce96a21f56b2637a979c33185cfb1"
+            />
     </application>
 
 </manifest>

@@ -3,44 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img_banner">
+    android:background="@color/c_black">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_placeholder_nurse" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="@dimen/x30dp">
+        android:gravity="bottom"
+        android:orientation="vertical" >
 
         <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
             android:id="@+id/contParentLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/c_white"
             android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/x10dp"
-            app:corner_radius="@dimen/x30dp">
+            android:layout_marginBottom="@dimen/x200dp"
+            android:orientation="vertical"  >
 
 
-            <ImageView
-                android:layout_width="@dimen/x120dp"
-                android:layout_height="@dimen/x120dp"
-                android:layout_marginLeft="@dimen/x10dp"
-                android:layout_marginRight="@dimen/x10dp"
-                android:padding="@dimen/x2dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/logo" />
-
-            <edu.aku.ehs.widget.AnyTextView
-                android:layout_width="wrap_content"
+            <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#9fff"
                 android:gravity="center"
-                android:padding="@dimen/x10dp"
-                android:text="Employee Health Screening"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/s14"
-                app:typeface="@string/font_bold" />
+                android:orientation="horizontal"
+                app:corner_radius="@dimen/x5dp">
+
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:src="@drawable/ehs_logo" />
+
+
+            </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
 
         </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
@@ -49,15 +54,16 @@
     </LinearLayout>
 
 
-    <ImageView
-        android:layout_width="@dimen/x280dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/x10dp"
-        android:padding="@dimen/x8dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/akuh_logo" />
+    <!--<ImageView-->
+    <!--android:layout_width="@dimen/x280dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_margin="@dimen/x10dp"-->
+    <!--android:padding="@dimen/x8dp"-->
+    <!--android:scaleType="fitCenter"-->
+    <!--android:src="@drawable/akuh_logo"-->
+    <!--android:visibility="gone" />-->
 
 
 </RelativeLayout>

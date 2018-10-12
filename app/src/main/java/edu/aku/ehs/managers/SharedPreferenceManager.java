@@ -7,8 +7,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 
 import edu.aku.ehs.constatnts.AppConstants;
-import edu.aku.ehs.models.receiving_model.CardMemberDetail;
-import edu.aku.ehs.models.receiving_model.UserDetailModel;
+import edu.aku.ehs.models.receiving_model.UserModel;
 import edu.aku.ehs.models.sending_model.InsertRegisteredDeviceModel;
 import edu.aku.ehs.models.sending_model.RegisteredDeviceModel;
 
@@ -116,15 +115,8 @@ public class SharedPreferenceManager {
         return pref.contains(key);
     }
 
-    public UserDetailModel getCurrentUser() {
-        return getObject(KEY_CURRENT_USER_MODEL, UserDetailModel.class);
-    }
-
-    public CardMemberDetail getCardMemberDetail() {
-//        Type type = new TypeToken<List<UserDetailModel>>() {
-//        }.getType();
-//        return GsonFactory.getSimpleGson().fromJson(getString(KEY_CARD_MEMBER_DETAIL), CardMemberDetail.class);
-        return getObject(KEY_CARD_MEMBER_DETAIL, CardMemberDetail.class);
+    public UserModel getCurrentUser() {
+        return getObject(KEY_CURRENT_USER_MODEL, UserModel.class);
     }
 
     public boolean isForcedRestart() {

@@ -17,7 +17,7 @@
             android:id="@+id/empty_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-             android:gravity="center"
+            android:gravity="center"
             android:padding="@dimen/x10dp"
             android:text="No Item Found"
             android:textColor="@color/txtBlue"
@@ -43,11 +43,11 @@
 
 
             <info.hoang8f.widget.FButton
-                android:id="@+id/btnGetLabs"
+                android:id="@+id/btnAddEmployees"
                 android:layout_width="@dimen/x100dp"
                 android:layout_height="@dimen/x25dp"
                 android:layout_margin="@dimen/x10dp"
-                android:text="Get Labs"
+                android:text="Add Employees"
                 android:textColor="@color/c_white"
                 app:cornerRadius="@dimen/x10dp"
                 app:fButtonColor="@color/fbutton_color_turquoise"
@@ -70,11 +70,11 @@
                 app:shadowHeight="2dp" />
 
             <info.hoang8f.widget.FButton
-                android:id="@+id/btnAddSchedule"
+                android:id="@+id/btnGetLabs"
                 android:layout_width="@dimen/x100dp"
                 android:layout_height="@dimen/x25dp"
                 android:layout_margin="@dimen/x10dp"
-                android:text="Add Schedule"
+                android:text="Get Labs"
                 android:textColor="@color/c_white"
                 app:cornerRadius="@dimen/x10dp"
                 app:fButtonColor="@color/fbutton_color_turquoise"
@@ -82,13 +82,12 @@
                 app:shadowEnabled="true"
                 app:shadowHeight="2dp" />
 
-
             <info.hoang8f.widget.FButton
-                android:id="@+id/btnAddEmployees"
+                android:id="@+id/btnAddSchedule"
                 android:layout_width="@dimen/x100dp"
                 android:layout_height="@dimen/x25dp"
                 android:layout_margin="@dimen/x10dp"
-                android:text="Add Employees"
+                android:text="Schedule"
                 android:textColor="@color/c_white"
                 app:cornerRadius="@dimen/x10dp"
                 app:fButtonColor="@color/fbutton_color_turquoise"
@@ -102,48 +101,22 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="@dimen/x5dp"
             android:baselineAligned="true">
 
             <edu.aku.ehs.widget.AnyTextView
                 android:id="@+id/txtSessionName"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x10dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:padding="@dimen/x3dp"
                 android:text="Session Name: IT Session - 1"
                 android:textColor="@color/c_white"
                 android:textSize="@dimen/s14"
                 android:visibility="invisible" />
-
-            <LinearLayout
-                android:id="@+id/contSelection"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:baselineAligned="false"
-                android:gravity="bottom"
-                android:visibility="gone">
-
-
-                <edu.aku.ehs.widget.AnyTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/x1dp"
-                    android:gravity="center"
-                    android:text="Select All"
-                    android:textColor="@color/c_white"
-                    android:textSize="@dimen/s14" />
-
-                <CheckBox
-                    android:id="@+id/cbSelectAll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/c_white" />
-
-
-            </LinearLayout>
 
 
         </LinearLayout>
@@ -169,7 +142,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/x4dp"
                 android:padding="@dimen/x5dp"
-                android:src="@drawable/search2"
+                android:src="@drawable/icon_search_updated"
                 android:tint="@color/txtBlue" />
 
             <edu.aku.ehs.widget.AnyEditTextView
@@ -193,12 +166,41 @@
                 android:layout_margin="@dimen/x4dp"
                 android:padding="@dimen/x5dp"
                 android:src="@drawable/tag_close"
-                android:visibility="gone"
-                android:tint="@color/txtBlue" />
-
+                android:tint="@color/txtBlue"
+                android:visibility="gone" />
 
 
         </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/contSelection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contSearch"
+            android:layout_margin="@dimen/x5dp"
+            android:baselineAligned="false"
+            android:gravity="right"
+            android:visibility="gone">
+
+
+            <edu.aku.ehs.widget.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x2dp"
+                android:gravity="center"
+                android:text="Select All"
+                android:textColor="@color/txtBlue"
+                android:textSize="@dimen/s12" />
+
+            <CheckBox
+                android:id="@+id/cbSelectAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/txtBlue" />
+
+
+        </LinearLayout>
 
 
         <android.support.v7.widget.RecyclerView
@@ -206,8 +208,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/contSearch"
-            android:layout_marginTop="@dimen/x5dp">
+            android:layout_below="@+id/contSelection"
+            android:layout_marginTop="@dimen/x5dp"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/x40dp">
 
         </android.support.v7.widget.RecyclerView>
 

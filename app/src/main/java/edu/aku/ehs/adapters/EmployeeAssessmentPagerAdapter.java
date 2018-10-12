@@ -8,13 +8,16 @@ import android.view.ViewGroup;
 
 import edu.aku.ehs.fragments.OtherHistoryAssessmentFragment;
 import edu.aku.ehs.fragments.MedicalHistoryAssessmentFragment;
+import edu.aku.ehs.models.SessionDetailModel;
 
 
 public class EmployeeAssessmentPagerAdapter extends FragmentStatePagerAdapter {
 
+    private SessionDetailModel sessionDetailModel;
 
-    public EmployeeAssessmentPagerAdapter(FragmentManager fm) {
+    public EmployeeAssessmentPagerAdapter(FragmentManager fm, SessionDetailModel sessionDetailModel) {
         super(fm);
+        this.sessionDetailModel = sessionDetailModel;
     }
 
     // CURRENT FRAGMENT
@@ -34,11 +37,11 @@ public class EmployeeAssessmentPagerAdapter extends FragmentStatePagerAdapter {
 //        return ForgotPasswordFragment.newInstance();
         switch (position) {
             case 0:
-                return MedicalHistoryAssessmentFragment.newInstance();
+                return MedicalHistoryAssessmentFragment.newInstance(sessionDetailModel);
             case 1:
-                return OtherHistoryAssessmentFragment.newInstance();
+                return OtherHistoryAssessmentFragment.newInstance(sessionDetailModel);
             default:
-                return MedicalHistoryAssessmentFragment.newInstance();
+                return MedicalHistoryAssessmentFragment.newInstance(sessionDetailModel);
         }
 
     }

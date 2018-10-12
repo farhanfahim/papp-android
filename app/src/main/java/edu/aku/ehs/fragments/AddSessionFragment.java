@@ -33,7 +33,6 @@ import edu.aku.ehs.widget.TitleBar;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
 
-import static edu.aku.ehs.constatnts.AppConstants.tempUserName;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
@@ -197,11 +196,13 @@ public class AddSessionFragment extends BaseFragment {
                     } else {
                         if (edtSessionID.getText().length() > 0 && edtSessionName.getText().length() > 0) {
                             if (isAddingNewSession) {
+
+                                String sessionID = edtSessionID.getText().toString().replaceAll("\\s+","");
                                 SessionModel sessionModel = new SessionModel();
                                 sessionModel.setActive("Y");
                                 sessionModel.setDescription(edtSessionName.getText().toString().trim());
                                 sessionModel.setSessionId(edtSessionID.getText().toString().trim());
-                                sessionModel.setLastFileUser(tempUserName);
+                                sessionModel.setLastFileUser(getCurrentUser().getName());
                                 sessionModel.setStatusId(SessionStatus.OPENED.canonicalForm());
                                 sessionModel.setStartDate(startDateInSendingFormat);
                                 sessionModel.setEndDate(endDateInSendingFormat);

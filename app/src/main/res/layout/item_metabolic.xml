@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="@dimen/x3dp">
+
+
+        <CheckBox
+            android:id="@+id/chkIsTrue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:editable="false" />
+
+
+        <edu.aku.ehs.widget.AnyTextView
+            android:id="@+id/txtRule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fasting glucose ≥ 100 mg/dL or on diabetes medications"
+            android:textColor="@color/txtBlue"
+            android:textSize="@dimen/s12"
+            app:typeface="@string/font_regular" />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/seperator_light_gray" />
+
+</LinearLayout>

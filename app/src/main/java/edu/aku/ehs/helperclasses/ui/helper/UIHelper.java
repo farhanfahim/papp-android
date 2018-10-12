@@ -645,11 +645,14 @@ public class UIHelper {
                             arrDatum.setSelected(false);
                         }
                         listCopy.get(position).setSelected(true);
+//                        adapter.getArrData().get(position).setSelected(true);
 
                         for (SpinnerModel arrDatum : arrData) {
                             arrDatum.setSelected(false);
                         }
                         arrData.get(position).setSelected(true);
+//                        adapter.getArrData().get(position).setSelected(true);
+
 
                         adapter.notifyDataSetChanged();
                         positionToScroll.value = position;

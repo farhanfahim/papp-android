@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.badoualy.stepperindicator.StepperIndicator;
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
+import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,9 @@ import edu.aku.ehs.R;
 import edu.aku.ehs.activities.BaseActivity;
 import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.enums.EmployeeSessionState;
+import edu.aku.ehs.fragments.SessionDetailFragment;
 import edu.aku.ehs.helperclasses.Helper;
+import edu.aku.ehs.helperclasses.StringHelper;
 import edu.aku.ehs.helperclasses.ui.helper.AnimationHelper;
 import edu.aku.ehs.models.SessionDetailModel;
 import edu.aku.ehs.widget.AnyTextView;
@@ -33,6 +36,7 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
 
 
     private final OnItemClickListener onItemClick;
+
 
     private ArrayList<SessionDetailModel> filteredData;
     private Filter mFilter = new ItemFilter();
@@ -57,16 +61,33 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
+
+
         SessionDetailModel model = filteredData.get(i);
         holder.txtEmployeeName.setText(model.getEmployeeName());
         holder.txtStatus.setText(model.getStatusID());
-        holder.txtEmployeeGender.setText(model.getGender());
         holder.txtEmployeeAge.setText(model.getAge() + "Y");
         holder.txtMRN.setText(model.getMedicalRecordNo());
         holder.txtEmployeeID.setText(model.getEmployeeNo());
         holder.txtDepartmentName.setText(model.getDepartmentName());
-        if (model.getStatusEnum() == EmployeeSessionState.SCHEDULED) {
-            holder.txDate.setText("Scheduled Date: " + model.getDisplayScheduledDTTM());
+
+
+
+        holder.imgViewProfile.setVisibility(View.GONE);
+
+        if (StringHelper.checkNotNullAndNotEmpty(model.getGender())) {
+            if (model.getGender().equalsIgnoreCase("M")) {
+                holder.txtEmployeeGender.setText("Male");
+            } else {
+                holder.txtEmployeeGender.setText("Female");
+            }
+        } else {
+            holder.txtEmployeeGender.setText("N/A");
+        }
+
+
+        if (model.getStatusEnum() == EmployeeSessionState.SCHEDULED || model.getStatusEnum() == EmployeeSessionState.INPROGRESS) {
+            holder.txDate.setText("Scheduled for: " + model.getDisplayScheduledDTTM());
         } else {
             holder.txDate.setText("");
         }
@@ -84,15 +105,25 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
 
         switch (model.getStatusEnum()) {
             case ENROLLED:
+                showOptions(holder);
+                setStatusColor(holder, R.color.colorPrimaryDark);
+                break;
             case SCHEDULED:
-                holder.btnSchedule.setVisibility(View.VISIBLE);
-                holder.btnDelete.setVisibility(View.VISIBLE);
+                showOptions(holder);
+                setStatusColor(holder, R.color.fbutton_color_midnight_blue);
                 break;
             case INPROGRESS:
+                hideOptions(holder);
+                setStatusColor(holder, R.color.base_amber);
+                break;
             case COMPLETED:
+                holder.imgViewProfile.setVisibility(VISIBLE);
+                hideOptions(holder);
+                setStatusColor(holder, android.R.color.holo_green_dark);
+                break;
             case CANCELLED:
-                holder.btnSchedule.setVisibility(View.GONE);
-                holder.btnDelete.setVisibility(View.GONE);
+                hideOptions(holder);
+                setStatusColor(holder, R.color.red_resistant);
                 break;
         }
 
@@ -102,7 +133,7 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
 
         if (model.isSelected()) {
             Helper.changeTransitionDrawableColor(td, activity.getColor(R.color.selected_item), 1);
-            td.startTransition(400);
+            td.startTransition(200);
             AnimationHelper.fade(holder.imgSelected, 0, View.VISIBLE, VISIBLE, 1, 800);
 
 
@@ -113,7 +144,8 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
 
         }
 
-        if (model.isInSelectionMode()) {
+
+        if (SessionDetailFragment.isSelectingEmployeesForSchedule) {
             holder.btnDelete.setVisibility(View.GONE);
             holder.btnSchedule.setVisibility(View.GONE);
         }
@@ -122,16 +154,38 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
         setListener(holder, model);
     }
 
+    private void setStatusColor(ViewHolder holder, int colorID) {
+        holder.contStatus.setBackgroundColor(activity.getColor(colorID));
+        holder.txtStatus.setTextColor(activity.getColor(colorID));
+    }
+
+    private void hideOptions(ViewHolder holder) {
+        holder.btnSchedule.setVisibility(View.GONE);
+        holder.btnDelete.setVisibility(View.GONE);
+    }
+
+    private void showOptions(ViewHolder holder) {
+        holder.btnSchedule.setVisibility(View.VISIBLE);
+        holder.btnDelete.setVisibility(View.VISIBLE);
+    }
+
     private void setListener(final ViewHolder holder, final SessionDetailModel model) {
         holder.btnSchedule.setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
         holder.btnDelete.setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
         holder.contListItem.setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
-//        holder.stepView.setOnClickListener(view -> holder.contListItem.performClick());
-        holder.stepView.setOnTouchListener((View view, MotionEvent motionEvent) -> {
+        holder.imgViewProfile.setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
+//        holder.stepView.setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
+        holder.stepView.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                return holder.contListItem.performClick();
+                onItemClick.onItemClick(holder.getAdapterPosition(), model, view);
+                return true;
             } else return false;
         });
+    }
+
+
+    public ArrayList<SessionDetailModel> getFilteredData() {
+        return filteredData;
     }
 
 
@@ -148,16 +202,18 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
         AnyTextView txtEmployeeGender;
         @BindView(R.id.txtEmployeeAge)
         AnyTextView txtEmployeeAge;
-        @BindView(R.id.txtEmployeeID)
-        AnyTextView txtEmployeeID;
         @BindView(R.id.txtMRN)
         AnyTextView txtMRN;
-        @BindView(R.id.txDate)
-        AnyTextView txDate;
-        @BindView(R.id.txtStatus)
-        AnyTextView txtStatus;
+        @BindView(R.id.txtEmployeeID)
+        AnyTextView txtEmployeeID;
         @BindView(R.id.txtDepartmentName)
         AnyTextView txtDepartmentName;
+        @BindView(R.id.txtStatus)
+        AnyTextView txtStatus;
+        @BindView(R.id.contStatus)
+        RoundKornerRelativeLayout contStatus;
+        @BindView(R.id.txDate)
+        AnyTextView txDate;
         @BindView(R.id.stepView)
         StepperIndicator stepView;
         @BindView(R.id.btnDelete)
@@ -168,6 +224,8 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
         RoundKornerLinearLayout contListItem;
         @BindView(R.id.imgSelected)
         ImageView imgSelected;
+        @BindView(R.id.imgViewProfile)
+        ImageView imgViewProfile;
 
 
         ViewHolder(View view) {

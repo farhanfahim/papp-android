@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,13 +46,17 @@ import edu.aku.ehs.enums.EmployeeSessionState;
 import edu.aku.ehs.enums.SelectEmployeeActionType;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.fragments.abstracts.GenericDialogFragment;
+import edu.aku.ehs.fragments.dialogs.LabDialogFragment;
 import edu.aku.ehs.helperclasses.ui.helper.KeyboardHelper;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
 import edu.aku.ehs.managers.DateManager;
 import edu.aku.ehs.managers.retrofit.GsonFactory;
 import edu.aku.ehs.managers.retrofit.WebServices;
+import edu.aku.ehs.models.EmpLabs;
+import edu.aku.ehs.models.EmployeeSummaryDetailModel;
 import edu.aku.ehs.models.SessionDetailModel;
 import edu.aku.ehs.models.SessionModel;
+import edu.aku.ehs.models.sending_model.EmployeeSendingModel;
 import edu.aku.ehs.models.sending_model.SearchSendingModel;
 import edu.aku.ehs.models.wrappers.WebResponse;
 import edu.aku.ehs.widget.AnyEditTextView;
@@ -148,7 +153,9 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
         cbSelectAll.setOnCheckedChangeListener((compoundButton, b) -> {
                     if (b) {
                         for (int i = 0; i < arrData.size(); i++) {
-                            arrData.get(i).setSelected(true);
+                            if (arrData.get(i).getStatusEnum() == EmployeeSessionState.ENROLLED) {
+                                arrData.get(i).setSelected(true);
+                            }
                         }
                     } else {
                         for (int i = 0; i < arrData.size(); i++) {
@@ -243,6 +250,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
 
     private void unFilterEnrolledData() {
         isSelectingEmployeesForSchedule = false;
+        cbSelectAll.setChecked(false);
         resetTitlebar(getBaseActivity().getTitleBar());
         fab.setVisibility(View.GONE);
         contOptionButtons.setVisibility(View.VISIBLE);
@@ -258,10 +266,16 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
     }
 
     private void filterOnlyEnrolledData() {
+
+        if (arrData.isEmpty()) {
+            UIHelper.showShortToastInCenter(getContext(), "Please add employees first");
+            return;
+        }
+
         fab.setVisibility(View.VISIBLE);
         isSelectingEmployeesForSchedule = true;
         contSearch.setVisibility(View.INVISIBLE);
-        getBaseActivity().getTitleBar().setTitle("Select Employees");
+        getBaseActivity().getTitleBar().setTitle("Add Schedule");
         txtSessionName.setVisibility(View.VISIBLE);
         txtSessionName.setText(sessionModel.getDescription());
         contOptionButtons.setVisibility(View.GONE);
@@ -290,7 +304,9 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
     @Override
     public void onItemClick(int position, Object object, View view) {
         SessionDetailModel sessionDetailModel = (SessionDetailModel) object;
-
+        EmployeeSendingModel sendingModel = new EmployeeSendingModel();
+        sendingModel.setSessionID(sessionModel.getSessionId());
+        sendingModel.setEmployeeNo(sessionDetailModel.getEmployeeNo());
         switch (view.getId()) {
             case R.id.btnSchedule:
                 editSingleEmployeeSchedule(sessionDetailModel);
@@ -300,12 +316,36 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
                 deleteEmployee(sessionDetailModel, position);
                 break;
 
+            case R.id.imgViewProfile:
+
+                getEmployeeSummaryDetail(sessionDetailModel, sendingModel);
+                break;
+
+
+            case R.id.stepView:
+                getEmployeeLabTest(sendingModel);
+
+                break;
+
             case R.id.contListItem:
-                if (isSelectingEmployeesForSchedule) {
-                    arrData.get(position).setSelected(!arrData.get(position).isSelected());
-                    adapter.notifyItemChanged(position);
-                } else {
-                    getBaseActivity().addDockableFragment(EmployeeAssessmentDashboardFragment.newInstance(), false);
+
+                switch (sessionDetailModel.getStatusEnum()) {
+                    case ENROLLED:
+                    case SCHEDULED:
+                    case INPROGRESS:
+                        if (isSelectingEmployeesForSchedule) {
+                            adapter.getFilteredData().get(position).setSelected(!adapter.getFilteredData().get(position).isSelected());
+                            adapter.notifyItemChanged(position);
+                        } else {
+                            getBaseActivity().addDockableFragment(EmployeeAssessmentDashboardFragment.newInstance(sessionDetailModel), false);
+                        }
+                        break;
+                    case COMPLETED:
+                    case CANCELLED:
+                        Log.d(TAG, "onItemClick: Can't go further on COMPLETED AND CANCELLED");
+                        UIHelper.showShortToastInCenter(getContext(), sessionDetailModel.getEmployeeName() + " assessment has " + sessionDetailModel.getStatusEnum().canonicalForm()
+                                + ", You may add this employee again.");
+                        break;
                 }
 
                 break;
@@ -314,7 +354,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
     }
 
     private void deleteEmployee(SessionDetailModel sessionDetailModel, int position) {
-        UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Remove", "Do you want to remove " + sessionDetailModel.getEmployeeName() + " ?", "Remove", "Cancel",
+        UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Remove", "Do you want to remove " + sessionDetailModel.getEmployeeName() + " ?", "Yes", "No",
                 () -> {
                     genericDialogFragment.dismiss();
                     updateSelectedEmployees(getSingleEmployeeArray(sessionDetailModel, EmployeeSessionState.CANCELLED));
@@ -375,7 +415,10 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
                         () -> {
                             genericDialogFragment.dismiss();
                             updateSelectedEmployees(selectedArray);
-                        }, genericDialogFragment::dismiss, false, true);
+                        }, () -> {
+                            unFilterEnrolledData();
+                            genericDialogFragment.dismiss();
+                        }, false, true);
 
             } else {
                 updateSelectedEmployees(getSingleEmployeeArray(sessionDetailModel, state));
@@ -391,8 +434,8 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
             if (sessionDetailModel.isSelected()) {
                 sessionDetailModel.setStatusID(state.canonicalForm());
                 sessionDetailModel.setScheduledDTTM(scheduledDateInSendingFormat);
-                sessionDetailModel.setScheduledBy(AppConstants.tempUserName);
-                sessionDetailModel.setLastFileUser(AppConstants.tempUserName);
+                sessionDetailModel.setScheduledBy(getCurrentUser().getName());
+                sessionDetailModel.setLastFileUser(getCurrentUser().getName());
                 arrayList.add(sessionDetailModel);
             }
         }
@@ -407,10 +450,10 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
         switch (state) {
             case SCHEDULED:
                 sessionDetailModel.setScheduledDTTM(scheduledDateInSendingFormat);
-                sessionDetailModel.setScheduledBy(AppConstants.tempUserName);
+                sessionDetailModel.setScheduledBy(getCurrentUser().getName());
                 break;
         }
-        sessionDetailModel.setLastFileUser(AppConstants.tempUserName);
+        sessionDetailModel.setLastFileUser(getCurrentUser().getName());
         arrayList.add(sessionDetailModel);
 
         return arrayList;
@@ -420,6 +463,12 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnAddEmail:
+
+                if (arrData.isEmpty()) {
+                    UIHelper.showShortToastInCenter(getContext(), "Please add employees first");
+                    return;
+                }
+
                 getBaseActivity().addDockableFragment(EmailFragment.newInstance(sessionModel, arrData), false);
 
                 break;
@@ -432,7 +481,16 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
                 break;
 
             case R.id.btnGetLabs:
-                UIHelper.showToast(getContext(), "Get Lab Webservice will be available in Beta version");
+
+                if (arrData.isEmpty()) {
+                    UIHelper.showShortToastInCenter(getContext(), "Please add employees first");
+                    return;
+                }
+
+                SearchSendingModel searchSendingModel = new SearchSendingModel();
+                searchSendingModel.setSessionID(sessionModel.getSessionId());
+
+                syncEmployeeLabs(searchSendingModel);
                 break;
 
 
@@ -469,19 +527,23 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
                                     if (arrData.size() > 0) {
                                         emptyView.setVisibility(View.GONE);
                                     } else {
-                                        emptyView.setVisibility(View.VISIBLE);
+                                        showEmptyView(webResponse.responseMessage);
                                     }
                                 }
                             }
 
                             @Override
                             public void onError(Object object) {
-                                emptyView.setVisibility(View.VISIBLE);
                                 if (object instanceof String) {
-                                    UIHelper.showToast(getContext(), (String) object);
+                                    showEmptyView((String) object);
                                 }
                             }
                         });
+    }
+
+    private void showEmptyView(String text) {
+        emptyView.setText(text);
+        emptyView.setVisibility(View.VISIBLE);
     }
 
 
@@ -526,4 +588,109 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
                             }
                         });
     }
+
+
+    private void syncEmployeeLabs(SearchSendingModel model) {
+        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+                .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_SYNC_EMPLOYEE_LABS, model.toString(),
+                        new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                            @Override
+                            public void requestDataResponse(WebResponse<Object> webResponse) {
+                                UIHelper.showToast(getContext(), webResponse.responseMessage);
+                                SearchSendingModel searchSendingModel = new SearchSendingModel();
+                                searchSendingModel.setSessionID(sessionModel.getSessionId());
+                                getSessionEmployeesCall(searchSendingModel);
+                            }
+
+                            @Override
+                            public void onError(Object object) {
+                                if (object instanceof String) {
+                                    UIHelper.showToast(getContext(), (String) object);
+                                }
+                            }
+                        });
+    }
+
+
+    private void getEmployeeLabTest(EmployeeSendingModel model) {
+        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+                .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_GET_EMPLOYEE_LAB_TEST_RESULTS, model.toString(),
+                        new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                            @Override
+                            public void requestDataResponse(WebResponse<Object> webResponse) {
+                                if (webResponse.result instanceof ArrayList) {
+
+                                    Type type = new TypeToken<ArrayList<EmpLabs>>() {
+                                    }.getType();
+                                    ArrayList<EmpLabs> arrayList = GsonFactory.getSimpleGson()
+                                            .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                                    , type);
+
+                                    LabDialogFragment labDialogFragment = LabDialogFragment.newInstance(arrayList, view1 -> {
+                                    });
+                                    labDialogFragment.setCancelable(false);
+                                    labDialogFragment.show(getBaseActivity().getSupportFragmentManager(), "labDialogFragment");
+                                }
+                            }
+
+                            @Override
+                            public void onError(Object object) {
+                                if (object instanceof String) {
+                                    UIHelper.showToast(getContext(), (String) object);
+                                }
+                            }
+                        });
+    }
+
+
+    private void getEmployeeSummaryDetail(SessionDetailModel sessionDetailModel, EmployeeSendingModel model) {
+        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+                .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_GET_EMPLOYEE_SUMMARY_DETAIL, model.toString(),
+                        new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                            @Override
+                            public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                                EmployeeSummaryDetailModel employeeSummaryDetailModel = GsonFactory.getSimpleGson()
+                                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), EmployeeSummaryDetailModel.class);
+
+                                if (employeeSummaryDetailModel.getEmpMeasurements() == null && employeeSummaryDetailModel.getEmpMeasurements().isEmpty()) {
+                                    UIHelper.showShortToastInCenter(getContext(), "Measurement Data missing");
+                                    return;
+                                }
+
+                                if (employeeSummaryDetailModel.getEmpAssessments() == null && employeeSummaryDetailModel.getEmpAssessments().isEmpty()) {
+                                    UIHelper.showShortToastInCenter(getContext(), "Assessment Data missing");
+                                    return;
+                                }
+
+                                if (employeeSummaryDetailModel.getEmpLabs() == null && employeeSummaryDetailModel.getEmpLabs().isEmpty()) {
+                                    UIHelper.showShortToastInCenter(getContext(), "Labs Data missing");
+                                    return;
+                                }
+
+                                if (employeeSummaryDetailModel.getCVDRiskFactors() == null && employeeSummaryDetailModel.getCVDRiskFactors().isEmpty()) {
+                                    UIHelper.showShortToastInCenter(getContext(), "CVD Risk Data missing");
+                                    return;
+                                }
+
+                                if (employeeSummaryDetailModel.getMetabolicSyndromeDetail().getMetabolicSyndromeRules() == null && employeeSummaryDetailModel.getEmpLabs().isEmpty()) {
+                                    UIHelper.showShortToastInCenter(getContext(), "Metabolic Syndrome Data missing");
+                                    return;
+                                }
+
+
+                                getBaseActivity().addDockableFragment(EmployeeProfileViewerFragment.newInstance(sessionDetailModel, employeeSummaryDetailModel), false);
+
+
+                            }
+
+                            @Override
+                            public void onError(Object object) {
+                                if (object instanceof String) {
+                                    UIHelper.showToast(getContext(), (String) object);
+                                }
+                            }
+                        });
+    }
+
 }

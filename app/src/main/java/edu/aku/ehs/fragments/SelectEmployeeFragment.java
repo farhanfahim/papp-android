@@ -44,6 +44,7 @@ import edu.aku.ehs.managers.retrofit.WebServices;
 import edu.aku.ehs.models.SessionDetailModel;
 import edu.aku.ehs.models.SessionModel;
 import edu.aku.ehs.models.peoplesoft.department.DEPT;
+import edu.aku.ehs.models.peoplesoft.department.DepartmentWrapper;
 import edu.aku.ehs.models.peoplesoft.employee.EMPLOYEE;
 import edu.aku.ehs.models.peoplesoft.employee.EmployeeWrapper;
 import edu.aku.ehs.models.wrappers.WebResponse;
@@ -145,6 +146,7 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
                         for (int i = 0; i < arrData.size(); i++) {
                             arrData.get(i).setSelected(true);
                         }
+//                        UIHelper.showShortToastInCenter(getContext(), "Employee without MR Number will not be added.");
                     } else {
                         for (int i = 0; i < arrData.size(); i++) {
                             arrData.get(i).setSelected(false);
@@ -286,15 +288,25 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
                     sessionDetailModel.setDivisionID(division.getDEPTID());
                     sessionDetailModel.setDivisionName(division.getDESCR());
                 }
-                sessionDetailModel.setEnrolledBy(AppConstants.tempUserName);
-                sessionDetailModel.setLastFileUser(AppConstants.tempUserName);
+                sessionDetailModel.setEnrolledBy(getCurrentUser().getName());
+                sessionDetailModel.setLastFileUser(getCurrentUser().getName());
 
                 sessionDetailModelArrayList.add(sessionDetailModel);
             }
         }
 
-        String jsonArrayData = GsonFactory.getConfiguredGson().toJson(sessionDetailModelArrayList);
-        addEmployeesInSessionCall(jsonArrayData);
+        if (sessionDetailModelArrayList == null || sessionDetailModelArrayList.isEmpty()) {
+            UIHelper.showShortToastInCenter(getContext(), "No employee selected.");
+            return;
+        }
+
+        if (division == null && !sessionDetailModelArrayList.isEmpty()) {
+            getDepartmentDetailCall(sessionDetailModelArrayList);
+        } else {
+            String jsonArrayData = GsonFactory.getConfiguredGson().toJson(sessionDetailModelArrayList);
+            addEmployeesInSessionCall(jsonArrayData);
+        }
+
     }
 
 
@@ -313,14 +325,14 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
                             emptyView.setVisibility(View.GONE);
 
                         } else {
-                            showEmptyView("No Record Found");
+                            showEmptyView("No Employee Found");
                         }
                     }
 
                     @Override
                     public void onError(Object object) {
 
-                        showEmptyView("No Record Found");
+                        showEmptyView("No Employee Found");
                     }
                 });
     }
@@ -339,7 +351,6 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
 
                             @Override
                             public void onError(Object object) {
-                                emptyView.setVisibility(View.VISIBLE);
                                 if (object instanceof String) {
                                     UIHelper.showToast(getContext(), (String) object);
                                 }
@@ -351,6 +362,33 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
     private void showEmptyView(String text) {
         emptyView.setText(text);
         emptyView.setVisibility(View.VISIBLE);
+    }
+
+
+    private void getDepartmentDetailCall(ArrayList<SessionDetailModel> arrayList) {
+        new WebServices(getContext(),
+                "",
+                BaseURLTypes.GET_EMP_DEPT_URL, true)
+                .webServiceGetDeptDiv(WebServiceConstants.DEPT_DETAIL_KEY, arrayList.get(0).getDepartmentID(), new WebServices.IRequestWebResponseDeptDivList() {
+                    @Override
+                    public void requestDataResponse(DepartmentWrapper webResponse) {
+
+                        if (webResponse.getAKU_WA_DEPT_EMPS().getDEPT() != null && !webResponse.getAKU_WA_DEPT_EMPS().getDEPT().isEmpty()) {
+                            arrayList.get(0).setDivisionID(webResponse.getAKU_WA_DEPT_EMPS().getDEPT().get(0).getAKU_LEVEL5());
+                            arrayList.get(0).setDivisionName(webResponse.getAKU_WA_DEPT_EMPS().getDEPT().get(0).getAKU_LEVEL5_DESC());
+                            String jsonArrayData = GsonFactory.getConfiguredGson().toJson(arrayList);
+                            addEmployeesInSessionCall(jsonArrayData);
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+
+                    }
+                });
     }
 
 }

@@ -220,19 +220,23 @@ public class SessionListFragment extends BaseFragment implements OnItemClickList
                                     if (arrData.size() > 0) {
                                         emptyView.setVisibility(View.GONE);
                                     } else {
-                                        emptyView.setVisibility(View.VISIBLE);
+                                        showEmptyView(webResponse.responseMessage);
                                     }
                                 }
                             }
 
                             @Override
                             public void onError(Object object) {
-                                emptyView.setVisibility(View.VISIBLE);
                                 if (object instanceof String) {
-                                    UIHelper.showToast(getContext(), (String) object);
+                                    showEmptyView((String) object);
                                 }
                             }
                         });
+    }
+
+    private void showEmptyView(String text) {
+        emptyView.setText(text);
+        emptyView.setVisibility(View.VISIBLE);
     }
 
 
@@ -298,8 +302,8 @@ public class SessionListFragment extends BaseFragment implements OnItemClickList
         UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Close Session", "Do you want to close \"" + sessionModel.getDescription() + "\" session?", "Close", "Cancel",
                 () -> {
                     sessionModel.setStatusId(SessionStatus.CLOSED.canonicalForm());
-                    sessionModel.setClosedBy(AppConstants.tempUserName);
-                    sessionModel.setLastFileUser(AppConstants.tempUserName);
+                    sessionModel.setClosedBy(getCurrentUser().getName());
+                    sessionModel.setLastFileUser(getCurrentUser().getName());
                     genericDialogFragment.dismiss();
                     closeSessionCall(sessionModel);
                 }, () -> {

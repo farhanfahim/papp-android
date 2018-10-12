@@ -56,7 +56,6 @@
                 </LinearLayout>
 
 
-
                 <edu.aku.ehs.widget.AnyTextView
                     android:id="@+id/txtMRN"
                     android:layout_width="wrap_content"
@@ -186,14 +185,14 @@
             android:id="@+id/imgSelected"
             android:layout_width="@dimen/x23dp"
             android:layout_height="@dimen/x23dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/x10dp"
+            android:layout_alignBottom="@id/txtMRN"
+             android:layout_marginStart="@dimen/x8dp"
             android:background="@drawable/shape_circle"
             android:backgroundTint="@color/colorAccent"
             android:padding="@dimen/x3dp"
+            android:layout_marginTop="@dimen/x35dp"
             android:src="@drawable/ic_done_white_18dp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
     </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
 

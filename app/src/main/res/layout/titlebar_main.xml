@@ -118,6 +118,8 @@
             android:drawableEnd="@drawable/b_home_icon"
             android:drawablePadding="@dimen/x5dp"
             android:gravity="center"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
             android:padding="@dimen/x5dp"
             android:textColor="@color/c_white"
             android:visibility="visible" />

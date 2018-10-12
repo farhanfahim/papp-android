@@ -32,8 +32,8 @@ import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
 import edu.aku.ehs.managers.DateManager;
 import edu.aku.ehs.managers.FileManager;
 import edu.aku.ehs.managers.SharedPreferenceManager;
-import edu.aku.ehs.models.receiving_model.UserDetailModel;
-import edu.aku.ehs.models.wrappers.WebResponse;
+ import edu.aku.ehs.models.receiving_model.UserModel;
+ import edu.aku.ehs.models.wrappers.WebResponse;
 import edu.aku.ehs.widget.TitleBar;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -83,7 +83,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     }
 
-    public UserDetailModel getCurrentUser() {
+    public UserModel getCurrentUser() {
         return sharedPreferenceManager.getCurrentUser();
     }
 

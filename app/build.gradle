@@ -31,7 +31,6 @@ android {
 //        renderscriptTargetApi 19
 //        renderscriptSupportModeEnabled true
         useLibrary 'org.apache.http.legacy'
-
     }
     buildTypes {
         release {
@@ -114,8 +113,7 @@ dependencies {
     implementation 'com.shawnlin:number-picker:2.4.6'
     implementation 'com.github.jd-alexander:android-flat-button:v1.1'
     implementation 'me.grantland:autofittextview:0.2.1'
-
-    compile('com.crashlytics.sdk.android:crashlytics:2.9.3@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true;
     }
 }

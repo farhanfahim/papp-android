@@ -28,7 +28,7 @@ public class KeyboardHelper {
         }
         InputMethodManager imm = (InputMethodManager) context
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
     public static void showSoftKeyboard(Context context, EditText editText) {

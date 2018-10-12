@@ -12,54 +12,230 @@
         android:layout_height="wrap_content"
         android:background="@drawable/img_banner"
         android:gravity="center"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/x20dp"
-        android:paddingTop="@dimen/x20dp">
-
-        <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
-            android:layout_width="@dimen/x100dp"
-            android:layout_height="@dimen/x100dp"
-            android:background="@color/c_white"
-            app:corner_radius="@dimen/x20dp">
+        android:padding="@dimen/x20dp">
 
 
-            <ImageView
-                android:layout_width="@dimen/x70dp"
-                android:layout_height="@dimen/x70dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/img_statistics" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+                android:layout_width="@dimen/x50dp"
+                android:layout_height="@dimen/x50dp"
+                android:background="@color/c_white"
+                app:corner_radius="@dimen/x8dp">
 
 
-        </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
+                <ImageView
+                    android:layout_width="@dimen/x30dp"
+                    android:layout_height="@dimen/x30dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/img_statistics" />
 
 
-        <edu.aku.ehs.widget.AnyTextView
+            </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
+
+
+            <edu.aku.ehs.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="Stats"
+                android:textColor="@color/c_white"
+                android:textSize="@dimen/s14"
+                app:typeface="@string/font_bold" />
+
+
+        </LinearLayout>
+
+
+        <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/contParent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:padding="@dimen/x3dp"
-            android:singleLine="true"
-            android:text="Stats"
-            android:textColor="@color/c_white"
-            android:textSize="@dimen/s17"
-            app:typeface="@string/font_bold" />
+            android:layout_marginBottom="@dimen/x10dp"
+            android:layout_marginLeft="@dimen/x20dp"
+            android:layout_marginRight="@dimen/x20dp"
+            android:layout_marginTop="@dimen/x5dp"
+            android:background="@color/timeline_out_dark"
+            android:elevation="@dimen/x5dp"
+            android:orientation="vertical"
+            app:corner_radius="@dimen/x10dp">
 
 
+            <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+                android:id="@+id/contListItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/c_white"
+                android:orientation="vertical"
+                android:padding="@dimen/x8dp"
+                app:corner_radius="@dimen/x10dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/x25dp"
+                        android:layout_height="@dimen/x25dp"
+                        android:padding="@dimen/x5dp"
+                        android:src="@drawable/img_session" />
+
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:id="@+id/txtSessionName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:padding="@dimen/x3dp"
+                        android:singleLine="true"
+                        android:text="Session - IT Department"
+                        android:textColor="@color/txtBlue"
+                        android:textSize="@dimen/s14"
+                        app:typeface="@string/font_medium" />
+
+
+                    <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+
+                        <ImageView
+                            android:id="@+id/imgStatus"
+                            android:layout_width="@dimen/x8dp"
+                            android:layout_height="@dimen/x8dp"
+                            android:layout_marginRight="@dimen/x3dp"
+                            android:layout_marginTop="@dimen/x1dp"
+                            android:src="@drawable/curve_edges_square_bullet"
+                            android:tint="@color/timeline_out_dark" />
+
+                        <edu.aku.ehs.widget.AnyTextView
+                            android:id="@+id/txtStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:padding="@dimen/x3dp"
+                            android:singleLine="true"
+                            android:text="In Progress"
+                            android:textColor="@color/timeline_out_dark"
+                            android:textSize="@dimen/s11"
+                            app:typeface="@string/font_medium" />
+
+                    </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+                </LinearLayout>
+
+
+                <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:corner_radius="@dimen/x10dp">
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:id="@+id/txtStartDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:padding="@dimen/x3dp"
+                        android:singleLine="true"
+                        android:text="Start Date: 10 July, 2018"
+                        android:textColor="@color/txtBlue"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_medium" />
+
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:id="@+id/txtEndDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="end"
+                        android:padding="@dimen/x3dp"
+                        android:singleLine="true"
+                        android:text="End Date: 20 July, 2018"
+                        android:textColor="@color/txtBlue"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_medium" />
+
+
+                </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+                <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_marginLeft="@dimen/x20dp"-->
+                <!--android:layout_marginRight="@dimen/x20dp"-->
+                <!--android:layout_marginTop="@dimen/x1dp"-->
+                <!--android:background="@color/seperator_light_gray" />-->
+                <!---->
+
+
+            </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+        </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/background_light"
         android:gravity="center"
-        android:paddingTop="@dimen/x50dp">
+        android:orientation="vertical">
 
-
-        <TextView
-            android:layout_width="wrap_content"
+        <edu.aku.ehs.widget.AnyTextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Statistics Screen"
-            android:textSize="@dimen/s16" />
+            android:background="@color/background_color"
+            android:gravity="center"
+            android:padding="@dimen/x5dp"
+            android:text="Overall population outcome"
+            android:textColor="@color/txtBlue"
+            android:textSize="@dimen/s13"
+            app:typeface="@string/font_medium" />
+
+
+        <edu.aku.ehs.libraries.mpchart.charts.BarChart
+            android:id="@+id/chart1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/x20dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:visibility="visible" />
+
+
+        <edu.aku.ehs.widget.AnyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_color"
+            android:gravity="center"
+            android:padding="@dimen/x5dp"
+            android:text="No. of employees screened w.r.t divisions"
+            android:textColor="@color/txtBlue"
+            android:textSize="@dimen/s13"
+            app:typeface="@string/font_medium" />
+
+        <edu.aku.ehs.libraries.mpchart.charts.PieChart
+            android:id="@+id/chart2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x270dp"
+            android:layout_margin="@dimen/x10dp" />
+
 
     </LinearLayout>
 

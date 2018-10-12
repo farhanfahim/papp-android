@@ -4,13 +4,13 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import edu.aku.ehs.enums.EmployeeSessionState;
+import edu.aku.ehs.helperclasses.StringHelper;
 
 /**
  * Created by hamza.ahmed on 7/23/2018.
  */
 
 public class SessionDetailModel {
-
 
     @Expose
     @SerializedName("LastFileUser")
@@ -40,11 +40,11 @@ public class SessionDetailModel {
     @SerializedName("EnrolledBy")
     private String EnrolledBy;
     @Expose
-    @SerializedName("DisplayEnrolledDTTM")
-    private String DisplayEnrolledDTTM;
-    @Expose
     @SerializedName("EnrolledDTTM")
     private String EnrolledDTTM;
+    @Expose
+    @SerializedName("DisplayEnrolledDTTM")
+    private String DisplayEnrolledDTTM;
     @Expose
     @SerializedName("ReferredToDescription")
     private String ReferredToDescription;
@@ -54,6 +54,9 @@ public class SessionDetailModel {
     @Expose
     @SerializedName("IsReferred")
     private String IsReferred;
+    @Expose
+    @SerializedName("HasMetabolicSyndrome")
+    private String HasMetabolicSyndrome;
     @Expose
     @SerializedName("RiskScore")
     private String RiskScore;
@@ -95,11 +98,9 @@ public class SessionDetailModel {
     private String SessionID;
 
     private boolean isSelected = false;
-    private boolean inSelectionMode = false;
 
     public SessionDetailModel() {
     }
-
 
 
     public EmployeeSessionState getStatusEnum() {
@@ -115,37 +116,7 @@ public class SessionDetailModel {
         isSelected = selected;
     }
 
-    public boolean isInSelectionMode() {
-        return inSelectionMode;
-    }
 
-    public void setInSelectionMode(boolean inSelectionMode) {
-        this.inSelectionMode = inSelectionMode;
-    }
-
-    public String getDisplayCompletedDTTM() {
-        return DisplayCompletedDTTM;
-    }
-
-    public void setDisplayCompletedDTTM(String displayCompletedDTTM) {
-        DisplayCompletedDTTM = displayCompletedDTTM;
-    }
-
-    public String getDisplayScheduledDTTM() {
-        return DisplayScheduledDTTM;
-    }
-
-    public void setDisplayScheduledDTTM(String displayScheduledDTTM) {
-        DisplayScheduledDTTM = displayScheduledDTTM;
-    }
-
-    public String getDisplayEnrolledDTTM() {
-        return DisplayEnrolledDTTM;
-    }
-
-    public void setDisplayEnrolledDTTM(String displayEnrolledDTTM) {
-        DisplayEnrolledDTTM = displayEnrolledDTTM;
-    }
 
     public String getLastFileUser() {
         return LastFileUser;
@@ -179,6 +150,14 @@ public class SessionDetailModel {
         this.CompletedDTTM = CompletedDTTM;
     }
 
+    public String getDisplayCompletedDTTM() {
+        return DisplayCompletedDTTM;
+    }
+
+    public void setDisplayCompletedDTTM(String DisplayCompletedDTTM) {
+        this.DisplayCompletedDTTM = DisplayCompletedDTTM;
+    }
+
     public String getScheduledBy() {
         return ScheduledBy;
     }
@@ -195,6 +174,14 @@ public class SessionDetailModel {
         this.ScheduledDTTM = ScheduledDTTM;
     }
 
+    public String getDisplayScheduledDTTM() {
+        return DisplayScheduledDTTM;
+    }
+
+    public void setDisplayScheduledDTTM(String DisplayScheduledDTTM) {
+        this.DisplayScheduledDTTM = DisplayScheduledDTTM;
+    }
+
     public String getEnrolledBy() {
         return EnrolledBy;
     }
@@ -209,6 +196,14 @@ public class SessionDetailModel {
 
     public void setEnrolledDTTM(String EnrolledDTTM) {
         this.EnrolledDTTM = EnrolledDTTM;
+    }
+
+    public String getDisplayEnrolledDTTM() {
+        return DisplayEnrolledDTTM;
+    }
+
+    public void setDisplayEnrolledDTTM(String DisplayEnrolledDTTM) {
+        this.DisplayEnrolledDTTM = DisplayEnrolledDTTM;
     }
 
     public String getReferredToDescription() {
@@ -234,6 +229,22 @@ public class SessionDetailModel {
     public void setIsReferred(String IsReferred) {
         this.IsReferred = IsReferred;
     }
+
+    public boolean getHasMetabolicSyndrome() {
+        return StringHelper.checkNotNullAndNotEmpty(HasMetabolicSyndrome) && HasMetabolicSyndrome.equalsIgnoreCase("Y");
+
+    }
+
+
+    public void setHasMetabolicSyndrome(boolean HasMetabolicSyndrome) {
+        if (HasMetabolicSyndrome) {
+            this.HasMetabolicSyndrome = "Y";
+        } else {
+            this.HasMetabolicSyndrome = "N";
+        }
+
+    }
+
 
     public String getRiskScore() {
         return RiskScore;
@@ -277,6 +288,10 @@ public class SessionDetailModel {
 
     public String getHasLabResult() {
         return HasLabResult;
+    }
+
+    public boolean getisLabResultDone() {
+        return StringHelper.checkNotNullAndNotEmpty(HasLabResult) && HasLabResult.equalsIgnoreCase("Y");
     }
 
     public void setHasLabResult(String HasLabResult) {

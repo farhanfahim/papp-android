@@ -52,8 +52,8 @@ public class BaseApplication extends MultiDexApplication implements Application.
 //        configureCalligraphyLibrary();
 
         // TODO: 11/1/2017 Enable Crash Lytics and Never Crash feature before releasing the app
-//        Fabric.with(this, new Crashlytics());
-//        neverCrash();
+        Fabric.with(this, new Crashlytics());
+        neverCrash();
     }
 
     public static Context getContext() {

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
@@ -28,9 +29,13 @@ public class SpinnerDialogAdapter extends RecyclerView.Adapter<SpinnerDialogAdap
     private Activity activity;
     private ArrayList<SpinnerModel> arrData;
 
+    private ArrayList<SpinnerModel> filteredData;
+    private Filter mFilter = new ItemFilter();
+
     public SpinnerDialogAdapter(Activity activity, ArrayList<SpinnerModel> arrayList, OnSpinnerItemClickListener onItemClickListener) {
         this.arrData = arrayList;
         this.activity = activity;
+        this.filteredData = arrayList;
         this.onItemClick = onItemClickListener;
     }
 
@@ -46,7 +51,7 @@ public class SpinnerDialogAdapter extends RecyclerView.Adapter<SpinnerDialogAdap
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
 
-        final SpinnerModel model = arrData.get(holder.getAdapterPosition());
+        final SpinnerModel model = filteredData.get(holder.getAdapterPosition());
 
         holder.txtChoice.setText(model.getText());
         if (model.isSelected()) {
@@ -72,11 +77,15 @@ public class SpinnerDialogAdapter extends RecyclerView.Adapter<SpinnerDialogAdap
     public ArrayList<SpinnerModel> getArrData() {
         return arrData;
     }
+    public ArrayList<SpinnerModel> getFilteredData() {
+        return filteredData;
+    }
 
     @Override
     public int getItemCount() {
-        return arrData.size();
+        return filteredData.size();
     }
+
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.radioButton)
@@ -91,5 +100,59 @@ public class SpinnerDialogAdapter extends RecyclerView.Adapter<SpinnerDialogAdap
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    public Filter getFilter() {
+
+        return mFilter;
+    }
+
+
+    private class ItemFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String filterString = constraint.toString().toLowerCase();
+
+            FilterResults results = new FilterResults();
+
+            final ArrayList<SpinnerModel> list = arrData;
+
+            int count = list.size();
+
+//            final ArrayList<String> nlist = new ArrayList<String>(count);
+            final ArrayList<SpinnerModel> filterData = new ArrayList<SpinnerModel>();
+
+            String filterableString1;
+//            String filterableString2;
+//            String filterableString3;
+//            String filterableString4;
+//            String filterableString5;
+
+            for (int i = 0; i < count; i++) {
+                filterableString1 = list.get(i).getText();
+
+                if (filterableString1.toLowerCase().contains(filterString)
+//                        || filterableString2.toLowerCase().contains(filterString)
+//                        || filterableString3.toLowerCase().contains(filterString)
+//                        || filterableString4.toLowerCase().contains(filterString)
+//                        || filterableString5.toLowerCase().contains(filterString)
+                        ) {
+                    filterData.add(list.get(i));
+                }
+            }
+
+            results.values = filterData;
+            results.count = filterData.size();
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredData = (ArrayList<SpinnerModel>) results.values;
+            notifyDataSetChanged();
+        }
+
     }
 }

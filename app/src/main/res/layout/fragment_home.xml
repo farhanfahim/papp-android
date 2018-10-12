@@ -16,13 +16,13 @@
         android:paddingBottom="@dimen/x10dp"
         android:paddingTop="@dimen/x10dp">
 
-        <!--<de.hdodenhof.circleimageview.CircleImageView-->
-        <!--android:id="@+id/imgNursePic"-->
-        <!--android:layout_width="@dimen/x100dp"-->
-        <!--android:layout_height="@dimen/x100dp"-->
-        <!--android:src="@drawable/img_placeholder_nurse"-->
-        <!--app:civ_border_color="@color/c_white"-->
-        <!--app:civ_border_width="@dimen/x2dp" />-->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgUser"
+            android:layout_width="@dimen/x60dp"
+            android:layout_height="@dimen/x60dp"
+            android:src="@drawable/img_placeholder_nurse"
+            app:civ_border_color="@color/c_white"
+            app:civ_border_width="@dimen/x2dp" />
 
 
         <edu.aku.ehs.widget.AnyTextView
@@ -31,11 +31,11 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="center"
-            android:padding="@dimen/x3dp"
+            android:padding="@dimen/x1dp"
             android:singleLine="true"
-            android:text="Maryam Ahmed"
+            android:text="Nurse Name"
             android:textColor="@color/c_white"
-            android:textSize="@dimen/s20"
+            android:textSize="@dimen/s18"
             app:typeface="@string/font_bold" />
 
         <edu.aku.ehs.widget.AnyTextView
@@ -44,11 +44,10 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="center"
-            android:padding="@dimen/x3dp"
             android:singleLine="true"
-            android:text="CIME / Nurse"
+            android:text="Role | Speciality"
             android:textColor="@color/c_white"
-            android:textSize="@dimen/s18"
+            android:textSize="@dimen/s14"
             app:typeface="@string/font_regular" />
 
     </LinearLayout>
@@ -57,17 +56,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="@dimen/x20dp">
 
         <LinearLayout
             android:id="@+id/contSession"
-            android:layout_width="@dimen/x120dp"
-            android:layout_height="@dimen/x120dp"
-            android:layout_margin="@dimen/x10dp"
+            android:layout_width="@dimen/x150dp"
+            android:layout_height="@dimen/x150dp"
+            android:layout_margin="@dimen/x20dp"
             android:background="@drawable/shape_circle"
-            android:gravity="center"
             android:elevation="@dimen/x5dp"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
@@ -88,45 +87,46 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="vertical">-->
 
-            <ImageView
-                android:layout_width="@dimen/x1dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/colorPrimaryDark" />
+        <!--<ImageView-->
+        <!--android:layout_width="@dimen/x1dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@color/colorPrimaryDark" />-->
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="@dimen/x150dp"
-                android:layout_height="@dimen/x150dp"
-                android:layout_marginLeft="@dimen/x10dp"
-                android:layout_marginRight="@dimen/x10dp"
-                android:src="@drawable/img_placeholder_nurse"
-                app:civ_border_color="@color/colorPrimaryDark"
-                app:civ_border_width="@dimen/x2dp" />
+        <!--<de.hdodenhof.circleimageview.CircleImageView-->
+        <!--android:id="@+id/imgUser"-->
+        <!--android:layout_width="@dimen/x150dp"-->
+        <!--android:layout_height="@dimen/x150dp"-->
+        <!--android:layout_marginLeft="@dimen/x10dp"-->
+        <!--android:layout_marginRight="@dimen/x10dp"-->
+        <!--android:src="@drawable/img_placeholder_nurse"-->
+        <!--app:civ_border_color="@color/colorPrimaryDark"-->
+        <!--app:civ_border_width="@dimen/x2dp" />-->
 
-            <ImageView
-                android:layout_width="@dimen/x1dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/colorPrimaryDark" />
+        <!--<ImageView-->
+        <!--android:layout_width="@dimen/x1dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@color/colorPrimaryDark" />-->
 
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
 
         <LinearLayout
             android:id="@+id/contStats"
-            android:layout_width="@dimen/x120dp"
-            android:layout_height="@dimen/x120dp"
-            android:layout_margin="@dimen/x10dp"
+            android:layout_width="@dimen/x150dp"
+            android:layout_height="@dimen/x150dp"
+            android:layout_margin="@dimen/x20dp"
             android:background="@drawable/shape_circle"
-            android:gravity="center"
             android:elevation="@dimen/x5dp"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView

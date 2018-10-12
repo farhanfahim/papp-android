@@ -101,36 +101,6 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:id="@+id/contSelection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="@dimen/x10dp"
-            android:layout_marginTop="@dimen/x10dp"
-            android:gravity="right|center_vertical"
-            android:visibility="gone">
-
-
-            <edu.aku.ehs.widget.AnyTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="@dimen/x10dp"
-                android:gravity="center"
-                android:text="Select All"
-                android:textColor="@color/c_white"
-                android:textSize="@dimen/s14" />
-
-            <CheckBox
-                android:id="@+id/cbSelectAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/c_white" />
-
-
-        </LinearLayout>
-
-
         <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
             android:id="@+id/contSearch"
             android:layout_width="match_parent"
@@ -152,7 +122,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/x4dp"
                 android:padding="@dimen/x5dp"
-                android:src="@drawable/search2"
+                android:src="@drawable/icon_search_updated"
                 android:tint="@color/txtBlue" />
 
             <edu.aku.ehs.widget.AnyEditTextView
@@ -176,11 +146,41 @@
                 android:layout_margin="@dimen/x4dp"
                 android:padding="@dimen/x5dp"
                 android:src="@drawable/tag_close"
-                android:visibility="gone"
-                android:tint="@color/txtBlue" />
+                android:tint="@color/txtBlue"
+                android:visibility="gone" />
 
 
         </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/contSelection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contSearch"
+            android:layout_margin="@dimen/x5dp"
+            android:baselineAligned="false"
+            android:gravity="right"
+            android:visibility="gone">
+
+
+            <edu.aku.ehs.widget.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x2dp"
+                android:gravity="center"
+                android:text="Select All"
+                android:textColor="@color/txtBlue"
+                android:textSize="@dimen/s12" />
+
+            <CheckBox
+                android:id="@+id/cbSelectAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/txtBlue" />
+
+
+        </LinearLayout>
 
 
         <android.support.v7.widget.RecyclerView
@@ -188,7 +188,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/contSearch"
+            android:layout_below="@+id/contSelection"
+            android:paddingBottom="@dimen/x40dp"
+            android:clipToPadding="false"
             android:layout_marginTop="@dimen/x5dp">
 
         </android.support.v7.widget.RecyclerView>

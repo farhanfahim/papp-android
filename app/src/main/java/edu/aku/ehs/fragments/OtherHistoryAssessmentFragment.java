@@ -24,11 +24,17 @@ import edu.aku.ehs.R;
 import edu.aku.ehs.adapters.recyleradapters.AssessmentQuestionAdapter;
 import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.callbacks.RadioGroupAdapterListner;
-import edu.aku.ehs.enums.QuestionTypeEnum;
+import edu.aku.ehs.constatnts.WebServiceConstants;
+import edu.aku.ehs.enums.BaseURLTypes;
+import edu.aku.ehs.enums.EmployeeSessionState;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.fragments.dialogs.PinDialogFragment;
+import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
+import edu.aku.ehs.managers.retrofit.GsonFactory;
+import edu.aku.ehs.managers.retrofit.WebServices;
 import edu.aku.ehs.models.AssessmentQuestionModel;
 import edu.aku.ehs.models.SessionDetailModel;
+import edu.aku.ehs.models.wrappers.WebResponse;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
 import edu.aku.ehs.widget.recyclerview_layout.CustomLayoutManager;
@@ -39,52 +45,53 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
     Unbinder unbinder;
     NewAssessmentViewPagerFragment parentFragment;
     @BindView(R.id.txtQuestionTitle1)
-    AnyTextView txtQuestionTitle1;
+    AnyTextView txtTitleFamily;
     @BindView(R.id.txtQuestionSubTitle1)
-    AnyTextView txtQuestionSubTitle1;
+    AnyTextView txtSubtitleFamily;
     @BindView(R.id.recylerView1)
     RecyclerView recylerView1;
     @BindView(R.id.txtQuestionTitle2)
-    AnyTextView txtQuestionTitle2;
+    AnyTextView txtTitleSocial;
     @BindView(R.id.txtQuestionSubTitle2)
-    AnyTextView txtQuestionSubTitle2;
+    AnyTextView txtSubtitleSocial;
     @BindView(R.id.recylerView2)
     RecyclerView recylerView2;
     @BindView(R.id.txtQuestionTitle3)
-    AnyTextView txtQuestionTitle3;
+    AnyTextView txtTitleSmoking;
     @BindView(R.id.txtQuestionSubTitle3)
-    AnyTextView txtQuestionSubTitle3;
+    AnyTextView txtSubtitleSmoking;
     @BindView(R.id.recylerView3)
     RecyclerView recylerView3;
     @BindView(R.id.btnDone)
-    Button btnDone;
+    public Button btnDone;
     @BindView(R.id.fabBack)
     FloatingActionButton fabBack;
-    @BindView(R.id.fabNext)
-    FloatingActionButton fabNext;
 
 
-    private ArrayList<AssessmentQuestionModel> arrData1;
-    private ArrayList<AssessmentQuestionModel> arrData2;
-    private ArrayList<AssessmentQuestionModel> arrData3;
-    private AssessmentQuestionAdapter adapter1;
-    private AssessmentQuestionAdapter adapter2;
-    private AssessmentQuestionAdapter adapter3;
-    private RadioGroupAdapterListner onSwitchListener1_r1;
-    private RadioGroupAdapterListner onSwitchListener2_r1;
-    private RadioGroupAdapterListner onSwitchListener1_r2;
-    private RadioGroupAdapterListner onSwitchListener2_r2;
-    private RadioGroupAdapterListner onSwitchListener1_r3;
-    private RadioGroupAdapterListner onSwitchListener2_r3;
+    private ArrayList<AssessmentQuestionModel> arrFamilyHistory;
+    private ArrayList<AssessmentQuestionModel> arrSocialHistory;
+    private ArrayList<AssessmentQuestionModel> arrSmokingBehavior;
+    private AssessmentQuestionAdapter adaptFamilyHistory;
+    private AssessmentQuestionAdapter adaptSocialHistory;
+    private AssessmentQuestionAdapter adaptSmokingBehavior;
+    private RadioGroupAdapterListner onSwitchListener1_family;
+    private RadioGroupAdapterListner onSwitchListener2_family;
+    private RadioGroupAdapterListner onSwitchListener1_social;
+    private RadioGroupAdapterListner onSwitchListener2_social;
+    private RadioGroupAdapterListner onSwitchListener1_smoking;
+    private RadioGroupAdapterListner onSwitchListener2_smoking;
     private SessionDetailModel sessionDetailModel;
-    private PinDialogFragment pinDialogFragment;
+
+    ArrayList<AssessmentQuestionModel> dataArray = new ArrayList<>();
 
 
-    public static OtherHistoryAssessmentFragment newInstance() {
+    public static OtherHistoryAssessmentFragment newInstance(SessionDetailModel sessionDetailModel) {
 
         Bundle args = new Bundle();
 
         OtherHistoryAssessmentFragment fragment = new OtherHistoryAssessmentFragment();
+        fragment.sessionDetailModel = sessionDetailModel;
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -113,9 +120,82 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
     @Override
     public void setListeners() {
 
-        pinDialogFragment = PinDialogFragment.newInstance(view -> {
-        }, view -> getBaseActivity().addDockableFragment(EmployeeAnthropometricMeasurmentsFragment.newInstance(), false));
 
+
+    }
+
+    private boolean validateQuestions(ArrayList<AssessmentQuestionModel> dataArray) {
+        // Medical History
+        for (AssessmentQuestionModel assessmentQuestionModel : ((MedicalHistoryAssessmentFragment) parentFragment.getChildFragmentManager().getFragments().get(0)).getArrData()) {
+            if (assessmentQuestionModel.getIsAnswerYes() == null || assessmentQuestionModel.getIsAnswerYes().isEmpty()) {
+                UIHelper.showShortToastInCenter(getContext(), "Kindly Answer all the Questions of " + assessmentQuestionModel.getCategoryID());
+                return false;
+            } else if (assessmentQuestionModel.getIsAnswerYes().equalsIgnoreCase("Y") && assessmentQuestionModel.getAskIsUnderTreatment() != null && assessmentQuestionModel.getAskIsUnderTreatment().equalsIgnoreCase("Y")) {
+                if (assessmentQuestionModel.getIsUnderTreatment() == null || assessmentQuestionModel.getIsUnderTreatment().isEmpty()) {
+                    UIHelper.showShortToastInCenter(getContext(), "Kindly Answer all the Questions of " + assessmentQuestionModel.getCategoryID());
+                    return false;
+                } else {
+                    dataArray.add(assessmentQuestionModel);
+                }
+            } else {
+                dataArray.add(assessmentQuestionModel);
+            }
+        }
+
+
+        // Family History
+        for (AssessmentQuestionModel assessmentQuestionModel : arrFamilyHistory) {
+            if (assessmentQuestionModel.getIsAnswerYes() == null || assessmentQuestionModel.getIsAnswerYes().isEmpty()) {
+                UIHelper.showShortToastInCenter(getContext(), "Kindly Answer all the Questions of " + assessmentQuestionModel.getCategoryID());
+                return false;
+            } else if (assessmentQuestionModel.getAskIsUnderTreatment() != null && assessmentQuestionModel.getAskIsUnderTreatment().equalsIgnoreCase("Y")) {
+                if (assessmentQuestionModel.getIsUnderTreatment() == null || assessmentQuestionModel.getIsUnderTreatment().isEmpty()) {
+                    UIHelper.showShortToastInCenter(getContext(), "Kindly Answer all the Questions of " + assessmentQuestionModel.getCategoryID());
+                    return false;
+                } else {
+                    dataArray.add(assessmentQuestionModel);
+                }
+            } else {
+                dataArray.add(assessmentQuestionModel);
+            }
+        }
+
+
+        // Social History
+        for (AssessmentQuestionModel assessmentQuestionModel : arrSocialHistory) {
+            if (assessmentQuestionModel.getIsAnswerYes() == null || assessmentQuestionModel.getIsAnswerYes().isEmpty()) {
+                UIHelper.showShortToastInCenter(getContext(), "Kindly Answer all the Questions of " + assessmentQuestionModel.getCategoryID());
+                return false;
+            } else if (assessmentQuestionModel.getAskIsUnderTreatment() != null && assessmentQuestionModel.getAskIsUnderTreatment().equalsIgnoreCase("Y")) {
+                if (assessmentQuestionModel.getIsUnderTreatment() == null || assessmentQuestionModel.getIsUnderTreatment().isEmpty()) {
+                    UIHelper.showShortToastInCenter(getContext(), "Kindly Answer all the Questions of " + assessmentQuestionModel.getCategoryID());
+                    return false;
+                } else {
+                    dataArray.add(assessmentQuestionModel);
+                }
+            } else {
+                dataArray.add(assessmentQuestionModel);
+            }
+        }
+
+
+        // Smoking behavior
+        for (AssessmentQuestionModel assessmentQuestionModel : arrSmokingBehavior) {
+            if (assessmentQuestionModel.getIsAnswerYes() == null || assessmentQuestionModel.getIsAnswerYes().isEmpty()) {
+                UIHelper.showShortToastInCenter(getContext(), "Kindly Answer all the Questions of " + assessmentQuestionModel.getCategoryID());
+                return false;
+            } else if (assessmentQuestionModel.getAskIsUnderTreatment() != null && assessmentQuestionModel.getAskIsUnderTreatment().equalsIgnoreCase("Y")) {
+                if (assessmentQuestionModel.getIsUnderTreatment() == null || assessmentQuestionModel.getIsUnderTreatment().isEmpty()) {
+                    UIHelper.showShortToastInCenter(getContext(), "Kindly Answer all the Questions of " + assessmentQuestionModel.getCategoryID());
+                    return false;
+                } else {
+                    dataArray.add(assessmentQuestionModel);
+                }
+            } else {
+                dataArray.add(assessmentQuestionModel);
+            }
+        }
+        return true;
     }
 
     @Override
@@ -134,78 +214,87 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
 
         initSwitchListener();
 
-        arrData1 = new ArrayList<AssessmentQuestionModel>();
-        adapter1 = new AssessmentQuestionAdapter(getBaseActivity(), arrData1, this, onSwitchListener1_r1, onSwitchListener2_r1);
-        arrData2 = new ArrayList<AssessmentQuestionModel>();
-        adapter2 = new AssessmentQuestionAdapter(getBaseActivity(), arrData2, this, onSwitchListener1_r2, onSwitchListener2_r2);
-        arrData3 = new ArrayList<AssessmentQuestionModel>();
-        adapter3 = new AssessmentQuestionAdapter(getBaseActivity(), arrData3, this, onSwitchListener1_r3, onSwitchListener2_r3);
     }
 
     private void initSwitchListener() {
 
         // List 1
-        onSwitchListener1_r1 = (radioGroup, i, adapterPosition) -> {
+        onSwitchListener1_family = (radioGroup, i, adapterPosition) -> {
             if (i == R.id.rbQues1Yes) {
-                arrData1.get(adapterPosition).setAnswer1(true);
-                adapter1.notifyItemChanged(adapterPosition);
+                arrFamilyHistory.get(adapterPosition).setAnswer1(true);
+                adaptFamilyHistory.notifyItemChanged(adapterPosition);
             } else {
-                arrData1.get(adapterPosition).setAnswer1(false);
-                adapter1.notifyItemChanged(adapterPosition);
+                arrFamilyHistory.get(adapterPosition).setAnswer1(false);
+                arrFamilyHistory.get(adapterPosition).setIsUnderTreatment("");
+                adaptFamilyHistory.notifyItemChanged(adapterPosition);
             }
+            parentFragment.dirtyCheck = true;
+            btnDone.setAlpha(1f);
         };
 
-        onSwitchListener2_r1 = (radioGroup, i, adapterPosition) -> {
+        onSwitchListener2_family = (radioGroup, i, adapterPosition) -> {
             if (i == R.id.rbQues2Yes) {
-                arrData1.get(adapterPosition).setAnswer2(true);
-                adapter1.notifyItemChanged(adapterPosition);
+                arrFamilyHistory.get(adapterPosition).setAnswer2(true);
+                adaptFamilyHistory.notifyItemChanged(adapterPosition);
             } else {
-                arrData1.get(adapterPosition).setAnswer2(false);
-                adapter1.notifyItemChanged(adapterPosition);
+                arrFamilyHistory.get(adapterPosition).setAnswer2(false);
+                adaptFamilyHistory.notifyItemChanged(adapterPosition);
             }
+            parentFragment.dirtyCheck = true;
+            btnDone.setAlpha(1f);
         };
 
         // For List 2
-        onSwitchListener1_r2 = (radioGroup, i, adapterPosition) -> {
+        onSwitchListener1_social = (radioGroup, i, adapterPosition) -> {
             if (i == R.id.rbQues1Yes) {
-                arrData2.get(adapterPosition).setAnswer1(true);
-                adapter2.notifyItemChanged(adapterPosition);
+                arrSocialHistory.get(adapterPosition).setAnswer1(true);
+                adaptSocialHistory.notifyItemChanged(adapterPosition);
             } else {
-                arrData2.get(adapterPosition).setAnswer1(false);
-                adapter2.notifyItemChanged(adapterPosition);
+                arrSocialHistory.get(adapterPosition).setAnswer1(false);
+                arrSocialHistory.get(adapterPosition).setIsUnderTreatment("");
+                adaptSocialHistory.notifyItemChanged(adapterPosition);
             }
+            parentFragment.dirtyCheck = true;
+            btnDone.setAlpha(1f);
         };
 
-        onSwitchListener2_r2 = (radioGroup, i, adapterPosition) -> {
+        onSwitchListener2_social = (radioGroup, i, adapterPosition) -> {
             if (i == R.id.rbQues2Yes) {
-                arrData2.get(adapterPosition).setAnswer2(true);
-                adapter2.notifyItemChanged(adapterPosition);
+                arrSocialHistory.get(adapterPosition).setAnswer2(true);
+                adaptSocialHistory.notifyItemChanged(adapterPosition);
             } else {
-                arrData2.get(adapterPosition).setAnswer2(false);
-                adapter2.notifyItemChanged(adapterPosition);
+                arrSocialHistory.get(adapterPosition).setAnswer2(false);
+                adaptSocialHistory.notifyItemChanged(adapterPosition);
             }
+            parentFragment.dirtyCheck = true;
+            btnDone.setAlpha(1f);
         };
 
 
         // For List 3
-        onSwitchListener1_r3 = (radioGroup, i, adapterPosition) -> {
+        onSwitchListener1_smoking = (radioGroup, i, adapterPosition) -> {
             if (i == R.id.rbQues1Yes) {
-                arrData3.get(adapterPosition).setAnswer1(true);
-                adapter3.notifyItemChanged(adapterPosition);
+                arrSmokingBehavior.get(adapterPosition).setAnswer1(true);
+                adaptSmokingBehavior.notifyItemChanged(adapterPosition);
             } else {
-                arrData3.get(adapterPosition).setAnswer1(false);
-                adapter3.notifyItemChanged(adapterPosition);
+                arrSmokingBehavior.get(adapterPosition).setAnswer1(false);
+                arrSmokingBehavior.get(adapterPosition).setIsUnderTreatment("");
+                adaptSmokingBehavior.notifyItemChanged(adapterPosition);
             }
+            parentFragment.dirtyCheck = true;
+            btnDone.setAlpha(1f);
         };
 
-        onSwitchListener2_r3 = (radioGroup, i, adapterPosition) -> {
+        onSwitchListener2_smoking = (radioGroup, i, adapterPosition) -> {
             if (i == R.id.rbQues2Yes) {
-                arrData3.get(adapterPosition).setAnswer2(true);
-                adapter3.notifyItemChanged(adapterPosition);
+                arrSmokingBehavior.get(adapterPosition).setAnswer2(true);
+                adaptSmokingBehavior.notifyItemChanged(adapterPosition);
             } else {
-                arrData3.get(adapterPosition).setAnswer2(false);
-                adapter3.notifyItemChanged(adapterPosition);
+                arrSmokingBehavior.get(adapterPosition).setAnswer2(false);
+                adaptSmokingBehavior.notifyItemChanged(adapterPosition);
             }
+            parentFragment.dirtyCheck = true;
+            btnDone.setAlpha(1f);
         };
 
     }
@@ -222,55 +311,53 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         parentFragment = (NewAssessmentViewPagerFragment) getParentFragment();
+        getDataAndBindAdapter();
+
         setTitleData();
-        fabNext.setVisibility(View.GONE);
         btnDone.setVisibility(View.VISIBLE);
 
         bindView();
         bindData();
     }
 
+    private void getDataAndBindAdapter() {
+        arrFamilyHistory = parentFragment.getArrFamilyHistory();
+        arrSmokingBehavior = parentFragment.getArrSmokingBehavior();
+        arrSocialHistory = parentFragment.getArrSocialHistory();
+
+        adaptFamilyHistory = new AssessmentQuestionAdapter(getBaseActivity(), arrFamilyHistory, this, onSwitchListener1_family, onSwitchListener2_family);
+        adaptSocialHistory = new AssessmentQuestionAdapter(getBaseActivity(), arrSocialHistory, this, onSwitchListener1_social, onSwitchListener2_social);
+        adaptSmokingBehavior = new AssessmentQuestionAdapter(getBaseActivity(), arrSmokingBehavior, this, onSwitchListener1_smoking, onSwitchListener2_smoking);
+    }
+
     private void setTitleData() {
-        txtQuestionTitle1.setText("Family History");
-        txtQuestionSubTitle1.setText("Specific to Mother, Father, Brother and Sister");
+        txtTitleFamily.setText("Family History");
+        txtTitleSocial.setText("Psychosocial History");
+        txtTitleSmoking.setText("Smoking Behaviors");
 
-        txtQuestionTitle2.setText("Psychosocial History");
-        txtQuestionSubTitle2.setText("Over the last 2 weeks, How often have you felt?");
+        if (!arrFamilyHistory.isEmpty()) {
+            txtSubtitleFamily.setText(arrFamilyHistory.get(0).getCategoryDescription());
+        } else {
+            txtSubtitleFamily.setText("");
+        }
 
+        if (!arrSocialHistory.isEmpty()) {
+            txtSubtitleSocial.setText(arrSocialHistory.get(0).getCategoryDescription());
+        } else {
+            txtSubtitleSocial.setText("");
+        }
 
-        txtQuestionTitle3.setText("Smoking Behaviors");
-        txtQuestionSubTitle3.setText("Kindly answer the following Questions");
+        if (!arrSmokingBehavior.isEmpty()) {
+            txtSubtitleSmoking.setText(arrSmokingBehavior.get(0).getCategoryDescription());
+        } else {
+            txtSubtitleSmoking.setText("");
+        }
     }
 
     private void bindData() {
-        // List 1
-        arrData1.clear();
-        AssessmentQuestionModel model1;
-        for (String s : getBaseActivity().getResources().getStringArray(R.array.familyHistoryQuestions)) {
-            model1 = new AssessmentQuestionModel(s, QuestionTypeEnum.FAMILYHISTORY);
-            arrData1.add(model1);
-        }
-        adapter1.notifyDataSetChanged();
-
-
-        // List 2
-
-        arrData2.clear();
-        AssessmentQuestionModel model2;
-        for (String s : getBaseActivity().getResources().getStringArray(R.array.pschosocialHistoryQuestions)) {
-            model2 = new AssessmentQuestionModel(s, QuestionTypeEnum.PSYCHOSOCIALHISTORY);
-            arrData2.add(model2);
-        }
-        adapter2.notifyDataSetChanged();
-
-        // List 3
-        arrData3.clear();
-        AssessmentQuestionModel model3;
-        for (String s : getBaseActivity().getResources().getStringArray(R.array.smokingBehaviorsQuestions)) {
-            model3 = new AssessmentQuestionModel(s, QuestionTypeEnum.SMOKINGBEHAVIOR);
-            arrData3.add(model3);
-        }
-        adapter3.notifyDataSetChanged();
+        adaptFamilyHistory.notifyDataSetChanged();
+        adaptSocialHistory.notifyDataSetChanged();
+        adaptSmokingBehavior.notifyDataSetChanged();
     }
 
 
@@ -279,19 +366,19 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
         RecyclerView.LayoutManager mLayoutManager1 = new CustomLayoutManager(getBaseActivity(), LinearLayoutManager.VERTICAL, false);
         recylerView1.setLayoutManager(mLayoutManager1);
         ((DefaultItemAnimator) recylerView1.getItemAnimator()).setSupportsChangeAnimations(false);
-        recylerView1.setAdapter(adapter1);
+        recylerView1.setAdapter(adaptFamilyHistory);
 
         // List 2
         RecyclerView.LayoutManager mLayoutManager2 = new CustomLayoutManager(getBaseActivity(), LinearLayoutManager.VERTICAL, false);
         recylerView2.setLayoutManager(mLayoutManager2);
         ((DefaultItemAnimator) recylerView2.getItemAnimator()).setSupportsChangeAnimations(false);
-        recylerView2.setAdapter(adapter2);
+        recylerView2.setAdapter(adaptSocialHistory);
 
         // List 3
         RecyclerView.LayoutManager mLayoutManager = new CustomLayoutManager(getBaseActivity(), LinearLayoutManager.VERTICAL, false);
         recylerView3.setLayoutManager(mLayoutManager);
         ((DefaultItemAnimator) recylerView3.getItemAnimator()).setSupportsChangeAnimations(false);
-        recylerView3.setAdapter(adapter3);
+        recylerView3.setAdapter(adaptSmokingBehavior);
     }
 
 
@@ -307,22 +394,82 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
     }
 
 
-    @OnClick({R.id.fabBack, R.id.fabNext, R.id.btnDone})
+    @OnClick({R.id.fabBack, R.id.btnCancel, R.id.btnDone})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fabBack:
                 parentFragment.viewpager.movePrevious();
                 break;
-            case R.id.fabNext:
-                parentFragment.viewpager.moveNext();
+            case R.id.btnCancel:
+                getBaseActivity().popBackStack();
                 break;
             case R.id.btnDone:
-                pinDialogFragment.setTitle("Enter Pin Number");
-                pinDialogFragment.setCancelable(false);
-                pinDialogFragment.clearField();
-                pinDialogFragment.show(getBaseActivity().getSupportFragmentManager(), null);
+                if (!parentFragment.dirtyCheck) return;
+
+
+                if (!validateQuestions(dataArray)) return;
+
+                String jsonArrayData = GsonFactory.getConfiguredGson().toJson(dataArray);
+                saveEmployeeAssessment(jsonArrayData);
+
                 break;
         }
     }
+
+
+    private void saveEmployeeAssessment(String jsonArrayData) {
+        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+                .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_SAVE_EMPLOYEE_ASSESSMENT, jsonArrayData,
+                        new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                            @Override
+                            public void requestDataResponse(WebResponse<Object> webResponse) {
+
+
+                                if (sessionDetailModel.getStatusEnum() != EmployeeSessionState.INPROGRESS) {
+                                    ArrayList<SessionDetailModel> sessionDetailModelArrayList = new ArrayList<>();
+
+                                    sessionDetailModel.setStatusID(EmployeeSessionState.INPROGRESS.canonicalForm());
+                                    sessionDetailModel.setLastFileUser(getCurrentUser().getName());
+
+                                    sessionDetailModelArrayList.add(sessionDetailModel);
+                                    String jsonArrayData = GsonFactory.getConfiguredGson().toJson(sessionDetailModelArrayList);
+                                    updateEmployeeInSessionCall(jsonArrayData);
+                                } else {
+                                    UIHelper.showToast(getContext(), webResponse.responseMessage);
+                                    getBaseActivity().popBackStack();
+                                }
+
+                            }
+
+                            @Override
+                            public void onError(Object object) {
+                                if (object instanceof String) {
+                                    UIHelper.showToast(getContext(), (String) object);
+                                }
+                            }
+                        });
+    }
+
+
+    private void updateEmployeeInSessionCall(String jsonArrayData) {
+        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+                .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_UPDATE_SESSION_EMPLOYEE, jsonArrayData,
+                        new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                            @Override
+                            public void requestDataResponse(WebResponse<Object> webResponse) {
+                                UIHelper.showToast(getContext(), webResponse.responseMessage);
+                                getBaseActivity().popBackStack();
+                            }
+
+                            @Override
+                            public void onError(Object object) {
+                                if (object instanceof String) {
+                                    UIHelper.showToast(getContext(), (String) object);
+                                }
+                            }
+                        });
+    }
+
+
 }
 

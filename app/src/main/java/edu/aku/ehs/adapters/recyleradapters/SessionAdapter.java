@@ -19,6 +19,7 @@ import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.enums.SessionStatus;
 import edu.aku.ehs.models.SessionModel;
 import edu.aku.ehs.widget.AnyTextView;
+import info.hoang8f.widget.FButton;
 
 /**
  */
@@ -26,6 +27,7 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHold
 
 
     private final OnItemClickListener onItemClick;
+
 
 
     private BaseActivity activity;
@@ -52,7 +54,8 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
         SessionModel model = filteredData.get(i);
-        holder.txtSessionName.setText(model.getSessionId() + " - " + model.getDescription());
+//        holder.txtSessionName.setText(model.getSessionId() + " - " + model.getDescription());
+        holder.txtSessionName.setText(model.getDescription());
         holder.txtStartDate.setText("Start Date: " + model.getDisplayStartDate());
         holder.txtEndDate.setText("End Date: " + model.getDisplayEndDate());
         holder.txtStatus.setText(model.getStatusId());
@@ -103,9 +106,9 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHold
         @BindView(R.id.txtSessionName)
         AnyTextView txtSessionName;
         @BindView(R.id.btnClose)
-        ImageView btnClose;
+        FButton btnClose;
         @BindView(R.id.btnSchedule)
-        ImageView btnSchedule;
+        FButton btnSchedule;
         @BindView(R.id.imgStatus)
         ImageView imgStatus;
         @BindView(R.id.txtStatus)

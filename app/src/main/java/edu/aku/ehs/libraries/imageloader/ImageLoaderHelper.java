@@ -1,6 +1,9 @@
 package edu.aku.ehs.libraries.imageloader;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -37,6 +40,18 @@ public class ImageLoaderHelper {
                 imageView,
                 ImageLoaderHelper.getOptionsWithAnimation(WebServiceConstants
                         .getHeaders(SharedPreferenceManager.getInstance(context).getString(AppConstants.KEY_TOKEN))));
+    }
+
+
+    public static void loadBase64Image(Context context, ImageView imageView, String base64) {
+        byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        if (decodedByte != null) {
+            imageView.setImageBitmap(decodedByte);
+        } else {
+            imageView.setImageResource(R.drawable.female_icon_filled);
+        }
     }
 
     public static String getImageURL(String path, String requestMethod) {
