@@ -171,6 +171,7 @@ public class NewAssessmentViewPagerFragment extends BaseFragment implements OnIt
         adapter = new EmployeeAssessmentPagerAdapter(getChildFragmentManager(), sessionDetailModel);
         viewpager.setAdapter(adapter);
         pagerIndicator.setViewPager(viewpager);
+
     }
 
     @Override

@@ -589,6 +589,7 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
                             @Override
                             public void requestDataResponse(WebResponse<Object> webResponse) {
                                 UIHelper.showToast(getContext(), webResponse.responseMessage);
+                                //TODO ask to hamza
                                 getBaseActivity().popBackStack();
                                 getBaseActivity().popBackStack();
                             }

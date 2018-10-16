@@ -107,7 +107,7 @@ public class MedicalHistoryAssessmentFragment extends BaseFragment implements On
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+//TODO ask hamza
         initSwitchListener();
     }
 

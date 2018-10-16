@@ -211,7 +211,7 @@ public class OtherHistoryAssessmentFragment extends BaseFragment implements OnIt
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+// TODO ask to hamza
         initSwitchListener();
 
     }
