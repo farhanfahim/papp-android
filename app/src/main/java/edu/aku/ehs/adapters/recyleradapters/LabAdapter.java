@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import edu.aku.ehs.R;
 import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.helperclasses.Spanny;
+import edu.aku.ehs.helperclasses.StringHelper;
 import edu.aku.ehs.models.EmpLabs;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.CustomTypefaceSpan;
@@ -51,7 +52,12 @@ public class LabAdapter extends RecyclerView.Adapter<LabAdapter.ViewHolder> {
         EmpLabs model = arrData.get(i);
         holder.txtLabName.setText(model.getTestID());
         holder.txtRange.setText(model.getNormalRangeFormatted());
-        holder.txtDate.setText(model.getDisplaySpecimenDate());
+        if (StringHelper.checkNotNullAndNotEmpty(model.getDisplaySpecimenDate())) {
+            holder.txtDate.setText("Speciment Date: " + model.getDisplaySpecimenDate());
+        } else {
+            holder.txtDate.setText(model.getDisplaySpecimenDate());
+
+        }
         holder.txtUnit.setText(model.getUnit());
 
         CustomTypefaceSpan customTypefaceSpan;
