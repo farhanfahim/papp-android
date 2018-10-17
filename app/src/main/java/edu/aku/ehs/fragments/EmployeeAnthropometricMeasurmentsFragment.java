@@ -437,6 +437,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
                                                 sbWaist.setRange(activeMeasurementsModel.getMinRange(), activeMeasurementsModel.getMaxRange());
                                                 txtWaist.setText(activeMeasurementsModel.getMinRange() + "");
                                                 break;
+
                                             case SBP:
                                                 txtBPSystolicDesc.setText(activeMeasurementsModel.getDescription() + " (" + activeMeasurementsModel.getUnitofMeasure() + ")");
                                                 sbSystolicBP.setRange(activeMeasurementsModel.getMinRange(), activeMeasurementsModel.getMaxRange());
@@ -446,6 +447,9 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
                                                 txtBPDiastolicDesc.setText(activeMeasurementsModel.getDescription() + " (" + activeMeasurementsModel.getUnitofMeasure() + ")");
                                                 sbDiastolicBP.setRange(activeMeasurementsModel.getMinRange(), activeMeasurementsModel.getMaxRange());
                                                 txtBPDiastolic.setText(activeMeasurementsModel.getMinRange() + "");
+                                                break;
+                                            case BMI:
+
                                                 break;
                                             case HEIGHT:
                                                 txtHeightDesc.setText(activeMeasurementsModel.getDescription() + " (" + activeMeasurementsModel.getUnitofMeasure() + ")");
@@ -459,6 +463,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
                                                 txtWeight.setText(activeMeasurementsModel.getMinRange() + "");
                                                 weight = activeMeasurementsModel.getMinRange();
                                                 break;
+
                                         }
                                     }
                                     arrData.clear();

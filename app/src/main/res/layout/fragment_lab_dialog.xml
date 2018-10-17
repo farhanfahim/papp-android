@@ -30,8 +30,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Lab Results"
                 android:gravity="center"
+                android:text="Lab Results"
                 android:textColor="@color/c_white"
                 android:textSize="@dimen/s13"
                 app:typeface="@string/font_medium" />
@@ -53,7 +53,8 @@
             android:layout_height="@dimen/x30dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/x3dp"
-            android:text="OK"
+            android:text="Ok"
+            android:textAllCaps="false"
             android:textColor="@color/c_white"
             app:fButtonColor="#ff9c3d"
             app:shadowHeight="@dimen/x1dp" />

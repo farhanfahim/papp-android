@@ -21,17 +21,19 @@
                 android:id="@+id/txtLabName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="start"
+                android:paddingLeft="@dimen/x6dp"
                 android:text="HB"
                 android:textColor="@color/txtBlue"
                 android:textSize="@dimen/s12"
-                app:typeface="@string/font_regular" />
+                app:typeface="@string/font_bold" />
 
             <edu.aku.ehs.widget.AnyTextView
                 android:id="@+id/txtRange"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="end"
+                android:paddingRight="@dimen/x6dp"
                 android:text="(0-100)"
                 android:textColor="@color/txtBlue"
                 android:textSize="@dimen/s10"
@@ -50,13 +52,13 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="center"
-            android:paddingLeft="@dimen/x5dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/x5dp">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
 
                 <edu.aku.ehs.widget.AnyTextView
@@ -83,7 +85,6 @@
             </LinearLayout>
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,7 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/x3dp"
-                     android:text="01-01-2099"
+                    android:text="01-01-2099"
                     android:textColor="@color/txtBlue"
                     android:textSize="@dimen/s9"
                     app:typeface="@string/font_regular" />

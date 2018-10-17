@@ -419,6 +419,7 @@
             android:layout_margin="@dimen/x8dp"
             android:background="@drawable/img_button_clr"
             android:text="Done"
+            android:textAllCaps="false"
             android:textColor="@color/c_white"
             android:textSize="@dimen/s16"
             android:visibility="visible" />

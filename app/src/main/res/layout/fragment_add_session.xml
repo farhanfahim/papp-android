@@ -170,6 +170,7 @@
         android:layout_margin="@dimen/x10dp"
         android:background="@drawable/img_button_clr"
         android:text="Add"
+        android:textAllCaps="false"
         android:textColor="@color/c_white"
         android:textSize="@dimen/s16" />
 
