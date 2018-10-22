@@ -43,6 +43,8 @@ import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.CustomViewPager;
 import edu.aku.ehs.widget.TitleBar;
 
+import static edu.aku.ehs.constatnts.WebServiceConstants._token;
+
 public class NewAssessmentViewPagerFragment extends BaseFragment implements OnItemClickListener {
 
     Unbinder unbinder;
@@ -187,7 +189,7 @@ public class NewAssessmentViewPagerFragment extends BaseFragment implements OnIt
 
 
     private void getEmployeeAssessmentList(EmployeeSendingModel model) {
-        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+        new WebServices(getContext(), _token, BaseURLTypes.EHS_BASE_URL, true)
                 .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_GET_EMPLOYEE_ASSESSMENTS, model.toString(),
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override

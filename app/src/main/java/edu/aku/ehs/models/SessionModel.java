@@ -54,6 +54,9 @@ public class SessionModel {
     @Expose
     @SerializedName("ClosedBy")
     private String closedBy;
+    @Expose
+    @SerializedName("DisplayCloseDTTM")
+    private String DisplayCloseDTTM;
 
 
     public String getDisplayEndDate() {
@@ -168,6 +171,13 @@ public class SessionModel {
         this.sessionId = sessionId;
     }
 
+    public String getDisplayCloseDTTM() {
+        return DisplayCloseDTTM;
+    }
+
+    public void setDisplayCloseDTTM(String displayCloseDTTM) {
+        DisplayCloseDTTM = displayCloseDTTM;
+    }
 
     @Override
     public String toString() {

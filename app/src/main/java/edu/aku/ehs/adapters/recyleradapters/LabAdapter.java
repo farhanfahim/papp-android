@@ -53,7 +53,7 @@ public class LabAdapter extends RecyclerView.Adapter<LabAdapter.ViewHolder> {
         holder.txtLabName.setText(model.getTestID());
         holder.txtRange.setText(model.getNormalRangeFormatted());
         if (StringHelper.checkNotNullAndNotEmpty(model.getDisplaySpecimenDate())) {
-            holder.txtDate.setText("Speciment Date: " + model.getDisplaySpecimenDate());
+            holder.txtDate.setText("Specimen Date: " + model.getDisplaySpecimenDate());
         } else {
             holder.txtDate.setText(model.getDisplaySpecimenDate());
 

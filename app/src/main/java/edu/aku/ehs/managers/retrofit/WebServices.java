@@ -26,6 +26,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static edu.aku.ehs.constatnts.WebServiceConstants._token;
+
 /**
  * Created by hamzakhan on 6/30/2017.
  */
@@ -71,13 +73,13 @@ public class WebServices {
     public WebServices(Context activity, String token, BaseURLTypes baseURLTypes, boolean isShowLoader) {
         switch (baseURLTypes) {
             case PACS_VIEWER:
-                apiService = WebServiceFactory.getInstancePACSURL(token, bearerToken);
+                apiService = WebServiceFactory.getInstancePACSURL(_token, bearerToken);
                 break;
             case EHS_BASE_URL:
-                apiService = WebServiceFactory.getInstanceBaseURL(token);
+                apiService = WebServiceFactory.getInstanceBaseURL(_token);
                 break;
             case PACS_IMAGE_DOWNLOAD:
-                apiService = WebServiceFactory.getInstancePACSURL(token, bearerToken);
+                apiService = WebServiceFactory.getInstancePACSURL(_token, bearerToken);
                 break;
             case GET_EMP_DEPT_URL:
                 apiService = WebServiceFactory.getInstanceXML();

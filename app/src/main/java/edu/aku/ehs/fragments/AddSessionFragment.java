@@ -33,6 +33,8 @@ import edu.aku.ehs.widget.TitleBar;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
 
+import static edu.aku.ehs.constatnts.WebServiceConstants._token;
+
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
@@ -260,7 +262,7 @@ public class AddSessionFragment extends BaseFragment {
 
 
     private void addSessionCall(SessionModel sessionModel) {
-        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+        new WebServices(getContext(), _token, BaseURLTypes.EHS_BASE_URL, true)
                 .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_ADD_SESSION, sessionModel.toString(),
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override
@@ -281,7 +283,7 @@ public class AddSessionFragment extends BaseFragment {
 
 
     private void updateSessionCall(SessionModel sessionModel) {
-        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+        new WebServices(getContext(), _token, BaseURLTypes.EHS_BASE_URL, true)
                 .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_UPDATE_SESSION, sessionModel.toString(),
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override

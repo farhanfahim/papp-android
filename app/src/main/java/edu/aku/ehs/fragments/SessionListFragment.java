@@ -201,6 +201,12 @@ public class SessionListFragment extends BaseFragment implements OnItemClickList
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getSessionListCall();
+    }
+
     private void getSessionListCall() {
         new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
                 .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_GET_SESSION_LIST, "",

@@ -518,7 +518,6 @@
                                     app:typeface="@string/font_medium" />
 
 
-
                             </LinearLayout>
 
 
@@ -995,6 +994,7 @@
 
 
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -1034,18 +1034,6 @@
 
 
                                     <edu.aku.ehs.widget.AnyTextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginRight="@dimen/x3dp"
-                                        android:ellipsize="end"
-                                        android:gravity="start"
-                                        android:singleLine="true"
-                                        android:text="% Risk Score"
-                                        android:textColor="@color/base_reddish"
-                                        android:textSize="@dimen/s11"
-                                        app:typeface="@string/font_regular" />
-
-                                    <edu.aku.ehs.widget.AnyTextView
                                         android:id="@+id/txtRiskLevel"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
@@ -1057,7 +1045,7 @@
                                         android:text="low"
                                         android:textColor="@color/base_reddish"
                                         android:textSize="@dimen/s10"
-                                        app:typeface="@string/font_regular" />
+                                        app:typeface="@string/font_medium" />
 
                                 </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
                             </LinearLayout>
@@ -1326,9 +1314,6 @@
                             app:typeface="@string/font_medium" />
 
 
-
-
-
                     </LinearLayout>
 
 
@@ -1513,20 +1498,24 @@
 
             </LinearLayout>
 
-            <edu.aku.ehs.widget.AnyTextView
+            <edu.aku.ehs.widget.AnyEditTextView
                 android:id="@+id/txtothers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
                 android:layout_margin="@dimen/x10dp"
                 android:background="@drawable/rounded_box"
-                android:maxLines="3"
-                android:minLines="3"
-                android:padding="@dimen/x6dp"
+                android:gravity="start"
                 android:hint="Type here..."
-                android:visibility="gone"
+                android:maxLength="30"
+                android:maxLines="3"
+                android:minLines="1"
+                android:paddingBottom="@dimen/x10dp"
+                android:paddingLeft="@dimen/x6dp"
+                android:paddingRight="@dimen/x6dp"
+                android:paddingTop="@dimen/x6dp"
                 android:textColor="@color/txtBlue"
                 android:textSize="@dimen/s12"
+                android:visibility="gone"
                 app:typeface="@string/font_regular" />
 
             <RelativeLayout

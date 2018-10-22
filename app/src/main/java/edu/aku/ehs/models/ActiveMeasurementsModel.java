@@ -30,6 +30,15 @@ public class ActiveMeasurementsModel {
     @Expose
     @SerializedName("NormalMenMax")
     private int NormalMenMax;
+
+
+    @Expose
+    @SerializedName("NormalWomenMin")
+    private int NormalWomenMin;
+    @Expose
+    @SerializedName("NormalMenMin")
+    private int NormalMenMin;
+
     @Expose
     @SerializedName("UnitofMeasure")
     private String UnitofMeasure;
@@ -165,5 +174,21 @@ public class ActiveMeasurementsModel {
 
     public void setMeasurementID(String MeasurementID) {
         this.MeasurementID = MeasurementID;
+    }
+
+    public int getNormalWomenMin() {
+        return NormalWomenMin;
+    }
+
+    public void setNormalWomenMin(int normalWomenMin) {
+        NormalWomenMin = normalWomenMin;
+    }
+
+    public int getNormalMenMin() {
+        return NormalMenMin;
+    }
+
+    public void setNormalMenMin(int normalMenMin) {
+        NormalMenMin = normalMenMin;
     }
 }

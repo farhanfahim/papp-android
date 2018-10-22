@@ -29,7 +29,6 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHold
     private final OnItemClickListener onItemClick;
 
 
-
     private BaseActivity activity;
     private ArrayList<SessionModel> arrData;
     private ArrayList<SessionModel> filteredData;
@@ -58,7 +57,7 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHold
         holder.txtSessionName.setText(model.getDescription());
         holder.txtStartDate.setText("Start Date: " + model.getDisplayStartDate());
         holder.txtEndDate.setText("End Date: " + model.getDisplayEndDate());
-        holder.txtStatus.setText(model.getStatusId());
+
         holder.txtEnrolledNumber.setText(model.getCountEnrolled() + "");
         holder.txtInProgressNumber.setText(model.getCountInprogress() + "");
         holder.txtAssessedNumber.setText(model.getCountAssessed() + "");
@@ -69,10 +68,12 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHold
             holder.btnSchedule.setVisibility(View.GONE);
             holder.btnClose.setVisibility(View.GONE);
             holder.imgNext.setVisibility(View.GONE);
+            holder.txtStatus.setText(model.getStatusId() + " on: " + model.getDisplayCloseDTTM());
 //            setColor(holder, activity.getResources().getColor(R.color.c_gray));
             setColor(holder, activity.getResources().getColor(R.color.timeline_out_dark));
             holder.contParent.setAlpha(0.6f);
         } else {
+            holder.txtStatus.setText(model.getStatusId());
             holder.btnSchedule.setVisibility(View.VISIBLE);
             holder.btnClose.setVisibility(View.VISIBLE);
             holder.imgNext.setVisibility(View.VISIBLE);

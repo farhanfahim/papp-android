@@ -42,6 +42,8 @@ import edu.aku.ehs.widget.TitleBar;
 import edu.aku.ehs.widget.custom_seekbar.OnRangeChangedListener;
 import edu.aku.ehs.widget.custom_seekbar.RangeSeekBar;
 
+import static edu.aku.ehs.constatnts.WebServiceConstants._token;
+
 public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment implements OnItemClickListener {
 
 
@@ -49,6 +51,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
 
     int height = 60;
     int weight = 0;
+    int bmiMin = 0 ,bmiMax;
     SessionDetailModel sessionDetailModel;
 
     ArrayList<ActiveMeasurementsModel> arrData;
@@ -108,6 +111,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
     Button btnDone;
     @BindView(R.id.contParent)
     LinearLayout contParent;
+    private double result;
 
 
     public static EmployeeAnthropometricMeasurmentsFragment newInstance(SessionDetailModel sessionDetailModel) {
@@ -359,7 +363,8 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
     private void setBMI() {
         double heightInMeters = (height / 100f);
 
-        double result = (weight / (heightInMeters * heightInMeters));
+         result = (weight / (heightInMeters * heightInMeters));
+
         txtBMI.setText(new DecimalFormat("##.#").format(result));
     }
 
@@ -378,7 +383,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
 
     private void onDonePressed() {
         ArrayList<ActiveMeasurementsModel> arrMeasurementToSend = new ArrayList<>();
-        if (txtHeight.testValidity() && txtWeight.testValidity() && txtWaist.testValidity() && txtBPSystolic.testValidity() && txtBPDiastolic.testValidity()) {
+        if (txtHeight.testValidity() && txtWeight.testValidity()  && txtWaist.testValidity() && txtBPSystolic.testValidity() && txtBPDiastolic.testValidity()) {
 
             if (Integer.valueOf(txtBPSystolic.getStringTrimmed()) < Integer.valueOf(txtBPDiastolic.getStringTrimmed())) {
                 UIHelper.showShortToastInCenter(getContext(), "Systolic should be greater than Diastolic BP.");
@@ -398,12 +403,16 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
                     case DBP:
                         activeMeasurementsModel.setValue(txtBPDiastolic.getStringTrimmed());
                         break;
+                    case BMI:
+                        txtBMI.setText(new DecimalFormat("##.#").format(result));
+                        break;
                     case HEIGHT:
                         activeMeasurementsModel.setValue(txtHeight.getStringTrimmed());
                         break;
                     case WEIGHT:
                         activeMeasurementsModel.setValue(txtWeight.getStringTrimmed());
                         break;
+
                 }
                 arrMeasurementToSend.add(activeMeasurementsModel);
             }
@@ -416,7 +425,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
 
 
     private void getActiveMeasurementsList() {
-        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+        new WebServices(getContext(), _token, BaseURLTypes.EHS_BASE_URL, true)
                 .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_GET_ACTIVE_MEASUREMENTS_LIST, "",
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override
@@ -449,7 +458,9 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
                                                 txtBPDiastolic.setText(activeMeasurementsModel.getMinRange() + "");
                                                 break;
                                             case BMI:
-
+                                                txtBMI.setText(new DecimalFormat("##.#").format(result));
+//                                                bmiMin = activeMeasurementsModel.getMinRange();
+//                                                bmiMax = activeMeasurementsModel.getMaxRange();
                                                 break;
                                             case HEIGHT:
                                                 txtHeightDesc.setText(activeMeasurementsModel.getDescription() + " (" + activeMeasurementsModel.getUnitofMeasure() + ")");
@@ -468,7 +479,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
                                     }
                                     arrData.clear();
                                     arrData.addAll(arrayList);
-                                    setBMI();
+//
 
                                 }
                             }
@@ -484,7 +495,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
 
 
     private void getEmployeeMeasurementsList(EmployeeSendingModel model) {
-        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+        new WebServices(getContext(), _token, BaseURLTypes.EHS_BASE_URL, true)
                 .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_GET_EMPLOYEE_MEASUREMENTS, model.toString(),
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override
@@ -515,6 +526,11 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
                                                 sbDiastolicBP.setRange(activeMeasurementsModel.getMinRange(), activeMeasurementsModel.getMaxRange());
                                                 sbDiastolicBP.setValue(Float.valueOf(activeMeasurementsModel.getValue()));
                                                 break;
+                                            case BMI:
+                                                txtBMI.setText(new DecimalFormat("##.#").format(result));
+//                                                bmiMin = activeMeasurementsModel.getMinRange();
+//                                                bmiMax = activeMeasurementsModel.getMaxRange();
+                                                break;
                                             case HEIGHT:
                                                 txtHeightDesc.setText(activeMeasurementsModel.getDescription() + " (" + activeMeasurementsModel.getUnitofMeasure() + ")");
                                                 sbHeight.setRange(activeMeasurementsModel.getMinRange(), activeMeasurementsModel.getMaxRange());
@@ -525,11 +541,13 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
                                                 sbWeight.setRange(activeMeasurementsModel.getMinRange(), activeMeasurementsModel.getMaxRange());
                                                 sbWeight.setValue(Float.valueOf(activeMeasurementsModel.getValue()));
                                                 break;
+
+
                                         }
                                     }
                                     arrData.clear();
                                     arrData.addAll(arrayList);
-                                    setBMI();
+//                                    setBMI();
 
                                 }
                             }
@@ -546,7 +564,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
 
 
     private void saveEmployeeMeasurements(String jsonArrayData) {
-        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+        new WebServices(getContext(), _token, BaseURLTypes.EHS_BASE_URL, true)
                 .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_SAVE_EMPLOYEE_MEASUREMENTS, jsonArrayData,
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override
@@ -576,7 +594,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
     }
 
     private void updateEmployeeInSessionCall(String jsonArrayData) {
-        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+        new WebServices(getContext(), _token, BaseURLTypes.EHS_BASE_URL, true)
                 .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_UPDATE_SESSION_EMPLOYEE, jsonArrayData,
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override
