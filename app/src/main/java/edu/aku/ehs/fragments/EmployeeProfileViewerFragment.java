@@ -612,41 +612,49 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
                     txtHeightUnit.setText(activeMeasurementsModel.getUnitofMeasure());
                     txtHeightDesc.setText(activeMeasurementsModel.getDescription());
                     if (sessionDetailModel.getGender().equalsIgnoreCase("M")) {
+                        if(Integer.valueOf(activeMeasurementsModel.getNormalMenMax() ) != 0 && Integer.valueOf(activeMeasurementsModel.getNormalMenMax() ) != 0){
                         if (Integer.valueOf(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalMenMax()) {
                             txtHeight.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
                         } else if (Integer.valueOf(activeMeasurementsModel.getValue()) < activeMeasurementsModel.getNormalMenMin()) {
-                            txtHeight.setTextColor(getBaseActivity().getColor(R.color.panic_blue));
+                            txtHeight.setTextColor(getBaseActivity().getColor(R.color.panic_blue));}
 
                         }
                     } else {
+                        if(Integer.valueOf(activeMeasurementsModel.getNormalWomenMax() ) != 0 && Integer.valueOf(activeMeasurementsModel.getNormalWomenMin() ) != 0){
+
                         if (Integer.valueOf(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalWomenMax()) {
                             txtHeight.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
                         } else if (Integer.valueOf(activeMeasurementsModel.getValue()) < activeMeasurementsModel.getNormalWomenMin()) {
                             txtHeight.setTextColor(getBaseActivity().getColor(R.color.panic_blue));
 
-                        }
+                        }}
                     }
 
                     break;
                 case WEIGHT:
+
                     txtWeight.setText(activeMeasurementsModel.getValue());
                     txtWeightUnit.setText(activeMeasurementsModel.getUnitofMeasure());
                     txtWeightDesc.setText(activeMeasurementsModel.getDescription());
                     if (sessionDetailModel.getGender().equalsIgnoreCase("M")) {
-                        if (Integer.valueOf(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalMenMax()) {
-                            txtWeight.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
-                        } else if (Integer.valueOf(activeMeasurementsModel.getValue()) < activeMeasurementsModel.getNormalMenMin()) {
-                            txtWeight.setTextColor(getBaseActivity().getColor(R.color.panic_blue));
+                        if(Integer.valueOf(activeMeasurementsModel.getNormalMenMax() ) != 0 && (Integer.valueOf(activeMeasurementsModel.getNormalMenMin()) != 0 )) {
+                            if (Integer.valueOf(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalMenMax()) {
+                                txtWeight.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
+
+                                } else if
+                                    (Integer.valueOf(activeMeasurementsModel.getValue()) < activeMeasurementsModel.getNormalMenMin()) {
+                                    txtWeight.setTextColor(getBaseActivity().getColor(R.color.panic_blue));
+                                }
 
                         }
-
                     } else {
+                        if(Integer.valueOf(activeMeasurementsModel.getNormalWomenMax() ) != 0 && Integer.valueOf(activeMeasurementsModel.getNormalWomenMin() ) != 0){
                         if (Integer.valueOf(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalWomenMax()) {
                             txtWeight.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
                         } else if (Integer.valueOf(activeMeasurementsModel.getValue()) < activeMeasurementsModel.getNormalWomenMin()) {
                             txtWeight.setTextColor(getBaseActivity().getColor(R.color.panic_blue));
 
-                        }
+                        }}
                     }
                     break;
             }
