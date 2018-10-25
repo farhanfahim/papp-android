@@ -404,7 +404,7 @@ public class EmployeeAnthropometricMeasurmentsFragment extends BaseFragment impl
                         activeMeasurementsModel.setValue(txtBPDiastolic.getStringTrimmed());
                         break;
                     case BMI:
-                        txtBMI.setText(new DecimalFormat("##.#").format(result));
+                        activeMeasurementsModel.setValue(new DecimalFormat("##.#").format(result));
                         break;
                     case HEIGHT:
                         activeMeasurementsModel.setValue(txtHeight.getStringTrimmed());

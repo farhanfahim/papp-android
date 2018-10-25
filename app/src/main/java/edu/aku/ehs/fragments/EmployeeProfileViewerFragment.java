@@ -325,6 +325,7 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
                             rbIMS.setChecked(true);
                             break;
                         case OTHER:
+                            txtothers.setVisibility(View.VISIBLE);
                             rbOther.setChecked(true);
                             txtothers.setText(sessionDetailModel.getReferredToText());
                             break;
@@ -657,7 +658,6 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
 
                 getLastFileDateTime());
     }
-
 
 
     private void updateEmployeeInSessionCall(String jsonArrayData) {
