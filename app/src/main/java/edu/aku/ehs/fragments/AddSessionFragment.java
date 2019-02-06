@@ -122,7 +122,7 @@ public class AddSessionFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (isAddingNewSession) {
-             btnDone.setText("Add");
+            btnDone.setText("Add");
         } else {
             edtSessionID.setText(sessionModel.getSessionId());
             edtSessionName.setText(sessionModel.getDescription());
@@ -130,7 +130,7 @@ public class AddSessionFragment extends BaseFragment {
             txtEndDate.setText(sessionModel.getDisplayEndDate());
             tfSessionID.setEnabled(false);
             edtSessionID.setEnabled(false);
-            btnDone.setText("Upadte");
+            btnDone.setText("Update");
             startDateInSendingFormat = sessionModel.getStartDate();
             endDateInSendingFormat = sessionModel.getEndDate();
 
@@ -199,7 +199,7 @@ public class AddSessionFragment extends BaseFragment {
                         if (edtSessionID.getText().length() > 0 && edtSessionName.getText().length() > 0) {
                             if (isAddingNewSession) {
 
-                                String sessionID = edtSessionID.getText().toString().replaceAll("\\s+","");
+                                String sessionID = edtSessionID.getText().toString().replaceAll("\\s+", "");
                                 SessionModel sessionModel = new SessionModel();
                                 sessionModel.setActive("Y");
                                 sessionModel.setDescription(edtSessionName.getText().toString().trim());
