@@ -53,7 +53,7 @@ public class BaseApplication extends MultiDexApplication implements Application.
 
         // TODO: 11/1/2017 Enable Crash Lytics and Never Crash feature before releasing the app
         Fabric.with(this, new Crashlytics());
-//        neverCrash();
+        neverCrash();
     }
 
     public static Context getContext() {

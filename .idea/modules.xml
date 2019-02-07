@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://C:\Users\aqsa.sarwar\Desktop\AKU\EHS-Android\AKUH Employee Health Screening.iml" filepath="C:\Users\aqsa.sarwar\Desktop\AKU\EHS-Android\AKUH Employee Health Screening.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/EHS-Android.iml" filepath="$PROJECT_DIR$/.idea/EHS-Android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AKUH Employee Health Screening.iml" filepath="$PROJECT_DIR$/AKUH Employee Health Screening.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
