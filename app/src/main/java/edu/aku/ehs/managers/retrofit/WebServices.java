@@ -366,7 +366,8 @@ public class WebServices {
     }
 
 
-    public void webServiceGetEmployees(String type, String value, IRequestWebResponseEmployeeList iRequestWebResponseEmployeeList) {
+    public void webServiceGetEmployees(String type, String value,
+                                       IRequestWebResponseEmployeeList iRequestWebResponseEmployeeList) {
         try {
             if (Helper.isNetworkConnected(mContext, true)) {
                 WebServiceFactory.getInstanceXML().getEmpl(type, value).enqueue(new Callback<EmployeeWrapper>() {

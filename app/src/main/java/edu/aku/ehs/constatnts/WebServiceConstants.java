@@ -39,7 +39,7 @@ public class WebServiceConstants {
      */
 //    https://userauthentication.aku.edu
     public static final String BASE_URL_LOGIN = "https://userauthentication.aku.edu/api/";
-//    public static final String BASE_URL_LOGIN = "http://userauthservicedev.aku.edu/api/";
+    //    public static final String BASE_URL_LOGIN = "http://userauthservicedev.aku.edu/api/";
     public static final String BASE_URL_EMAIL_VALIDATION = "http://userauthservicedev.aku.edu/api/";
 
 
@@ -49,7 +49,7 @@ public class WebServiceConstants {
     // LIVE
     public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapi.aku.edu/getimage?path=";
     public static final String BASE_URL = "https://ehsliveapi.aku.edu/api/";
-//
+    //
     public static String PACS_VIEWER_URL = "https://pacsviewer.aku.edu/api/PACSViewer/";
 
     public static final String WS_KEY_GET_TOKEN = "getToken";
@@ -76,7 +76,7 @@ public class WebServiceConstants {
     public static final String GET_ALL_KEY = "*";
 
 
-     /**
+    /**
      * REQUEST METHODS NAMES
      */
 
@@ -100,14 +100,13 @@ public class WebServiceConstants {
     public static final String METHOD_SAVE_EMPLOYEE_MEASUREMENTS = "SessionManager.SaveEmployeeMeasurement";
     public static final String METHOD_GET_EMPLOYEE_ASSESSMENTS = "SessionManager.GetEmployeeAssessment";
     public static final String METHOD_SAVE_EMPLOYEE_ASSESSMENT = "SessionManager.SaveEmployeeAssessment";
-    public static final String METHOD_GET_EMPLOYEE_LAB_TEST_RESULTS= "SessionManager.GetEmployeeLabTestResults";
+    public static final String METHOD_GET_EMPLOYEE_LAB_TEST_RESULTS = "SessionManager.GetEmployeeLabTestResults";
     public static final String METHOD_SYNC_EMPLOYEE_LABS = "SessionManager.SyncEmployeeLabs";
 
 
     //Reporter Manager
     public static final String METHOD_GET_EMPLOYEE_SUMMARY_DETAIL = "ReportManager.GetEmployeeSummaryDetail";
     public static final String METHOD_GET_SESSION_STATS = "ReportManager.GetSessionStats";
-
 
 
     public static final String WS_KEY_AUTHENTICATE_USER = "AuthenticateUser";
