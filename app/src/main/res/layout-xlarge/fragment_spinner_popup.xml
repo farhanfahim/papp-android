@@ -103,7 +103,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/x10dp"
             android:layout_marginTop="@dimen/x5dp"
-            android:text="OK"
+            android:text="Ok"
             android:textColor="@color/c_white"
             app:fButtonColor="#ff9c3d"
             app:shadowHeight="@dimen/x1dp" />

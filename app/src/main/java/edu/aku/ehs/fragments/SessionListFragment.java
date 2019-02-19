@@ -190,6 +190,7 @@ public class SessionListFragment extends BaseFragment implements OnItemClickList
 
         if (onCreated) {
             if (AppConstants.isForcedResetFragment) {
+                //TODO ask to hamza
                 AppConstants.isForcedResetFragment = false;
                 new Handler().postDelayed(this::getSessionListCall, 200);
             }
@@ -198,6 +199,12 @@ public class SessionListFragment extends BaseFragment implements OnItemClickList
         }
 
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getSessionListCall();
     }
 
     private void getSessionListCall() {

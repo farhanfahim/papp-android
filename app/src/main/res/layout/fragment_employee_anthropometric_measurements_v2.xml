@@ -9,7 +9,7 @@
         android:id="@+id/contParent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-         android:orientation="vertical" >
+        android:orientation="vertical">
 
 
         <ImageView
@@ -507,12 +507,10 @@
         </ScrollView>
 
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/x15dp">
-
 
 
             <com.github.clans.fab.FloatingActionButton
@@ -539,6 +537,7 @@
                 android:layout_toLeftOf="@id/btnDone"
                 android:background="@drawable/img_button_white"
                 android:text="Cancel"
+                android:textAllCaps="false"
                 android:textColor="@color/txtBlue"
                 android:textSize="@dimen/s16"
                 android:visibility="visible" />
@@ -550,16 +549,16 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
-                android:background="@drawable/img_button_clr"
                 android:alpha="1"
-                android:text="SAVE"
+                android:background="@drawable/img_button_clr"
+                android:text="Save"
+                android:textAllCaps="false"
                 android:textColor="@color/c_white"
                 android:textSize="@dimen/s16"
                 android:visibility="visible" />
 
 
         </RelativeLayout>
-
 
 
     </LinearLayout>

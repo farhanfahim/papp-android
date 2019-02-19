@@ -37,6 +37,8 @@ import edu.aku.ehs.models.sending_model.EmployeeSendingModel;
 import edu.aku.ehs.models.wrappers.WebResponse;
 import edu.aku.ehs.widget.TitleBar;
 
+import static edu.aku.ehs.constatnts.WebServiceConstants._token;
+
 public class EmployeeAssessmentDashboardFragment extends BaseFragment implements OnItemClickListener {
 
 
@@ -69,6 +71,7 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
     boolean isLabDone = false;
 
     KProgressHUD dialog;
+    private EmployeeSendingModel model;
 
     public static EmployeeAssessmentDashboardFragment newInstance(SessionDetailModel sessionDetailModel) {
 
@@ -112,7 +115,7 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
                     getBaseActivity().addDockableFragment(EmployeeAnthropometricMeasurmentsFragment.newInstance(sessionDetailModel), false);
                     break;
                 case R.id.contRefer:
-                    getBaseActivity().addDockableFragment(EmployeeProfileViewerFragment.newInstance(sessionDetailModel, employeeSummaryDetailModel), false);
+                    getEmployeeSummaryDetail(model);
                     break;
             }
         });
@@ -149,15 +152,16 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
         dialog = UIHelper.getProgressHUD(getContext());
 
 
-        EmployeeSendingModel model = new EmployeeSendingModel();
+         model = new EmployeeSendingModel();
         model.setSessionID(sessionDetailModel.getSessionID());
         model.setEmployeeNo(sessionDetailModel.getEmployeeNo());
 
         isLabDone = sessionDetailModel.getisLabResultDone();
 
         dialog.show();
-        getEmployeeSummaryDetail(model);
 
+        getEmployeeAssessmentList(model);
+        getMeasurementList(model);
     }
 
     @Override
@@ -185,10 +189,10 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
                 break;
             case R.id.contRefer:
                 lastID = R.id.contRefer;
-                if (employeeSummaryDetailModel != null && isAssessmentDone && isLabDone && isMeasurementDone) {
+                if (isLabDone && isAssessmentDone && isLabDone && isMeasurementDone) {
                     showPin();
                 } else {
-                    UIHelper.showShortToastInCenter(getContext(), "Kindly complete all processes to view profile.");
+                    UIHelper.showLongToastInCenter(getContext(), "Kindly complete all processes to view profile.");
                 }
                 break;
         }
@@ -203,7 +207,7 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
 
 
     private void getEmployeeSummaryDetail(EmployeeSendingModel model) {
-        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, false)
+        new WebServices(getContext(), _token, BaseURLTypes.EHS_BASE_URL, false)
                 .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_GET_EMPLOYEE_SUMMARY_DETAIL, model.toString(),
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override
@@ -212,22 +216,9 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
                                 employeeSummaryDetailModel = GsonFactory.getSimpleGson()
                                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), EmployeeSummaryDetailModel.class);
 
-                                if (sessionDetailModel.getStatusEnum() == EmployeeSessionState.COMPLETED) {
-                                    imgProfileDone.setVisibility(View.VISIBLE);
-                                } else {
-                                    imgProfileDone.setVisibility(View.GONE);
-                                }
+                    getBaseActivity().addDockableFragment(EmployeeProfileViewerFragment.newInstance(sessionDetailModel, employeeSummaryDetailModel), false);
 
 
-                                if (employeeSummaryDetailModel.getEmpMeasurements() != null && !employeeSummaryDetailModel.getEmpMeasurements().isEmpty()) {
-                                    isMeasurementDone = true;
-                                    imgMeasurementsDone.setVisibility(View.VISIBLE);
-                                } else {
-                                    imgMeasurementsDone.setVisibility(View.GONE);
-                                }
-
-
-                                getEmployeeAssessmentList(model);
 
                             }
 
@@ -242,7 +233,7 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
     }
 
     private void getEmployeeAssessmentList(EmployeeSendingModel model) {
-        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, false)
+        new WebServices(getContext(), _token, BaseURLTypes.EHS_BASE_URL, false)
                 .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_GET_EMPLOYEE_ASSESSMENTS, model.toString(),
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override
@@ -276,5 +267,39 @@ public class EmployeeAssessmentDashboardFragment extends BaseFragment implements
                             }
                         });
     }
+    private void getMeasurementList(EmployeeSendingModel model) {
+        new WebServices(getContext(), _token, BaseURLTypes.EHS_BASE_URL, false)
+                .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_GET_EMPLOYEE_MEASUREMENTS, model.toString(),
+                        new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                            @Override
+                            public void requestDataResponse(WebResponse<Object> webResponse) {
+                                if (webResponse.result instanceof ArrayList) {
 
+                                    Type type = new TypeToken<ArrayList<AssessmentQuestionModel>>() {
+                                    }.getType();
+                                    ArrayList<AssessmentQuestionModel> arrayList = GsonFactory.getSimpleGson()
+                                            .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                                    , type);
+
+
+                                    if (arrayList != null && !arrayList.isEmpty()) {
+                                        isMeasurementDone = true;
+                                        imgMeasurementsDone.setVisibility(View.VISIBLE);
+                                    } else {
+                                        imgMeasurementsDone.setVisibility(View.GONE);
+                                    }
+
+                                    dialog.dismiss();
+
+                                }
+                            }
+
+                            @Override
+                            public void onError(Object object) {
+                                dialog.dismiss();
+                                isMeasurementDone = false;
+                                imgMeasurementsDone.setVisibility(View.GONE);
+                            }
+                        });
+    }
 }

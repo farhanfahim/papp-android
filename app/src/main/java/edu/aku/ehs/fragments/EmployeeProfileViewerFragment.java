@@ -49,8 +49,11 @@ import edu.aku.ehs.models.CVDRiskFactors;
 import edu.aku.ehs.models.EmployeeSummaryDetailModel;
 import edu.aku.ehs.models.SessionDetailModel;
 import edu.aku.ehs.models.wrappers.WebResponse;
+import edu.aku.ehs.widget.AnyEditTextView;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
+
+import static edu.aku.ehs.constatnts.WebServiceConstants._token;
 
 public class EmployeeProfileViewerFragment extends BaseFragment implements OnItemClickListener {
 
@@ -201,7 +204,12 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
     RadioGroup rgRefferedTo;
     @BindView(R.id.contCVDRisk)
     RoundKornerLinearLayout contCVDRisk;
+    @BindView(R.id.txtothers)
+    AnyEditTextView txtothers;
+    @BindView(R.id.txtRiskLevel)
+    AnyTextView txtRiskLevel;
     private EmployeeSummaryDetailModel employeeSummaryDetailModel;
+    private double result;
 
 
     public static EmployeeProfileViewerFragment newInstance(SessionDetailModel sessionDetailModel, EmployeeSummaryDetailModel employeeSummaryDetailModel) {
@@ -246,6 +254,23 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
                 case R.id.rbNo:
                     contReferredTo.setVisibility(View.GONE);
                     rgRefferedTo.clearCheck();
+                    txtothers.setVisibility(View.GONE);
+                    break;
+            }
+        });
+
+        rgRefferedTo.setOnCheckedChangeListener((group, checkedId) -> {
+
+            switch (checkedId) {
+
+                case R.id.rbCHC:
+                    txtothers.setVisibility(View.GONE);
+                    break;
+                case R.id.rbIMS:
+                    txtothers.setVisibility(View.GONE);
+                    break;
+                case R.id.rbOther:
+                    txtothers.setVisibility(View.VISIBLE);
                     break;
             }
         });
@@ -300,7 +325,9 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
                             rbIMS.setChecked(true);
                             break;
                         case OTHER:
+                            txtothers.setVisibility(View.VISIBLE);
                             rbOther.setChecked(true);
+                            txtothers.setText(sessionDetailModel.getReferredToText());
                             break;
                     }
 
@@ -429,6 +456,8 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
 
         txtTotalRiskValue.setText(totalScore + "");
         txtRiskSocre.setText(model.getRiskScore());
+        txtRiskLevel.setText("% - " + model.getRiskLevel());
+
     }
 
     private void setLabs(EmployeeSummaryDetailModel model) {
@@ -446,7 +475,7 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
         if (model.isHasMetabolicSyndrome()) {
             txtHasMetabolicSyndrom.setText("Has Metabolic Syndrome");
         } else {
-            txtHasMetabolicSyndrom.setTextColor(getContext().getColor(R.color.txtBlue));
+            txtHasMetabolicSyndrom.setTextColor(getContext().getColor(R.color.panic_blue));
             txtHasMetabolicSyndrom.setText("No Metabolic Syndrome");
         }
     }
@@ -460,29 +489,29 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
                     txtMedicalNone.setVisibility(View.GONE);
                     if (assessmentQuestionModel.isAnswer2()) {
                         Helper.addTextView(getContext(), contMedicalHistory, assessmentQuestionModel.getQuestionDescription() + " (Treated)",
-                                (int) getBaseActivity().getResources().getDimension(R.dimen.s7), getBaseActivity().getResources().getColor(R.color.txtBlue));
+                                (int) getBaseActivity().getResources().getDimension(R.dimen.s7), getBaseActivity().getResources().getColor(R.color.panic_blue));
                     } else {
                         Helper.addTextView(getContext(), contMedicalHistory, assessmentQuestionModel.getQuestionDescription() + " (Not Treated)",
-                                (int) getBaseActivity().getResources().getDimension(R.dimen.s7), getBaseActivity().getResources().getColor(R.color.txtBlue));
+                                (int) getBaseActivity().getResources().getDimension(R.dimen.s7), getBaseActivity().getResources().getColor(R.color.panic_blue));
                     }
 
                     break;
                 case FAMILYHISTORY:
                     txtFamilyNone.setVisibility(View.GONE);
                     Helper.addTextView(getContext(), contFamilyHistory, assessmentQuestionModel.getQuestionDescription() + " (Yes)",
-                            (int) getBaseActivity().getResources().getDimension(R.dimen.s7), getBaseActivity().getResources().getColor(R.color.txtBlue));
+                            (int) getBaseActivity().getResources().getDimension(R.dimen.s7), getBaseActivity().getResources().getColor(R.color.panic_blue));
 
                     break;
                 case SOCIALHISTORY:
                     txtPsycosocialNone.setVisibility(View.GONE);
                     Helper.addTextView(getContext(), contPsychosocialHistory, assessmentQuestionModel.getQuestionDescription() + " (Yes)",
-                            (int) getBaseActivity().getResources().getDimension(R.dimen.s7), getBaseActivity().getResources().getColor(R.color.txtBlue));
+                            (int) getBaseActivity().getResources().getDimension(R.dimen.s7), getBaseActivity().getResources().getColor(R.color.panic_blue));
 
                     break;
                 case SMOKINGBEHAVIOR:
                     txtSmokingBehaviorsNone.setVisibility(View.GONE);
                     Helper.addTextView(getContext(), contSmokingBehaviors, assessmentQuestionModel.getQuestionDescription() + " (Yes)",
-                            (int) getBaseActivity().getResources().getDimension(R.dimen.s7), getBaseActivity().getResources().getColor(R.color.txtBlue));
+                            (int) getBaseActivity().getResources().getDimension(R.dimen.s7), getBaseActivity().getResources().getColor(R.color.panic_blue));
                     break;
             }
 
@@ -494,6 +523,8 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
         for (ActiveMeasurementsModel activeMeasurementsModel : model.getEmpMeasurements()) {
             activeMeasurementsModel.setMeasurementsType(MeasurementsType.fromCanonicalForm(activeMeasurementsModel.getMeasurementID()));
             switch (activeMeasurementsModel.getMeasurementsType()) {
+
+
                 case WAIST:
                     txtWaist.setText(activeMeasurementsModel.getValue());
                     txtWaistUnit.setText(activeMeasurementsModel.getUnitofMeasure());
@@ -502,10 +533,16 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
                     if (sessionDetailModel.getGender().equalsIgnoreCase("M")) {
                         if (Integer.valueOf(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalMenMax()) {
                             txtWaist.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
+                        } else if (Integer.valueOf(activeMeasurementsModel.getValue()) < activeMeasurementsModel.getNormalMenMin()) {
+                            txtWaist.setTextColor(getBaseActivity().getColor(R.color.panic_blue));
+
                         }
                     } else {
                         if (Integer.valueOf(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalWomenMax()) {
                             txtWaist.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
+                        } else if (Integer.valueOf(activeMeasurementsModel.getValue()) < activeMeasurementsModel.getNormalWomenMin()) {
+                            txtWaist.setTextColor(getBaseActivity().getColor(R.color.panic_blue));
+
                         }
                     }
 
@@ -516,10 +553,16 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
                     if (sessionDetailModel.getGender().equalsIgnoreCase("M")) {
                         if (Integer.valueOf(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalMenMax()) {
                             txtBPSystolic.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
+                        } else if (Integer.valueOf(activeMeasurementsModel.getValue()) < activeMeasurementsModel.getNormalMenMin()) {
+                            txtBPSystolic.setTextColor(getBaseActivity().getColor(R.color.panic_blue));
+
                         }
                     } else {
                         if (Integer.valueOf(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalWomenMax()) {
                             txtBPSystolic.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
+                        } else if (Integer.valueOf(activeMeasurementsModel.getValue()) < activeMeasurementsModel.getNormalWomenMin()) {
+                            txtBPSystolic.setTextColor(getBaseActivity().getColor(R.color.panic_blue));
+
                         }
                     }
 
@@ -531,10 +574,36 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
                     if (sessionDetailModel.getGender().equalsIgnoreCase("M")) {
                         if (Integer.valueOf(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalMenMax()) {
                             txtBPDiastolic.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
+                        } else if (Integer.valueOf(activeMeasurementsModel.getValue()) < activeMeasurementsModel.getNormalMenMin()) {
+                            txtBPDiastolic.setTextColor(getBaseActivity().getColor(R.color.panic_blue));
+
                         }
                     } else {
                         if (Integer.valueOf(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalWomenMax()) {
                             txtBPDiastolic.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
+                        } else if (Integer.valueOf(activeMeasurementsModel.getValue()) < activeMeasurementsModel.getNormalWomenMin()) {
+                            txtBPDiastolic.setTextColor(getBaseActivity().getColor(R.color.panic_blue));
+
+                        }
+                    }
+
+                    break;
+                case BMI:
+
+                    txtBMI.setText(activeMeasurementsModel.getValue() + "");
+                    if (sessionDetailModel.getGender().equalsIgnoreCase("M")) {
+                        if (Float.parseFloat(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalMenMax()) {
+                            txtBMI.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
+                        } else if (Float.parseFloat(activeMeasurementsModel.getValue()) < activeMeasurementsModel.getNormalMenMin()) {
+                            txtBMI.setTextColor(getBaseActivity().getColor(R.color.panic_blue));
+
+                        }
+                    } else {
+                        if (Float.parseFloat(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalWomenMax()) {
+                            txtBMI.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
+                        } else if (Float.parseFloat(activeMeasurementsModel.getValue()) < activeMeasurementsModel.getNormalWomenMin()) {
+                            txtBMI.setTextColor(getBaseActivity().getColor(R.color.panic_blue));
+
                         }
                     }
 
@@ -544,51 +613,69 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
                     txtHeightUnit.setText(activeMeasurementsModel.getUnitofMeasure());
                     txtHeightDesc.setText(activeMeasurementsModel.getDescription());
                     if (sessionDetailModel.getGender().equalsIgnoreCase("M")) {
+                        if(Integer.valueOf(activeMeasurementsModel.getNormalMenMax() ) != 0 && Integer.valueOf(activeMeasurementsModel.getNormalMenMax() ) != 0){
                         if (Integer.valueOf(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalMenMax()) {
                             txtHeight.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
+                        } else if (Integer.valueOf(activeMeasurementsModel.getValue()) < activeMeasurementsModel.getNormalMenMin()) {
+                            txtHeight.setTextColor(getBaseActivity().getColor(R.color.panic_blue));}
+
                         }
                     } else {
+                        if(Integer.valueOf(activeMeasurementsModel.getNormalWomenMax() ) != 0 && Integer.valueOf(activeMeasurementsModel.getNormalWomenMin() ) != 0){
+
                         if (Integer.valueOf(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalWomenMax()) {
                             txtHeight.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
-                        }
+                        } else if (Integer.valueOf(activeMeasurementsModel.getValue()) < activeMeasurementsModel.getNormalWomenMin()) {
+                            txtHeight.setTextColor(getBaseActivity().getColor(R.color.panic_blue));
+
+                        }}
                     }
 
                     break;
                 case WEIGHT:
+
                     txtWeight.setText(activeMeasurementsModel.getValue());
                     txtWeightUnit.setText(activeMeasurementsModel.getUnitofMeasure());
                     txtWeightDesc.setText(activeMeasurementsModel.getDescription());
                     if (sessionDetailModel.getGender().equalsIgnoreCase("M")) {
-                        if (Integer.valueOf(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalMenMax()) {
-                            txtWeight.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
+                        if(Integer.valueOf(activeMeasurementsModel.getNormalMenMax() ) != 0 && (Integer.valueOf(activeMeasurementsModel.getNormalMenMin()) != 0 )) {
+                            if (Integer.valueOf(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalMenMax()) {
+                                txtWeight.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
+
+                                } else if
+                                    (Integer.valueOf(activeMeasurementsModel.getValue()) < activeMeasurementsModel.getNormalMenMin()) {
+                                    txtWeight.setTextColor(getBaseActivity().getColor(R.color.panic_blue));
+                                }
+
                         }
                     } else {
+                        if(Integer.valueOf(activeMeasurementsModel.getNormalWomenMax() ) != 0 && Integer.valueOf(activeMeasurementsModel.getNormalWomenMin() ) != 0){
                         if (Integer.valueOf(activeMeasurementsModel.getValue()) > activeMeasurementsModel.getNormalWomenMax()) {
                             txtWeight.setTextColor(getBaseActivity().getColor(R.color.red_resistant));
-                        }
+                        } else if (Integer.valueOf(activeMeasurementsModel.getValue()) < activeMeasurementsModel.getNormalWomenMin()) {
+                            txtWeight.setTextColor(getBaseActivity().getColor(R.color.panic_blue));
+
+                        }}
                     }
                     break;
             }
         }
-        txtDateMeasurements.setText(model.getEmpMeasurements().get(0).getLastFileDateTime());
-        setBMI(Integer.valueOf(txtHeight.getText().toString()), Integer.valueOf(txtWeight.getText().toString()));
-    }
+        txtDateMeasurements.setText(model.getEmpMeasurements().
 
-    private void setBMI(int height, int weight) {
-        double heightInMeters = (height / 100f);
+                get(0).
 
-        double result = (weight / (heightInMeters * heightInMeters));
-        txtBMI.setText(new DecimalFormat("##.#").format(result));
+                getLastFileDateTime());
     }
 
 
     private void updateEmployeeInSessionCall(String jsonArrayData) {
-        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+        new WebServices(getContext(), _token, BaseURLTypes.EHS_BASE_URL, true)
                 .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_UPDATE_SESSION_EMPLOYEE, jsonArrayData,
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override
                             public void requestDataResponse(WebResponse<Object> webResponse) {
                                 UIHelper.showToast(getContext(), webResponse.responseMessage);
+                                //TODO ask to hamza
                                 getBaseActivity().popBackStack();
                                 getBaseActivity().popBackStack();
                             }
@@ -624,6 +711,7 @@ public class EmployeeProfileViewerFragment extends BaseFragment implements OnIte
                     } else if (rbOther.isChecked()) {
                         sessionDetailModel.setReferredToID(ReferredTypes.OTHER.canonicalForm());
                         sessionDetailModel.setReferredToDescription(ReferredTypes.OTHER.canonicalForm());
+                        sessionDetailModel.setReferredToText(txtothers.getStringTrimmed());
                     } else {
                         UIHelper.showShortToastInCenter(getContext(), "Please recommend referred location.");
                         return;

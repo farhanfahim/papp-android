@@ -51,6 +51,8 @@ import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
 import info.hoang8f.widget.FButton;
 
+import static edu.aku.ehs.constatnts.WebServiceConstants._token;
+
 /**
  * Created by hamza.ahmed on 7/23/2018.
  */
@@ -194,7 +196,7 @@ public class StatsSessionFragment extends BaseFragment implements OnItemClickLis
     }
 
     private void getSessionListCall() {
-        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+        new WebServices(getContext(), _token, BaseURLTypes.EHS_BASE_URL, true)
                 .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_GET_SESSION_LIST, "",
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override

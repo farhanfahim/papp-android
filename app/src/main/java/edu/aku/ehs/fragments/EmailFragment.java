@@ -38,6 +38,7 @@ import edu.aku.ehs.widget.TitleBar;
 import mabbas007.tagsedittext.TagsEditText;
 
 import static edu.aku.ehs.constatnts.Events.ON_EMPLOYEES_SELECTED_FOR_EMAIL;
+import static edu.aku.ehs.constatnts.WebServiceConstants._token;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
@@ -104,9 +105,9 @@ public class EmailFragment extends BaseFragment implements OnNewPacketReceivedLi
 
         StringBuilder employeeNames = new StringBuilder();
         for (SessionDetailModel sessionDetailModel : arrSessioDetailModel) {
-            employeeNames.append(sessionDetailModel.getEmployeeName()).append("\n");
+            employeeNames.append(" "+sessionDetailModel.getEmployeeName()+"  ("+sessionDetailModel.getEmployeeNo()+")").append("\n");
         }
-        String bodyText = getContext().getResources().getString(R.string.email_text) + "\n" + "\n" + "\n" + employeeNames;
+        String bodyText = getContext().getResources().getString(R.string.email_text) + " Employee List:" + "\n" + "\n" + employeeNames;
         edtEmailBody.setText(bodyText);
         edtEmailSubject.setText("Employee Health Screening");
 //        if (!newTags.isEmpty()) {
@@ -210,7 +211,7 @@ public class EmailFragment extends BaseFragment implements OnNewPacketReceivedLi
     }
 
     private void sendEmailCall(EmailModel emailModel) {
-        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+        new WebServices(getContext(), _token, BaseURLTypes.EHS_BASE_URL, true)
                 .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_EMAIL_SESSION, emailModel.toString(),
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override

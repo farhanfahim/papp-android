@@ -114,7 +114,7 @@ public class HomeFragment extends BaseFragment {
             imgUser.setImageResource(R.drawable.female_icon_filled);
         }
 
-        logUser();
+//        logUser();
 
     }
 

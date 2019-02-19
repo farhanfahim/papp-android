@@ -246,6 +246,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
             searchSendingModel.setSessionID(sessionModel.getSessionId());
             getSessionEmployeesCall(searchSendingModel);
         }
+
     }
 
     private void unFilterEnrolledData() {
@@ -367,7 +368,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
 
         switch (sessionDetailModel.getStatusEnum()) {
             case ENROLLED:
-                UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Schedule", "Do you want to add Schedule for " + sessionDetailModel.getEmployeeName() + "?", "Add", "Cancel",
+                UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Schedule", "Do you want to add the Schedule for " + sessionDetailModel.getEmployeeName() + "?", "Add", "Cancel",
                         () -> {
                             genericDialogFragment.dismiss();
                             pickScheduleDate(false, sessionDetailModel, EmployeeSessionState.SCHEDULED);
@@ -375,7 +376,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
                 break;
 
             case SCHEDULED:
-                UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Schedule", "Do you want to update Schedule " + sessionDetailModel.getEmployeeName() + "?", "Update", "Cancel",
+                UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Schedule", "Do you want to update the Schedule for " + sessionDetailModel.getEmployeeName() + "?", "Update", "Cancel",
                         () -> {
                             genericDialogFragment.dismiss();
                             pickScheduleDate(false, sessionDetailModel, EmployeeSessionState.SCHEDULED);
@@ -411,6 +412,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
                 if (selectedArray.size() <= 1) {
                     employeekeyword = "employee";
                 }
+
                 UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Schedule", "You are about to schedule " + selectedArray.size() + " " + employeekeyword + " for " + scheduledDateInShowFormat + ".", "Add", "Cancel",
                         () -> {
                             genericDialogFragment.dismiss();
@@ -494,9 +496,15 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
                 break;
 
 
-            case R.id.fab:
-                pickScheduleDate(true, null, EmployeeSessionState.SCHEDULED);
-                break;
+            case R.id.fab: {
+                if (getSelectedEmployeesArray(EmployeeSessionState.SCHEDULED).size() < 1) {
+                    UIHelper.showShortToastInCenter(getContext(), "Please select employee first");
+                    return;
+                } else {
+                    pickScheduleDate(true, null, EmployeeSessionState.SCHEDULED);
+                }
+            }
+            break;
         }
     }
 
@@ -564,6 +572,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
         String jsonArrayData = GsonFactory.getConfiguredGson().toJson(sessionDetailModelArrayList);
 
         updateEmployeesInSessionCall(jsonArrayData);
+
     }
 
 

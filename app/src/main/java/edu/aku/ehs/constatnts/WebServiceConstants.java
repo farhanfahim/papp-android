@@ -37,22 +37,23 @@ public class WebServiceConstants {
      * Check Version Code
      * BaseApplication Fabric enable
      */
-
-//    public static final String BASE_URL_LOGIN = "https://userauthentication.aku.edu/api/";
-    public static final String BASE_URL_LOGIN = "http://userauthservicedev.aku.edu/api/";
+//    https://userauthentication.aku.edu
+    public static final String BASE_URL_LOGIN = "https://userauthentication.aku.edu/api/";
+    //    public static final String BASE_URL_LOGIN = "http://userauthservicedev.aku.edu/api/";
     public static final String BASE_URL_EMAIL_VALIDATION = "http://userauthservicedev.aku.edu/api/";
 
 
     // UAT
-    public static final String BASE_URL = "http://ehsapi.aku.edu/api/";
-    public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapiuat.aku.edu/getimage?path=";
+//    public static final String BASE_URL = "http://ehsapi.aku.edu/api/";
+//    public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapiuat.aku.edu/getimage?path=";
     // LIVE
-//    public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapi.aku.edu/getimage?path=";
-//    public static final String BASE_URL = "https://familyhifazatmobileapi.aku.edu/api/";
-
+    public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapi.aku.edu/getimage?path=";
+    public static final String BASE_URL = "https://ehsliveapi.aku.edu/api/";
+    //
     public static String PACS_VIEWER_URL = "https://pacsviewer.aku.edu/api/PACSViewer/";
 
     public static final String WS_KEY_GET_TOKEN = "getToken";
+    public static final String _token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJKV1RTZWNyZXRLZXkiOiJHUURzdGNLc3gwTkhqUE91WE9ZZzVNYmVKMVhUMHVGaXdEVnZWQnJrTW5NIiwiQVBQIjoiRUhTIn0.FnFfCEGEN1o-Oj71a1_t8phbV5hzL19FqURXQ2R8VUU";
 
     // People soft
     public static final String WS_TOKEN_CONSTANT = "Authorization: Basic QUtVX1dBUE1fUkVTVF9FTVBfREVQVDo5N0FBNUI0QS0zNzEwLTRFREYtOTQxMS02QjVEQTlEMDBEQ0U=";
@@ -75,7 +76,7 @@ public class WebServiceConstants {
     public static final String GET_ALL_KEY = "*";
 
 
-     /**
+    /**
      * REQUEST METHODS NAMES
      */
 
@@ -99,14 +100,13 @@ public class WebServiceConstants {
     public static final String METHOD_SAVE_EMPLOYEE_MEASUREMENTS = "SessionManager.SaveEmployeeMeasurement";
     public static final String METHOD_GET_EMPLOYEE_ASSESSMENTS = "SessionManager.GetEmployeeAssessment";
     public static final String METHOD_SAVE_EMPLOYEE_ASSESSMENT = "SessionManager.SaveEmployeeAssessment";
-    public static final String METHOD_GET_EMPLOYEE_LAB_TEST_RESULTS= "SessionManager.GetEmployeeLabTestResults";
+    public static final String METHOD_GET_EMPLOYEE_LAB_TEST_RESULTS = "SessionManager.GetEmployeeLabTestResults";
     public static final String METHOD_SYNC_EMPLOYEE_LABS = "SessionManager.SyncEmployeeLabs";
 
 
     //Reporter Manager
     public static final String METHOD_GET_EMPLOYEE_SUMMARY_DETAIL = "ReportManager.GetEmployeeSummaryDetail";
     public static final String METHOD_GET_SESSION_STATS = "ReportManager.GetSessionStats";
-
 
 
     public static final String WS_KEY_AUTHENTICATE_USER = "AuthenticateUser";

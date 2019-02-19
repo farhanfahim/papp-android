@@ -96,6 +96,9 @@ public class SessionDetailModel {
     @Expose
     @SerializedName("SessionID")
     private String SessionID;
+    @Expose
+    @SerializedName("ReferredToText")
+    private String ReferredToText;
 
     private boolean isSelected = false;
 
@@ -115,7 +118,6 @@ public class SessionDetailModel {
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
-
 
 
     public String getLastFileUser() {
@@ -352,5 +354,13 @@ public class SessionDetailModel {
 
     public void setSessionID(String SessionID) {
         this.SessionID = SessionID;
+    }
+
+    public String getReferredToText() {
+        return ReferredToText;
+    }
+
+    public void setReferredToText(String referredToText) {
+        ReferredToText = referredToText;
     }
 }

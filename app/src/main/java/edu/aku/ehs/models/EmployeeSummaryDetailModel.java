@@ -22,6 +22,9 @@ public class EmployeeSummaryDetailModel {
     @SerializedName("RiskScore")
     private String RiskScore;
     @Expose
+    @SerializedName("RiskLevel")
+    private String RiskLevel;
+    @Expose
     @SerializedName("MetabolicSyndromeDetail")
     private MetabolicSyndromeDetail MetabolicSyndromeDetail;
     @Expose
@@ -100,6 +103,14 @@ public class EmployeeSummaryDetailModel {
 
     public void setCVDRiskFactors(List<CVDRiskFactors> CVDRiskFactors) {
         this.CVDRiskFactors = CVDRiskFactors;
+    }
+
+    public String getRiskLevel() {
+        return RiskLevel;
+    }
+
+    public void setRiskLevel(String riskLevel) {
+        RiskLevel = riskLevel;
     }
 
     public List<EmpLabs> getEmpLabs() {

@@ -28,6 +28,8 @@ import edu.aku.ehs.widget.AnyEditTextView;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
 
+import static edu.aku.ehs.constatnts.WebServiceConstants._token;
+
 /**
  * Created by hamza.ahmed on 7/19/2018.
  */
@@ -126,7 +128,7 @@ public class LoginFragment extends BaseFragment {
 
     private void authenticateUserCall() {
         new WebServices(getContext(),
-                "",
+                _token,
                 BaseURLTypes.AUTHENTICATE_USER_URL, true)
                 .webServiceAuthenticateUser(edtUserName.getStringTrimmed(), edtPassword.getStringTrimmed(), new WebServices.IRequestWebResponseJustObjectCallBack() {
                     @Override
@@ -151,7 +153,7 @@ public class LoginFragment extends BaseFragment {
 
     private void getAuthenticatedUserDetails() {
         new WebServices(getContext(),
-                "",
+                _token,
                 BaseURLTypes.AUTHENTICATE_USER_URL, true)
                 .webServiceGetAuthenticatedUserDetail(edtUserName.getStringTrimmed(), new WebServices.IRequestWebResponseJustObjectCallBack() {
                     @Override

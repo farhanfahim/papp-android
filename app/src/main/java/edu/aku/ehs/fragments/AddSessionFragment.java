@@ -33,6 +33,8 @@ import edu.aku.ehs.widget.TitleBar;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
 
+import static edu.aku.ehs.constatnts.WebServiceConstants._token;
+
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
@@ -120,7 +122,7 @@ public class AddSessionFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (isAddingNewSession) {
-             btnDone.setText("ADD");
+            btnDone.setText("Add");
         } else {
             edtSessionID.setText(sessionModel.getSessionId());
             edtSessionName.setText(sessionModel.getDescription());
@@ -128,7 +130,7 @@ public class AddSessionFragment extends BaseFragment {
             txtEndDate.setText(sessionModel.getDisplayEndDate());
             tfSessionID.setEnabled(false);
             edtSessionID.setEnabled(false);
-            btnDone.setText("UPDATE");
+            btnDone.setText("Update");
             startDateInSendingFormat = sessionModel.getStartDate();
             endDateInSendingFormat = sessionModel.getEndDate();
 
@@ -197,7 +199,7 @@ public class AddSessionFragment extends BaseFragment {
                         if (edtSessionID.getText().length() > 0 && edtSessionName.getText().length() > 0) {
                             if (isAddingNewSession) {
 
-                                String sessionID = edtSessionID.getText().toString().replaceAll("\\s+","");
+                                String sessionID = edtSessionID.getText().toString().replaceAll("\\s+", "");
                                 SessionModel sessionModel = new SessionModel();
                                 sessionModel.setActive("Y");
                                 sessionModel.setDescription(edtSessionName.getText().toString().trim());
@@ -260,7 +262,7 @@ public class AddSessionFragment extends BaseFragment {
 
 
     private void addSessionCall(SessionModel sessionModel) {
-        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+        new WebServices(getContext(), _token, BaseURLTypes.EHS_BASE_URL, true)
                 .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_ADD_SESSION, sessionModel.toString(),
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override
@@ -281,7 +283,7 @@ public class AddSessionFragment extends BaseFragment {
 
 
     private void updateSessionCall(SessionModel sessionModel) {
-        new WebServices(getContext(), "", BaseURLTypes.EHS_BASE_URL, true)
+        new WebServices(getContext(), _token, BaseURLTypes.EHS_BASE_URL, true)
                 .webServiceRequestAPIAnyObject(WebServiceConstants.METHOD_UPDATE_SESSION, sessionModel.toString(),
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override
