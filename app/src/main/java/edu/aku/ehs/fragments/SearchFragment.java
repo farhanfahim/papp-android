@@ -6,14 +6,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 
@@ -92,7 +95,6 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
     private ArrayList<DEPT> arrDept;
     private DepartmentAdapter adapter;
     private SelectEmployeeActionType selectEmployeeActionType;
-    ;
     private SpinnerModel tempSpinnerModel;
     private IntWrapper currentDivisionPosition = new IntWrapper(-1);
     private ArrayList<SpinnerModel> arrDivisionSpinner;
@@ -130,6 +132,30 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
 
     @Override
     public void setListeners() {
+
+
+        edtMRNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    imgSearchByMR.performClick();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+        edtEmployeeID.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    imgSearchByEmplID.performClick();
+                    return true;
+                }
+                return false;
+            }
+        });
 
     }
 

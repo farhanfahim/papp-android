@@ -67,7 +67,7 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHold
         if (model.getStatusId().equalsIgnoreCase(SessionStatus.CLOSED.canonicalForm())) {
             holder.btnSchedule.setVisibility(View.GONE);
             holder.btnClose.setVisibility(View.GONE);
-            holder.imgNext.setVisibility(View.GONE);
+            holder.imgNext.setVisibility(View.INVISIBLE);
             holder.txtStatus.setText(model.getStatusId() + " on: " + model.getDisplayCloseDTTM());
 //            setColor(holder, activity.getResources().getColor(R.color.c_gray));
             setColor(holder, activity.getResources().getColor(R.color.timeline_out_dark));

@@ -22,6 +22,18 @@ public class KeyboardHelper {
 
     }
 
+
+    public static void hideSoftKeyboardForced(Context context, View view) {
+        if (context == null) {
+            return;
+        }
+
+        InputMethodManager imm = (InputMethodManager) context
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromInputMethod(view.getWindowToken(), 0);
+
+    }
+
     public static void hideSoftKeyboard(Context context, EditText editText) {
         if (context == null) {
             return;

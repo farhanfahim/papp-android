@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
@@ -27,6 +28,7 @@ import edu.aku.ehs.adapters.SpinnerDialogAdapter;
 import edu.aku.ehs.callbacks.OnSpinnerItemClickListener;
 import edu.aku.ehs.callbacks.OnSpinnerOKPressedListener;
 import edu.aku.ehs.helperclasses.ui.helper.KeyboardHelper;
+import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
 import edu.aku.ehs.models.SpinnerModel;
 import edu.aku.ehs.widget.AnyEditTextView;
 import edu.aku.ehs.widget.AnyTextView;
@@ -100,7 +102,7 @@ public class SpinnerDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        KeyboardHelper.hideSoftKeyboard(getContext(),view);
         setListeners();
         adapter = new SpinnerDialogAdapter(getActivity(), arrData, onItemClickListener);
         adapter.notifyDataSetChanged();
@@ -116,15 +118,9 @@ public class SpinnerDialogFragment extends DialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-//        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+//        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        KeyboardHelper.hideSoftKeyboard(getContext(), edtSearchBar);
-
-    }
 
     private void setListeners() {
         edtSearchBar.addTextChangedListener(new TextWatcher() {
@@ -184,7 +180,6 @@ public class SpinnerDialogFragment extends DialogFragment {
             case R.id.txtOK:
                 if (onSpinnerOKPressedListener != null) {
                     onSpinnerOKPressedListener.onItemSelect(null);
-                    this.dismiss();
                 }
                 this.dismiss();
                 break;

@@ -113,23 +113,6 @@ public class UIHelper {
         // showLongToastInCenter(ctx, R.string.msg_connection_error);
     }
 
-    public static void hideSoftKeyboard(Context context, EditText editText) {
-        try {
-            InputMethodManager imm = (InputMethodManager) context
-                    .getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-        } catch (Throwable t) {
-        }
-
-    }
-
-    public static void hideSoftKeyboard(Context context, View view) {
-        InputMethodManager imm = (InputMethodManager) context
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
-    }
-
     public static void showAlertDialog(String message, CharSequence title,
                                        Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

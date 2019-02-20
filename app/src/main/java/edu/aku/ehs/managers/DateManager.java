@@ -17,6 +17,7 @@ import java.util.TimeZone;
 import edu.aku.ehs.callbacks.OnCalendarUpdate;
 import edu.aku.ehs.callbacks.OnDatePicked;
 import edu.aku.ehs.constatnts.AppConstants;
+import edu.aku.ehs.helperclasses.ui.helper.KeyboardHelper;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
 
 /**
@@ -409,6 +410,7 @@ public class DateManager {
 
 
     public static void showDatePicker(final Context context, final TextView textView, final String customDateFormatToShow, final DatePickerDialog.OnDateSetListener onDateSetListener, boolean isCurrentDateMaxiumum, boolean isCurrentDateMinimum, Date dateToOpen) {
+            KeyboardHelper.hideSoftKeyboard(context, textView);
             final Calendar myCalendar;
             myCalendar = Calendar.getInstance();
             if (dateToOpen != null) {
