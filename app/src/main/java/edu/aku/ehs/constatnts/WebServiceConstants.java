@@ -56,8 +56,10 @@ public class WebServiceConstants {
     public static final String _token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJKV1RTZWNyZXRLZXkiOiJHUURzdGNLc3gwTkhqUE91WE9ZZzVNYmVKMVhUMHVGaXdEVnZWQnJrTW5NIiwiQVBQIjoiRUhTIn0.FnFfCEGEN1o-Oj71a1_t8phbV5hzL19FqURXQ2R8VUU";
 
     // People soft
-    public static final String WS_TOKEN_CONSTANT = "Authorization: Basic QUtVX1dBUE1fUkVTVF9FTVBfREVQVDo5N0FBNUI0QS0zNzEwLTRFREYtOTQxMS02QjVEQTlEMDBEQ0U=";
-    public static final String WS_AKU_DEPT_EMP_GET_BASE_URL = "https://erphweb.aku.edu/PSIGW/RESTListeningConnector/PSFT_HR/AKU_DEPT_EMPS_GET.v1/";
+//    public static final String WS_TOKEN_CONSTANT = "Authorization: Basic QUtVX1dBUE1fUkVTVF9FTVBfREVQVDo5N0FBNUI0QS0zNzEwLTRFREYtOTQxMS02QjVEQTlEMDBEQ0U=";
+    public static final String WS_TOKEN_CONSTANT = "Authorization: Basic QUtVX1RMX1JFU1RfRU1QX0RFUFQ6ezVDNEY0MkIzLUYyRDktNzQ1Ny0yQURDLTM5RTcxNDYyMDJCMn0=";
+//    public static final String WS_AKU_DEPT_EMP_GET_BASE_URL = "https://erphweb.aku.edu/PSIGW/RESTListeningConnector/PSFT_HR/AKU_DEPT_EMPS_GET.v1/";
+    public static final String WS_AKU_DEPT_EMP_GET_BASE_URL = "https://uerpdmo.aku.edu/PSIGW/RESTListeningConnector/PSFT_HR/AKU_DEPT_EMPS_GET.v1/";
     public static final String WS_AKU_DEPT_EMP_PART = "SHARE/{type}/{value}";
 
 

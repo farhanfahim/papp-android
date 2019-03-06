@@ -69,8 +69,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initFragments() {
-        if (SharedPreferenceManager.getInstance(getApplicationContext()).getString(AppConstants.KEY_CARD_NUMBER) == null
-                || SharedPreferenceManager.getInstance(getApplicationContext()).getString(AppConstants.KEY_CARD_NUMBER).isEmpty()) {
+        if (SharedPreferenceManager.getInstance(getApplicationContext()).getCurrentUser() == null) {
             addDockableFragment(LoginFragment.newInstance(), false);
         } else {
             openActivity(HomeActivity.class);

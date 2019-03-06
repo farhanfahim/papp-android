@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
@@ -47,7 +48,7 @@ public class SelectEmployeesAdapter extends RecyclerView.Adapter<SelectEmployees
 
         View itemView = null;
         itemView = LayoutInflater.from(activity)
-                .inflate(R.layout.item_employee, parent, false);
+                .inflate(R.layout.item_employee_v2, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -56,7 +57,7 @@ public class SelectEmployeesAdapter extends RecyclerView.Adapter<SelectEmployees
         EMPLOYEE model = arrData.get(i);
         holder.txtEmployeeName.setText(model.getNAME());
         holder.txtDeptName.setText(model.getDESCR());
-        holder.txtDesignationAndGrade.setText(model.getTITLE() + " | " + model.getGRADE());
+        holder.txtDesignationAndGrade.setText(model.getTITLE() + " | " + model.getGRADE() + " | " + model.getFULLTIME_PARTTIMEDESC());
         holder.txtEmployeeID.setText(model.getEMPLID());
         holder.txtMRN.setText(model.getAKU_MRNO());
 
@@ -64,8 +65,8 @@ public class SelectEmployeesAdapter extends RecyclerView.Adapter<SelectEmployees
 
         if (model.isSelected()) {
             Helper.changeTransitionDrawableColor(td, activity.getColor(R.color.selected_item), 1);
-            td.startTransition(200);
-            AnimationHelper.fade(holder.imgSelected, 0, View.VISIBLE, VISIBLE, 1, 800);
+            td.startTransition(100);
+            AnimationHelper.fade(holder.imgSelected, 0, View.VISIBLE, VISIBLE, 1, 500);
         } else {
             Helper.changeTransitionDrawableColor(td, activity.getColor(R.color.c_white), 0);
             td.resetTransition();
@@ -73,10 +74,19 @@ public class SelectEmployeesAdapter extends RecyclerView.Adapter<SelectEmployees
         }
 
 
-        if (StringHelper.checkNotNullAndNotEmpty(model.getAKU_MRNO())) {
+        if (StringHelper.checkNotNullAndNotEmpty(model.getAKU_MRNO()) && StringHelper.isNullOrEmpty(model.getFUTURE_TERM_DT())) {
             holder.contParent.setAlpha(1f);
         } else {
             holder.contParent.setAlpha(0.5f);
+        }
+
+
+        if (StringHelper.isNullOrEmpty(model.getFUTURE_TERM_DT())) {
+            holder.contTerminationDate.setVisibility(View.GONE);
+        } else {
+            holder.contTerminationDate.setVisibility(View.VISIBLE);
+            holder.txtTerminationDate.setText(model.getFUTURE_TERM_DT());
+
         }
 
         setListener(holder, model);
@@ -98,12 +108,16 @@ public class SelectEmployeesAdapter extends RecyclerView.Adapter<SelectEmployees
         AnyTextView txtEmployeeName;
         @BindView(R.id.txtMRN)
         AnyTextView txtMRN;
-        @BindView(R.id.txtDesignationAndGrade)
-        AnyTextView txtDesignationAndGrade;
         @BindView(R.id.txtEmployeeID)
         AnyTextView txtEmployeeID;
+        @BindView(R.id.txtDesignationAndGrade)
+        AnyTextView txtDesignationAndGrade;
         @BindView(R.id.txtDeptName)
         AnyTextView txtDeptName;
+        @BindView(R.id.txtTerminationDate)
+        AnyTextView txtTerminationDate;
+        @BindView(R.id.contTerminationDate)
+        LinearLayout contTerminationDate;
         @BindView(R.id.contListItem)
         RoundKornerLinearLayout contListItem;
         @BindView(R.id.imgSelected)

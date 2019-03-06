@@ -37,7 +37,6 @@ import edu.aku.ehs.enums.EmployeeSessionState;
 import edu.aku.ehs.enums.SearchByType;
 import edu.aku.ehs.enums.SelectEmployeeActionType;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
-import edu.aku.ehs.fragments.abstracts.GenericDialogFragment;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
 import edu.aku.ehs.managers.retrofit.GsonFactory;
 import edu.aku.ehs.managers.retrofit.WebServices;
@@ -95,15 +94,17 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
     private String searchKeyword = "";
 
 
-    GenericDialogFragment genericDialogFragment = GenericDialogFragment.newInstance();
     private SelectEmployeeActionType selectEmployeeActionType;
     SessionModel sessionModel;
     private SearchByType searchByType;
     private DEPT deptModel;
     private DEPT division;
+    boolean isFulltime;
+
+    SelectEmployeePagerFragment parentFragment;
 
 
-    public static SelectEmployeeFragment newInstance(String searchKeyword, SelectEmployeeActionType selectEmployeeActionType, SearchByType searchByType, SessionModel sessionModel, DEPT dept, DEPT division) {
+    public static SelectEmployeeFragment newInstance(boolean isFulltime, String searchKeyword, SelectEmployeeActionType selectEmployeeActionType, SearchByType searchByType, SessionModel sessionModel, DEPT dept, DEPT division) {
         Bundle args = new Bundle();
 
         SelectEmployeeFragment fragment = new SelectEmployeeFragment();
@@ -113,6 +114,7 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
         fragment.sessionModel = sessionModel;
         fragment.deptModel = dept;
         fragment.division = division;
+        fragment.isFulltime = isFulltime;
         fragment.setArguments(args);
         return fragment;
     }
@@ -191,11 +193,15 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        contSearch.setVisibility(View.VISIBLE);
-        imgBanner.setVisibility(View.VISIBLE);
+
+        parentFragment = (SelectEmployeePagerFragment) getParentFragment();
+
+
+        contSearch.setVisibility(View.GONE);
+        imgBanner.setVisibility(View.GONE);
+        txtSessionName.setVisibility(View.GONE);
         contSelection.setVisibility(View.VISIBLE);
-        txtSessionName.setVisibility(View.VISIBLE);
-        txtSessionName.setText(sessionModel.getDescription());
+
         fab.setVisibility(View.VISIBLE);
         fab.setImageResource(R.drawable.ic_done_white_18dp);
 
@@ -295,12 +301,12 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
             }
         }
 
-        if (sessionDetailModelArrayList == null || sessionDetailModelArrayList.isEmpty()) {
+        if (sessionDetailModelArrayList.isEmpty()) {
             UIHelper.showShortToastInCenter(getContext(), "No employee selected.");
             return;
         }
 
-        if (division == null && !sessionDetailModelArrayList.isEmpty()) {
+        if (division == null) {
             getDepartmentDetailCall(sessionDetailModelArrayList);
         } else {
             String jsonArrayData = GsonFactory.getConfiguredGson().toJson(sessionDetailModelArrayList);
@@ -320,9 +326,44 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
 
                         if (webResponse.getAKU_WA_DEPT_EMPS().getEMPLOYEE() != null && !webResponse.getAKU_WA_DEPT_EMPS().getEMPLOYEE().isEmpty()) {
                             arrData.clear();
-                            arrData.addAll(webResponse.getAKU_WA_DEPT_EMPS().getEMPLOYEE());
+                            if (isFulltime) {
+                                for (EMPLOYEE employee : webResponse.getAKU_WA_DEPT_EMPS().getEMPLOYEE()) {
+                                    if (employee.getFULLTIME_PARTTIME().equalsIgnoreCase("F")) {
+                                        arrData.add(employee);
+                                    }
+                                }
+                            } else {
+                                for (EMPLOYEE employee : webResponse.getAKU_WA_DEPT_EMPS().getEMPLOYEE()) {
+                                    if (employee.getFULLTIME_PARTTIME().equalsIgnoreCase("P")) {
+                                        arrData.add(employee);
+                                    }
+                                }
+                            }
+
+
+                            if (arrData.isEmpty()) {
+                                showEmptyView("No Employee Found");
+
+                                if (isFulltime) {
+                                    parentFragment.txtCountFT.setVisibility(View.GONE);
+                                } else {
+                                    parentFragment.txtCountPT.setVisibility(View.GONE);
+                                }
+
+                            } else {
+                                emptyView.setVisibility(View.GONE);
+
+                                if (isFulltime) {
+                                    parentFragment.txtCountFT.setVisibility(View.VISIBLE);
+                                    parentFragment.txtCountFT.setText(arrData.size() + "");
+                                } else {
+                                    parentFragment.txtCountPT.setVisibility(View.VISIBLE);
+                                    parentFragment.txtCountPT.setText(arrData.size() + "");
+
+                                }
+                            }
+
                             adapter.notifyDataSetChanged();
-                            emptyView.setVisibility(View.GONE);
 
                         } else {
                             showEmptyView("No Employee Found");
@@ -362,6 +403,8 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
     private void showEmptyView(String text) {
         emptyView.setText(text);
         emptyView.setVisibility(View.VISIBLE);
+        contSelection.setVisibility(View.GONE);
+        fab.setVisibility(View.GONE);
     }
 
 

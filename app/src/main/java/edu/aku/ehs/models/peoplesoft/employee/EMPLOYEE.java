@@ -25,6 +25,14 @@ public class EMPLOYEE {
 
     private String TITLE;
 
+    private String FULLTIME_PARTTIME;
+
+    private String FUTURE_TERM_DT;
+
+    private String GENDER;
+
+    private String BIRTHDATE;
+
     public String getEMPL_RCD() {
         return EMPL_RCD;
     }
@@ -121,11 +129,53 @@ public class EMPLOYEE {
     }
 
     public void setSelected(boolean selected) {
-        if (StringHelper.checkNotNullAndNotEmpty(AKU_MRNO)) {
+        if (StringHelper.checkNotNullAndNotEmpty(AKU_MRNO)  && StringHelper.isNullOrEmpty(FUTURE_TERM_DT)) {
             isSelected = selected;
         } else {
             isSelected = false;
         }
+    }
+
+
+    public String getFULLTIME_PARTTIMEDESC() {
+        if (StringHelper.isNullOrEmpty(FULLTIME_PARTTIME)) {
+            return "";
+        } else {
+            return FULLTIME_PARTTIME.equalsIgnoreCase("F") ? "Full-time" : "Part-time";
+        }
+    }
+
+
+    public String getFULLTIME_PARTTIME() {
+        return FULLTIME_PARTTIME == null ? "" : FULLTIME_PARTTIME;
+    }
+
+    public void setFULLTIME_PARTTIME(String FULLTIME_PARTTIME) {
+        this.FULLTIME_PARTTIME = FULLTIME_PARTTIME;
+    }
+
+    public String getFUTURE_TERM_DT() {
+        return FUTURE_TERM_DT;
+    }
+
+    public void setFUTURE_TERM_DT(String FUTURE_TERM_DT) {
+        this.FUTURE_TERM_DT = FUTURE_TERM_DT;
+    }
+
+    public String getGENDER() {
+        return GENDER;
+    }
+
+    public void setGENDER(String GENDER) {
+        this.GENDER = GENDER;
+    }
+
+    public String getBIRTHDATE() {
+        return BIRTHDATE;
+    }
+
+    public void setBIRTHDATE(String BIRTHDATE) {
+        this.BIRTHDATE = BIRTHDATE;
     }
 
     @Override

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+        android:id="@+id/contParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/x10dp"
+        android:layout_marginLeft="@dimen/x20dp"
+        android:layout_marginRight="@dimen/x20dp"
+        android:layout_marginTop="@dimen/x10dp"
+        android:background="@color/panic_blue"
+        android:elevation="@dimen/x3dp"
+        app:corner_radius="@dimen/x10dp">
+
+
+        <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+            android:id="@+id/contListItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selected_user_transition"
+            android:orientation="horizontal"
+            android:padding="@dimen/x5dp"
+            app:corner_radius="@dimen/x10dp">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:id="@+id/txtEmployeeName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:padding="@dimen/x3dp"
+                        android:text="Employee Name"
+                        android:textColor="@color/txtBlue"
+                        android:textSize="@dimen/s14"
+                        app:typeface="@string/font_medium" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:id="@+id/txtMRN"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="right"
+                        android:padding="@dimen/x3dp"
+                        android:singleLine="true"
+                        android:text="400-40-40"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_medium" />
+
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:padding="@dimen/x3dp"
+                        android:singleLine="true"
+                        android:text="|"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_medium" />
+
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:id="@+id/txtEmployeeID"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:padding="@dimen/x3dp"
+                        android:singleLine="true"
+                        android:text="202011"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_medium" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/x3dp"
+                android:background="@color/c_light_grey" />
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:id="@+id/txtDesignationAndGrade"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/x3dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:padding="@dimen/x3dp"
+                        android:singleLine="true"
+                        android:text="Programmer Analyst  |  AD4 | Full-time"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_regular" />
+
+
+                </LinearLayout>
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_margin="@dimen/x3dp"
+                    android:background="@color/c_light_grey" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <edu.aku.ehs.widget.AnyTextView
+                        android:id="@+id/txtDeptName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/x3dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:padding="@dimen/x3dp"
+                        android:singleLine="true"
+                        android:text="Software Development and Maintenance"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_regular" />
+
+
+                    <LinearLayout
+                        android:id="@+id/contTerminationDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <edu.aku.ehs.widget.AnyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/x3dp"
+                            android:ellipsize="end"
+                            android:padding="@dimen/x3dp"
+                            android:singleLine="true"
+                            android:text="DOT:"
+                            android:textColor="@color/txtDarkGrey"
+                            android:textSize="@dimen/s12"
+                            app:typeface="@string/font_regular" />
+
+
+                        <edu.aku.ehs.widget.AnyTextView
+                            android:id="@+id/txtTerminationDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/x3dp"
+                            android:ellipsize="end"
+                            android:padding="@dimen/x3dp"
+                            android:singleLine="true"
+                            android:text="10-01-1899"
+                            android:textColor="@color/red_resistant"
+                            android:textSize="@dimen/s12"
+                            app:typeface="@string/font_regular" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+        <ImageView
+            android:id="@+id/imgSelected"
+            android:layout_width="@dimen/x23dp"
+            android:layout_height="@dimen/x23dp"
+            android:layout_alignBottom="@id/txtMRN"
+            android:layout_marginStart="@dimen/x8dp"
+            android:layout_marginTop="@dimen/x35dp"
+            android:background="@drawable/shape_circle"
+            android:backgroundTint="@color/colorAccent"
+            android:padding="@dimen/x3dp"
+            android:src="@drawable/ic_done_white_18dp"
+            android:visibility="visible" />
+
+    </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/imgHighlight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/contParent"
+        android:layout_alignParentTop="true"
+        android:alpha="0.2"
+        android:src="@color/colorPrimary"
+        android:visibility="gone" />
+
+
+</RelativeLayout>

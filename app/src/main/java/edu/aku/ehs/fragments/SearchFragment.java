@@ -299,7 +299,7 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
 
         switch (view.getId()) {
             case R.id.contListItem:
-                getBaseActivity().addDockableFragment(SelectEmployeeFragment.newInstance(model.getDESCR(), selectEmployeeActionType, SearchByType.DEPARTMENT, sessionModel, model, arrDivisions.get(currentDivisionPosition.value)), false);
+                getBaseActivity().addDockableFragment(SelectEmployeePagerFragment.newInstance(model.getDESCR(), selectEmployeeActionType, SearchByType.DEPARTMENT, sessionModel, model, arrDivisions.get(currentDivisionPosition.value)), false);
                 break;
         }
     }
@@ -308,10 +308,10 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgSearchByMR:
-                getBaseActivity().addDockableFragment(SelectEmployeeFragment.newInstance(edtMRNumber.getStringTrimmed(), selectEmployeeActionType, SearchByType.MRNUMBER, sessionModel, null, null), false);
+                getBaseActivity().addDockableFragment(SelectEmployeePagerFragment.newInstance(edtMRNumber.getStringTrimmed(), selectEmployeeActionType, SearchByType.MRNUMBER, sessionModel, null, null), false);
                 break;
             case R.id.imgSearchByEmplID:
-                getBaseActivity().addDockableFragment(SelectEmployeeFragment.newInstance(edtEmployeeID.getStringTrimmed(), selectEmployeeActionType, SearchByType.EMPLOYEENUMBER, sessionModel, null, null), false);
+                getBaseActivity().addDockableFragment(SelectEmployeePagerFragment.newInstance(edtEmployeeID.getStringTrimmed(), selectEmployeeActionType, SearchByType.EMPLOYEENUMBER, sessionModel, null, null), false);
                 break;
             case R.id.contSelectDivision:
                 showSpinner();
