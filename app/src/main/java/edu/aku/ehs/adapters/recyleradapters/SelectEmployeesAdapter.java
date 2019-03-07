@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import edu.aku.ehs.R;
 import edu.aku.ehs.activities.BaseActivity;
 import edu.aku.ehs.callbacks.OnItemClickListener;
+import edu.aku.ehs.helperclasses.DateHelper;
 import edu.aku.ehs.helperclasses.Helper;
 import edu.aku.ehs.helperclasses.StringHelper;
 import edu.aku.ehs.helperclasses.ui.helper.AnimationHelper;
@@ -25,6 +26,9 @@ import edu.aku.ehs.models.peoplesoft.employee.EMPLOYEE;
 import edu.aku.ehs.widget.AnyTextView;
 
 import static android.view.View.VISIBLE;
+import static edu.aku.ehs.constatnts.AppConstants.FORMAT_DATE_SEND;
+import static edu.aku.ehs.constatnts.AppConstants.FORMAT_DATE_SHOW;
+import static edu.aku.ehs.constatnts.AppConstants.FORMAT_PEOPLESOFT;
 
 /**
  */
@@ -85,7 +89,7 @@ public class SelectEmployeesAdapter extends RecyclerView.Adapter<SelectEmployees
             holder.contTerminationDate.setVisibility(View.GONE);
         } else {
             holder.contTerminationDate.setVisibility(View.VISIBLE);
-            holder.txtTerminationDate.setText(model.getFUTURE_TERM_DT());
+            holder.txtTerminationDate.setText(DateHelper.DateConversion(model.getFUTURE_TERM_DT(), FORMAT_PEOPLESOFT, FORMAT_DATE_SHOW));
 
         }
 

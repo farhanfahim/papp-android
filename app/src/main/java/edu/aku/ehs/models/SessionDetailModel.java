@@ -99,6 +99,15 @@ public class SessionDetailModel {
     @Expose
     @SerializedName("ReferredToText")
     private String ReferredToText;
+    @Expose
+    @SerializedName("Birthdate")
+    private String Birthdate;
+    @Expose
+    @SerializedName("FullTimePartTime")
+    private String FullTimePartTime;
+    @Expose
+    @SerializedName("DateOfTermination")
+    private String DateOfTermination;
 
     private boolean isSelected = false;
 
@@ -119,6 +128,43 @@ public class SessionDetailModel {
         isSelected = selected;
     }
 
+
+    public void setHasMetabolicSyndrome(String hasMetabolicSyndrome) {
+        HasMetabolicSyndrome = hasMetabolicSyndrome;
+    }
+
+    public String getBirthdate() {
+        return Birthdate;
+    }
+
+    public void setBirthdate(String birthdate) {
+        Birthdate = birthdate;
+    }
+
+    public String getFullTimePartTime() {
+        return FullTimePartTime;
+    }
+
+
+    public String getFullTimePartTimeDesc() {
+        if (StringHelper.isNullOrEmpty(FullTimePartTime)) {
+            return "-";
+        } else {
+            return FullTimePartTime.equalsIgnoreCase("F") ? "Full-time" : "Part-time";
+        }
+    }
+
+    public void setFullTimePartTime(String fullTimePartTime) {
+        FullTimePartTime = fullTimePartTime;
+    }
+
+    public String getDateOfTermination() {
+        return DateOfTermination;
+    }
+
+    public void setDateOfTermination(String dateOfTermination) {
+        DateOfTermination = dateOfTermination;
+    }
 
     public String getLastFileUser() {
         return LastFileUser;

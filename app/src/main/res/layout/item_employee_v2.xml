@@ -183,7 +183,6 @@
                         <edu.aku.ehs.widget.AnyTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/x3dp"
                             android:ellipsize="end"
                             android:padding="@dimen/x3dp"
                             android:singleLine="true"
@@ -197,14 +196,13 @@
                             android:id="@+id/txtTerminationDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/x3dp"
                             android:ellipsize="end"
                             android:padding="@dimen/x3dp"
                             android:singleLine="true"
                             android:text="10-01-1899"
                             android:textColor="@color/red_resistant"
                             android:textSize="@dimen/s12"
-                            app:typeface="@string/font_regular" />
+                            app:typeface="@string/font_medium" />
 
 
                     </LinearLayout>

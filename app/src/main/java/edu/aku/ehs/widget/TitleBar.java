@@ -228,7 +228,7 @@ public class TitleBar extends RelativeLayout {
 
         txtEmployeeName.setText(sessionDetailModel.getEmployeeName());
         txtStatus.setText(sessionDetailModel.getStatusID());
-        txtEmployeeAge.setText(sessionDetailModel.getAge() + "Y");
+        txtEmployeeAge.setText(sessionDetailModel.getAge() + " Y");
         txtMRN.setText(sessionDetailModel.getMedicalRecordNo());
         txtEmployeeID.setText(sessionDetailModel.getEmployeeNo());
         txtDepartmentName.setText(sessionDetailModel.getDepartmentName());

@@ -37,7 +37,9 @@ import edu.aku.ehs.enums.EmployeeSessionState;
 import edu.aku.ehs.enums.SearchByType;
 import edu.aku.ehs.enums.SelectEmployeeActionType;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
+import edu.aku.ehs.helperclasses.DateHelper;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
+import edu.aku.ehs.managers.DateManager;
 import edu.aku.ehs.managers.retrofit.GsonFactory;
 import edu.aku.ehs.managers.retrofit.WebServices;
 import edu.aku.ehs.models.SessionDetailModel;
@@ -50,6 +52,9 @@ import edu.aku.ehs.models.wrappers.WebResponse;
 import edu.aku.ehs.widget.AnyEditTextView;
 import edu.aku.ehs.widget.AnyTextView;
 import edu.aku.ehs.widget.TitleBar;
+
+import static edu.aku.ehs.constatnts.AppConstants.FORMAT_DATE_SEND;
+import static edu.aku.ehs.constatnts.AppConstants.FORMAT_PEOPLESOFT;
 
 /**
  * Created by hamza.ahmed on 7/23/2018.
@@ -288,6 +293,9 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
                 sessionDetailModel.setStatusID(EmployeeSessionState.ENROLLED.canonicalForm());
                 sessionDetailModel.setDepartmentID(employee.getDEPTID());
                 sessionDetailModel.setDepartmentName(employee.getDESCR());
+                sessionDetailModel.setGender(employee.getGENDER());
+                sessionDetailModel.setBirthdate(DateHelper.DateConversion(employee.getBIRTHDATE(), FORMAT_PEOPLESOFT, FORMAT_DATE_SEND));
+                sessionDetailModel.setFullTimePartTime(employee.getFULLTIME_PARTTIME());
 
 
                 if (division != null) {

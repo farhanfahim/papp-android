@@ -66,7 +66,7 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
         SessionDetailModel model = filteredData.get(i);
         holder.txtEmployeeName.setText(model.getEmployeeName());
         holder.txtStatus.setText(model.getStatusID());
-        holder.txtEmployeeAge.setText(model.getAge() + "Y");
+        holder.txtEmployeeAge.setText(model.getAge() + " Y");
         holder.txtMRN.setText(model.getMedicalRecordNo());
         holder.txtEmployeeID.setText(model.getEmployeeNo());
         holder.txtDepartmentName.setText(model.getDepartmentName());
@@ -151,6 +151,11 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
         }
 
 
+
+        holder.txtFullTimePartTime.setText(model.getFullTimePartTimeDesc());
+
+
+
         setListener(holder, model);
     }
 
@@ -214,6 +219,8 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
         RoundKornerRelativeLayout contStatus;
         @BindView(R.id.txDate)
         AnyTextView txDate;
+        @BindView(R.id.txtFullTimePartTime)
+        AnyTextView txtFullTimePartTime;
         @BindView(R.id.stepView)
         StepperIndicator stepView;
         @BindView(R.id.btnDelete)

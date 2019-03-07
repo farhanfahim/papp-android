@@ -12,7 +12,7 @@ import android.widget.EditText;
 public class KeyboardHelper {
 
     public static void hideSoftKeyboard(Context context, View view) {
-        if (context == null) {
+        if (context == null || view == null) {
             return;
         }
 

@@ -44,11 +44,11 @@ public class WebServiceConstants {
 
 
     // UAT
-//    public static final String BASE_URL = "http://ehsapi.aku.edu/api/";
-//    public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapiuat.aku.edu/getimage?path=";
+    public static final String BASE_URL = "http://ehsapi.aku.edu/api/";
+    public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapiuat.aku.edu/getimage?path=";
     // LIVE
-    public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapi.aku.edu/getimage?path=";
-    public static final String BASE_URL = "https://ehsliveapi.aku.edu/api/";
+//    public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapi.aku.edu/getimage?path=";
+//    public static final String BASE_URL = "https://ehsliveapi.aku.edu/api/";
     //
     public static String PACS_VIEWER_URL = "https://pacsviewer.aku.edu/api/PACSViewer/";
 

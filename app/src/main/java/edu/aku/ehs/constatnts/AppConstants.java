@@ -53,6 +53,7 @@ public class AppConstants {
     // Custom For AKUH
     public static final String INPUT_DATE_FORMAT_IMMUNIZATION = "dd/MM/yyyy";
     public static final String GENERAL_DATE_FORMAT = "dd-MM-yy";
+    public static final String FORMAT_PEOPLESOFT = "yyyy-MM-dd";
     public static final String FORMAT_DATE_SHOW = "MMM dd, yyyy";
     public static final String FORMAT_DATE_SEND = "dd/MM/yyyy HH:mm:ss";
 
