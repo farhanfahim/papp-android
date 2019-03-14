@@ -151,10 +151,7 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
         }
 
 
-
         holder.txtFullTimePartTime.setText(model.getFullTimePartTimeDesc());
-
-
 
         setListener(holder, model);
     }

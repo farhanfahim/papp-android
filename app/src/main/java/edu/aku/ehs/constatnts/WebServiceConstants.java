@@ -38,17 +38,27 @@ public class WebServiceConstants {
      * BaseApplication Fabric enable
      */
 //    https://userauthentication.aku.edu
-    public static final String BASE_URL_LOGIN = "https://userauthentication.aku.edu/api/";
     //    public static final String BASE_URL_LOGIN = "http://userauthservicedev.aku.edu/api/";
-    public static final String BASE_URL_EMAIL_VALIDATION = "http://userauthservicedev.aku.edu/api/";
+    //    public static final String BASE_URL_EMAIL_VALIDATION = "http://userauthservicedev.aku.edu/api/";
+
+    public static final String BASE_URL_LOGIN = "https://userauthentication.aku.edu/api/";
+    public static final String BASE_URL_EMAIL_VALIDATION = "https://userauthentication.aku.edu/api/";
 
 
     // UAT
-    public static final String BASE_URL = "http://ehsapi.aku.edu/api/";
-    public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapiuat.aku.edu/getimage?path=";
+//    public static final String BASE_URL = "http://ehsapi.aku.edu/api/";
+//    public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapiuat.aku.edu/getimage?path=";
+//    public static final String WS_AKU_DEPT_EMP_GET_BASE_URL = "https://uerpdmo.aku.edu/PSIGW/RESTListeningConnector/PSFT_HR/AKU_DEPT_EMPS_GET.v1/";
+
     // LIVE
-//    public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapi.aku.edu/getimage?path=";
-//    public static final String BASE_URL = "https://ehsliveapi.aku.edu/api/";
+    public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapi.aku.edu/getimage?path=";
+//    public static final String BASE_URL = "http://ehsapi.aku.edu/api/";
+    public static final String BASE_URL = "https://ehsliveapi.aku.edu/api/";
+    public static final String WS_AKU_DEPT_EMP_GET_BASE_URL = "https://erphweb.aku.edu/PSIGW/RESTListeningConnector/PSFT_HR/AKU_DEPT_EMPS_GET.v1/";
+
+
+
+
     //
     public static String PACS_VIEWER_URL = "https://pacsviewer.aku.edu/api/PACSViewer/";
 
@@ -56,10 +66,10 @@ public class WebServiceConstants {
     public static final String _token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJKV1RTZWNyZXRLZXkiOiJHUURzdGNLc3gwTkhqUE91WE9ZZzVNYmVKMVhUMHVGaXdEVnZWQnJrTW5NIiwiQVBQIjoiRUhTIn0.FnFfCEGEN1o-Oj71a1_t8phbV5hzL19FqURXQ2R8VUU";
 
     // People soft
-//    public static final String WS_TOKEN_CONSTANT = "Authorization: Basic QUtVX1dBUE1fUkVTVF9FTVBfREVQVDo5N0FBNUI0QS0zNzEwLTRFREYtOTQxMS02QjVEQTlEMDBEQ0U=";
-    public static final String WS_TOKEN_CONSTANT = "Authorization: Basic QUtVX1RMX1JFU1RfRU1QX0RFUFQ6ezVDNEY0MkIzLUYyRDktNzQ1Ny0yQURDLTM5RTcxNDYyMDJCMn0=";
-//    public static final String WS_AKU_DEPT_EMP_GET_BASE_URL = "https://erphweb.aku.edu/PSIGW/RESTListeningConnector/PSFT_HR/AKU_DEPT_EMPS_GET.v1/";
-    public static final String WS_AKU_DEPT_EMP_GET_BASE_URL = "https://uerpdmo.aku.edu/PSIGW/RESTListeningConnector/PSFT_HR/AKU_DEPT_EMPS_GET.v1/";
+    public static final String WS_TOKEN_CONSTANT = "Authorization: Basic QUtVX1dBUE1fUkVTVF9FTVBfREVQVDo5N0FBNUI0QS0zNzEwLTRFREYtOTQxMS02QjVEQTlEMDBEQ0U=";
+//    public static final String WS_TOKEN_CONSTANT = "Authorization: Basic QUtVX1RMX1JFU1RfRU1QX0RFUFQ6ezVDNEY0MkIzLUYyRDktNzQ1Ny0yQURDLTM5RTcxNDYyMDJCMn0=";
+
+
     public static final String WS_AKU_DEPT_EMP_PART = "SHARE/{type}/{value}";
 
 

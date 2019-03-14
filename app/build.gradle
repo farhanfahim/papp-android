@@ -23,8 +23,8 @@ android {
         applicationId 'edu.aku.ehs'
         minSdkVersion 24
         targetSdkVersion 27
-        versionCode 17
-        versionName "2.0.17"
+        versionCode 18
+        versionName "3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true

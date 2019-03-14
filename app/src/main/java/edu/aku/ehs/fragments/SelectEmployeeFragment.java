@@ -353,6 +353,7 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
                                 showEmptyView("No Employee Found");
 
                                 if (isFulltime) {
+                                    parentFragment.viewpager.moveNext();
                                     parentFragment.txtCountFT.setVisibility(View.GONE);
                                 } else {
                                     parentFragment.txtCountPT.setVisibility(View.GONE);
