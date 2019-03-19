@@ -34,6 +34,7 @@ import edu.aku.ehs.enums.BaseURLTypes;
 import edu.aku.ehs.enums.SearchByType;
 import edu.aku.ehs.enums.SelectEmployeeActionType;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
+import edu.aku.ehs.helperclasses.KotlinScriptsEHS;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
 import edu.aku.ehs.libraries.maskformatter.MaskFormatter;
 import edu.aku.ehs.managers.retrofit.WebServices;
@@ -220,8 +221,9 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
 
                         if (webResponse.getAKU_WA_DEPT_EMPS().getDEPT() != null && !webResponse.getAKU_WA_DEPT_EMPS().getDEPT().isEmpty()) {
                             arrDivisions.clear();
-                            arrDivisions.addAll(webResponse.getAKU_WA_DEPT_EMPS().getDEPT());
 
+
+                            arrDivisions.addAll(KotlinScriptsEHS.INSTANCE.sortDeptArray(webResponse.getAKU_WA_DEPT_EMPS().getDEPT()));
 
                             for (int i = 0; i < arrDivisions.size(); i++) {
                                 arrDivisionSpinner.add(new SpinnerModel(arrDivisions.get(i).getDESCR()));
@@ -251,7 +253,7 @@ public class SearchFragment extends BaseFragment implements OnItemClickListener 
 
                         if (webResponse.getAKU_WA_DEPT_EMPS().getDEPT() != null && !webResponse.getAKU_WA_DEPT_EMPS().getDEPT().isEmpty()) {
                             arrDept.clear();
-                            arrDept.addAll(webResponse.getAKU_WA_DEPT_EMPS().getDEPT());
+                            arrDept.addAll(KotlinScriptsEHS.INSTANCE.sortDeptArray(webResponse.getAKU_WA_DEPT_EMPS().getDEPT()));
                             adapter.notifyDataSetChanged();
                             emptyView.setVisibility(View.GONE);
                         } else {

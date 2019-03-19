@@ -21,6 +21,7 @@ import com.github.clans.fab.FloatingActionButton;
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +39,7 @@ import edu.aku.ehs.enums.SearchByType;
 import edu.aku.ehs.enums.SelectEmployeeActionType;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.helperclasses.DateHelper;
+import edu.aku.ehs.helperclasses.KotlinScriptsEHS;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
 import edu.aku.ehs.managers.DateManager;
 import edu.aku.ehs.managers.retrofit.GsonFactory;
@@ -288,6 +290,7 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
             if (employee.isSelected()) {
                 SessionDetailModel sessionDetailModel = new SessionDetailModel();
                 sessionDetailModel.setSessionID(sessionModel.getSessionId());
+                sessionDetailModel.setEmployeeName(employee.getNAME());
                 sessionDetailModel.setEmployeeNo(employee.getEMPLID());
                 sessionDetailModel.setMedicalRecordNo(employee.getAKU_MRNO());
                 sessionDetailModel.setStatusID(EmployeeSessionState.ENROLLED.canonicalForm());
@@ -332,16 +335,19 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
                     @Override
                     public void requestDataResponse(EmployeeWrapper webResponse) {
 
+
                         if (webResponse.getAKU_WA_DEPT_EMPS().getEMPLOYEE() != null && !webResponse.getAKU_WA_DEPT_EMPS().getEMPLOYEE().isEmpty()) {
+                            List<EMPLOYEE> employeeList = KotlinScriptsEHS.INSTANCE.sortEmployeeArray(webResponse.getAKU_WA_DEPT_EMPS().getEMPLOYEE());
+
                             arrData.clear();
                             if (isFulltime) {
-                                for (EMPLOYEE employee : webResponse.getAKU_WA_DEPT_EMPS().getEMPLOYEE()) {
+                                for (EMPLOYEE employee : employeeList) {
                                     if (employee.getFULLTIME_PARTTIME().equalsIgnoreCase("F")) {
                                         arrData.add(employee);
                                     }
                                 }
                             } else {
-                                for (EMPLOYEE employee : webResponse.getAKU_WA_DEPT_EMPS().getEMPLOYEE()) {
+                                for (EMPLOYEE employee : employeeList) {
                                     if (employee.getFULLTIME_PARTTIME().equalsIgnoreCase("P")) {
                                         arrData.add(employee);
                                     }
