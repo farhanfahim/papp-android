@@ -10,7 +10,8 @@
     <RelativeLayout
         android:id="@+id/contParent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
 
         <edu.aku.ehs.widget.AnyTextView
@@ -233,6 +234,80 @@
 
 
     </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/contEmailOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x10dp"
+        android:layout_marginRight="@dimen/x10dp"
+        android:gravity="center"
+        android:visibility="gone">
+
+
+        <info.hoang8f.widget.FButton
+            android:layout_width="0dp"
+            android:layout_height="@dimen/x25dp"
+            android:layout_margin="@dimen/x10dp"
+            android:layout_weight="1"
+            android:text="Department Email"
+            android:textColor="@color/c_white"
+            android:textSize="@dimen/s8"
+            app:cornerRadius="@dimen/x10dp"
+            app:fButtonColor="@color/fbutton_color_turquoise"
+            app:shadowColor="#6000"
+            app:shadowEnabled="true"
+            app:shadowHeight="2dp" />
+
+
+        <info.hoang8f.widget.FButton
+            android:layout_width="0dp"
+            android:layout_height="@dimen/x25dp"
+            android:layout_margin="@dimen/x10dp"
+            android:layout_weight="1"
+            android:text="Individual Email"
+            android:textColor="@color/c_white"
+            android:textSize="@dimen/s8"
+            app:cornerRadius="@dimen/x10dp"
+            app:fButtonColor="@color/fbutton_color_turquoise"
+            app:shadowColor="#6000"
+            app:shadowEnabled="true"
+            app:shadowHeight="2dp" />
+
+
+        <info.hoang8f.widget.FButton
+            android:layout_width="0dp"
+            android:layout_height="@dimen/x25dp"
+            android:layout_margin="@dimen/x10dp"
+            android:layout_weight="1"
+            android:text="Department Reminder"
+            android:textColor="@color/c_white"
+            android:textSize="@dimen/s8"
+            app:cornerRadius="@dimen/x10dp"
+            app:fButtonColor="@color/fbutton_color_turquoise"
+            app:shadowColor="#6000"
+            app:shadowEnabled="true"
+
+            app:shadowHeight="2dp" />
+
+
+        <info.hoang8f.widget.FButton
+            android:layout_width="0dp"
+            android:layout_height="@dimen/x25dp"
+            android:layout_margin="@dimen/x10dp"
+            android:layout_weight="1"
+            android:text="Individual Reminder"
+            android:textColor="@color/c_white"
+            android:textSize="@dimen/s8"
+            app:cornerRadius="@dimen/x10dp"
+            app:fButtonColor="@color/fbutton_color_turquoise"
+            app:shadowColor="#6000"
+            app:shadowEnabled="true"
+            app:shadowHeight="2dp" />
+
+    </LinearLayout>
+
 
 </LinearLayout>
 

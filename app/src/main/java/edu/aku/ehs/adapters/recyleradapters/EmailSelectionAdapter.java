@@ -3,7 +3,6 @@ package edu.aku.ehs.adapters.recyleradapters;
 import android.graphics.drawable.TransitionDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
@@ -21,7 +20,6 @@ import edu.aku.ehs.R;
 import edu.aku.ehs.activities.BaseActivity;
 import edu.aku.ehs.callbacks.OnItemClickListener;
 import edu.aku.ehs.enums.EmployeeSessionState;
-import edu.aku.ehs.fragments.SessionDetailFragment;
 import edu.aku.ehs.helperclasses.Helper;
 import edu.aku.ehs.helperclasses.StringHelper;
 import edu.aku.ehs.helperclasses.ui.helper.AnimationHelper;
@@ -32,7 +30,7 @@ import static android.view.View.VISIBLE;
 
 /**
  */
-public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdapter.ViewHolder> {
+public class EmailSelectionAdapter extends RecyclerView.Adapter<EmailSelectionAdapter.ViewHolder> {
 
 
     private final OnItemClickListener onItemClick;
@@ -43,7 +41,7 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
     private BaseActivity activity;
     private ArrayList<SessionDetailModel> arrData;
 
-    public SessionDetailAdapter(BaseActivity activity, ArrayList<SessionDetailModel> arrData, OnItemClickListener onItemClickListener) {
+    public EmailSelectionAdapter(BaseActivity activity, ArrayList<SessionDetailModel> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.filteredData = arrData;
         this.activity = activity;
@@ -73,6 +71,8 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
 
 
         holder.imgViewProfile.setVisibility(View.GONE);
+        holder.btnDelete.setVisibility(View.GONE);
+        holder.btnSchedule.setVisibility(View.GONE);
 
         if (StringHelper.checkNotNullAndNotEmpty(model.getGender())) {
             if (model.getGender().equalsIgnoreCase("M")) {
@@ -114,24 +114,24 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
 
         switch (model.getStatusEnum()) {
             case ENROLLED:
-                showOptions(holder);
+//                showOptions(holder);
                 setStatusColor(holder, R.color.colorPrimaryDark);
                 break;
             case SCHEDULED:
-                showOptions(holder);
+//                showOptions(holder);
                 setStatusColor(holder, R.color.fbutton_color_midnight_blue);
                 break;
             case INPROGRESS:
-                hideOptions(holder);
+//                hideOptions(holder);
                 setStatusColor(holder, R.color.base_amber);
                 break;
             case COMPLETED:
-                holder.imgViewProfile.setVisibility(VISIBLE);
-                hideOptions(holder);
+//                holder.imgViewProfile.setVisibility(VISIBLE);
+//                hideOptions(holder);
                 setStatusColor(holder, android.R.color.holo_green_dark);
                 break;
             case CANCELLED:
-                hideOptions(holder);
+//                hideOptions(holder);
                 setStatusColor(holder, R.color.red_resistant);
                 break;
         }
@@ -154,10 +154,6 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
         }
 
 
-        if (SessionDetailFragment.isSelectingEmployeesForSchedule) {
-            holder.btnDelete.setVisibility(View.GONE);
-            holder.btnSchedule.setVisibility(View.GONE);
-        }
 
 
         holder.txtFullTimePartTime.setText(model.getFullTimePartTimeDesc());
@@ -181,17 +177,8 @@ public class SessionDetailAdapter extends RecyclerView.Adapter<SessionDetailAdap
     }
 
     private void setListener(final ViewHolder holder, final SessionDetailModel model) {
-        holder.btnSchedule.setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
-        holder.btnDelete.setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
         holder.contListItem.setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
-        holder.imgViewProfile.setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
-//        holder.stepView.setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
-        holder.stepView.setOnTouchListener((view, motionEvent) -> {
-            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                onItemClick.onItemClick(holder.getAdapterPosition(), model, view);
-                return true;
-            } else return false;
-        });
+
     }
 
 

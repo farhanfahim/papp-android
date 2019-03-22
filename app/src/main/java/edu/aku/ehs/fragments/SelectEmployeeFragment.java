@@ -39,9 +39,8 @@ import edu.aku.ehs.enums.SearchByType;
 import edu.aku.ehs.enums.SelectEmployeeActionType;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
 import edu.aku.ehs.helperclasses.DateHelper;
-import edu.aku.ehs.helperclasses.KotlinScriptsEHS;
+import edu.aku.ehs.helperclasses.kotlinhelper.KotlinScriptsEHS;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
-import edu.aku.ehs.managers.DateManager;
 import edu.aku.ehs.managers.retrofit.GsonFactory;
 import edu.aku.ehs.managers.retrofit.WebServices;
 import edu.aku.ehs.models.SessionDetailModel;
@@ -292,6 +291,7 @@ public class SelectEmployeeFragment extends BaseFragment implements OnItemClickL
                 sessionDetailModel.setSessionID(sessionModel.getSessionId());
                 sessionDetailModel.setEmployeeName(employee.getNAME());
                 sessionDetailModel.setEmployeeNo(employee.getEMPLID());
+                sessionDetailModel.setEmailAddress(employee.getEMAIL_ADDR());
                 sessionDetailModel.setMedicalRecordNo(employee.getAKU_MRNO());
                 sessionDetailModel.setStatusID(EmployeeSessionState.ENROLLED.canonicalForm());
                 sessionDetailModel.setDepartmentID(employee.getDEPTID());

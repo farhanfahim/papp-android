@@ -34,7 +34,7 @@ import edu.aku.ehs.enums.BaseURLTypes;
 import edu.aku.ehs.enums.SearchByType;
 import edu.aku.ehs.enums.SelectEmployeeActionType;
 import edu.aku.ehs.fragments.abstracts.BaseFragment;
-import edu.aku.ehs.helperclasses.KotlinScriptsEHS;
+import edu.aku.ehs.helperclasses.kotlinhelper.KotlinScriptsEHS;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
 import edu.aku.ehs.libraries.maskformatter.MaskFormatter;
 import edu.aku.ehs.managers.retrofit.WebServices;

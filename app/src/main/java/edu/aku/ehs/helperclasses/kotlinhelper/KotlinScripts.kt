@@ -1,4 +1,4 @@
-package edu.aku.ehs.helperclasses
+package edu.aku.ehs.helperclasses.kotlinhelper
 
 import android.view.View
 import edu.aku.ehs.models.peoplesoft.department.DEPT

@@ -43,17 +43,16 @@ public class WebServiceConstants {
 
     public static final String BASE_URL_LOGIN = "https://userauthentication.aku.edu/api/";
     public static final String BASE_URL_EMAIL_VALIDATION = "https://userauthentication.aku.edu/api/";
+    public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapi.aku.edu/getimage?path=";
+
 
 
     // UAT
-//    public static final String BASE_URL = "http://ehsapi.aku.edu/api/";
-//    public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapiuat.aku.edu/getimage?path=";
+    public static final String BASE_URL = "http://ehsapi.aku.edu/api/";
 //    public static final String WS_AKU_DEPT_EMP_GET_BASE_URL = "https://uerpdmo.aku.edu/PSIGW/RESTListeningConnector/PSFT_HR/AKU_DEPT_EMPS_GET.v1/";
 
     // LIVE
-    public static final String GETIMAGE_BASE_URL = "https://familyhifazatmobileapi.aku.edu/getimage?path=";
-//    public static final String BASE_URL = "http://ehsapi.aku.edu/api/";
-    public static final String BASE_URL = "https://ehsliveapi.aku.edu/api/";
+//    public static final String BASE_URL = "https://ehsliveapi.aku.edu/api/";
     public static final String WS_AKU_DEPT_EMP_GET_BASE_URL = "https://erphweb.aku.edu/PSIGW/RESTListeningConnector/PSFT_HR/AKU_DEPT_EMPS_GET.v1/";
 
 

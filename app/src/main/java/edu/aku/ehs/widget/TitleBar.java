@@ -250,7 +250,12 @@ public class TitleBar extends RelativeLayout {
 //            txDate.setText("");
 //        }
 
-        txDate.setText("Scheduled for: " + sessionDetailModel.getDisplayScheduledDTTM());
+
+        if (StringHelper.isNullOrEmpty(sessionDetailModel.getDisplayScheduledDTTM())) {
+            txDate.setVisibility(GONE);
+        } else {
+            txDate.setText("Scheduled for: " + sessionDetailModel.getDisplayScheduledDTTM());
+        }
 
 
         if (sessionDetailModel.getHasLabResult().equalsIgnoreCase("Y")) {

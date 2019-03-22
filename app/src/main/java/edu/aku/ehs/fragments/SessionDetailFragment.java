@@ -240,12 +240,15 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
                 SearchSendingModel searchSendingModel = new SearchSendingModel();
                 searchSendingModel.setSessionID(sessionModel.getSessionId());
                 getSessionEmployeesCall(searchSendingModel);
+            } else {
+                unFilterEnrolledData();
             }
         } else {
             SearchSendingModel searchSendingModel = new SearchSendingModel();
             searchSendingModel.setSessionID(sessionModel.getSessionId());
             getSessionEmployeesCall(searchSendingModel);
         }
+
 
     }
 
@@ -467,11 +470,12 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
             case R.id.btnAddEmail:
 
                 if (arrData.isEmpty()) {
-                    UIHelper.showShortToastInCenter(getContext(), "Please add employees first");
+                    UIHelper.showShortToastInCenter(getContext(), "Please add employees in this session");
                     return;
                 }
 
-                getBaseActivity().addDockableFragment(EmailFragment.newInstance(sessionModel, arrData), false);
+//                getBaseActivity().addDockableFragment(EmailFragment.newInstance(sessionModel, arrData), false);
+                getBaseActivity().addDockableFragment(EmailSelectionPagerFragment.newInstance(sessionModel, arrData), false);
 
                 break;
             case R.id.btnAddSchedule:
@@ -485,7 +489,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
             case R.id.btnGetLabs:
 
                 if (arrData.isEmpty()) {
-                    UIHelper.showShortToastInCenter(getContext(), "Please add employees first");
+                    UIHelper.showShortToastInCenter(getContext(), "Please add employees in this session");
                     return;
                 }
 
@@ -498,7 +502,7 @@ public class SessionDetailFragment extends BaseFragment implements OnItemClickLi
 
             case R.id.fab: {
                 if (getSelectedEmployeesArray(EmployeeSessionState.SCHEDULED).size() < 1) {
-                    UIHelper.showShortToastInCenter(getContext(), "Please select employee first");
+                    UIHelper.showShortToastInCenter(getContext(), "Please add employees in this session");
                     return;
                 } else {
                     pickScheduleDate(true, null, EmployeeSessionState.SCHEDULED);

@@ -88,6 +88,9 @@ public class SessionDetailModel {
     @SerializedName("EmployeeName")
     private String EmployeeName;
     @Expose
+    @SerializedName("EmailAddress")
+    private String EmailAddress;
+    @Expose
     @SerializedName("MedicalRecordNo")
     private String MedicalRecordNo;
     @Expose
@@ -125,9 +128,17 @@ public class SessionDetailModel {
     }
 
     public void setSelected(boolean selected) {
-        isSelected = selected;
+        this.isSelected = !StringHelper.isNullOrEmpty(getEmailAddress()) && selected;
     }
 
+
+    public String getEmailAddress() {
+        return EmailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        EmailAddress = emailAddress;
+    }
 
     public void setHasMetabolicSyndrome(String hasMetabolicSyndrome) {
         HasMetabolicSyndrome = hasMetabolicSyndrome;

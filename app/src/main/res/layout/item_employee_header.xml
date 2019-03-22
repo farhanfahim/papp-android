@@ -48,7 +48,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:gravity="center"
-                        android:maxLines="2"
+                        android:maxLines="1"
                         android:padding="@dimen/x3dp"
                         android:text="Employee Name"
                         android:textColor="@color/txtBlue"
