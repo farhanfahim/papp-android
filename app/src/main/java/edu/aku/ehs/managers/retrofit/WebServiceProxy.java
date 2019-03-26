@@ -5,14 +5,10 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 
 import edu.aku.ehs.constatnts.WebServiceConstants;
-import edu.aku.ehs.models.peoplesoft.department.DepartmentWrapper;
-import edu.aku.ehs.models.peoplesoft.employee.EmployeeWrapper;
 import edu.aku.ehs.models.wrappers.WebResponse;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
@@ -70,20 +66,6 @@ public interface WebServiceProxy {
     @GET(WebServiceConstants.WS_KEY_GET_TOKEN)
     Call<String> getToken();
 
-
-    @Headers(WebServiceConstants.WS_TOKEN_CONSTANT)
-    @GET(WebServiceConstants.WS_AKU_DEPT_EMP_PART)
-    Call<EmployeeWrapper> getEmpl(
-            @Path("type") String type,
-            @Path("value") String value
-    );
-
-    @Headers(WebServiceConstants.WS_TOKEN_CONSTANT)
-    @GET(WebServiceConstants.WS_AKU_DEPT_EMP_PART)
-    Call<DepartmentWrapper> getDept(
-            @Path("type") String type,
-            @Path("value") String value
-    );
 
     @GET(WebServiceConstants.WS_KEY_AUTHENTICATE_USER)
     Call<Object> authenticateUser(

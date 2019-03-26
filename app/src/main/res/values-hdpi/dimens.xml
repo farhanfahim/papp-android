@@ -262,6 +262,8 @@
     <dimen name="x320dp">320dp</dimen>
     <dimen name="x340dp">340dp</dimen>
     <dimen name="x350dp">350dp</dimen>
+    <dimen name="x430dp">430dp</dimen>
+    <dimen name="x500dp">500dp</dimen>
 
 
     <dimen name="s1_">-1sp</dimen>

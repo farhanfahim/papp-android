@@ -1,9 +1,6 @@
 package edu.aku.ehs.helperclasses.kotlinhelper
 
 import android.view.View
-import edu.aku.ehs.models.peoplesoft.department.DEPT
-import edu.aku.ehs.models.peoplesoft.employee.EMPLOYEE
-
 
 /**
  * KOTLIN Scripts class, use this class to write KOTLIN scripts only to perform data or UI operation.
@@ -44,17 +41,11 @@ import edu.aku.ehs.models.peoplesoft.employee.EMPLOYEE
  */
 
 
-object KotlinScriptsEHS {
+object KotlinScriptsForProject {
 
-    fun sortDeptArray(arrDept: List<DEPT>): List<DEPT> {
-        return arrDept.sortedWith(compareBy { it.descr })
-    }
-
-
-    fun sortEmployeeArray(arrDept: List<EMPLOYEE>): List<EMPLOYEE> {
-        return arrDept.sortedWith(compareBy { it.name })
-    }
-
+//    fun sortDeptArray(arrDept: List<DEPT>): List<DEPT> {
+//        return arrDept.sortedWith(compareBy { it.descr })
+//    }
 }
 
 

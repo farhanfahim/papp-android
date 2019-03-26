@@ -12,9 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/containerTitlebar1"
-        android:visibility="gone">
+        android:visibility="visible">
 
-        <include layout="@layout/item_employee_header" />
 
     </RelativeLayout>
 
@@ -57,7 +56,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:singleLine="true"
-            android:text="Family Hifazat"
+            android:text="Your Title"
             android:textColor="#fff"
             android:textSize="@dimen/s15"
             app:typeface="@string/font_bold" />

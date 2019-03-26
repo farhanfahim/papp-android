@@ -22,7 +22,6 @@ import edu.aku.ehs.activities.HomeActivity;
 import edu.aku.ehs.enums.EmployeeSessionState;
 import edu.aku.ehs.helperclasses.StringHelper;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
-import edu.aku.ehs.models.SessionDetailModel;
 
 
 /**
@@ -47,18 +46,6 @@ public class TitleBar extends RelativeLayout {
     private TextView txtClearAll;
 
     private LinearLayout containerTitlebar1;
-
-    AnyTextView txtEmployeeName;
-    AnyTextView txtEmployeeGender;
-    AnyTextView txtEmployeeAge;
-    AnyTextView txtMRN;
-    AnyTextView txtEmployeeID;
-    AnyTextView txtDepartmentName;
-    AnyTextView txtStatus;
-    RoundKornerRelativeLayout contStatus;
-    AnyTextView txDate;
-    StepperIndicator stepView;
-
 
     public TitleBar(Context context) {
         super(context);
@@ -96,26 +83,6 @@ public class TitleBar extends RelativeLayout {
         containerTitlebar1 = findViewById(R.id.containerTitlebar1);
         contDropDown = findViewById(R.id.contDropDown);
 
-
-        txtEmployeeName = findViewById(R.id.txtEmployeeName);
-
-        txtEmployeeGender = findViewById(R.id.txtEmployeeGender);
-
-        txtEmployeeAge = findViewById(R.id.txtEmployeeAge);
-
-        txtMRN = findViewById(R.id.txtMRN);
-
-        txtEmployeeID = findViewById(R.id.txtEmployeeID);
-
-        txtDepartmentName = findViewById(R.id.txtDepartmentName);
-
-        txtStatus = findViewById(R.id.txtStatus);
-
-        contStatus = findViewById(R.id.contStatus);
-
-        txDate = findViewById(R.id.txDate);
-
-        stepView = findViewById(R.id.stepView);
 
 
     }
@@ -214,85 +181,6 @@ public class TitleBar extends RelativeLayout {
         this.btnRight1.setOnClickListener(onClickListener);
     }
 
-    public void setEmployeeHeader(final SessionDetailModel sessionDetailModel, Context context) {
-
-
-        if (sessionDetailModel == null) {
-            contDropDown.setVisibility(GONE);
-            UIHelper.showToast(context, "No Employee selected.");
-            return;
-        }
-
-        contDropDown.setVisibility(VISIBLE);
-
-
-        txtEmployeeName.setText(sessionDetailModel.getEmployeeName());
-        txtStatus.setText(sessionDetailModel.getStatusID());
-        txtEmployeeAge.setText(sessionDetailModel.getAge() + " Y");
-        txtMRN.setText(sessionDetailModel.getMedicalRecordNo());
-        txtEmployeeID.setText(sessionDetailModel.getEmployeeNo());
-        txtDepartmentName.setText(sessionDetailModel.getDepartmentName());
-
-
-        if (StringHelper.checkNotNullAndNotEmpty(sessionDetailModel.getGender())) {
-            if (sessionDetailModel.getGender().equalsIgnoreCase("M")) {
-                txtEmployeeGender.setText("Male");
-            } else {
-                txtEmployeeGender.setText("Female");
-            }
-        } else {
-            txtEmployeeGender.setText("N/A");
-        }
-
-
-//        if (sessionDetailModel.getStatusEnum() == EmployeeSessionState.SCHEDULED || sessionDetailModel.getStatusEnum() == EmployeeSessionState.INPROGRESS) {
-//        } else {
-//            txDate.setText("");
-//        }
-
-
-        if (StringHelper.isNullOrEmpty(sessionDetailModel.getDisplayScheduledDTTM())) {
-            txDate.setVisibility(GONE);
-        } else {
-            txDate.setText("Scheduled for: " + sessionDetailModel.getDisplayScheduledDTTM());
-        }
-
-
-        if (sessionDetailModel.getHasLabResult().equalsIgnoreCase("Y")) {
-            if (sessionDetailModel.getStatusID().equalsIgnoreCase(EmployeeSessionState.COMPLETED.canonicalForm())) {
-                stepView.setCurrentStep(2);
-            } else {
-                stepView.setCurrentStep(1);
-            }
-        } else {
-            stepView.setCurrentStep(0);
-        }
-
-
-        switch (sessionDetailModel.getStatusEnum()) {
-            case ENROLLED:
-                setStatusColor(R.color.colorPrimaryDark);
-                break;
-            case SCHEDULED:
-                setStatusColor(R.color.fbutton_color_midnight_blue);
-                break;
-            case INPROGRESS:
-                setStatusColor(R.color.base_amber);
-                break;
-            case COMPLETED:
-                setStatusColor(android.R.color.holo_green_dark);
-                break;
-            case CANCELLED:
-                setStatusColor(R.color.red_resistant);
-                break;
-        }
-
-    }
-
-    private void setStatusColor(int colorID) {
-        contStatus.setBackgroundColor(getContext().getColor(colorID));
-        txtStatus.setTextColor(getContext().getColor(colorID));
-    }
 
 
     public void setRightButton(int drawable, OnClickListener onClickListener, int colorToTint) {

@@ -86,59 +86,6 @@ public class WebServiceFactory {
     }
 
 
-    public static WebServiceProxy getInstancePACSURL(final String _token, final String bearerToken) {
-
-        if (retrofitPACSViewer == null) {
-
-//            Gson gson = new GsonBuilder()
-//                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-//                    .create();
-
-
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-            // set your desired log level
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-            httpClient.connectTimeout(120, TimeUnit.SECONDS);
-            httpClient.readTimeout(121, TimeUnit.SECONDS);
-
-
-//             add your other interceptors …
-            httpClient.addInterceptor(new Interceptor() {
-
-                @Override
-                public Response intercept(Chain chain) throws IOException {
-                    Request original = chain.request();
-                    Request.Builder requestBuilder = original.newBuilder();
-
-                    requestBuilder.addHeader("_token", _token + "");
-                    requestBuilder.addHeader("Authorization", "Bearer " + WebServices.getBearerToken());
-                    requestBuilder.addHeader("Requestor", "aku.edu");
-
-                    // Request customization: add request headers
-
-                    Request request = requestBuilder.build();
-                    return chain.proceed(request);
-
-                }
-            });
-
-
-            // add logging as last interceptor
-//            httpClient.addNetworkInterceptor(interceptor).addInterceptor(interceptor);  // <-- this is the important line!
-            httpClient.addInterceptor(interceptor);  // <-- this is the important line!
-            retrofitPACSViewer = new Retrofit.Builder()
-                    .baseUrl(WebServiceConstants.PACS_VIEWER_URL)
-                    .addConverterFactory(GsonConverterFactory.create(GsonFactory.getSimpleGson()))
-                    .client(httpClient.build())
-                    .build();
-
-        }
-
-        return retrofitPACSViewer.create(WebServiceProxy.class);
-    }
-
 
     public static WebServiceProxy getInstanceXML() {
 

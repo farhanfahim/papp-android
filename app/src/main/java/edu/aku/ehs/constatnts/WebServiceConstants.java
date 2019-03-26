@@ -57,12 +57,8 @@ public class WebServiceConstants {
 
 
 
-
-    //
-    public static String PACS_VIEWER_URL = "https://pacsviewer.aku.edu/api/PACSViewer/";
-
     public static final String WS_KEY_GET_TOKEN = "getToken";
-    public static final String _token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJKV1RTZWNyZXRLZXkiOiJHUURzdGNLc3gwTkhqUE91WE9ZZzVNYmVKMVhUMHVGaXdEVnZWQnJrTW5NIiwiQVBQIjoiRUhTIn0.FnFfCEGEN1o-Oj71a1_t8phbV5hzL19FqURXQ2R8VUU";
+    public static final String _token = "-Oj71a1_t8phbV5hzL19FqURXQ2R8VUU";
 
     // People soft
     public static final String WS_TOKEN_CONSTANT = "Authorization: Basic QUtVX1dBUE1fUkVTVF9FTVBfREVQVDo5N0FBNUI0QS0zNzEwLTRFREYtOTQxMS02QjVEQTlEMDBEQ0U=";

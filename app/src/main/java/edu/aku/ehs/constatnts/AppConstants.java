@@ -111,7 +111,7 @@ public class AppConstants {
     /**
      * File Name initials if user download the pdf
      */
-    public static String FILE_NAME = "AKUH-PatientReport";
+    public static String FILE_NAME = "Demo-App";
 
 
     /**

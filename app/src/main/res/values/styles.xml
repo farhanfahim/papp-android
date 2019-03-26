@@ -46,13 +46,6 @@
     </style>
 
 
-    <style name="Item.padding" parent="Theme.AppCompat">
-        <item name="android:paddingRight">@dimen/x4dp</item>
-        <item name="android:paddingLeft">@dimen/x4dp</item>
-        <item name="android:paddingBottom">@dimen/x2dp</item>
-        <item name="android:paddingTop">@dimen/x2dp</item>
-    </style>
-
     <style name="Item.padding_form_field" parent="Theme.AppCompat">
         <item name="android:paddingRight">@dimen/x5dp</item>
         <item name="android:paddingLeft">@dimen/x5dp</item>
@@ -75,16 +68,6 @@
         // Unchecked
         <item name="colorControlActivated">@color/colorPrimaryDark</item>
         // Checked
-    </style>
-
-
-    <style name="RadioButtonStyle" parent="AppBaseTheme">
-        <item name="colorControlNormal">@color/c_white</item>
-        // unchecked
-        <item name="colorControlActivated">@color/base_amber</item>
-        // checked
-        <item name="android:textColorSecondary">@color/c_white</item>
-        // text color
     </style>
 
 

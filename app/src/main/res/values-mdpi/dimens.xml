@@ -401,7 +401,8 @@
     <dimen name="x398dp">298.5dp</dimen>
     <dimen name="x399dp">299.25dp</dimen>
     <dimen name="x400dp">300.0dp</dimen>
-
+    <dimen name="x430dp">322.5dp</dimen>
+    <dimen name="x500dp">375dp</dimen>
     <integer name="bottomsheet_grid_columns">2</integer>
 
 

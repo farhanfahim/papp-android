@@ -6,6 +6,6 @@ package edu.aku.ehs.constatnts;
 
 public class Events {
 
-    public static final int ON_EMPLOYEES_SELECTED_FOR_EMAIL = 100;
+    public static final int ON_PROFILE_UPDATED = 100;
 
 }

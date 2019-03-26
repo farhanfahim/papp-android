@@ -860,7 +860,8 @@
     <dimen name="x398dp">597.0dp</dimen>
     <dimen name="x399dp">598.5dp</dimen>
     <dimen name="x400dp">600.0dp</dimen>
-
+    <dimen name="x430dp">645.0dp</dimen>
+    <dimen name="x500dp">750dp</dimen>
     <!--Font Dimens-->
     <dimen name="s1">1.5sp</dimen>
     <dimen name="s2">3sp</dimen>

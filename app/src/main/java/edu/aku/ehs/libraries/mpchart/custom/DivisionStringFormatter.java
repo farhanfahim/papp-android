@@ -6,15 +6,15 @@ import android.content.Context;
 import edu.aku.ehs.R;
 import edu.aku.ehs.libraries.mpchart.components.AxisBase;
 import edu.aku.ehs.libraries.mpchart.formatter.IAxisValueFormatter;
-import edu.aku.ehs.models.StatsModel;
+import edu.aku.ehs.models.TupleModel;
 
 public class DivisionStringFormatter implements IAxisValueFormatter {
 
 
     private final Context mContext;
-    private final StatsModel statsModel;
+    private final TupleModel statsModel;
 
-    public DivisionStringFormatter(Context mContext, StatsModel statsModel) {
+    public DivisionStringFormatter(Context mContext, TupleModel statsModel) {
         this.mContext = mContext;
         this.statsModel = statsModel;
     }
@@ -22,12 +22,12 @@ public class DivisionStringFormatter implements IAxisValueFormatter {
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
         int v = (int) value;
-        if (v == 0) {
-            return mContext.getResources().getStringArray(R.array.stats_xAxis)[v];
-        } else if (statsModel.getListDivisionCount().size() >= v) {
-            return statsModel.getListDivisionCount().get(v - 1).getDivisionName();
-        } else {
+//        if (v == 0) {
+//            return mContext.getResources().getStringArray(R.array.stats_xAxis)[v];
+//        } else if (statsModel.getListDivisionCount().size() >= v) {
+//            return statsModel.getListDivisionCount().get(v - 1).getDivisionName();
+//        } else {
             return "Unknown";
-        }
+//        }
     }
 }

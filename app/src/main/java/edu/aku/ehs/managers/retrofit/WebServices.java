@@ -16,8 +16,6 @@ import edu.aku.ehs.enums.FileType;
 import edu.aku.ehs.helperclasses.Helper;
 import edu.aku.ehs.helperclasses.ui.helper.UIHelper;
 import edu.aku.ehs.managers.FileManager;
-import edu.aku.ehs.models.peoplesoft.department.DepartmentWrapper;
-import edu.aku.ehs.models.peoplesoft.employee.EmployeeWrapper;
 import edu.aku.ehs.models.wrappers.WebResponse;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -362,82 +360,7 @@ public class WebServices {
         }
 
         return webResponseCall;
-
     }
-
-
-    public void webServiceGetEmployees(String type, String value,
-                                       IRequestWebResponseEmployeeList iRequestWebResponseEmployeeList) {
-        try {
-            if (Helper.isNetworkConnected(mContext, true)) {
-                WebServiceFactory.getInstanceXML().getEmpl(type, value).enqueue(new Callback<EmployeeWrapper>() {
-                    @Override
-                    public void onResponse(Call<EmployeeWrapper> call, Response<EmployeeWrapper> response) {
-                        dismissDialog();
-                        if (response.body() == null || response.body().getAKU_WA_DEPT_EMPS() == null) {
-                            iRequestWebResponseEmployeeList.onError(call);
-//                            UIHelper.showShortToastInCenter(mContext, "Something went wrong");
-                        } else {
-                            iRequestWebResponseEmployeeList.requestDataResponse(response.body());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<EmployeeWrapper> call, Throwable t) {
-                        iRequestWebResponseEmployeeList.onError(call);
-                        UIHelper.showShortToastInCenter(mContext, "Something went wrong, Please check your internet connection.");
-                        dismissDialog();
-
-                    }
-                });
-            } else {
-                dismissDialog();
-            }
-
-        } catch (Exception e) {
-            dismissDialog();
-            e.printStackTrace();
-
-        }
-
-    }
-
-
-    public void webServiceGetDeptDiv(String type, String value, IRequestWebResponseDeptDivList iRequestWebResponseDeptDivList) {
-        try {
-            if (Helper.isNetworkConnected(mContext, true)) {
-                WebServiceFactory.getInstanceXML().getDept(type, value).enqueue(new Callback<DepartmentWrapper>() {
-                    @Override
-                    public void onResponse(Call<DepartmentWrapper> call, Response<DepartmentWrapper> response) {
-                        dismissDialog();
-                        if (response.body() == null || response.body().getAKU_WA_DEPT_EMPS() == null) {
-                            iRequestWebResponseDeptDivList.onError(call);
-//                            UIHelper.showShortToastInCenter(mContext, "Something went wrong");
-                        } else {
-                            iRequestWebResponseDeptDivList.requestDataResponse(response.body());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<DepartmentWrapper> call, Throwable t) {
-                        iRequestWebResponseDeptDivList.onError(call);
-                        UIHelper.showShortToastInCenter(mContext, "Something went wrong, Please check your internet connection.");
-                        dismissDialog();
-
-                    }
-                });
-            } else {
-                dismissDialog();
-            }
-
-        } catch (Exception e) {
-            dismissDialog();
-            e.printStackTrace();
-
-        }
-
-    }
-
 
     public void webServiceAuthenticateUser(String userName, String password, IRequestWebResponseJustObjectCallBack iRequestWebResponseJustObjectCallBack) {
         try {
@@ -579,19 +502,6 @@ public class WebServices {
 
     public interface IRequestWebResponseJustObjectCallBack {
         void requestDataResponse(Object webResponse);
-
-        void onError(Object object);
-    }
-
-
-    public interface IRequestWebResponseEmployeeList {
-        void requestDataResponse(EmployeeWrapper webResponse);
-
-        void onError(Object object);
-    }
-
-    public interface IRequestWebResponseDeptDivList {
-        void requestDataResponse(DepartmentWrapper webResponse);
 
         void onError(Object object);
     }

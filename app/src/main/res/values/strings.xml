@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">EHS</string>
 
-    <string name="table_name">Table</string>
     <!--FONTS-->
 
     <!--<string name="font_regular">HelveticaNeue Light.ttf</string>-->
@@ -12,9 +11,6 @@
     <string name="font_medium">Roboto-Regular_1B</string>
     <!--<string name="font_bold">Roboto-Regular_1B.ttf</string>-->
 
-    <string name="font_micross">micross.ttf</string>
-    <string name="font_san_regular">cour.ttf</string>
-
     <string name="pick_image_intent_text">Choose an image</string>
 
     <!--Side Bar-->
@@ -22,41 +18,27 @@
     <!--Checkout Bar-->
 
     <!--login-->
-    <string name="forgot_password">Forgot Password?</string>
     <!--login-->
 
     <!--SignUp/Edit Profile-->
-    <string name="full_name">Full Name</string>
     <!--SignUp/Edit Profile-->
 
     <!--Login/SignUP-->
-    <string name="mrnNumber">Password</string>
-    <string name="email_address">Email Address</string>
-    <string name="enter_email_address">Enter Email Address</string>
     <!--Common in Login/SignUP-->
 
     <!--verify Number-->
-    <string name="country">Country</string>
-    <string name="we_ll_text_you_code_to_confirm_your_number">We\'ll text you a code to confirm your number</string>
     <!--verify Number-->
 
     <!--common in Signup / verify Number/Edit Profile-->
-    <string name="mobile_number">Mobile Number</string>
     <!--common in Signup / verify Number-->
 
     <!--verification code  -->
-    <string name="enter_verification_code">Enter Verification Code</string>
-    <string name="a_verification_code_has_been_sent_to_your_mobile_phone">A verification code has been sent to your mobile phone</string>
-    <string name="didn_t_get_a_code_yet_wait_for_3_43_seconds">Didn\'t get a code yet? Wait for</string>
-    <string name="resend_code">Resend Code</string>
     <!--verification code-->
 
     <!--fragment feedback-->
-    <string name="enter_your_detail_here">Enter your detail here...</string>
     <!--fragment feedback-->
 
     <!--shopping cart-->
-    <string name="needed_to_reach_minimum_order">needed to reach minimum order.</string>
     <!--shopping cart-->
 
 
@@ -65,9 +47,6 @@
 
     <!--success popup-->
     <string name="title">Title</string>
-    <string name="you_are_all_signed_up">You are all signed up</string>
-    <string name="we_re_glad_you_re_here">We\'re glad you\'re here!</string>
-    <string name="ok">OK</string>
     <!--success popup-->
 
 
@@ -79,91 +58,22 @@
     <string name="no">No</string>
     <!--popup Rating-->
 
-    <string name="generic">Lorem ipsum dolor sit amet, rutrum tempus nascetur parturient ipsum lobortis, vel iaculis posuere leo odio, cum velit amet at vestibulum non, ac eiusmod ornare dictum, in praesent sed. Tincidunt pellentesque. Tellus earum a, wisi tempus suspendisse quam dui adipiscing. Sapien morbi scelerisque vitae sit, molestie suscipit quis cras parturient ipsum, sodales turpis, fusce ultrices quam vestibulum nec sit malesuada. Nonummy ultricies placerat integer vel similique, eu vestibulum volutpat quisque eget, porttitor vulputate morbi quam eros augue, amet turpis, et elit mauris vehicula. Malesuada donec erat, ut penatibus rutrum, amet lectus arcu. Dis suspendisse itaque dis dolor semper, justo amet condimentum nunc nibh quis etiam, luctus diam in enim donec id nam, ante dolor ultrices nam consequat aliquam. Tincidunt aliquam metus nulla eu quam integer, at sem in pellentesque ipsum, libero diam eos iaculis aliquam libero, a per vestibulum felis arcu. Et eros nullam est hymenaeos, libero leo, consequat a vehicula, vitae massa dictumst.
-Ut leo duis, lacus rerum integer in lobortis cursus, montes sodales amet nunc nec nunc justo. Pulvinar turpis lectus et nunc consectetuer, ultrices viverra. Elit adipiscing metus id wisi. Mi nibh sociosqu, odio dignissim fames nisl wisi. Aenean lectus, luctus sit ullamcorper tincidunt, sed pellentesque feugiat in. Fusce aliquam vitae justo risus, ullamcorper donec. Proin amet donec at tristique, diam et justo ipsum nascetur. Lacinia nisl faucibus tempus aliquam ante eu, sit id montes varius. Ligula non, pretium mauris, orci lacus ac fringilla. Sed at.
-Aliquam vitae, eu elit, in luctus nulla nunc ornare sodales tincidunt, libero laoreet accumsan netus, amet nec eros venenatis justo dis sit. Pede pulvinar leo dui eros, habitant erat nunc lectus. Suscipit ligula in cras et, etiam parturient accumsan erat orci neque, phasellus nullam mauris wisi convallis in. Lacinia dapibus sociis aspernatur nibh, sodales pretium arcu, consectetuer ornare metus eros, est accumsan et lorem duis adipiscing, vehicula fusce elementum. Natoque cursus ultricies semper nostra dignissim, eget duis viverra vestibulum, elit eros quis quisque elementum semper massa.
-Enim vitae euismod eu velit pede eu, sodales malesuada sit fermentum ut dictum dictum, justo dui sapien vitae. Justo quisque, commodo potenti nascetur ultrices tellus consequat ut, ligula tristique aliquam dapibus et in quis. Donec nibh arcu vel nonummy. Eget felis. In tellus orci donec, felis porta et dis nibh, tellus dictumst fermentum enim sit nulla praesent. Dolor sed tempor maecenas, vitae auctor tellus bibendum venenatis, mauris turpis blandit, pede risus a elit pulvinar eu proin, eleifend augue anim. Varius posuere pharetra tincidunt, aliquam aliquam luctus voluptatibus dignissim, eu quis. Suspendisse hac imperdiet donec cras id mauris, et sit tempor lobortis, etiam nec volutpat vel eu vitae eros, aliquam at suscipit molestie, platea in wisi feugiat egestas nulla.
-</string>
-
-    <string name="about_us"><b>Family Hifazat</b> is a product of Aga Khan University Hospital Karachi. It provides discounts on medical services as well as patients’ access to their personal health records through web portal and mobile applications.
-        The Family Hifazat <b>“Patient Portal”</b> is secure, confidential and easy to use web portal &amp; mobile apps to provide AKUH patients 24 hour access to their personal health records including diagnostic results, imaging, medications, vaccines and discharge summaries.
-</string>
-
-    <string name="verification_email">Enter 6 digits verification code which has been sent to subscriber\'s registered email address.</string>
-
-    <string name="done">Done</string>
-    <string name="feedback_and_suggestions">Feedback and Suggestions</string>
-    <string name="submit">Submit</string>
     <string name="login">Login</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="confirm">Confirm</string>
-    <string name="cancel">Cancel</string>
     <string name="search">Search</string>
-    <string name="Ok">OK</string>
-    <string name="verificationCode">Verification Code</string>
-    <string name="verifyYourNumber">Verify Your Number</string>
     <string name="areYouSureToLogout">Are you sure you want to Logout?</string>
-    <string name="get_code">Didn\'t receive a code yet?</string>
 
-
-    <string name="country_code">Country Code</string>
 
     <!--<string name="_s_created_group__s" formatted="false"> %s created group with \"%s\"</string>-->
-
-    <string name="add">Add</string>
 
     <string name="typeface_not_found">Typeface %s not found, or could not be loaded. Showing default typeface. </string>
     <string name="assets_fonts_folder">fonts/</string>
 
-    <string name="next">Next</string>
-    <string name="no_search">No search</string>
     <!--<string name="next_build">This feature will be implemented in next build.</string>-->
 
-    <string name="user_id">User ID</string>
-    <string name="date_of_birth">Date of Birth</string>
-    <string name="gender">Gender</string>
-    <string name="cnic_number">CNIC Number</string>
-    <string name="passport_number">Passport Number</string>
-    <string name="landline_number">Landline Number</string>
-    <string name="current_address">Current Address</string>
-    <string name="permanent_address">Permanent Address</string>
-    <string name="current_city">Current City</string>
-    <string name="current_country">Current Country</string>
-    <string name="permanent_country">Permanent Country</string>
-    <string name="permanent_city">Permanent City</string>
-    <string name="mother_name">Mother Name</string>
-    <string name="mr_number">MR Number</string>
-    <string name="card_type">Card Type</string>
-    <string name="relationship">Relationship</string>
-    <string name="cell_phone_number">Cell Phone Number</string>
-    <string name="tag_line">Access to Personal Health Records</string>
-    <string name="save">Save</string>
-    <string name="verification">Verification Code</string>
-    <string name="card_number">Card Number</string>
     <string name="logout_underline"><u>Logout</u></string>
 
     <string name="password">Password</string>
-    <string name="org_name"> Aga Khan University Hospital</string>
-    <string name="org_info"> Stadium Road, Garden, Karimabad,</string>
-    <string name="org_info1"> Kharadar and Hyderabad,</string>
-    <string name="portal_info"> A Portal For Healthcare Providers</string>
     <string name="login_text"> --------------- Log In ---------------</string>
-    <string name="email_text">Dear AKHMCF employee,\n\n
-Employee Health and Wellness and Human Resources are starting an initiative to ensure that all our employees are in their best health possible.\n\n
-We know that early identification and proper treatment of problems such as diabetes, high blood pressure, smoking, depression, decreases the risk of heart disease in the future.\n\n
-To provide this service, we ask you/or your employee to:\n\n
-1.	Get fasting blood tests from AKU lab by showing your AKU ID card/this email printout and package name\n
-2.	Set an appointment with the employee health nurse. The nurse will check your vital signs and ask you some questions. With this information, she will share with you your risk of developing diabetes and heart disease, and if you need to develop healthy habits such as stopping smoking and getting treatment for depression.\n
-3.	Based on your risks, she/he will make a referral for you to see either a family doctor at the CHC or a Family Medicine Consultant to discuss further treatment and plan.\n\n
-This initiative is provided at no cost to you. Your results will remain confidential and will only be discussed with you and the doctor that you are being referred to.\n\n
-We would like to analyze and publish results for the entire group without specific names. If you choose not to have your results be part of this bigger group, please let the nurse know. The nurse will print; have you sign a consent form when you come for your appointment.\n\n
-We hope that this experience informs you about your health and motivates you to take better care of yourself!\n\n
-For any questions, please contact Nurses Shehreen Ali or Arshnoor Barkatali 1490-91 or Dr. Unab Khan at 4842-4843\n\n\n\n
-
-Sincerely,\n\n
-Employee Health and Wellness Team\n\n
-Department of Family Medicine\n\n
-</string>
 
 
 </resources>
