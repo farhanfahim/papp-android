@@ -25,7 +25,7 @@
                 android:layout_below="@id/titlebar"
                 android:layout_centerHorizontal="true" />
 
-            <edu.aku.ehs.widget.TitleBar
+            <com.android.structure.widget.TitleBar
                 android:id="@+id/titlebar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

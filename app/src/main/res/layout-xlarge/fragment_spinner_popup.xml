@@ -25,7 +25,7 @@
             android:orientation="horizontal">
 
 
-            <edu.aku.ehs.widget.AnyTextView
+            <com.android.structure.widget.AnyTextView
                 android:id="@+id/txtTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
                 android:padding="@dimen/x3dp"
                 android:visibility="visible">
 
-                <edu.aku.ehs.widget.AnyEditTextView
+                <com.android.structure.widget.AnyEditTextView
                     android:id="@+id/edtSearchBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
