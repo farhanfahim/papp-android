@@ -2,7 +2,6 @@ package com.android.papp.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,7 @@ import com.android.papp.R;
 import com.android.papp.activities.HomeActivity;
 import com.android.papp.adapters.LoginPagerAdapter;
 import com.android.papp.fragments.abstracts.BaseFragment;
-import com.android.papp.widget.AnyTextView;
-import com.android.papp.widget.CustomViewPager;
+import com.android.papp.widget.AnyEditTextView;
 import com.android.papp.widget.TitleBar;
 
 import butterknife.BindView;
@@ -26,25 +24,28 @@ import butterknife.Unbinder;
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class LoginFragment extends BaseFragment {
+public class LoginCivilianFragment extends BaseFragment {
 
 
     Unbinder unbinder;
-    @BindView(R.id.tabs)
-    TabLayout tabs;
-    @BindView(R.id.viewpager)
-    CustomViewPager viewpager;
-    @BindView(R.id.contLogin)
-    LinearLayout contLogin;
-    @BindView(R.id.txtForgotPassword)
-    AnyTextView txtForgotPassword;
-    private LoginPagerAdapter adapter;
+    @BindView(R.id.edtEmailAddress)
+    AnyEditTextView edtEmailAddress;
+    @BindView(R.id.edtPassword)
+    AnyEditTextView edtPassword;
+    @BindView(R.id.contBtnLogin)
+    LinearLayout contBtnLogin;
+    @BindView(R.id.contFacebookLogin)
+    LinearLayout contFacebookLogin;
+    @BindView(R.id.contTwitterLogin)
+    LinearLayout contTwitterLogin;
+    @BindView(R.id.contSignup)
+    LinearLayout contSignup;
 
-    public static LoginFragment newInstance() {
+    public static LoginCivilianFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        LoginFragment fragment = new LoginFragment();
+        LoginCivilianFragment fragment = new LoginCivilianFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,7 +58,7 @@ public class LoginFragment extends BaseFragment {
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_login;
+        return R.layout.fragment_login_civilian;
     }
 
     @Override
@@ -70,17 +71,8 @@ public class LoginFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setViewPagerAdapter();
-    }
+     }
 
-
-    private void setViewPagerAdapter() {
-        adapter = new LoginPagerAdapter(getChildFragmentManager());
-        viewpager.setAdapter(adapter);
-        viewpager.setPagingEnabled(true);
-        tabs.setupWithViewPager(viewpager);
-
-    }
 
 
 
@@ -108,9 +100,6 @@ public class LoginFragment extends BaseFragment {
     }
 
 
-
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -123,9 +112,5 @@ public class LoginFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.txtForgotPassword)
-    public void onViewClicked() {
-        getBaseActivity().finish();
-        getBaseActivity().openActivity(HomeActivity.class);
-    }
+
 }

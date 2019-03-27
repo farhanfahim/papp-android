@@ -7,7 +7,6 @@ import android.widget.AdapterView;
 
 import com.android.papp.R;
 import com.android.papp.fragments.abstracts.BaseFragment;
-import com.android.papp.libraries.residemenu.ResideMenu;
 import com.android.papp.widget.TitleBar;
 
 public class HomeFragment extends BaseFragment {
@@ -30,7 +29,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_login_v2;
+        return R.layout.fragment_login;
     }
 
     @Override

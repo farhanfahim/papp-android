@@ -6,9 +6,10 @@
     <!--<string name="font_regular">HelveticaNeue Light.ttf</string>-->
     <!--<string name="font_bold">HelveticaNeue Medium.ttf</string>-->
 
-    <string name="font_regular">Roboto-Light_D.ttf</string>
-    <string name="font_bold">Roboto-Medium_2.ttf</string>
-    <string name="font_medium">Roboto-Regular_1B</string>
+    <string name="font_light">Roboto-Light_D.ttf</string>
+    <string name="font_regular">Roboto-Regular_1B</string>
+    <string name="font_medium">Roboto-Medium_2.ttf</string>
+    <string name="font_bold">Roboto-Bold_F.ttf</string>
     <!--<string name="font_bold">Roboto-Regular_1B.ttf</string>-->
 
     <string name="pick_image_intent_text">Choose an image</string>
