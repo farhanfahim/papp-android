@@ -51,7 +51,7 @@
                     android:src="@drawable/family_hifazat_logo_no_padding" />
 
 
-                <com.android.structure.widget.AnyTextView
+                <com.android.papp.widget.AnyTextView
                     android:id="@+id/txtHome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                     android:background="@color/c_white" />
 
 
-                <com.android.structure.widget.AnyTextView
+                <com.android.papp.widget.AnyTextView
                     android:id="@+id/txtCardSubscription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
 
 
 
-                <com.android.structure.widget.AnyTextView
+                <com.android.papp.widget.AnyTextView
                     android:id="@+id/txtPreferences"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
                     android:background="@color/c_white" />
 
 
-                <com.android.structure.widget.AnyTextView
+                <com.android.papp.widget.AnyTextView
                     android:id="@+id/txtAbout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <com.android.structure.widget.AnyTextView
+                    <com.android.papp.widget.AnyTextView
                         android:id="@+id/txtLogout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
