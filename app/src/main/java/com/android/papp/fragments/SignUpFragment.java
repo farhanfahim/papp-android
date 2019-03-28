@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.android.papp.R;
 import com.android.papp.adapters.LoginPagerAdapter;
+import com.android.papp.adapters.SignupPagerAdapter;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.widget.CustomViewPager;
 import com.android.papp.widget.TitleBar;
@@ -35,7 +36,7 @@ public class SignUpFragment extends BaseFragment {
     @BindView(R.id.contLogin)
     LinearLayout contLogin;
 
-    private LoginPagerAdapter adapter;
+    private SignupPagerAdapter adapter;
 
     public static SignUpFragment newInstance() {
 
@@ -72,7 +73,7 @@ public class SignUpFragment extends BaseFragment {
 
 
     private void setViewPagerAdapter() {
-        adapter = new LoginPagerAdapter(getChildFragmentManager());
+        adapter = new SignupPagerAdapter(getChildFragmentManager());
         viewpager.setAdapter(adapter);
         viewpager.setPagingEnabled(true);
         tabs.setupWithViewPager(viewpager);

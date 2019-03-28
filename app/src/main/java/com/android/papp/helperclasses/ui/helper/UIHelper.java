@@ -134,13 +134,13 @@ public class UIHelper {
         builder
                 .setMessage(message)
                 .setCancelable(true)
-                .setNegativeButton("Cancel",
+                .setNegativeButton("No",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
                         })
-                .setPositiveButton("OK", onClickListener);
+                .setPositiveButton("Yes", onClickListener);
 
         if (!title.isEmpty())
             builder.setTitle(title);
