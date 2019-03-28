@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/contBack"
+        android:layout_width="wrap_content"
+        android:layout_gravity="left"
+        android:gravity="center_vertical"
+        android:padding="@dimen/x10dp"
+        android:layout_height="wrap_content">
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/x5dp"
+            android:src="@drawable/img_back_blue"/>
+
+
+
+        <com.android.papp.widget.AnyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back to Login"
+            android:gravity="center"
+            android:textSize="@dimen/s12"
+            android:textColor="@color/txtGrey"
+            app:fontFamily="@string/font_regular"/>
+
+    </LinearLayout>
+
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x10dp"
+                android:src="@drawable/img_logo_white"/>
+
+
+
+            <com.android.papp.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Create your account"
+                android:gravity="center"
+                android:textSize="@dimen/s22"
+                android:layout_marginLeft="@dimen/x10dp"
+                android:layout_marginRight="@dimen/x10dp"
+                android:layout_marginBottom="@dimen/x10dp"
+                android:textColor="@color/c_black"
+                app:fontFamily="@string/font_bold"/>
+
+
+
+            <com.android.papp.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Create your account to get access to the dashboard"
+                android:gravity="center"
+                android:textSize="@dimen/s14"
+                android:layout_marginRight="@dimen/x10dp"
+                android:layout_marginLeft="@dimen/x10dp"
+                android:layout_marginBottom="@dimen/x20dp"
+                android:textColor="@color/txtGrey"
+                app:fontFamily="@string/font_regular"/>
+
+
+
+            <LinearLayout
+                android:id="@+id/contLogin"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:elevation="@dimen/x10dp"
+                android:layout_marginLeft="@dimen/x20dp"
+                android:layout_marginRight="@dimen/x20dp"
+                android:layout_marginBottom="@dimen/x20dp"
+                android:layout_marginTop="@dimen/x10dp"
+                android:background="@color/c_white"
+                android:layout_weight="1">
+
+
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/c_white"
+                    app:tabBackground="@drawable/tab_color_selector"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@color/c_white"
+                    app:tabIndicatorHeight="1px"
+                    app:tabMaxWidth="0dp"
+                    app:tabMode="fixed"
+                    app:tabSelectedTextColor="@color/txtBlack"
+                    app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                    app:tabTextColor="@color/txtGrey" />
+
+                <com.android.papp.widget.CustomViewPager
+                    android:id="@+id/viewpager"
+                    android:background="@color/c_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+
+
+
+
+</LinearLayout>
+
+

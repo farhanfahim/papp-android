@@ -10,9 +10,9 @@ import android.widget.LinearLayout;
 
 import com.android.papp.R;
 import com.android.papp.activities.HomeActivity;
-import com.android.papp.adapters.LoginPagerAdapter;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.widget.AnyEditTextView;
+import com.android.papp.widget.AnyTextView;
 import com.android.papp.widget.TitleBar;
 
 import butterknife.BindView;
@@ -24,7 +24,7 @@ import butterknife.Unbinder;
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class LoginCivilianFragment extends BaseFragment {
+public class LoginDetailFragment extends BaseFragment {
 
 
     Unbinder unbinder;
@@ -40,12 +40,18 @@ public class LoginCivilianFragment extends BaseFragment {
     LinearLayout contTwitterLogin;
     @BindView(R.id.contSignup)
     LinearLayout contSignup;
+    @BindView(R.id.txtOrLoginWith)
+    AnyTextView txtOrLoginWith;
+    @BindView(R.id.contSocialLogin)
+    LinearLayout contSocialLogin;
+    private boolean isLEA;
 
-    public static LoginCivilianFragment newInstance() {
+    public static LoginDetailFragment newInstance(boolean isLEA) {
 
         Bundle args = new Bundle();
 
-        LoginCivilianFragment fragment = new LoginCivilianFragment();
+        LoginDetailFragment fragment = new LoginDetailFragment();
+        fragment.isLEA = isLEA;
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,7 +64,7 @@ public class LoginCivilianFragment extends BaseFragment {
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_login_civilian;
+        return R.layout.fragment_login_detail;
     }
 
     @Override
@@ -71,9 +77,16 @@ public class LoginCivilianFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-     }
 
+        if (isLEA) {
+            contSocialLogin.setVisibility(View.GONE);
+            txtOrLoginWith.setVisibility(View.GONE);
+        } else {
+            contSocialLogin.setVisibility(View.VISIBLE);
+            txtOrLoginWith.setVisibility(View.VISIBLE);
+        }
 
+    }
 
 
     @Override
@@ -113,4 +126,24 @@ public class LoginCivilianFragment extends BaseFragment {
     }
 
 
+    @OnClick({R.id.contBtnLogin, R.id.contFacebookLogin, R.id.contTwitterLogin, R.id.contSignup})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.contBtnLogin:
+                if (isLEA) {
+                    showNextBuildToast();
+                } else {
+                    getBaseActivity().finish();
+                    getBaseActivity().openActivity(HomeActivity.class);
+                }
+                break;
+            case R.id.contFacebookLogin:
+                break;
+            case R.id.contTwitterLogin:
+                break;
+            case R.id.contSignup:
+                getBaseActivity().addDockableFragment(SignUpFragment.newInstance(), true);
+                break;
+        }
+    }
 }

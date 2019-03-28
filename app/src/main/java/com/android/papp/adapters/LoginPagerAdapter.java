@@ -7,8 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
-import com.android.papp.fragments.LoginCivilianFragment;
-import com.android.papp.fragments.LoginFragment;
+import com.android.papp.fragments.LoginDetailFragment;
 
 
 public class LoginPagerAdapter extends FragmentStatePagerAdapter {
@@ -35,8 +34,15 @@ public class LoginPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
+
+            case 0:
+                return LoginDetailFragment.newInstance(false);
+
+            case 1:
+                return LoginDetailFragment.newInstance(true);
+
             default:
-                return LoginCivilianFragment.newInstance();
+                return LoginDetailFragment.newInstance(false);
         }
     }
 

@@ -10,10 +10,8 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.android.papp.R;
-import com.android.papp.activities.HomeActivity;
 import com.android.papp.adapters.LoginPagerAdapter;
 import com.android.papp.fragments.abstracts.BaseFragment;
-import com.android.papp.widget.AnyTextView;
 import com.android.papp.widget.CustomViewPager;
 import com.android.papp.widget.TitleBar;
 
@@ -26,7 +24,7 @@ import butterknife.Unbinder;
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class LoginFragment extends BaseFragment {
+public class SignUpFragment extends BaseFragment {
 
 
     Unbinder unbinder;
@@ -36,15 +34,14 @@ public class LoginFragment extends BaseFragment {
     CustomViewPager viewpager;
     @BindView(R.id.contLogin)
     LinearLayout contLogin;
-    @BindView(R.id.txtForgotPassword)
-    AnyTextView txtForgotPassword;
+
     private LoginPagerAdapter adapter;
 
-    public static LoginFragment newInstance() {
+    public static SignUpFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        LoginFragment fragment = new LoginFragment();
+        SignUpFragment fragment = new SignUpFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,7 +54,7 @@ public class LoginFragment extends BaseFragment {
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_login;
+        return R.layout.fragment_signup;
     }
 
     @Override
@@ -81,7 +78,6 @@ public class LoginFragment extends BaseFragment {
         tabs.setupWithViewPager(viewpager);
 
     }
-
 
 
     @Override
@@ -108,9 +104,6 @@ public class LoginFragment extends BaseFragment {
     }
 
 
-
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -123,8 +116,8 @@ public class LoginFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.txtForgotPassword)
+    @OnClick(R.id.contBack)
     public void onViewClicked() {
-
+        getBaseActivity().onBackPressed();
     }
 }

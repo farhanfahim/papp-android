@@ -171,6 +171,7 @@
 
 
         <com.android.papp.widget.AnyTextView
+            android:id="@+id/txtOrLoginWith"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/x10dp"
@@ -184,6 +185,7 @@
 
 
         <LinearLayout
+            android:id="@+id/contSocialLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
