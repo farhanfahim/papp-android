@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jcminarro.roundkornerlayout.RoundKornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contParentLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/x15dp"
+    android:layout_marginBottom="@dimen/x15dp"
+    android:layout_marginLeft="@dimen/x5dp"
+    android:layout_marginRight="@dimen/x5dp"
+    android:background="@color/c_white"
+    android:elevation="@dimen/x5dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/x5dp"
+    app:corner_radius="@dimen/x20dp">
+
+
+    <com.android.papp.widget.AnyTextView
+        android:id="@+id/txtSpeciality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLength="50"
+        android:layout_marginRight="@dimen/x5dp"
+        android:layout_marginLeft="@dimen/x5dp"
+        android:padding="@dimen/x3dp"
+        android:singleLine="true"
+        android:text="Bullets"
+        android:textColor="@color/txtBlack"
+        android:textSize="@dimen/s12"
+        app:fontFamily="@string/font_regular" />
+
+
+    <ImageView
+        android:id="@+id/imgCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/x5dp"
+        android:src="@drawable/img_cancel" />
+
+
+</com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>

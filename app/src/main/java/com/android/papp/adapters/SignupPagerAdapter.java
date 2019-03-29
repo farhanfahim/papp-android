@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.android.papp.fragments.LoginDetailFragment;
 import com.android.papp.fragments.SignUpCivilianFragment;
+import com.android.papp.fragments.SignUpLEAFragment;
 
 
 public class SignupPagerAdapter extends FragmentStatePagerAdapter {
@@ -40,7 +41,7 @@ public class SignupPagerAdapter extends FragmentStatePagerAdapter {
                 return SignUpCivilianFragment.newInstance();
 
             case 1:
-                return LoginDetailFragment.newInstance(true);
+                return SignUpLEAFragment.newInstance();
 
             default:
                 return SignUpCivilianFragment.newInstance();
