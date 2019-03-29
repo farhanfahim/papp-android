@@ -1,6 +1,5 @@
 package com.android.papp.fragments;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -15,8 +14,8 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.android.papp.R;
-import com.android.papp.activities.HomeActivity;
 import com.android.papp.adapters.recyleradapters.AddDependentsAdapter;
+import com.android.papp.callbacks.OnItemAdd;
 import com.android.papp.callbacks.OnItemClickListener;
 import com.android.papp.constatnts.Constants;
 import com.android.papp.fragments.abstracts.BaseFragment;
@@ -37,7 +36,7 @@ import butterknife.Unbinder;
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class SignUpCivilianFragment extends BaseFragment implements OnItemClickListener {
+public class SignUpCivilianFragment extends BaseFragment implements OnItemClickListener, OnItemAdd {
 
 
     Unbinder unbinder;
@@ -119,8 +118,12 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
         bindRecyclerView();
 
 
-        arrData.clear();
+        if (onCreated) {
+            adapter.notifyDataSetChanged();
+            return;
+        }
 
+        arrData.clear();
         arrData.addAll(Constants.getAddDependentsArray());
         adapter.notifyDataSetChanged();
     }
@@ -173,6 +176,7 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.contAddDependents:
+                getBaseActivity().addDockableFragment(AddDependentFragment.newInstance(arrData), false);
                 break;
             case R.id.contBtnSignUp:
                 break;
@@ -193,5 +197,11 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
                     arrData.remove(position);
                     adapter.notifyDataSetChanged();
                 }, getContext());
+    }
+
+    @Override
+    public void onItemAdd(Object object) {
+//        arrData.add(new SpinnerModel("John Doe"));
+//        adapter.notifyDataSetChanged();
     }
 }

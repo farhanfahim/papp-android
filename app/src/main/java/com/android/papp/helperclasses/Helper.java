@@ -354,7 +354,7 @@ public class Helper {
         shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_NAME, shortcutname);
         Parcelable icon = Intent.ShortcutIconResource.fromContext(mContext, R.mipmap.ic_launcher);
         shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);
-        shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, new Intent("edu.aku.family_hifazat"));
+        shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, new Intent("com.android.structure"));
         mContext.sendBroadcast(shortcutintent);
     }
 

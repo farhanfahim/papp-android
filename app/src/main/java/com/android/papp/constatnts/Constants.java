@@ -15,4 +15,34 @@ public class Constants {
         return arrayList;
 
     }
+
+
+
+
+
+    public static ArrayList<SpinnerModel> getGenderArray() {
+        ArrayList<SpinnerModel> arrayList = new ArrayList<>();
+        arrayList.add(new SpinnerModel("Male"));
+        arrayList.add(new SpinnerModel("Female"));
+        arrayList.add(new SpinnerModel("Unknown"));
+        return arrayList;
+
+    }
+
+
+
+
+
+
+    public static ArrayList<SpinnerModel> getAgeNumbersArray() {
+        ArrayList<SpinnerModel> arrayList = new ArrayList<>();
+
+
+        for (int i = 3; i < 120; i++) {
+            arrayList.add(new SpinnerModel(i+ " years"));
+        }
+
+        return arrayList;
+
+    }
 }

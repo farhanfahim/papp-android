@@ -9,11 +9,11 @@
 //import android.net.Uri;
 //import android.support.v4.app.NotificationCompat;
 //
-//import edu.aku.family_hifazat.BaseApplication;
-//import edu.aku.family_hifazat.R;
-//import edu.aku.family_hifazat.activities.MainActivity;
-//import edu.aku.family_hifazat.constatnts.AppConstants;
-//import edu.aku.family_hifazat.managers.DateManager;
+//import com.android.structure.BaseApplication;
+//import com.android.structure.R;
+//import com.android.structure.activities.MainActivity;
+//import com.android.structure.constatnts.AppConstants;
+//import com.android.structure.managers.DateManager;
 //
 ///**
 // * Created by muhammadmuzammil on 7/25/2017.

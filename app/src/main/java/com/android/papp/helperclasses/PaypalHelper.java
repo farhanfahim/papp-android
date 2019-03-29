@@ -1,4 +1,4 @@
-//package edu.aku.family_hifazat.helperclasses;
+//package com.android.structure.helperclasses;
 //
 //import android.app.Activity;
 //import android.content.Intent;
@@ -11,8 +11,8 @@
 //import com.paypal.android.sdk.payments.PaymentActivity;
 //import com.paypal.android.sdk.payments.PaymentConfirmation;
 //
-//import edu.aku.family_hifazat.helperclasses.ui.helper.UIHelper;
-//import edu.aku.family_hifazat.activities.BaseActivity;
+//import com.android.structure.helperclasses.ui.helper.UIHelper;
+//import com.android.structure.activities.BaseActivity;
 //
 //import java.math.BigDecimal;
 //

@@ -51,12 +51,12 @@ public class SpinnerDialogFragment extends DialogFragment {
     RecyclerView recyclerView;
     @BindView(R.id.txtOK)
     FButton txtOK;
-    @BindView(R.id.edtSearchBar)
-    AnyEditTextView edtSearchBar;
-    @BindView(R.id.imgSearch)
-    ImageView imgSearch;
-    @BindView(R.id.contSearchBar)
-    LinearLayout contSearchBar;
+//    @BindView(R.id.edtSearchBar)
+//    AnyEditTextView edtSearchBar;
+//    @BindView(R.id.imgSearch)
+//    ImageView imgSearch;
+//    @BindView(R.id.contSearchBar)
+//    LinearLayout contSearchBar;
 
 
     private ArrayList<SpinnerModel> arrData;
@@ -82,6 +82,23 @@ public class SpinnerDialogFragment extends DialogFragment {
 
         return frag;
     }
+
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+//        getDialog().getWindow()
+//                .setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+//                        getResources().getDimensionPixelSize(R.dimen.x400dp));
+
+
+
+        getDialog().getWindow()
+                .setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,27 +141,27 @@ public class SpinnerDialogFragment extends DialogFragment {
 
 
     private void setListeners() {
-        edtSearchBar.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                adapter.getFilter().filter(charSequence);
-//                if (edtSearchBar.getStringTrimmed().length() == 0) {
-////                    imgClose.setVisibility(View.GONE);
-//                } else {
-////                    imgClose.setVisibility(View.VISIBLE);
-//                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+//        edtSearchBar.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                adapter.getFilter().filter(charSequence);
+////                if (edtSearchBar.getStringTrimmed().length() == 0) {
+//////                    imgClose.setVisibility(View.GONE);
+////                } else {
+//////                    imgClose.setVisibility(View.VISIBLE);
+////                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
     }
 
     private void bindView() {
