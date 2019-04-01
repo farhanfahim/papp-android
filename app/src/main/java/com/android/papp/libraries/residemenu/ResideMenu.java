@@ -371,7 +371,7 @@ public class ResideMenu extends FrameLayout {
             scaleUp_activity.playTogether(alpha_menu);
             scaleUp_activity.start();
 
-            homeActivity.removeBlurImage();
+//            homeActivity.removeBlurImage();
 
 
         } catch (Exception e) {

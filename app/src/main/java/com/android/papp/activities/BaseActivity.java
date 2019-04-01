@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Pair;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
@@ -19,6 +20,7 @@ import com.android.papp.callbacks.GenericClickableInterface;
 import com.android.papp.constatnts.AppConstants;
 import com.android.papp.fragments.LeftSideMenuFragment;
 import com.android.papp.fragments.abstracts.BaseFragment;
+import com.android.papp.fragments.abstracts.GenericDialogFragment;
 import com.android.papp.utils.utility.Blur;
 import com.android.papp.utils.utility.Utils;
 import com.gdacciaro.iOSDialog.iOSDialogBuilder;
@@ -45,10 +47,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            getWindow().setStatusBarColor(Color.WHITE);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//            getWindow().setStatusBarColor(Color.WHITE);
+//        }
+
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            Window window = getWindow();
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            window.setStatusBarColor(getResources().getColor(android.R.color.transparent));
+//        }
+
+
 
         addDrawerFragment();
     }
@@ -87,36 +99,38 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void closeApp() {
-//        final GenericDialogFragment genericDialogFragment = GenericDialogFragment.newInstance();
-//
-//        genericDialogFragment.setTitle("Quit");
-//        genericDialogFragment.setMessage("Do you want to close this application?");
-//        genericDialogFragment.setButton1("Yes", new GenericClickableInterface() {
-//            @Override
-//            public void click() {
-//                genericDialogFragment.getDialog().dismiss();
-//                finish();
-//            }
-//        });
-//
-//        genericDialogFragment.setButton2("No", new GenericClickableInterface() {
-//            @Override
-//            public void click() {
-//                genericDialogFragment.getDialog().dismiss();
-//            }
-//        });
-//        genericDialogFragment.show(getSupportFragmentManager(), null);
-        new iOSDialogBuilder(this)
-                .setTitle("Quit")
-                .setSubtitle("Do you want to close this application?")
-                .setBoldPositiveLabel(false)
-                .setCancelable(false)
-                .setPositiveListener("Yes", dialog -> {
-                    dialog.dismiss();
-                    finish();
-                })
-                .setNegativeListener("No", dialog -> dialog.dismiss())
-                .build().show();
+        final GenericDialogFragment genericDialogFragment = GenericDialogFragment.newInstance();
+
+        genericDialogFragment.setTitle("Quit");
+        genericDialogFragment.setMessage("Do you want to close this application?");
+        genericDialogFragment.setButton1("Yes", new GenericClickableInterface() {
+            @Override
+            public void click() {
+                genericDialogFragment.getDialog().dismiss();
+                finish();
+            }
+        });
+
+        genericDialogFragment.setButton2("No", new GenericClickableInterface() {
+            @Override
+            public void click() {
+                genericDialogFragment.getDialog().dismiss();
+            }
+        });
+        genericDialogFragment.show(getSupportFragmentManager(), null);
+
+
+//        new iOSDialogBuilder(this)
+//                .setTitle("Quit")
+//                .setSubtitle("Do you want to close this application?")
+//                .setBoldPositiveLabel(false)
+//                .setCancelable(false)
+//                .setPositiveListener("Yes", dialog -> {
+//                    dialog.dismiss();
+//                    finish();
+//                })
+//                .setNegativeListener("No", dialog -> dialog.dismiss())
+//                .build().show();
     }
 
     public void addDockableFragment(Fragment fragment, boolean isTransition) {

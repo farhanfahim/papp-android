@@ -18,8 +18,9 @@ import com.android.papp.constatnts.AppConstants;
 import java.util.List;
 
 import com.android.papp.R;
-import com.android.papp.fragments.HomeFragment;
+import com.android.papp.fragments.DashboardCivilianFragment;
 import com.android.papp.fragments.LeftSideMenuFragment;
+import com.android.papp.fragments.LoginFragment;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.libraries.residemenu.ResideMenu;
 import com.android.papp.utils.utility.Blur;
@@ -43,7 +44,6 @@ public class HomeActivity extends BaseActivity {
     private String mBackgroundFilename;
     private Bitmap background;
 
-    private ImageView imageBlur;
 
 
     @Override
@@ -62,18 +62,17 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        String intentData = getIntent().getStringExtra(AppConstants.JSON_STRING_KEY);
+//        String intentData = getIntent().getStringExtra(AppConstants.JSON_STRING_KEY);
 
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.getBackground().setColorFilter(0x80000000, PorterDuff.Mode.MULTIPLY);
         contMain = findViewById(R.id.contMain);
         contParentActivityLayout = findViewById(R.id.contParentActivityLayout);
-        imageBlur = findViewById(R.id.imageBlur);
 
         setSideMenu(ResideMenu.DIRECTION_RIGHT);
 
-        initFragments(intentData);
+        initFragments("");
 
 
     }
@@ -136,7 +135,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initFragments(String intentData) {
-        addDockableFragment(HomeFragment.newInstance(), false);
+        addDockableFragment(LoginFragment.newInstance(), false);
     }
 
     public FrameLayout getContMain() {
@@ -166,9 +165,9 @@ public class HomeActivity extends BaseActivity {
 
 
 
-    public ImageView getBlurImage() {
-        return imageBlur;
-    }
+//    public ImageView getBlurImage() {
+//        return imageBlur;
+//    }
 
     public void setBlurBackground() {
 
@@ -202,10 +201,10 @@ public class HomeActivity extends BaseActivity {
         localBitmap.recycle();
         return str;
     }
-
-    public void removeBlurImage() {
-        getBlurImage().setVisibility(View.GONE);
-    }
+//
+//    public void removeBlurImage() {
+//        getBlurImage().setVisibility(View.GONE);
+//    }
 
 
 

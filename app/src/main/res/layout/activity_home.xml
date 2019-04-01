@@ -8,15 +8,6 @@
     android:orientation="vertical">
 
 
-    <ImageView
-        android:id="@+id/imageBlur"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:alpha="0"
-        android:scaleType="centerCrop"
-        android:visibility="gone" />
-
-
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"

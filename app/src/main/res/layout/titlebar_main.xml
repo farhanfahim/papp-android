@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/x40dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/title_bar_gradient"
+        android:background="@color/c_white"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/x8dp"
         android:paddingRight="@dimen/x8dp">
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:drawablePadding="@dimen/x5dp"
-            android:drawableStart="@drawable/ic_back"
+            android:drawableStart="@drawable/img_back"
             android:gravity="center"
             android:padding="@dimen/x5dp"
             android:scaleX="1.5"
@@ -54,11 +54,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:gravity="center"
+            android:gravity="left|center_vertical"
             android:singleLine="true"
             android:text="Your Title"
-            android:textColor="#fff"
-            android:textSize="@dimen/s15"
+            android:textColor="@color/txtBlack"
+            android:textSize="@dimen/s16"
             app:typeface="@string/font_bold" />
 
 
@@ -93,7 +93,7 @@
             android:layout_marginLeft="@dimen/x10dp"
             android:layout_toLeftOf="@id/btnRight1"
             android:padding="@dimen/x5dp"
-            android:src="@drawable/b_home_icon"
+            android:src="@drawable/img_side_menu"
             android:visibility="gone" />
 
 
@@ -114,14 +114,14 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/x8dp"
             android:background="@color/transparent"
-            android:drawableEnd="@drawable/b_home_icon"
+            android:drawableEnd="@drawable/img_side_menu"
             android:drawablePadding="@dimen/x5dp"
             android:gravity="center"
             android:scaleX="1.2"
             android:scaleY="1.2"
             android:padding="@dimen/x5dp"
             android:textColor="@color/c_white"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
 
         <TextView

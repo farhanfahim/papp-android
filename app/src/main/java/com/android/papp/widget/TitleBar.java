@@ -168,7 +168,7 @@ public class TitleBar extends RelativeLayout {
     public void showResideMenu(final HomeActivity homeActivity) {
 
         this.btnRight2.setVisibility(VISIBLE);
-        this.btnRight2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.menu_icon, 0);
+        this.btnRight2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.img_side_menu, 0);
         this.btnRight2.setText(null);
         btnRight2.setOnClickListener(new OnClickListener() {
             @Override
