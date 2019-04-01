@@ -28,7 +28,7 @@
             <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/x20dp"
+                android:layout_marginBottom="@dimen/x10dp"
                 android:background="@color/c_white"
                 android:elevation="@dimen/x5dp"
                 android:gravity="center_vertical"
@@ -84,7 +84,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/x20dp"
+                android:layout_marginBottom="@dimen/x10dp"
                 android:orientation="vertical">
 
 
@@ -125,7 +125,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/x20dp"
+                android:layout_marginBottom="@dimen/x10dp"
                 android:orientation="vertical">
 
 
@@ -177,7 +177,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/x20dp"
+                android:layout_marginBottom="@dimen/x10dp"
                 android:orientation="vertical">
 
 
@@ -255,7 +255,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="@dimen/x3dp"
-                android:text="Dependents"
+                android:text="My Dependents"
                 android:textColor="@color/txtBlack"
                 android:textSize="@dimen/s16"
                 app:fontFamily="@string/font_regular" />

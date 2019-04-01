@@ -20,15 +20,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  */
-public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdapter.ViewHolder> {
+public class DependentsAdapter extends RecyclerView.Adapter<DependentsAdapter.ViewHolder> {
 
     private final OnItemClickListener onItemClick;
+    View itemView = null;
+
 
 
     private Context activity;
     private List<SpinnerModel> arrData;
 
-    public AddDependentsAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
+    public DependentsAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
@@ -37,9 +39,8 @@ public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdap
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View itemView = null;
         itemView = LayoutInflater.from(activity)
-                .inflate(R.layout.item_add_dependents, parent, false);
+                .inflate(R.layout.item_dependents, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -47,13 +48,14 @@ public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdap
     public void onBindViewHolder(final ViewHolder holder, int i) {
         SpinnerModel model = arrData.get(i);
 
+
         holder.txtName.setText(model.getText());
         setListener(holder, model);
     }
 
     private void setListener(final ViewHolder holder, final SpinnerModel model) {
-        holder.txtRemove.
-                setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null));
+        holder.contParentLayout.
+                setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, itemView, DependentsAdapter.class.getSimpleName()));
     }
 
 
@@ -68,10 +70,6 @@ public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdap
         CircleImageView imgDependentProfile;
         @BindView(R.id.txtName)
         AnyTextView txtName;
-        @BindView(R.id.txtRemove)
-        AnyTextView txtRemove;
-        @BindView(R.id.txtGender)
-        AnyTextView txtGender;
         @BindView(R.id.contParentLayout)
         LinearLayout contParentLayout;
 

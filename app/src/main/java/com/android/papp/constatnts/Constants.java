@@ -17,6 +17,25 @@ public class Constants {
     }
 
 
+    public static ArrayList<SpinnerModel> getAddDependentsArray2() {
+        ArrayList<SpinnerModel> arrayList = new ArrayList<>();
+        arrayList.add(new SpinnerModel("Joe Robert"));
+        arrayList.add(new SpinnerModel("Chan Lee"));
+        arrayList.add(new SpinnerModel("Jason Brody"));
+        arrayList.add(new SpinnerModel("Tom Johns"));
+        return arrayList;
+
+    }
+
+
+    public static ArrayList<SpinnerModel> getTopLEA() {
+        ArrayList<SpinnerModel> arrayList = new ArrayList<>();
+        arrayList.add(new SpinnerModel("Alexandra"));
+        arrayList.add(new SpinnerModel("Silvester"));
+        arrayList.add(new SpinnerModel("Jain Bush"));
+        return arrayList;
+
+    }
 
 
 
@@ -45,4 +64,18 @@ public class Constants {
         return arrayList;
 
     }
+
+
+
+    public static ArrayList<SpinnerModel> getCategories() {
+        ArrayList<SpinnerModel> arrayList = new ArrayList<>();
+        arrayList.add(new SpinnerModel("Police"));
+        arrayList.add(new SpinnerModel("Traffic Police"));
+        arrayList.add(new SpinnerModel("Sheriff"));
+        arrayList.add(new SpinnerModel("Fire fighter"));
+        return arrayList;
+
+    }
+
+
 }

@@ -1,7 +1,11 @@
 package com.android.papp.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,17 +16,25 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.papp.R;
+import com.android.papp.adapters.recyleradapters.CategoriesAdapter;
+import com.android.papp.adapters.recyleradapters.DependentsAdapter;
+import com.android.papp.adapters.recyleradapters.LEAAdapter;
+import com.android.papp.callbacks.OnItemClickListener;
+import com.android.papp.constatnts.Constants;
 import com.android.papp.fragments.abstracts.BaseFragment;
+import com.android.papp.models.SpinnerModel;
 import com.android.papp.widget.AnyEditTextView;
 import com.android.papp.widget.AnyTextView;
 import com.android.papp.widget.TitleBar;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class DashboardCivilianFragment extends BaseFragment {
+public class DashboardCivilianFragment extends BaseFragment implements OnItemClickListener {
 
 
     @BindView(R.id.edtSearch)
@@ -53,6 +65,22 @@ public class DashboardCivilianFragment extends BaseFragment {
     RelativeLayout contBottomBar;
     Unbinder unbinder;
 
+
+    CategoriesAdapter categoriesAdapter;
+    ArrayList<SpinnerModel> arrCategories;
+
+    DependentsAdapter dependentsAdapter;
+    ArrayList<SpinnerModel> arrDependents;
+
+    LEAAdapter myLEAAdapter;
+    ArrayList<SpinnerModel> arrMyLEA;
+
+
+    LEAAdapter topLEAAdapter;
+    ArrayList<SpinnerModel> arrTopLEA;
+
+
+
     public static DashboardCivilianFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -62,6 +90,26 @@ public class DashboardCivilianFragment extends BaseFragment {
         return fragment;
     }
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        arrCategories = new ArrayList<>();
+        categoriesAdapter = new CategoriesAdapter(getContext(), arrCategories, this);
+
+
+        arrDependents = new ArrayList<>();
+        dependentsAdapter = new DependentsAdapter(getContext(), arrDependents, this);
+
+
+        arrMyLEA = new ArrayList<>();
+        myLEAAdapter = new LEAAdapter(getContext(), arrMyLEA, this);
+
+
+        arrTopLEA = new ArrayList<>();
+        topLEAAdapter = new LEAAdapter(getContext(), arrTopLEA, this);
+    }
 
     @Override
     public int getDrawerLockMode() {
@@ -78,6 +126,30 @@ public class DashboardCivilianFragment extends BaseFragment {
         titleBar.setVisibility(View.VISIBLE);
         titleBar.setTitle("Dashboard");
         titleBar.showResideMenu(getHomeActivity());
+    }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+        bindRecyclerView();
+
+        arrCategories.clear();
+
+        arrCategories.addAll(Constants.getCategories());
+        arrCategories.get(0).setSelected(true);
+
+        arrDependents.clear();
+        arrDependents.addAll(Constants.getAddDependentsArray2());
+
+        arrMyLEA.clear();
+        arrMyLEA.addAll(Constants.getAddDependentsArray2());
+
+
+        arrTopLEA.clear();
+        arrTopLEA.addAll(Constants.getTopLEA());
     }
 
     @Override
@@ -109,6 +181,34 @@ public class DashboardCivilianFragment extends BaseFragment {
         unbinder.unbind();
     }
 
+
+    private void bindRecyclerView() {
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvCategories.setLayoutManager(mLayoutManager);
+        ((DefaultItemAnimator) rvCategories.getItemAnimator()).setSupportsChangeAnimations(false);
+        rvCategories.setAdapter(categoriesAdapter);
+
+
+        GridLayoutManager mLayoutManager2 = new GridLayoutManager(getContext(), 4);
+        rvDependents.setLayoutManager(mLayoutManager2);
+        ((DefaultItemAnimator) rvDependents.getItemAnimator()).setSupportsChangeAnimations(false);
+        rvDependents.setAdapter(dependentsAdapter);
+
+
+        GridLayoutManager mLayoutManager3 = new GridLayoutManager(getContext(), 4);
+        rvMyLEA.setLayoutManager(mLayoutManager3);
+        ((DefaultItemAnimator) rvDependents.getItemAnimator()).setSupportsChangeAnimations(false);
+        rvMyLEA.setAdapter(myLEAAdapter);
+
+
+        GridLayoutManager mLayoutManager4 = new GridLayoutManager(getContext(), 3);
+        rvTopLEA.setLayoutManager(mLayoutManager4);
+        ((DefaultItemAnimator) rvTopLEA.getItemAnimator()).setSupportsChangeAnimations(false);
+        rvTopLEA.setAdapter(topLEAAdapter);
+    }
+
+
+
     @OnClick({R.id.imgFilter, R.id.txtViewAllTopLEA, R.id.txtViewAllMyLEA, R.id.txtViewAllDependents, R.id.contChat, R.id.contSessions, R.id.imgHome})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -127,5 +227,23 @@ public class DashboardCivilianFragment extends BaseFragment {
             case R.id.imgHome:
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(int position, Object object, View view, Object type) {
+        if (type instanceof String) {
+            if (((String) type).equalsIgnoreCase(CategoriesAdapter.class.getSimpleName())) {
+                for (SpinnerModel arrCategory : arrCategories) {
+                    arrCategory.setSelected(false);
+                }
+
+                arrCategories.get(position).setSelected(true);
+
+                categoriesAdapter.notifyDataSetChanged();
+            }
+
+        }
+
+
     }
 }

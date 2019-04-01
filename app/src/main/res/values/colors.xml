@@ -18,7 +18,7 @@
 
     <color name="base_reddish">#D52B29</color>
     <color name="base_dark_gray">#394752</color>
-    <color name="base_amber">#FD8200</color>
+    <color name="base_amber">#FF9100</color>
 
     <color name="base_blue">#1DB9D9</color>
     <color name="panic_blue">#4F81BD</color>

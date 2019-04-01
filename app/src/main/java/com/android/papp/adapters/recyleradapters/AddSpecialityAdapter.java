@@ -54,7 +54,7 @@ public class AddSpecialityAdapter extends RecyclerView.Adapter<AddSpecialityAdap
 
     private void setListener(final ViewHolder holder, final SpinnerModel model) {
         holder.imgCancel.
-                setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view));
+                setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null));
     }
 
 

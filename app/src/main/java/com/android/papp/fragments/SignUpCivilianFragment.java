@@ -188,7 +188,7 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
     }
 
     @Override
-    public void onItemClick(int position, Object object, View view) {
+    public void onItemClick(int position, Object object, View view, Object type) {
 
         SpinnerModel model = (SpinnerModel) object;
 
@@ -201,7 +201,7 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
 
     @Override
     public void onItemAdd(Object object) {
-//        arrData.add(new SpinnerModel("John Doe"));
+//        arrCategories.add(new SpinnerModel("John Doe"));
 //        adapter.notifyDataSetChanged();
     }
 }

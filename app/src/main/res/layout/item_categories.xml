@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jcminarro.roundkornerlayout.RoundKornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contParentLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/x5dp"
+    android:layout_marginRight="@dimen/x5dp"
+    android:layout_marginTop="@dimen/x1dp"
+    android:layout_marginBottom="@dimen/x1dp"
+    android:background="@color/c_white"
+    android:elevation="@dimen/x5dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/x5dp"
+    app:corner_radius="@dimen/x15dp">
+
+
+    <com.android.papp.widget.AnyTextView
+        android:id="@+id/txtCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLength="50"
+        android:layout_marginRight="@dimen/x8dp"
+        android:layout_marginLeft="@dimen/x8dp"
+        android:padding="@dimen/x3dp"
+        android:singleLine="true"
+        android:text="Bullets"
+        android:textColor="@color/txtBlack"
+        android:textSize="@dimen/s12"
+        app:fontFamily="@string/font_regular" />
+
+
+
+</com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>

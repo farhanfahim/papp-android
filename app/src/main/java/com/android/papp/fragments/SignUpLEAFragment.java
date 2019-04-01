@@ -186,7 +186,7 @@ public class SignUpLEAFragment extends BaseFragment implements OnItemClickListen
 
 
     @Override
-    public void onItemClick(int position, Object object, View view) {
+    public void onItemClick(int position, Object object, View view, Object type) {
 
         SpinnerModel model = (SpinnerModel) object;
 

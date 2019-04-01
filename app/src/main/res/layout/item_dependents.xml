@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contParentLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/x5dp"
+    android:layout_marginRight="@dimen/x5dp"
+    android:background="@color/c_white"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgDependentProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_placeholder_dependent" />
+
+
+        <com.android.papp.widget.AnyTextView
+            android:id="@+id/txtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:padding="@dimen/x3dp"
+            android:singleLine="true"
+            android:text="Joe Robert"
+            android:textColor="@color/txtDarkGrey"
+            android:textSize="@dimen/s10"
+            app:fontFamily="@string/font_regular" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

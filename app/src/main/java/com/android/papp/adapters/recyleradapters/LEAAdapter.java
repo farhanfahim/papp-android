@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.papp.R;
@@ -16,11 +17,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  */
-public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdapter.ViewHolder> {
+public class LEAAdapter extends RecyclerView.Adapter<LEAAdapter.ViewHolder> {
 
     private final OnItemClickListener onItemClick;
 
@@ -28,7 +28,7 @@ public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdap
     private Context activity;
     private List<SpinnerModel> arrData;
 
-    public AddDependentsAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
+    public LEAAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
@@ -36,10 +36,10 @@ public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdap
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View itemView = null;
+
         itemView = LayoutInflater.from(activity)
-                .inflate(R.layout.item_add_dependents, parent, false);
+                .inflate(R.layout.item_lea, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -47,13 +47,14 @@ public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdap
     public void onBindViewHolder(final ViewHolder holder, int i) {
         SpinnerModel model = arrData.get(i);
 
+
         holder.txtName.setText(model.getText());
         setListener(holder, model);
     }
 
     private void setListener(final ViewHolder holder, final SpinnerModel model) {
-        holder.txtRemove.
-                setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null));
+        holder.contParentLayout.
+                setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, LEAAdapter.class.getSimpleName()));
     }
 
 
@@ -64,14 +65,10 @@ public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdap
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.imgDependentProfile)
-        CircleImageView imgDependentProfile;
+        @BindView(R.id.imgProfile)
+        ImageView imgProfile;
         @BindView(R.id.txtName)
         AnyTextView txtName;
-        @BindView(R.id.txtRemove)
-        AnyTextView txtRemove;
-        @BindView(R.id.txtGender)
-        AnyTextView txtGender;
         @BindView(R.id.contParentLayout)
         LinearLayout contParentLayout;
 

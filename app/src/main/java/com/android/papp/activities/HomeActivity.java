@@ -135,7 +135,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initFragments(String intentData) {
-        addDockableFragment(LoginFragment.newInstance(), false);
+        addDockableFragment(DashboardCivilianFragment.newInstance(), false);
     }
 
     public FrameLayout getContMain() {
