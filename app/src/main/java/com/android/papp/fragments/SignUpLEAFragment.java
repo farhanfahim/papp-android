@@ -15,11 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.papp.R;
-import com.android.papp.adapters.recyleradapters.AddDependentsAdapter;
-import com.android.papp.adapters.recyleradapters.AddSpecialityAdapter;
-import com.android.papp.callbacks.OnItemAdd;
+import com.android.papp.adapters.recyleradapters.SpecialityAdapter;
 import com.android.papp.callbacks.OnItemClickListener;
-import com.android.papp.constatnts.Constants;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.helperclasses.ui.helper.KeyboardHelper;
 import com.android.papp.helperclasses.ui.helper.UIHelper;
@@ -80,7 +77,7 @@ public class SignUpLEAFragment extends BaseFragment implements OnItemClickListen
 
 
 
-    AddSpecialityAdapter adapter;
+    SpecialityAdapter adapter;
     ArrayList<SpinnerModel> arrData;
 
     public static SignUpLEAFragment newInstance() {
@@ -114,7 +111,7 @@ public class SignUpLEAFragment extends BaseFragment implements OnItemClickListen
         super.onCreate(savedInstanceState);
 
         arrData = new ArrayList<>();
-        adapter = new AddSpecialityAdapter(getContext(), arrData, this);
+        adapter = new SpecialityAdapter(getContext(), arrData, this, true);
     }
 
 

@@ -379,7 +379,7 @@ public class ResideMenu extends FrameLayout {
         }
 
 
-        // homeActivity.getSupportFragmentManager().popBackStack("LeftSideMenuFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        // homeActivity.getSupportFragmentManager().popBackStack("RightSideMenuFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         //homeActivity.getSupportFragmentManager().popBackStack("RightSideMenuFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 

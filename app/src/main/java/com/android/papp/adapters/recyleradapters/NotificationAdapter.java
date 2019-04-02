@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.papp.R;
@@ -21,7 +20,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  */
-public class AddSpecialityAdapter extends RecyclerView.Adapter<AddSpecialityAdapter.ViewHolder> {
+public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
 
     private final OnItemClickListener onItemClick;
 
@@ -29,7 +28,7 @@ public class AddSpecialityAdapter extends RecyclerView.Adapter<AddSpecialityAdap
     private Context activity;
     private List<SpinnerModel> arrData;
 
-    public AddSpecialityAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
+    public NotificationAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
@@ -40,7 +39,7 @@ public class AddSpecialityAdapter extends RecyclerView.Adapter<AddSpecialityAdap
 
         View itemView = null;
         itemView = LayoutInflater.from(activity)
-                .inflate(R.layout.item_add_speciality, parent, false);
+                .inflate(R.layout.item_notifications, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -48,13 +47,18 @@ public class AddSpecialityAdapter extends RecyclerView.Adapter<AddSpecialityAdap
     public void onBindViewHolder(final ViewHolder holder, int i) {
         SpinnerModel model = arrData.get(i);
 
-        holder.txtSpeciality.setText(model.getText());
+
+        if (i == 0) {
+            holder.txtNotification.setTextColor(activity.getResources().getColor(R.color.colorPrimaryDark));
+        } else {
+            holder.txtNotification.setTextColor(activity.getResources().getColor(R.color.txtBlack));
+
+        }
         setListener(holder, model);
     }
 
     private void setListener(final ViewHolder holder, final SpinnerModel model) {
-        holder.imgCancel.
-                setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null));
+
     }
 
 
@@ -65,12 +69,15 @@ public class AddSpecialityAdapter extends RecyclerView.Adapter<AddSpecialityAdap
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.txtSpeciality)
-        AnyTextView txtSpeciality;
-        @BindView(R.id.imgCancel)
-        ImageView imgCancel;
+        @BindView(R.id.txtNotification)
+        AnyTextView txtNotification;
+        @BindView(R.id.txtDate)
+        AnyTextView txtDate;
+        @BindView(R.id.txtTime)
+        AnyTextView txtTime;
         @BindView(R.id.contParentLayout)
         LinearLayout contParentLayout;
+
 
 
         ViewHolder(View view) {

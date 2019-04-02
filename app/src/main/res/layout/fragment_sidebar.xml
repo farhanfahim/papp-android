@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="1"
-            android:background="@drawable/b_menu_bg"
+            android:background="@drawable/img_background_sidebar"
             android:scaleType="centerCrop"
             android:visibility="visible" />
 
@@ -28,139 +28,564 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/x90dp"
+                android:layout_marginLeft="@dimen/x120dp"
+                android:padding="@dimen/x20dp"
                 android:orientation="vertical">
 
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/x60dp"
-                    android:layout_marginLeft="@dimen/x40dp"
-                    android:layout_marginRight="@dimen/x40dp"
-                    android:layout_marginTop="@dimen/x20dp"
+                    android:id="@+id/imgBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/akuh_logo" />
+                    android:layout_gravity="right"
+                    android:padding="@dimen/x5dp"
+                    android:layout_marginBottom="@dimen/x10dp"
+                    android:rotation="180"
+                    android:src="@drawable/img_back_blue"
+                    android:tint="@color/c_white" />
 
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="@dimen/x80dp"
+                    android:layout_height="@dimen/x80dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_placeholder_dependent" />
+
+
+                <com.android.papp.widget.AnyTextView
+                    android:id="@+id/txtUserName"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/x60dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="Mason Joe"
+                    android:textColor="@color/c_white"
+                    android:textSize="@dimen/s18"
+                    app:typeface="@string/font_bold" />
+
+
+                <com.android.papp.widget.AnyTextView
+                    android:id="@+id/txtUserID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:layout_marginBottom="@dimen/x20dp"
-                    android:layout_marginLeft="@dimen/x40dp"
-                    android:layout_marginRight="@dimen/x40dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/family_hifazat_logo_no_padding" />
+                    android:text="@string/masonjoe"
+                    android:textColor="@color/c_white"
+                    android:textSize="@dimen/s12"
+                    app:typeface="@string/font_light" />
 
 
-                <com.android.papp.widget.AnyTextView
-                    android:id="@+id/txtHome"
+                <LinearLayout
+                    android:id="@+id/contNofitications"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:drawablePadding="@dimen/x5dp"
-                    android:drawableStart="@drawable/b_home_icon"
                     android:gravity="center_vertical"
-                    android:padding="@dimen/x15dp"
-                    android:singleLine="true"
-                    android:text="Home"
-                    android:textColor="@color/c_white"
-                    android:textSize="16sp"
-                    app:typeface="@string/font_bold" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:background="@color/c_white" />
+                    android:layout_marginBottom="@dimen/x10dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/x10dp"
+                    android:paddingBottom="@dimen/x10dp">
 
 
-                <com.android.papp.widget.AnyTextView
-                    android:id="@+id/txtCardSubscription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:drawablePadding="@dimen/x5dp"
-                    android:drawableStart="@drawable/c_cardsubscription_menu_icon"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/x15dp"
-                    android:singleLine="true"
-                    android:text="Card Subscription"
-                    android:textColor="@color/c_white"
-android:visibility="gone"
-                    android:textSize="16sp"
-                    app:typeface="@string/font_bold" />
+                    <ImageView
+                        android:layout_width="@dimen/x20dp"
+                        android:layout_height="@dimen/x20dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:src="@drawable/img_notification" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:background="@color/c_white" />
-
-                <com.android.papp.widget.AnyTextView
-                    android:id="@+id/txtPreferences"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:drawablePadding="@dimen/x5dp"
-                    android:drawableStart="@drawable/ic_settings"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/x15dp"
-                    android:singleLine="true"
-                    android:text="Settings"
-                    android:textColor="@color/c_white"
-                    android:textSize="16sp"
-
-                    android:visibility="visible"
-                    app:typeface="@string/font_bold" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:background="@color/c_white" />
-
-                <com.android.papp.widget.AnyTextView
-                    android:id="@+id/txtAbout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:drawablePadding="@dimen/x5dp"
-                    android:drawableStart="@drawable/c_about_menu_icon"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/x15dp"
-                    android:singleLine="true"
-                    android:text="About"
-                    android:textColor="@color/c_white"
-
-                    android:textSize="16sp"
-                    app:typeface="@string/font_bold" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:background="@color/c_white" />
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
 
                     <com.android.papp.widget.AnyTextView
-                        android:id="@+id/txtLogout"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="@dimen/x25dp"
-                        android:layout_marginLeft="@dimen/x20dp"
-                        android:layout_marginRight="@dimen/x20dp"
-                        android:background="@drawable/rounded_box_semi_transparent_grey"
-                        android:gravity="center"
-                        android:padding="@dimen/x15dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
                         android:singleLine="true"
-                        android:text="@string/logout"
+                        android:text="Notifications"
                         android:textColor="@color/c_white"
-                        android:textSize="16sp"
-                        app:typeface="@string/font_bold" />
+                        android:textSize="@dimen/s16"
+                        app:typeface="@string/font_regular" />
 
 
-                </RelativeLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x10dp"
+                        android:rotation="-90"
+                        android:src="@drawable/img_drop_down"
+                        android:tint="@color/c_white" />
+
+
+                </LinearLayout>
+
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/contEditProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/x10dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/x10dp"
+                    android:paddingBottom="@dimen/x10dp">
+
+
+                    <ImageView
+                        android:layout_width="@dimen/x20dp"
+                        android:layout_height="@dimen/x20dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:src="@drawable/img_profile_icon" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="Edit Profile"
+                        android:textColor="@color/c_white"
+                        android:textSize="@dimen/s16"
+                        app:typeface="@string/font_regular" />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x10dp"
+                        android:rotation="-90"
+                        android:src="@drawable/img_drop_down"
+                        android:tint="@color/c_white" />
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/conSessionHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/x10dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/x10dp"
+                    android:paddingBottom="@dimen/x10dp">
+
+
+                    <ImageView
+                        android:layout_width="@dimen/x20dp"
+                        android:layout_height="@dimen/x20dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:src="@drawable/img_session_history" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="Session History"
+                        android:textColor="@color/c_white"
+                        android:textSize="@dimen/s16"
+                        app:typeface="@string/font_regular" />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x10dp"
+                        android:rotation="-90"
+                        android:src="@drawable/img_drop_down"
+                        android:tint="@color/c_white" />
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/contSessionPayoutHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/x10dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/x10dp"
+                    android:paddingBottom="@dimen/x10dp">
+
+
+                    <ImageView
+                        android:layout_width="@dimen/x20dp"
+                        android:layout_height="@dimen/x20dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:src="@drawable/img_session_payout_history" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="Session Payout History"
+                        android:textColor="@color/c_white"
+                        android:textSize="@dimen/s16"
+                        app:typeface="@string/font_regular" />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x10dp"
+                        android:rotation="-90"
+                        android:src="@drawable/img_drop_down"
+                        android:tint="@color/c_white" />
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/contMyGifts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/x10dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/x10dp"
+                    android:paddingBottom="@dimen/x10dp">
+
+
+                    <ImageView
+                        android:layout_width="@dimen/x20dp"
+                        android:layout_height="@dimen/x20dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:src="@drawable/img_gift2" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="My Gifts"
+                        android:textColor="@color/c_white"
+                        android:textSize="@dimen/s16"
+                        app:typeface="@string/font_regular" />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x10dp"
+                        android:rotation="-90"
+                        android:src="@drawable/img_drop_down"
+                        android:tint="@color/c_white" />
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/contGiftsAndRewards"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/x10dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/x10dp"
+                    android:paddingBottom="@dimen/x10dp">
+
+
+                    <ImageView
+                        android:layout_width="@dimen/x20dp"
+                        android:layout_height="@dimen/x20dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:src="@drawable/img_gifts" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="Gifts and Rewards"
+                        android:textColor="@color/c_white"
+                        android:textSize="@dimen/s16"
+                        app:typeface="@string/font_regular" />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x10dp"
+                        android:rotation="-90"
+                        android:src="@drawable/img_drop_down"
+                        android:tint="@color/c_white" />
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/contMilestones"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/x10dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/x10dp"
+                    android:paddingBottom="@dimen/x10dp">
+
+
+                    <ImageView
+                        android:layout_width="@dimen/x20dp"
+                        android:layout_height="@dimen/x20dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:src="@drawable/img_milestones" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="Milestones"
+                        android:textColor="@color/c_white"
+                        android:textSize="@dimen/s16"
+                        app:typeface="@string/font_regular" />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x10dp"
+                        android:rotation="-90"
+                        android:src="@drawable/img_drop_down"
+                        android:tint="@color/c_white" />
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/contAboutApp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/x10dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/x10dp"
+                    android:paddingBottom="@dimen/x10dp">
+
+
+                    <ImageView
+                        android:layout_width="@dimen/x20dp"
+                        android:layout_height="@dimen/x20dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:src="@drawable/img_about" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="About App"
+                        android:textColor="@color/c_white"
+                        android:textSize="@dimen/s16"
+                        app:typeface="@string/font_regular" />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x10dp"
+                        android:rotation="-90"
+                        android:src="@drawable/img_drop_down"
+                        android:tint="@color/c_white" />
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/contTermsAndConditions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/x10dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/x10dp"
+                    android:paddingBottom="@dimen/x10dp">
+
+
+                    <ImageView
+                        android:layout_width="@dimen/x20dp"
+                        android:layout_height="@dimen/x20dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:src="@drawable/img_terms_and_conditions" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="Terms and Conditions"
+                        android:textColor="@color/c_white"
+                        android:textSize="@dimen/s16"
+                        app:typeface="@string/font_regular" />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x10dp"
+                        android:rotation="-90"
+                        android:src="@drawable/img_drop_down"
+                        android:tint="@color/c_white" />
+
+
+                </LinearLayout>
+
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/contLogout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/x10dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/x10dp"
+                    android:paddingBottom="@dimen/x10dp">
+
+
+                    <ImageView
+                        android:layout_width="@dimen/x20dp"
+                        android:layout_height="@dimen/x20dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:src="@drawable/img_logout" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="Logout"
+                        android:textColor="@color/c_white"
+                        android:textSize="@dimen/s16"
+                        app:typeface="@string/font_regular" />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x10dp"
+                        android:rotation="-90"
+                        android:src="@drawable/img_drop_down"
+                        android:tint="@color/c_white" />
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             </LinearLayout>

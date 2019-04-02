@@ -8,19 +8,14 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
-import com.android.papp.constatnts.AppConstants;
 
 import java.util.List;
 
 import com.android.papp.R;
 import com.android.papp.fragments.DashboardCivilianFragment;
-import com.android.papp.fragments.LeftSideMenuFragment;
-import com.android.papp.fragments.LoginFragment;
+import com.android.papp.fragments.RightSideMenuFragment;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.libraries.residemenu.ResideMenu;
 import com.android.papp.utils.utility.Blur;
@@ -36,7 +31,7 @@ public class HomeActivity extends BaseActivity {
 
 
 
-    private LeftSideMenuFragment leftSideMenuFragment;
+    private RightSideMenuFragment rightSideMenuFragment;
     private ResideMenu resideMenu;
 
     //For Blurred Background
@@ -98,13 +93,13 @@ public class HomeActivity extends BaseActivity {
     public void setMenuItemDirection(int direction) {
 
         if (direction == ResideMenu.DIRECTION_RIGHT) {
-            leftSideMenuFragment = LeftSideMenuFragment.newInstance();
-            resideMenu.addMenuItem(leftSideMenuFragment, "LeftSideMenuFragment", direction);
+            rightSideMenuFragment = RightSideMenuFragment.newInstance();
+            resideMenu.addMenuItem(rightSideMenuFragment, "RightSideMenuFragment", direction);
         }
     }
 
-    public LeftSideMenuFragment getLeftSideMenuFragment() {
-        return leftSideMenuFragment;
+    public RightSideMenuFragment getRightSideMenuFragment() {
+        return rightSideMenuFragment;
     }
 
 

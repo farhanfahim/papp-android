@@ -4,8 +4,8 @@
     android:id="@+id/contParentLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/c_white"
-    android:layout_marginTop="@dimen/x5dp"
+    android:paddingTop="@dimen/x5dp"
+    android:paddingBottom="@dimen/x10dp"
     android:orientation="vertical">
 
 
@@ -84,7 +84,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/x1dp"
         android:layout_marginTop="@dimen/x10dp"
-        android:layout_marginBottom="@dimen/x10dp"
         android:background="@color/seperator_light_gray" />
 
 </LinearLayout>

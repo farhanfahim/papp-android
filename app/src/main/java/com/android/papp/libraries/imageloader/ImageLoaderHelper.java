@@ -40,6 +40,13 @@ public class ImageLoaderHelper {
     }
 
 
+    public static void loadImageWithAnimations(Context context, ImageView imageView, String path) {
+        ImageLoader.getInstance().displayImage(path,
+                imageView,
+                ImageLoaderHelper.getOptionsWithAnimation());
+    }
+
+
     public static void loadBase64Image(Context context, ImageView imageView, String base64) {
         byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -82,10 +89,10 @@ public class ImageLoaderHelper {
     public static DisplayImageOptions getOptionsWithAnimation() {
 
         return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
-                .showImageForEmptyUri(R.color.base_dark_gray)
-                .showImageOnFail(R.drawable.profile_placeholder)
-                .showImageOnLoading(R.drawable.profile_placeholder)
-                .imageScaleType(ImageScaleType.EXACTLY).displayer(new FadeInBitmapDisplayer(500)).build();
+                .showImageForEmptyUri(R.color.c_light_grey)
+                .showImageOnFail(R.color.c_light_grey)
+                .showImageOnLoading(R.color.c_light_grey)
+                .imageScaleType(ImageScaleType.EXACTLY).displayer(new FadeInBitmapDisplayer(200)).build();
     }
 
 
@@ -96,6 +103,6 @@ public class ImageLoaderHelper {
                 .showImageOnFail(R.drawable.profile_placeholder)
                 .showImageOnLoading(R.drawable.profile_placeholder)
                 .extraForDownloader(headers)
-                .imageScaleType(ImageScaleType.EXACTLY).displayer(new FadeInBitmapDisplayer(500)).build();
+                .imageScaleType(ImageScaleType.EXACTLY).displayer(new FadeInBitmapDisplayer(200)).build();
     }
 }

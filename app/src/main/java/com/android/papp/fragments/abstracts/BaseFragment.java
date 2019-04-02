@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.android.papp.BaseApplication;
 import com.android.papp.activities.HomeActivity;
 import com.android.papp.activities.MainActivity;
+import com.android.papp.callbacks.GenericClickableInterface;
 import com.android.papp.constatnts.AppConstants;
 import com.android.papp.helperclasses.ui.helper.KeyboardHelper;
 import com.android.papp.helperclasses.ui.helper.UIHelper;
@@ -244,18 +245,44 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public static void logoutClick(final BaseFragment baseFragment) {
         Context context = baseFragment.getContext();
 
-        new iOSDialogBuilder(context)
-                .setTitle(context.getString(R.string.logout))
-                .setSubtitle(context.getString(R.string.areYouSureToLogout))
-                .setBoldPositiveLabel(false)
-                .setCancelable(false)
-                .setPositiveListener(context.getString(R.string.yes), dialog -> {
-                    dialog.dismiss();
-                    baseFragment.sharedPreferenceManager.clearDB();
-                    baseFragment.getBaseActivity().clearAllActivitiesExceptThis(MainActivity.class);
-                })
-                .setNegativeListener(context.getString(R.string.no), dialog -> dialog.dismiss())
-                .build().show();
+//        new iOSDialogBuilder(context)
+//                .setTitle(context.getString(R.string.logout))
+//                .setSubtitle(context.getString(R.string.areYouSureToLogout))
+//                .setBoldPositiveLabel(false)
+//                .setCancelable(false)
+//                .setPositiveListener(context.getString(R.string.yes), dialog -> {
+//                    dialog.dismiss();
+//                    baseFragment.sharedPreferenceManager.clearDB();
+//                    baseFragment.getBaseActivity().clearAllActivitiesExceptThis(MainActivity.class);
+//                })
+//                .setNegativeListener(context.getString(R.string.no), dialog -> dialog.dismiss())
+//                .build().show();
+
+
+
+        final GenericDialogFragment genericDialogFragment = GenericDialogFragment.newInstance();
+
+        genericDialogFragment.setTitle("Logout");
+        genericDialogFragment.setMessage(context.getString(R.string.areYouSureToLogout));
+        genericDialogFragment.setButton1("Yes", new GenericClickableInterface() {
+            @Override
+            public void click() {
+                genericDialogFragment.dismiss();
+                baseFragment.sharedPreferenceManager.clearDB();
+                baseFragment.getBaseActivity().clearAllActivitiesExceptThis(MainActivity.class);
+            }
+        });
+
+        genericDialogFragment.setButton2("No", new GenericClickableInterface() {
+            @Override
+            public void click() {
+                genericDialogFragment.getDialog().dismiss();
+            }
+        });
+        genericDialogFragment.show(baseFragment.getBaseActivity().getSupportFragmentManager(), null);
+
+
+
 
 
     }

@@ -75,6 +75,9 @@
 
     <string name="password">Password</string>
     <string name="login_text"> --------------- Log In ---------------</string>
+    <string name="masonjoe">\@masonjoe</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</string>
+    <string name="personal_info">During my 3 years as a police officer, I performed area patrols on  foot, bicycle and in patrol cars, responding to traffic incidents, domestic disputes and reports of criminal activity.</string>
 
 
 </resources>

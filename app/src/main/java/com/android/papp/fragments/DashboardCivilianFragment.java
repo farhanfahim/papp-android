@@ -21,6 +21,7 @@ import com.android.papp.adapters.recyleradapters.DependentsAdapter;
 import com.android.papp.adapters.recyleradapters.LEAAdapter;
 import com.android.papp.callbacks.OnItemClickListener;
 import com.android.papp.constatnts.Constants;
+import com.android.papp.enums.LeaType;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.models.SpinnerModel;
 import com.android.papp.widget.AnyEditTextView;
@@ -126,6 +127,7 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
         titleBar.setVisibility(View.VISIBLE);
         titleBar.setTitle("Dashboard");
         titleBar.showResideMenu(getHomeActivity());
+        titleBar.showBackButtonInvisible();
     }
 
 
@@ -215,10 +217,13 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
             case R.id.imgFilter:
                 break;
             case R.id.txtViewAllTopLEA:
+                getBaseActivity().addDockableFragment(ViewLEAListFragment.newInstance(LeaType.TOPLEA), false);
                 break;
             case R.id.txtViewAllMyLEA:
+                getBaseActivity().addDockableFragment(ViewLEAListFragment.newInstance(LeaType.MYLEA), false);
                 break;
             case R.id.txtViewAllDependents:
+                getBaseActivity().addDockableFragment(ViewAllDependentsFragment.newInstance(), false);
                 break;
             case R.id.contChat:
                 break;

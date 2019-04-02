@@ -93,6 +93,7 @@ public class AddDependentFragment extends BaseFragment {
 
     @Override
     public void setTitlebar(TitleBar titleBar) {
+        titleBar.setVisibility(View.GONE);
 
     }
 

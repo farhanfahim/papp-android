@@ -60,6 +60,7 @@ public class SignUpFragment extends BaseFragment {
 
     @Override
     public void setTitlebar(TitleBar titleBar) {
+        titleBar.setVisibility(View.GONE);
 
     }
 

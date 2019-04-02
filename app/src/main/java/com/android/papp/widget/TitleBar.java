@@ -119,7 +119,7 @@ public class TitleBar extends RelativeLayout {
 
     public void showBackButton(final Activity mActivity) {
         this.btnLeft1.setVisibility(VISIBLE);
-        this.btnLeft1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_back, 0, 0, 0);
+        this.btnLeft1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.img_back, 0, 0, 0);
         this.btnLeft1.setText(null);
         btnLeft1.setOnClickListener(new OnClickListener() {
             @Override

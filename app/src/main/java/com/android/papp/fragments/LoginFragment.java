@@ -62,6 +62,7 @@ public class LoginFragment extends BaseFragment {
 
     @Override
     public void setTitlebar(TitleBar titleBar) {
+        titleBar.setVisibility(View.GONE);
 
     }
 
@@ -125,6 +126,7 @@ public class LoginFragment extends BaseFragment {
 
     @OnClick(R.id.txtForgotPassword)
     public void onViewClicked() {
+        getBaseActivity().addDockableFragment(ForgotPasswordFragment.newInstance(), true);
 
     }
 }

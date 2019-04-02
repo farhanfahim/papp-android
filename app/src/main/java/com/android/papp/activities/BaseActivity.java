@@ -1,9 +1,6 @@
 package com.android.papp.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -11,19 +8,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Pair;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ImageView;
 
 import com.android.papp.BaseApplication;
 import com.android.papp.callbacks.GenericClickableInterface;
 import com.android.papp.constatnts.AppConstants;
-import com.android.papp.fragments.LeftSideMenuFragment;
+import com.android.papp.fragments.RightSideMenuFragment;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.fragments.abstracts.GenericDialogFragment;
-import com.android.papp.utils.utility.Blur;
-import com.android.papp.utils.utility.Utils;
-import com.gdacciaro.iOSDialog.iOSDialogBuilder;
 
 import com.android.papp.R;
 
@@ -34,7 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected DrawerLayout drawerLayout;
     protected TitleBar titleBar;
-    private LeftSideMenuFragment leftSideMenuFragment;
+    private RightSideMenuFragment rightSideMenuFragment;
     public BaseFragment baseFragment;
     public GenericClickableInterface genericClickableInterface;
 
@@ -87,8 +78,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     public void addDrawerFragment() {
-        leftSideMenuFragment = LeftSideMenuFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().replace(getDrawerFragmentId(), leftSideMenuFragment).commit();
+        rightSideMenuFragment = RightSideMenuFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(getDrawerFragmentId(), rightSideMenuFragment).commit();
     }
 
 
@@ -167,8 +158,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    public LeftSideMenuFragment getLeftSideMenuFragment() {
-        return leftSideMenuFragment;
+    public RightSideMenuFragment getRightSideMenuFragment() {
+        return rightSideMenuFragment;
     }
 
     public void reload() {

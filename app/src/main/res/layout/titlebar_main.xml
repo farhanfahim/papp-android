@@ -20,7 +20,7 @@
     <LinearLayout
         android:id="@+id/containerTitlebar1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x40dp"
+        android:layout_height="@dimen/x50dp"
         android:layout_alignParentTop="true"
         android:background="@color/c_white"
         android:gravity="center_vertical"
@@ -38,9 +38,9 @@
         <TextView
             android:id="@+id/btnLeft1"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:drawablePadding="@dimen/x5dp"
+            android:layout_height="wrap_content"
             android:drawableStart="@drawable/img_back"
+            android:layout_marginRight="@dimen/x5dp"
             android:gravity="center"
             android:padding="@dimen/x5dp"
             android:scaleX="1.5"
@@ -59,7 +59,7 @@
             android:text="Your Title"
             android:textColor="@color/txtBlack"
             android:textSize="@dimen/s16"
-            app:typeface="@string/font_bold" />
+            app:typeface="@string/font_medium" />
 
 
         <ImageView

@@ -78,4 +78,31 @@ public class Constants {
     }
 
 
+    public static ArrayList<SpinnerModel> getSpeciality() {
+        ArrayList<SpinnerModel> arrayList = new ArrayList<>();
+        arrayList.add(new SpinnerModel("Leadership"));
+        arrayList.add(new SpinnerModel("SOPS"));
+        arrayList.add(new SpinnerModel("Personal Traits"));
+        arrayList.add(new SpinnerModel("Swimming"));
+        arrayList.add(new SpinnerModel("Cycling"));
+        return arrayList;
+
+    }
+
+
+    public static ArrayList<SpinnerModel> getMedalURL() {
+        ArrayList<SpinnerModel> arrayList = new ArrayList<>();
+        arrayList.add(new SpinnerModel("http://icons.iconarchive.com/icons/webalys/kameleon.pics/512/Medal-2-icon.png"));
+        arrayList.add(new SpinnerModel("https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.shareicon.net%2Fdownload%2F2017%2F03%2F29%2F881750_sport_512x512.png"));
+        arrayList.add(new SpinnerModel("https://image.flaticon.com/icons/png/512/625/625393.png"));
+        arrayList.add(new SpinnerModel(""));
+        arrayList.add(new SpinnerModel(""));
+        arrayList.add(new SpinnerModel(""));
+        return arrayList;
+
+    }
+
+
+
+
 }

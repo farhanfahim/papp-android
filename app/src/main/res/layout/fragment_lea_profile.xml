@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/c_white"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x200dp"
+            android:background="@drawable/img_header_blue_background"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/containerTitlebar1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x50dp"
+                android:layout_marginBottom="@dimen/x20dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/x8dp"
+                android:paddingRight="@dimen/x8dp">
+                <!--<ImageButton-->
+                <!--android:id="@+id/btnLeft1"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:background="@color/colorPrimary"-->
+                <!--android:padding="@dimen/x10dp"-->
+                <!--android:src="@drawable/ic_back" />-->
+
+
+                <TextView
+                    android:id="@+id/btnLeft1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x5dp"
+                    android:drawableStart="@drawable/img_back_profile"
+                    android:gravity="center"
+                    android:padding="@dimen/x5dp"
+                    android:scaleX="1.5"
+                    android:scaleY="1.5"
+                    android:textColor="@color/c_white" />
+
+
+                <com.android.papp.widget.AnyTextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="left|center_vertical"
+                    android:singleLine="true"
+                    android:text="LEA Profile"
+                    android:textColor="@color/c_white"
+                    android:textSize="@dimen/s16"
+                    app:typeface="@string/font_medium" />
+
+
+                <ImageView
+                    android:id="@+id/btnRight1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/x5dp"
+                    android:src="@drawable/img_side_menu"
+                    android:tint="@color/c_white"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x20dp"
+                android:layout_marginRight="@dimen/x20dp">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="@dimen/x80dp"
+                    android:layout_height="@dimen/x80dp"
+                    android:layout_marginRight="@dimen/x10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_lea_placeholder2" />
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:id="@+id/txtName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Jason Brody"
+                        android:textColor="@color/c_white"
+                        android:textSize="@dimen/s18"
+                        app:typeface="@string/font_bold" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:id="@+id/txtDesignation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x10dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Traffic Police"
+                        android:textColor="@color/c_white"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_light" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:id="@+id/txtLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/img_location"
+                        android:drawablePadding="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Washington DC."
+                        android:textColor="@color/c_white"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_light" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+            android:id="@+id/contMilestones"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x60dp"
+            android:layout_marginLeft="@dimen/x30dp"
+            android:layout_marginTop="@dimen/x170dp"
+            android:layout_marginRight="@dimen/x30dp"
+            android:background="@color/c_white"
+            android:elevation="@dimen/x5dp"
+            android:gravity="center_vertical"
+            app:corner_radius="@dimen/x5dp">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvMilestones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+
+        </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/contMilestones"
+            android:orientation="vertical"
+            android:padding="@dimen/x20dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Agency"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_regular" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Agency"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s14"
+                        app:typeface="@string/font_regular" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Department"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_regular" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Park Rangers"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s14"
+                        app:typeface="@string/font_regular" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Year of experience"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_regular" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="08 Years"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s14"
+                        app:typeface="@string/font_regular" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Points Earned"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_regular" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="1087 pts"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s14"
+                        app:typeface="@string/font_regular" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Ratings"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_regular" />
+
+
+                    <android.support.v7.widget.AppCompatRatingBar
+                        android:id="@+id/ratingbarDeliverySpeed"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:isIndicator="true"
+                        android:numStars="5"
+                        android:rating="4.5"
+                        android:stepSize="0.5" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/x5dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:id="@+id/contReviews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <com.android.papp.widget.AnyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="Reviews "
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_regular" />
+
+
+                        <com.android.papp.widget.AnyTextView
+                            android:id="@+id/txtReviews"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="(106)"
+                            android:textColor="@color/txtGrey"
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_regular" />
+
+
+                        <ImageView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/x20dp"
+                            android:rotation="-90"
+                            android:src="@drawable/img_drop_down" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Interest"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_regular" />
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvInterest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Personal Info"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_regular" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:maxLines="5"
+                        android:text="@string/personal_info"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_regular" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <com.android.papp.widget.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/img_button_blue"
+                android:gravity="center"
+                android:text="Schedule a meeting"
+                android:layout_marginTop="@dimen/x20dp"
+                android:textColor="@color/c_white"
+
+                />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</ScrollView>

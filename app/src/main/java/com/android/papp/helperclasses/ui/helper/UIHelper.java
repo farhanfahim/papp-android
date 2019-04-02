@@ -33,7 +33,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.papp.R;
+import com.android.papp.activities.BaseActivity;
 import com.android.papp.adapters.SpinnerDialogAdapter;
+import com.android.papp.callbacks.GenericClickableInterface;
+import com.android.papp.callbacks.OnSpinnerItemClickListener;
+import com.android.papp.callbacks.OnSpinnerOKPressedListener;
+import com.android.papp.fragments.abstracts.BaseFragment;
+import com.android.papp.fragments.abstracts.GenericDialogFragment;
+import com.android.papp.fragments.dialogs.SpinnerDialogFragment;
+import com.android.papp.managers.retrofit.GsonFactory;
 import com.android.papp.models.IntWrapper;
 import com.android.papp.models.SpinnerModel;
 import com.gdacciaro.iOSDialog.iOSDialogBuilder;
@@ -50,16 +59,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-
-import com.android.papp.R;
-import com.android.papp.activities.BaseActivity;
-import com.android.papp.callbacks.GenericClickableInterface;
-import com.android.papp.callbacks.OnSpinnerOKPressedListener;
-import com.android.papp.callbacks.OnSpinnerItemClickListener;
-import com.android.papp.fragments.abstracts.BaseFragment;
-import com.android.papp.fragments.abstracts.GenericDialogFragment;
-import com.android.papp.fragments.dialogs.SpinnerDialogFragment;
-import com.android.papp.managers.retrofit.GsonFactory;
 
 /**
  * Created by khanhamza on 09-Mar-17.
@@ -111,6 +110,22 @@ public class UIHelper {
         // showLongToastInCenter(ctx, R.string.msg_connection_error);
     }
 
+
+    public static void showAlertDialogWithCallback(String message, CharSequence title, DialogInterface.OnClickListener onClickListener,
+                                                   Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message)
+                .setTitle(title)
+                .setCancelable(true)
+                .setNegativeButton("OK", (dialogInterface, i) -> {
+                    dialogInterface.cancel();
+                    onClickListener.onClick(dialogInterface, i);
+                });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     public static void showAlertDialog(String message, CharSequence title,
                                        Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -133,7 +148,7 @@ public class UIHelper {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder
                 .setMessage(message)
-                .setCancelable(true)
+                .setCancelable(false)
                 .setNegativeButton("No",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {

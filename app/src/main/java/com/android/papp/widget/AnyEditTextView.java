@@ -24,17 +24,17 @@ public class AnyEditTextView extends FormEditText {
         Utils.setTypeface(attrs, this);
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
-        if (keyCode== KeyEvent.KEYCODE_ENTER)
-        {
-            // Just ignore the [Enter] key
-            return true;
-        }
-        // Handle all other keys in the default way
-        return super.onKeyDown(keyCode, event);
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event)
+//    {
+//        if (keyCode== KeyEvent.KEYCODE_ENTER)
+//        {
+//            // Just ignore the [Enter] key
+//            return true;
+//        }
+//        // Handle all other keys in the default way
+//        return super.onKeyDown(keyCode, event);
+//    }
 
 
     public String getStringTrimmed(){
