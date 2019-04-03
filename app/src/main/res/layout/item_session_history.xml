@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contParentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/x15dp"
+        android:layout_marginRight="@dimen/x15dp"
+        android:layout_marginTop="@dimen/x5dp"
+        android:layout_marginBottom="@dimen/x5dp"
+        android:paddingTop="@dimen/x10dp"
+        android:paddingBottom="@dimen/x10dp"
+        android:paddingLeft="@dimen/x10dp"
+        android:paddingRight="@dimen/x10dp"
+        android:background="@color/c_white"
+        app:corner_radius="@dimen/x5dp"
+        android:elevation="@dimen/x5dp"
+        android:gravity="center_vertical">
+
+
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/x5dp"
+            android:orientation="vertical">
+
+
+
+            <com.android.papp.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="Session Conducted by:"
+                android:textColor="@color/txtDarkGrey"
+                android:textSize="@dimen/s8"
+                app:fontFamily="@string/font_regular" />
+
+            <com.android.papp.widget.AnyTextView
+                android:id="@+id/txtSessionBy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:layout_marginBottom="@dimen/x5dp"
+                android:singleLine="true"
+                android:text="Jason Brody"
+                android:textColor="@color/txtBlack"
+                android:textSize="@dimen/s12"
+                app:fontFamily="@string/font_medium" />
+
+
+            <com.android.papp.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="Session Conducted on:"
+                android:textColor="@color/txtDarkGrey"
+                android:textSize="@dimen/s8"
+                app:fontFamily="@string/font_regular" />
+
+            <com.android.papp.widget.AnyTextView
+                android:id="@+id/txtSessionOn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:layout_marginBottom="@dimen/x5dp"
+                android:singleLine="true"
+                android:text="February 23rd, 5:00pm"
+                android:textColor="@color/txtBlack"
+                android:textSize="@dimen/s12"
+                app:fontFamily="@string/font_medium" />
+
+
+
+            <com.android.papp.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="Location:"
+                android:textColor="@color/txtDarkGrey"
+                android:textSize="@dimen/s8"
+                app:fontFamily="@string/font_regular" />
+
+            <com.android.papp.widget.AnyTextView
+                android:id="@+id/txtLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:layout_marginBottom="@dimen/x5dp"
+                android:singleLine="true"
+                android:text="23rd Jump Street, California"
+                android:textColor="@color/txtBlack"
+                android:textSize="@dimen/s12"
+                app:fontFamily="@string/font_medium" />
+
+
+            <com.android.papp.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="Dependents:"
+                android:textColor="@color/txtDarkGrey"
+                android:textSize="@dimen/s8"
+                app:fontFamily="@string/font_regular" />
+
+            <com.android.papp.widget.AnyTextView
+                android:id="@+id/txtDependentsCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:layout_marginBottom="@dimen/x5dp"
+                android:singleLine="true"
+                android:text="5"
+                android:textColor="@color/txtBlack"
+                android:textSize="@dimen/s12"
+                app:fontFamily="@string/font_medium" />
+
+
+        </LinearLayout>
+
+
+
+
+        <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+            android:layout_width="@dimen/x120dp"
+            android:layout_height="@dimen/x120dp"
+            android:layout_margin="@dimen/x5dp"
+            app:corner_radius="@dimen/x5dp">
+
+            <ImageView
+                android:id="@+id/imgProfile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_lea_placeholder2" />
+
+        </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
+
+
+    </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+</LinearLayout>

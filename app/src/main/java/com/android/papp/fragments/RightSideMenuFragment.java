@@ -134,7 +134,7 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
 //    }
 
 
-    @OnClick({R.id.imgBack, R.id.contNofitications, R.id.contEditProfile, R.id.conSessionHistory, R.id.contSessionPayoutHistory, R.id.contMyGifts, R.id.contGiftsAndRewards, R.id.contMilestones, R.id.contAboutApp, R.id.contTermsAndConditions, R.id.contLogout})
+    @OnClick({R.id.imgBack, R.id.contNofitications, R.id.contEditProfile, R.id.conSessionHistory, R.id.contSessionPayoutHistory, R.id.contMyGifts, R.id.contGiftsAndRewards, R.id.contMilestones, R.id.contSponsors, R.id.contAboutApp, R.id.contTermsAndConditions, R.id.contLogout})
     public void onViewClicked(View view) {
 
         closeMenu();
@@ -146,16 +146,22 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
                 getBaseActivity().addDockableFragment(NotificationsFragment.newInstance(), false);
                 break;
             case R.id.contEditProfile:
+                getBaseActivity().addDockableFragment(EditProfileFragment.newInstance(), false);
                 break;
             case R.id.conSessionHistory:
+                getBaseActivity().addDockableFragment(SessionHistoryFragment.newInstance(), false);
                 break;
             case R.id.contSessionPayoutHistory:
+                getBaseActivity().addDockableFragment(SessionPayoutHistoryFragment.newInstance(), false);
                 break;
             case R.id.contMyGifts:
                 break;
             case R.id.contGiftsAndRewards:
                 break;
             case R.id.contMilestones:
+                break;
+            case R.id.contSponsors:
+                getBaseActivity().addDockableFragment(SponsorFragment.newInstance(), false);
                 break;
             case R.id.contAboutApp:
                 getBaseActivity().addDockableFragment(GenericContentFragment.newInstance("About", AppConstants.AboutUs), false);
