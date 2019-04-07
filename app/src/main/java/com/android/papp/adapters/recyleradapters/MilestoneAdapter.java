@@ -12,7 +12,6 @@ import com.android.papp.callbacks.OnItemClickListener;
 import com.android.papp.libraries.imageloader.ImageLoaderHelper;
 import com.android.papp.models.SpinnerModel;
 import com.android.papp.widget.AnyTextView;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -22,17 +21,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  */
-public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.ViewHolder> {
+public class MilestoneAdapter extends RecyclerView.Adapter<MilestoneAdapter.ViewHolder> {
 
     private final OnItemClickListener onItemClick;
-    private View itemView = null;
-
 
 
     private Context activity;
     private List<SpinnerModel> arrData;
 
-    public MedalAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
+    public MilestoneAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
@@ -41,8 +38,9 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
+        View itemView = null;
         itemView = LayoutInflater.from(activity)
-                .inflate(R.layout.item_medal, parent, false);
+                .inflate(R.layout.item_milestone, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -56,8 +54,8 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.ViewHolder> 
     }
 
     private void setListener(final ViewHolder holder, final SpinnerModel model) {
-        holder.contMedalLayout.
-                setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, itemView, MedalAdapter.class.getSimpleName()));
+        holder.contParentLayout.
+                setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null));
     }
 
 
@@ -68,10 +66,17 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.ViewHolder> 
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.txtTitle)
+        AnyTextView txtTitle;
+        @BindView(R.id.txtPoints)
+        AnyTextView txtPoints;
         @BindView(R.id.imgMedal)
         CircleImageView imgMedal;
+        @BindView(R.id.contParentLayout)
+        LinearLayout contParentLayout;
         @BindView(R.id.contMedalLayout)
         LinearLayout contMedalLayout;
+
 
         ViewHolder(View view) {
             super(view);

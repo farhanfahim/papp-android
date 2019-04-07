@@ -21,13 +21,16 @@
     <!-- BaseApplication theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
-`        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <item name="actionModeBackground">@color/colorPrimaryDark</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
 
     <style name="SplashActivty" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>

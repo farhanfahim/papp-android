@@ -82,7 +82,7 @@ public class HomeActivity extends BaseActivity {
     public void setSideMenu(int direction) {
 
         resideMenu = new ResideMenu(this);
-        resideMenu.setBackground(R.drawable.measurment_background);
+        resideMenu.setBackground(R.drawable.img_background_sidebar);
         resideMenu.attachToActivity(HomeActivity.this);
         resideMenu.setScaleValue(0.56f);
         resideMenu.setShadowVisible(false);

@@ -135,6 +135,7 @@ public class LoginDetailFragment extends BaseFragment {
                 } else {
                     getBaseActivity().finish();
                     getBaseActivity().openActivity(HomeActivity.class);
+
                 }
                 break;
             case R.id.contFacebookLogin:

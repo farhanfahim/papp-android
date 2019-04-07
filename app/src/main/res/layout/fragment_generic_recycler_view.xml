@@ -14,15 +14,78 @@
         android:layout_weight="1">
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:padding="@dimen/x10dp"
-            android:paddingBottom="@dimen/x20dp">
+            android:orientation="vertical">
 
-        </android.support.v7.widget.RecyclerView>
+
+            <LinearLayout
+                android:id="@+id/contSearchBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/x10dp"
+                android:layout_marginTop="@dimen/x6dp"
+                android:layout_marginRight="@dimen/x10dp"
+                android:background="@drawable/searchbar"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <com.android.papp.widget.AnyEditTextView
+                    android:id="@+id/edtSearchBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:hint="@string/search"
+                    android:maxLines="1"
+                    android:padding="@dimen/x10dp"
+                    android:textColorHint="@color/base_gray"
+                    android:textSize="@dimen/s14" />
+
+                <ImageView
+
+                    android:id="@+id/imgSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center"
+                    android:paddingRight="@dimen/x7dp"
+                    android:src="@drawable/icon_search_updated"
+                    android:tint="@color/txtDarkGrey" />
+            </LinearLayout>
+
+
+
+
+            <com.android.papp.widget.AnyTextView
+                android:id="@+id/txtHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/x10dp"
+                android:text="Total Points Heading"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/s18"
+                android:visibility="gone"
+                app:typeface="@string/font_medium" />
+
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:padding="@dimen/x10dp"
+                android:paddingBottom="@dimen/x20dp">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/emptyview_container"
@@ -51,41 +114,6 @@
                 app:typeface="@string/font_bold" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/contSearchBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="@dimen/x10dp"
-            android:layout_marginTop="@dimen/x6dp"
-            android:layout_marginRight="@dimen/x10dp"
-            android:background="@drawable/searchbar"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <com.android.papp.widget.AnyEditTextView
-                android:id="@+id/edtSearchBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/transparent"
-                android:hint="@string/search"
-                android:maxLines="1"
-                android:padding="@dimen/x10dp"
-                android:textColorHint="@color/base_gray"
-                android:textSize="@dimen/s14" />
-
-            <ImageView
-
-                android:id="@+id/imgSearch"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="center"
-                android:paddingRight="@dimen/x7dp"
-                android:src="@drawable/icon_search_updated"
-                android:tint="@color/txtDarkGrey" />
-        </LinearLayout>
 
 
         <com.github.clans.fab.FloatingActionButton

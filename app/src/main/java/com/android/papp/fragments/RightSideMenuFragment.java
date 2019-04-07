@@ -155,10 +155,13 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
                 getBaseActivity().addDockableFragment(SessionPayoutHistoryFragment.newInstance(), false);
                 break;
             case R.id.contMyGifts:
+                getBaseActivity().addDockableFragment(MyGiftsFragment.newInstance(), false);
                 break;
             case R.id.contGiftsAndRewards:
+                getBaseActivity().addDockableFragment(GiftAndRewardsFragment.newInstance(), false);
                 break;
             case R.id.contMilestones:
+                getBaseActivity().addDockableFragment(MilestoneFragment.newInstance(), false);
                 break;
             case R.id.contSponsors:
                 getBaseActivity().addDockableFragment(SponsorFragment.newInstance(), false);

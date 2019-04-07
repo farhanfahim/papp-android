@@ -3,10 +3,13 @@ package com.android.papp.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -22,6 +25,8 @@ import com.android.papp.fragments.abstracts.BaseFragment;
 
 
 public class MainActivity extends BaseActivity {
+
+    private NavigationView navigationView;
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -42,6 +47,9 @@ public class MainActivity extends BaseActivity {
         super.onPostCreate(savedInstanceState);
         RunTimePermissions.verifyStoragePermissions(this);
         initFragments();
+
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.getBackground().setColorFilter(0x80000000, PorterDuff.Mode.MULTIPLY);
     }
 
     @Override
