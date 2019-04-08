@@ -181,9 +181,12 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
 
     }
 
-    @OnClick({R.id.btnLeft1, R.id.btnRight1, R.id.contMilestones, R.id.contReviews})
+    @OnClick({R.id.btnLeft1,R.id.txtScheduleMeeting, R.id.btnRight1, R.id.contMilestones, R.id.contReviews})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.txtScheduleMeeting:
+                getBaseActivity().addDockableFragment(ScheduleAMeetingFragment.newInstance(), true);
+                break;
             case R.id.btnLeft1:
                 getBaseActivity().onBackPressed();
                 break;

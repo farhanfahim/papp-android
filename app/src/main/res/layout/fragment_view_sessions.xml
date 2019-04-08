@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:orientation="vertical">
+    
+    
+    
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+
+
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="@dimen/x10dp"
+            android:layout_height="wrap_content">
+
+            <com.android.papp.widget.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:text="Date:"
+                android:layout_marginBottom="@dimen/x5dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/s12"
+                app:typeface="@string/font_regular" />
+
+
+
+
+
+            <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+                android:id="@+id/contDate"
+                android:layout_width="match_parent"
+                app:corner_radius="@dimen/x3dp"
+                android:background="@color/c_white"
+                android:elevation="@dimen/x3dp"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <com.android.papp.widget.AnyTextView
+                    android:id="@+id/txtDate"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:singleLine="true"
+                    android:padding="@dimen/x5dp"
+                    android:background="@color/c_white"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:hint="Please Select Date"
+                    android:textColor="@color/txtBlack"
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_regular" />
+
+
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/x5dp"
+                    android:src="@drawable/img_next"/>
+
+
+            </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+
+
+
+
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/contParent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:padding="@dimen/x10dp"
+            android:paddingBottom="@dimen/x20dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <LinearLayout
+            android:id="@+id/emptyview_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/x60dp"
+                android:layout_height="@dimen/x60dp"
+                android:src="@drawable/img_email" />
+
+            <com.android.papp.widget.AnyTextView
+                android:id="@+id/empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/x10dp"
+                android:text="No Record Found"
+                android:textColor="@color/txtBlack"
+                android:textSize="@dimen/s18"
+                android:visibility="visible"
+                app:typeface="@string/font_bold" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+    <include layout="@layout/container_navigation_bar" />
+</LinearLayout>

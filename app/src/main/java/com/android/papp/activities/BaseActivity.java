@@ -18,6 +18,7 @@ import com.android.papp.fragments.abstracts.GenericDialogFragment;
 
 import com.android.papp.R;
 
+import com.android.papp.helperclasses.GooglePlaceHelper;
 import com.android.papp.widget.TitleBar;
 
 
@@ -28,6 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private RightSideMenuFragment rightSideMenuFragment;
     public BaseFragment baseFragment;
     public GenericClickableInterface genericClickableInterface;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,6 +224,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == GooglePlaceHelper.REQUEST_CODE_AUTOCOMPLETE) {
+
+        }
+    }
 
     public void notifyToAll(int event, Object data) {
         BaseApplication.getPublishSubject().onNext(new Pair<>(event, data));
@@ -236,7 +246,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void setGenericClickableInterface(GenericClickableInterface genericClickableInterface) {
         this.genericClickableInterface = genericClickableInterface;
     }
-
 
 
 

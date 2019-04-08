@@ -78,8 +78,8 @@ public class GooglePlaceHelper {
                 intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(activity);
             }
 
-            activity.startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
-//            fragment.startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
+//            activity.startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
+            fragment.startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
         } catch (GooglePlayServicesRepairableException e) {
             // Indicates that Google Play Services is either not installed or not up to date. Prompt
             // the user to correct the issue.

@@ -6,11 +6,10 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/x5dp"
     android:layout_marginRight="@dimen/x5dp"
-    android:background="@color/c_white"
     android:orientation="vertical">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -25,10 +24,50 @@
             android:src="@drawable/img_placeholder_dependent" />
 
 
+        <RelativeLayout
+            android:id="@+id/contSelected"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/imgDependentProfile"
+            android:layout_alignTop="@id/imgDependentProfile"
+            android:layout_alignRight="@id/imgDependentProfile"
+            android:layout_alignBottom="@id/imgDependentProfile"
+            android:gravity="center">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:alpha="0.8"
+                android:scaleType="centerCrop"
+                android:src="#0B78C0" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/img_selected_tick" />
+
+
+        </RelativeLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:alpha="0.8"
+            android:scaleType="centerCrop"
+            android:src="#0B78C0" />
+
+
         <com.android.papp.widget.AnyTextView
             android:id="@+id/txtName"
             android:layout_width="match_parent"
+            android:layout_below="@id/imgDependentProfile"
+            android:layout_alignLeft="@id/imgDependentProfile"
             android:layout_height="wrap_content"
+            android:layout_alignRight="@id/imgDependentProfile"
             android:ellipsize="end"
             android:gravity="center"
             android:padding="@dimen/x3dp"
@@ -39,7 +78,7 @@
             app:fontFamily="@string/font_regular" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>

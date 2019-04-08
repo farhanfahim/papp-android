@@ -123,6 +123,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}"
 
     implementation 'com.specyci:residemenu:1.6+'
+
+    implementation 'com.github.psinetron:slycalendarview:0.0.9'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

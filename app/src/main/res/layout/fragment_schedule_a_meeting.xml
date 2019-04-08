@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/x20dp"
+        android:paddingTop="@dimen/x15dp"
+        android:paddingRight="@dimen/x20dp"
+        android:paddingBottom="@dimen/x10dp">
+
+
+        <com.android.papp.widget.AnyTextView
+            android:id="@+id/txtSetDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x10dp"
+            android:background="@drawable/img_button_blue"
+            android:gravity="center"
+            android:text="Set Date and Time"
+            android:textColor="@color/c_white" />
+
+
+        <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+            android:id="@+id/contLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x10dp"
+            android:background="@color/c_white"
+            android:elevation="@dimen/x5dp"
+            android:gravity="center_vertical"
+            android:padding="@dimen/x10dp"
+            app:corner_radius="@dimen/x3dp">
+
+
+            <com.android.papp.widget.AnyTextView
+                android:id="@+id/txtLocation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:ellipsize="end"
+                android:hint="Specify Location"
+                android:padding="@dimen/x3dp"
+                android:singleLine="true"
+                android:textColor="@color/txtBlack"
+                android:textColorHint="@color/txtGrey"
+                android:textSize="@dimen/s14"
+                app:fontFamily="@string/font_regular" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/x5dp"
+                android:src="@drawable/img_search"
+                android:tint="@color/c_black" />
+
+
+        </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+        <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+            android:id="@+id/contDependents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x10dp"
+            android:background="@color/c_white"
+            android:elevation="@dimen/x5dp"
+            android:gravity="center_vertical"
+            android:padding="@dimen/x10dp"
+            app:corner_radius="@dimen/x3dp">
+
+
+            <com.android.papp.widget.AnyTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:ellipsize="end"
+                android:padding="@dimen/x3dp"
+                android:singleLine="true"
+                android:text="Choose Dependents"
+                android:textColor="@color/txtBlack"
+                android:textColorHint="@color/txtGrey"
+                android:textSize="@dimen/s14"
+                app:fontFamily="@string/font_regular" />
+
+
+            <com.android.papp.widget.AnyTextView
+                android:id="@+id/txtDependentsCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:ellipsize="end"
+                android:maxLength="3"
+                android:padding="@dimen/x3dp"
+                android:singleLine="true"
+                android:text="1"
+                android:textColor="@color/txtGrey"
+                android:textColorHint="@color/txtGrey"
+                android:textSize="@dimen/s14"
+                app:fontFamily="@string/font_regular" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/x5dp"
+                android:src="@drawable/img_drop_down"
+                android:tint="@color/c_black" />
+
+
+        </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/x10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvDependents"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+
+        </LinearLayout>
+
+
+        <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:elevation="@dimen/x5dp"
+            android:layout_marginBottom="@dimen/x10dp"
+            android:orientation="vertical"
+            android:padding="@dimen/x20dp"
+            app:corner_radius="@dimen/x3dp">
+
+
+            <com.android.papp.widget.AnyEditTextView
+                android:id="@+id/edtMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/c_white"
+                android:gravity="start"
+                android:hint="Write a Message"
+                android:lines="5"
+                android:textColor="@color/txtDarkGrey"
+                android:textSize="@dimen/s14"
+                app:typeface="@string/font_regular" />
+
+
+        </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/x10dp"
+            android:layout_height="wrap_content">
+
+
+            <CheckBox
+                android:id="@+id/cbOnline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.android.papp.widget.AnyTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:ellipsize="end"
+                android:padding="@dimen/x3dp"
+                android:singleLine="true"
+                android:text="Choose if you want an online session"
+                android:textColor="@color/txtBlack"
+                android:textColorHint="@color/txtGrey"
+                android:textSize="@dimen/s14"
+                app:fontFamily="@string/font_regular" />
+
+
+        </LinearLayout>
+
+
+
+        <com.android.papp.widget.AnyTextView
+            android:id="@+id/contSendRequest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x10dp"
+            android:background="@drawable/img_button_blue"
+            android:gravity="center"
+            android:text="Send Request"
+            android:textColor="@color/c_white" />
+
+
+
+    </LinearLayout>
+
+
+
+
+</android.support.v4.widget.NestedScrollView>

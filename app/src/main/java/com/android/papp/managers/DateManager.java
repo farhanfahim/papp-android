@@ -7,7 +7,11 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.android.papp.callbacks.OnCalendarUpdate;
+import com.android.papp.callbacks.OnDatePicked;
+import com.android.papp.constatnts.AppConstants;
 import com.android.papp.helperclasses.ui.helper.KeyboardHelper;
+import com.android.papp.helperclasses.ui.helper.UIHelper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,11 +19,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import com.android.papp.callbacks.OnCalendarUpdate;
-import com.android.papp.callbacks.OnDatePicked;
-import com.android.papp.constatnts.AppConstants;
-import com.android.papp.helperclasses.ui.helper.UIHelper;
 
 /**
  * Created by muhammadmuzammil on 4/20/2017.
@@ -31,7 +30,7 @@ public class DateManager {
     private static SimpleDateFormat sdfDateInput = new SimpleDateFormat(AppConstants.INPUT_DATE_FORMAT);
     private static SimpleDateFormat sdfDateInputAmPm = new SimpleDateFormat(AppConstants.INPUT_DATE_FORMAT_AM_PM);
     private static SimpleDateFormat sdfLabDateInputAmPm = new SimpleDateFormat(AppConstants.INPUT_LAB_DATE_FORMAT_AM_PM);
-    private static SimpleDateFormat sdfDateOuput = new SimpleDateFormat(AppConstants.OUTPUT_DATE_TIME_FORMAT);
+    private static SimpleDateFormat sdfDateOuput = new SimpleDateFormat(AppConstants.OUTPUT_DATE_FORMAT);
     private static SimpleDateFormat sdfTimeInput = new SimpleDateFormat(AppConstants.INPUT_TIME_FORMAT);
     private static SimpleDateFormat sdfTimeOuput = new SimpleDateFormat(AppConstants.OUTPUT_TIME_FORMAT);
     private static SimpleDateFormat sdfUTCOutput = new SimpleDateFormat(AppConstants.OUTPUT_UTC);
@@ -510,42 +509,38 @@ public class DateManager {
 
     public static void showDateTimePicker(final Context context, final TextView textView, final OnCalendarUpdate onCalendarUpdate, boolean setCurrentDateMinimum) {
 
-        if (textView != null) {
-            final Calendar myCalendar = Calendar.getInstance();
 
-            final TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                    myCalendar.set(Calendar.HOUR_OF_DAY, i);
-                    myCalendar.set(Calendar.MINUTE, i1);
+        final Calendar myCalendar = Calendar.getInstance();
 
-                    String myFormat = "MMMM dd, yyyy HH:mm"; // In which you need put here
-                    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+            final TimePickerDialog.OnTimeSetListener timeSetListener = (timePicker, i, i1) -> {
+                myCalendar.set(Calendar.HOUR_OF_DAY, i);
+                myCalendar.set(Calendar.MINUTE, i1);
 
+                String myFormat = "MMMM dd, yyyy HH:mm"; // In which you need put here
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+
+                if (textView != null) {
                     textView.setText(sdf.format(myCalendar.getTime()));
+                }
 
-                    if (onCalendarUpdate != null) {
-                        onCalendarUpdate.onCalendarUpdate(myCalendar);
-                    }
+                if (onCalendarUpdate != null) {
+                    onCalendarUpdate.onCalendarUpdate(myCalendar);
                 }
             };
 
 
-            DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
 
 
-                    // TODO Auto-generated method stub
-                    myCalendar.set(Calendar.YEAR, year);
-                    myCalendar.set(Calendar.MONTH, monthOfYear);
-                    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                    TimePickerDialog timePickerDialog = new TimePickerDialog(context, timeSetListener, myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE), false);
-                    timePickerDialog.show();
+                TimePickerDialog timePickerDialog = new TimePickerDialog(context, timeSetListener, myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE), false);
+                timePickerDialog.show();
 
-
-                }
 
             };
 
@@ -554,8 +549,10 @@ public class DateManager {
                 datePickerDialog.getDatePicker().setMinDate(myCalendar.getTimeInMillis());
             }
             datePickerDialog.show();
-        } else {
-            UIHelper.showLongToastInCenter(context, "Unable to show Date picker");
-        }
+
+
+//        else {
+//            UIHelper.showLongToastInCenter(context, "Unable to show Date picker");
+//        }
     }
 }

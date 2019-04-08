@@ -228,6 +228,8 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
             case R.id.contChat:
                 break;
             case R.id.contSessions:
+                getBaseActivity().popBackStack();
+                getBaseActivity().addDockableFragment(ViewSessionFragment.newInstance(), false);
                 break;
             case R.id.imgHome:
                 break;

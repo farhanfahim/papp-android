@@ -72,6 +72,7 @@
             android:gravity="start"
             android:hint="Write a Review"
             android:lines="5"
+            android:maxLength="1000"
             android:textColor="@color/txtDarkGrey"
             android:textSize="@dimen/s14"
             app:typeface="@string/font_regular" />
