@@ -175,6 +175,8 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.contChat:
+                getBaseActivity().popBackStack();
+                getBaseActivity().addDockableFragment(ChatListsFragment.newInstance(), false);
                 break;
             case R.id.contDate:
                 new SlyCalendarDialog()

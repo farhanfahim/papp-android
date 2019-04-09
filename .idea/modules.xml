@@ -4,8 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PAPP.iml" filepath="$PROJECT_DIR$/PAPP.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/papp-program-android.iml" filepath="$PROJECT_DIR$/.idea/papp-program-android.iml" />
     </modules>
   </component>
 </project>

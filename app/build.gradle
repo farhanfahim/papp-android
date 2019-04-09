@@ -108,11 +108,7 @@ dependencies {
     implementation 'commons-io:commons-io:2.4'
     implementation 'com.gdacciaro:iosdialog:1.0.3'
     implementation 'com.kaopiz:kprogresshud:1.1.0'
-    implementation 'com.jcminarro:RoundKornerLayouts:0.3.1'
-    implementation 'com.github.HITGIF:TextFieldBoxes:1.4.4'
-    implementation 'com.github.badoualy:stepper-indicator:1.0.7'
-    implementation 'com.github.mabbas007:TagsEditText:1.0.5'
-    implementation 'com.shawnlin:number-picker:2.4.6'
+    implementation 'com.jcminarro:RoundKornerLayouts:0.4.0'
     implementation 'com.github.jd-alexander:android-flat-button:v1.1'
     implementation 'me.grantland:autofittextview:0.2.1'
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
@@ -125,6 +121,7 @@ dependencies {
     implementation 'com.specyci:residemenu:1.6+'
 
     implementation 'com.github.psinetron:slycalendarview:0.0.9'
+    compile 'io.huannguyen.swipeablerv:swipeable-rv:1.0.2'
 
 }
 

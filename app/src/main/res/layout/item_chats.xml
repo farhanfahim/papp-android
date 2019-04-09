@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contParentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/c_white"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/x10dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/x20dp"
+        android:layout_marginRight="@dimen/x10dp"
+        android:gravity="center_vertical">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgProfile"
+                android:layout_width="@dimen/x50dp"
+                android:layout_height="@dimen/x50dp"
+                android:layout_marginRight="@dimen/x10dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_placeholder_dependent" />
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgStatusOnline"
+                android:layout_width="@dimen/x10dp"
+                android:layout_height="@dimen/x10dp"
+                android:layout_alignStart="@+id/imgProfile"
+                android:layout_alignTop="@+id/imgProfile"
+                android:layout_marginTop="5dp"
+                android:src="@color/base_green"
+                app:civ_border_color="@color/c_white"
+                app:civ_border_width="1px" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <com.android.papp.widget.AnyTextView
+                android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:padding="@dimen/x2dp"
+                android:singleLine="true"
+                android:text="Jason Brody"
+                android:textColor="@color/txtBlack"
+                android:textSize="@dimen/s14"
+                app:fontFamily="@string/font_regular" />
+
+
+            <com.android.papp.widget.AnyTextView
+                android:id="@+id/txtMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:padding="@dimen/x2dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod."
+                android:textColor="@color/txtDarkGrey"
+                android:textSize="@dimen/s12"
+                app:fontFamily="@string/font_regular" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x5dp"
+            android:layout_marginRight="@dimen/x5dp"
+            android:gravity="center_vertical|right"
+            android:orientation="vertical">
+
+            <com.android.papp.widget.AnyTextView
+                android:id="@+id/txtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:padding="@dimen/x3dp"
+                android:singleLine="true"
+                android:text="22/2/2019"
+                android:textColor="@color/txtDarkGrey"
+                android:textSize="@dimen/s10"
+                app:fontFamily="@string/font_regular" />
+
+
+            <com.android.papp.widget.AnyTextView
+                android:id="@+id/txtTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:padding="@dimen/x3dp"
+                android:singleLine="true"
+                android:text="03:00 pm"
+                android:textColor="@color/txtBlack"
+                android:textSize="@dimen/s14"
+                app:fontFamily="@string/font_regular" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rotation="-90"
+            android:src="@drawable/img_drop_down"
+            android:visibility="visible" />
+
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1dp"
+        android:layout_marginTop="@dimen/x10dp"
+        android:background="@color/seperator_light_gray" />
+
+</LinearLayout>
