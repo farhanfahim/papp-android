@@ -87,7 +87,7 @@
             android:layout_height="@dimen/x15dp"
 
             android:src="@drawable/img_drop_down"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
 
     </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>

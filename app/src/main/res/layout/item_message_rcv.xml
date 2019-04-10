@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/x10dp"
+    android:layout_marginBottom="@dimen/x10dp"
+    android:orientation="horizontal">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgProfileRcv"
+        android:layout_width="@dimen/x40dp"
+        android:layout_height="@dimen/x40dp"
+        android:layout_gravity="bottom"
+        android:layout_marginRight="@dimen/x10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_placeholder_dependent" />
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2.5"
+        android:background="@drawable/img_chat_white_box"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/x5dp"
+        android:paddingBottom="@dimen/x5dp"
+        android:paddingLeft="@dimen/x10dp"
+        android:paddingRight="@dimen/x10dp"
+        >
+
+
+        <com.android.papp.widget.AnyTextView
+            android:id="@+id/txtMessageRcv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum dolor sit amet, cons ectetur adipisicing elit, "
+            android:textColor="@color/txtBlack"
+            android:textSize="@dimen/s12"
+            app:typeface="@string/font_regular" />
+
+
+        <com.android.papp.widget.AnyTextView
+            android:id="@+id/txtTimeRcv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="03:00 am"
+            android:textColor="@color/txtDarkGrey"
+            android:textSize="@dimen/s12"
+            app:typeface="@string/font_light" />
+
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.8" />
+
+
+</LinearLayout>

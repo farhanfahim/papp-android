@@ -1,7 +1,5 @@
 package com.android.papp.activities;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -9,22 +7,16 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
+import com.android.papp.R;
+import com.android.papp.fragments.ChatsFragment;
+import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.helperclasses.RunTimePermissions;
-import com.android.papp.managers.SharedPreferenceManager;
 
 import java.util.List;
 
-import com.android.papp.R;
 
-import com.android.papp.fragments.LoginFragment;
-import com.android.papp.fragments.abstracts.BaseFragment;
-
-
-public class MainActivity extends BaseActivity {
+public class ChatActivity extends BaseActivity {
 
     private NavigationView navigationView;
 
@@ -54,7 +46,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected int getViewId() {
-        return R.layout.activity_main;
+        return R.layout.activity_chat;
     }
 
     @Override
@@ -79,17 +71,14 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initFragments() {
-        if (SharedPreferenceManager.getInstance(getApplicationContext()).getCurrentUser() == null) {
-            addDockableFragment(LoginFragment.newInstance(), false);
-        } else {
-            openActivity(HomeActivity.class);
-            this.finish();
-        }
+
+        addDockableFragment(ChatsFragment.newInstance(), false);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
     }
 
     @Override
@@ -109,7 +98,7 @@ public class MainActivity extends BaseActivity {
                 fragment.setTitlebar(titleBar);
             }
         } else {
-            closeApp();
+            finish();
         }
     }
 

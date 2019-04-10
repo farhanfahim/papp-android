@@ -249,6 +249,8 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
                 arrCategories.get(position).setSelected(true);
 
                 categoriesAdapter.notifyDataSetChanged();
+            } else if (((String) type).equalsIgnoreCase(LEAAdapter.class.getSimpleName())) {
+                getBaseActivity().addDockableFragment(LEAProfileFragment.newInstance(), true);
             }
 
         }

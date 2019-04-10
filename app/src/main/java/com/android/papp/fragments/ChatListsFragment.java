@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.papp.R;
+import com.android.papp.activities.ChatActivity;
 import com.android.papp.adapters.recyleradapters.ChatListAdapter;
 import com.android.papp.callbacks.OnItemClickListener;
 import com.android.papp.constatnts.Constants;
@@ -214,6 +215,8 @@ public class ChatListsFragment extends BaseFragment implements OnItemClickListen
 
     @Override
     public void onItemClick(int position, Object object, View view, Object type) {
+
+        getBaseActivity().openActivity(ChatActivity.class);
 
     }
 

@@ -139,8 +139,10 @@ public class LoginDetailFragment extends BaseFragment {
                 }
                 break;
             case R.id.contFacebookLogin:
+                showNextBuildToast();
                 break;
             case R.id.contTwitterLogin:
+                showNextBuildToast();
                 break;
             case R.id.contSignup:
                 getBaseActivity().addDockableFragment(SignUpFragment.newInstance(), true);

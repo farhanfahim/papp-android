@@ -141,7 +141,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="@dimen/x3dp"
-                        android:text="Top LEAs"
+                        android:text="Top Mentors"
                         android:textColor="@color/txtBlack"
                         android:textSize="@dimen/s16"
                         app:fontFamily="@string/font_regular" />
@@ -193,7 +193,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="@dimen/x3dp"
-                        android:text="My LEAs"
+                        android:text="My Mentors"
                         android:textColor="@color/txtBlack"
                         android:textSize="@dimen/s16"
                         app:fontFamily="@string/font_regular" />

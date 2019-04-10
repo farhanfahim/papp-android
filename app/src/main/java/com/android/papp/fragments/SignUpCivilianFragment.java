@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.android.papp.R;
+import com.android.papp.activities.HomeActivity;
 import com.android.papp.adapters.recyleradapters.AddDependentsAdapter;
 import com.android.papp.callbacks.OnItemAdd;
 import com.android.papp.callbacks.OnItemClickListener;
@@ -179,10 +180,14 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
                 getBaseActivity().addDockableFragment(AddDependentFragment.newInstance(arrData), false);
                 break;
             case R.id.contBtnSignUp:
+                getBaseActivity().finish();
+                getBaseActivity().openActivity(HomeActivity.class);
                 break;
             case R.id.contFacebookLogin:
+                showNextBuildToast();
                 break;
             case R.id.contTwitterLogin:
+                showNextBuildToast();
                 break;
         }
     }

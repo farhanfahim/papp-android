@@ -1,6 +1,7 @@
 package com.android.papp.adapters.recyleradapters;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +54,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     }
 
     private void setListener(final ViewHolder holder, final SpinnerModel model) {
-        holder.txtRemove.
+        holder.contParentLayout.
                 setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null));
     }
 
@@ -69,13 +70,16 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         CircleImageView imgProfile;
         @BindView(R.id.txtName)
         AnyTextView txtName;
+        @BindView(R.id.ratingbarDeliverySpeed)
+        AppCompatRatingBar ratingbarDeliverySpeed;
+        @BindView(R.id.txtDate)
+        AnyTextView txtDate;
+        @BindView(R.id.txtTime)
+        AnyTextView txtTime;
         @BindView(R.id.txtReviews)
         AnyTextView txtReviews;
-        @BindView(R.id.txtRemove)
-        AnyTextView txtRemove;
         @BindView(R.id.contParentLayout)
         LinearLayout contParentLayout;
-
 
         ViewHolder(View view) {
             super(view);

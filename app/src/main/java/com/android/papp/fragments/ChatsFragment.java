@@ -13,12 +13,14 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.papp.R;
-import com.android.papp.adapters.recyleradapters.SpecialityAdapter;
+import com.android.papp.adapters.recyleradapters.ChatsAdapter;
+import com.android.papp.callbacks.OnItemAdd;
 import com.android.papp.callbacks.OnItemClickListener;
+import com.android.papp.constatnts.Constants;
 import com.android.papp.fragments.abstracts.BaseFragment;
-import com.android.papp.helperclasses.ui.helper.KeyboardHelper;
 import com.android.papp.helperclasses.ui.helper.UIHelper;
 import com.android.papp.models.SpinnerModel;
 import com.android.papp.widget.AnyEditTextView;
@@ -31,60 +33,45 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class SignUpLEAFragment extends BaseFragment implements OnItemClickListener{
+public class ChatsFragment extends BaseFragment implements OnItemClickListener, OnItemAdd {
 
 
     Unbinder unbinder;
 
 
-
-
-    @BindView(R.id.edtFirstName)
-    AnyEditTextView edtFirstName;
-    @BindView(R.id.edtLastName)
-    AnyEditTextView edtLastName;
-    @BindView(R.id.edtEmailAddress)
-    AnyEditTextView edtEmailAddress;
-    @BindView(R.id.edtPassword)
-    AnyEditTextView edtPassword;
-    @BindView(R.id.edtAgency)
-    AnyEditTextView edtAgency;
-    @BindView(R.id.edtDepartment)
-    AnyEditTextView edtDepartment;
-    @BindView(R.id.edtDesignation)
-    AnyEditTextView edtDesignation;
-    @BindView(R.id.edtSpecialization)
-    AnyEditTextView edtSpecialization;
-    @BindView(R.id.imgAddSpecialization)
-    ImageView imgAddSpecialization;
+    ChatsAdapter adapter;
+    ArrayList<SpinnerModel> arrData;
+    @BindView(R.id.btnBack)
+    TextView btnBack;
+    @BindView(R.id.imgProfile)
+    CircleImageView imgProfile;
+    @BindView(R.id.txtName)
+    AnyTextView txtName;
+    @BindView(R.id.txtTime)
+    AnyTextView txtTime;
+    @BindView(R.id.containerTitlebar1)
+    LinearLayout containerTitlebar1;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.contBtnSignUp)
-    LinearLayout contBtnSignUp;
-    @BindView(R.id.txtOrLoginWith)
-    AnyTextView txtOrLoginWith;
-    @BindView(R.id.contFacebookLogin)
-    LinearLayout contFacebookLogin;
-    @BindView(R.id.contTwitterLogin)
-    LinearLayout contTwitterLogin;
-    @BindView(R.id.contSocialLogin)
-    LinearLayout contSocialLogin;
+    @BindView(R.id.edtMessage)
+    AnyEditTextView edtMessage;
+    @BindView(R.id.imgCamera)
+    ImageView imgCamera;
+    @BindView(R.id.imgAttachment)
+    ImageView imgAttachment;
 
 
-
-    SpecialityAdapter adapter;
-    ArrayList<SpinnerModel> arrData;
-
-    public static SignUpLEAFragment newInstance() {
+    public static ChatsFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        SignUpLEAFragment fragment = new SignUpLEAFragment();
+        ChatsFragment fragment = new ChatsFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -97,12 +84,14 @@ public class SignUpLEAFragment extends BaseFragment implements OnItemClickListen
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_signup_lea;
+        return R.layout.fragment_chat;
     }
 
     @Override
     public void setTitlebar(TitleBar titleBar) {
 
+        titleBar.resetViews();
+        titleBar.setVisibility(View.GONE);
     }
 
 
@@ -111,7 +100,7 @@ public class SignUpLEAFragment extends BaseFragment implements OnItemClickListen
         super.onCreate(savedInstanceState);
 
         arrData = new ArrayList<>();
-        adapter = new SpecialityAdapter(getContext(), arrData, this, true);
+        adapter = new ChatsAdapter(getContext(), arrData, this);
     }
 
 
@@ -128,7 +117,6 @@ public class SignUpLEAFragment extends BaseFragment implements OnItemClickListen
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         bindRecyclerView();
 
 
@@ -137,7 +125,10 @@ public class SignUpLEAFragment extends BaseFragment implements OnItemClickListen
             return;
         }
 
+
         arrData.clear();
+        arrData.addAll(Constants.getAddDependentsArray2());
+        arrData.addAll(Constants.getAddDependentsArray2());
         adapter.notifyDataSetChanged();
     }
 
@@ -159,7 +150,7 @@ public class SignUpLEAFragment extends BaseFragment implements OnItemClickListen
 
 
     private void bindRecyclerView() {
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         ((DefaultItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         int resId = R.anim.layout_animation_fall_bottom;
@@ -181,41 +172,28 @@ public class SignUpLEAFragment extends BaseFragment implements OnItemClickListen
         unbinder.unbind();
     }
 
-
     @Override
     public void onItemClick(int position, Object object, View view, Object type) {
 
-        SpinnerModel model = (SpinnerModel) object;
 
-        UIHelper.showAlertDialog("Are you sure you want to remove " + model.getText() + "?",
-                "Alert", (dialogInterface, i) -> {
-                    arrData.remove(position);
-                    adapter.notifyDataSetChanged();
-                }, getContext());
     }
 
+    @Override
+    public void onItemAdd(Object object) {
+//        arrCategories.add(new SpinnerModel("John Doe"));
+//        adapter.notifyDataSetChanged();
+    }
 
-    @OnClick({R.id.imgAddSpecialization, R.id.contBtnSignUp, R.id.contFacebookLogin, R.id.contTwitterLogin})
+    @OnClick({R.id.btnBack, R.id.imgCamera, R.id.imgAttachment})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.imgAddSpecialization:
-                if (edtSpecialization.getStringTrimmed().isEmpty()){
-                    UIHelper.showShortToastInCenter(getContext(), "Please write something");
-                    return;
-                }
-                arrData.add(new SpinnerModel(edtSpecialization.getStringTrimmed()));
-                edtSpecialization.setText("");
-                KeyboardHelper.hideSoftKeyboardForced(getContext(), edtSpecialization);
-                adapter.notifyDataSetChanged();
-                KeyboardHelper.hideSoftKeyboard(getContext(), view);
+            case R.id.btnBack:
+                getBaseActivity().onBackPressed();
                 break;
-            case R.id.contBtnSignUp:
-                showNextBuildToast();
+            case R.id.imgCamera:
+                UIHelper.cropImagePicker(getContext(), ChatsFragment.this);
                 break;
-            case R.id.contFacebookLogin:
-                showNextBuildToast();
-                break;
-            case R.id.contTwitterLogin:
+            case R.id.imgAttachment:
                 showNextBuildToast();
                 break;
         }

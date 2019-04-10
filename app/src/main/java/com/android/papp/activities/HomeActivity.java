@@ -147,7 +147,9 @@ public class HomeActivity extends BaseActivity {
 
             if (drawerLayout.isDrawerOpen(Gravity.START)) {
                 drawerLayout.closeDrawer(Gravity.START);
-            }  else {
+            } else if (resideMenu.isOpened()) {
+                resideMenu.closeMenu();
+            } else {
                 super.onBackPressed();
                 List<Fragment> fragments = getSupportFragmentManager().getFragments();
                 BaseFragment fragment = (BaseFragment) fragments.get(fragments.size() - 1);

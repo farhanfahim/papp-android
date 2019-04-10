@@ -95,10 +95,10 @@ public class ViewLEAListFragment extends BaseFragment implements OnItemClickList
         titleBar.setVisibility(View.VISIBLE);
         switch (leaType) {
             case MYLEA:
-                titleBar.setTitle("My LEAs");
+                titleBar.setTitle("My Mentors");
                 break;
             case TOPLEA:
-                titleBar.setTitle("Top LEAs");
+                titleBar.setTitle("Top Mentors");
                 break;
         }
 

@@ -1,5 +1,7 @@
 package com.android.papp.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +21,7 @@ import com.android.papp.fragments.abstracts.GenericDialogFragment;
 import com.android.papp.R;
 
 import com.android.papp.helperclasses.GooglePlaceHelper;
+import com.android.papp.utils.DeviceUtils;
 import com.android.papp.widget.TitleBar;
 
 
@@ -225,6 +228,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (DeviceUtils.isRooted(getApplicationContext())) {
+            showAlertDialogAndExitApp("This device is rooted. You can't use this app.");
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -248,5 +259,24 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
+    public void showAlertDialogAndExitApp(String message) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle("Alert");
+        alertDialog.setMessage(message);
+        alertDialog.setCancelable(false);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
+        alertDialog.show();
+    }
 
 }

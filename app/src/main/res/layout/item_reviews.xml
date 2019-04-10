@@ -10,80 +10,128 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/x20dp"
-        android:layout_marginRight="@dimen/x10dp"
-        android:gravity="center_vertical">
-
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgProfile"
-            android:layout_width="@dimen/x50dp"
-            android:layout_height="@dimen/x50dp"
-            android:layout_marginRight="@dimen/x10dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_placeholder_dependent" />
-
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/x20dp"
+        android:paddingRight="@dimen/x20dp"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/x10dp"
+            android:gravity="center_vertical">
 
 
-            <com.android.papp.widget.AnyTextView
-                android:id="@+id/txtName"
-                android:layout_width="match_parent"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgProfile"
+                android:layout_width="@dimen/x50dp"
+                android:layout_height="@dimen/x50dp"
+                android:layout_marginRight="@dimen/x10dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_placeholder_dependent" />
+
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:padding="@dimen/x2dp"
-                android:singleLine="true"
-                android:text="Jason Brody"
-                android:textColor="@color/txtBlack"
-                android:textSize="@dimen/s14"
-                app:fontFamily="@string/font_regular" />
+                android:layout_weight="1"
+                android:orientation="vertical">
 
 
-            <com.android.papp.widget.AnyTextView
-                android:id="@+id/txtReviews"
-                android:layout_width="match_parent"
+                <com.android.papp.widget.AnyTextView
+                    android:id="@+id/txtName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:padding="@dimen/x2dp"
+                    android:singleLine="true"
+                    android:text="Jason Brody"
+                    android:textColor="@color/txtBlack"
+                    android:textSize="@dimen/s14"
+                    app:fontFamily="@string/font_regular" />
+
+
+
+                <android.support.v7.widget.AppCompatRatingBar
+                    android:id="@+id/ratingbarDeliverySpeed"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:rating="4.5"
+                    android:stepSize="0.5" />
+
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:padding="@dimen/x2dp"
-                android:text="During my 3 years as a police officer, I performed area patrols on  foot, bicycle and in patrol cars."
-                android:textColor="@color/txtDarkGrey"
-                android:textSize="@dimen/s12"
-                app:fontFamily="@string/font_regular" />
+                android:gravity="right|center_vertical"
+                android:orientation="vertical">
+
+
+
+                <com.android.papp.widget.AnyTextView
+                    android:id="@+id/txtDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:padding="@dimen/x3dp"
+                    android:singleLine="true"
+                    android:text="22/2/2019"
+                    android:textColor="@color/txtDarkGrey"
+                    android:textSize="@dimen/s10"
+                    app:fontFamily="@string/font_regular" />
+
+
+                <com.android.papp.widget.AnyTextView
+                    android:id="@+id/txtTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:padding="@dimen/x3dp"
+                    android:singleLine="true"
+                    android:text="03:00 pm"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/s14"
+                    app:fontFamily="@string/font_regular" />
+
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_drop_down"
+                android:visibility="gone"
+                android:rotation="-90"/>
 
 
         </LinearLayout>
 
 
+
         <com.android.papp.widget.AnyTextView
-            android:id="@+id/txtRemove"
-            android:layout_width="wrap_content"
+            android:id="@+id/txtReviews"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:padding="@dimen/x3dp"
-            android:singleLine="true"
-            android:text="22/2/2019"
+            android:maxLines="2"
+            android:padding="@dimen/x2dp"
+            android:text="During my 3 years as a police officer, I performed area patrols on  foot, bicycle and in patrol cars."
             android:textColor="@color/txtDarkGrey"
-            android:layout_marginRight="@dimen/x5dp"
-            android:layout_marginLeft="@dimen/x5dp"
-            android:textSize="@dimen/s10"
+            android:textSize="@dimen/s12"
             app:fontFamily="@string/font_regular" />
-        
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/img_drop_down"
-            android:visibility="gone"
-            android:rotation="-90"/>
+
 
 
     </LinearLayout>
+
 
 
     <ImageView
