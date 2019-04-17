@@ -21,6 +21,7 @@ import com.android.papp.R;
 import com.android.papp.activities.ChatActivity;
 import com.android.papp.adapters.recyleradapters.ChatListAdapter;
 import com.android.papp.callbacks.OnItemClickListener;
+import com.android.papp.constatnts.AppConstants;
 import com.android.papp.constatnts.Constants;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.models.SpinnerModel;
@@ -232,7 +233,11 @@ public class ChatListsFragment extends BaseFragment implements OnItemClickListen
                 break;
             case R.id.imgHome:
                 getBaseActivity().popBackStack();
-                getBaseActivity().addDockableFragment(DashboardCivilianFragment.newInstance(), false);
+                if (sharedPreferenceManager.getBoolean(AppConstants.KEY_IS_LEA)) {
+                    getBaseActivity().addDockableFragment(DashboardLEAFragment.newInstance(), false);
+                } else {
+                    getBaseActivity().addDockableFragment(DashboardCivilianFragment.newInstance(), false);
+                }
                 break;
         }
     }

@@ -79,12 +79,14 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initFragments() {
-        if (SharedPreferenceManager.getInstance(getApplicationContext()).getCurrentUser() == null) {
-            addDockableFragment(LoginFragment.newInstance(), false);
-        } else {
-            openActivity(HomeActivity.class);
-            this.finish();
-        }
+//        if (SharedPreferenceManager.getInstance(getApplicationContext()).getCurrentUser() == null) {
+//            addDockableFragment(LoginFragment.newInstance(), false);
+//        } else {
+//            openActivity(HomeActivity.class);
+//            this.finish();
+//        }
+//
+       addDockableFragment(LoginFragment.newInstance(), false);
     }
 
     @Override

@@ -78,6 +78,16 @@ public class Constants {
     }
 
 
+    public static ArrayList<SpinnerModel> getSessionTypes() {
+        ArrayList<SpinnerModel> arrayList = new ArrayList<>();
+        arrayList.add(new SpinnerModel("Video Call"));
+        arrayList.add(new SpinnerModel("Audio Call"));
+        arrayList.add(new SpinnerModel("One on One"));
+        arrayList.add(new SpinnerModel("Chat"));
+        return arrayList;
+
+    }
+
     public static ArrayList<SpinnerModel> getSpeciality() {
         ArrayList<SpinnerModel> arrayList = new ArrayList<>();
         arrayList.add(new SpinnerModel("Leadership"));

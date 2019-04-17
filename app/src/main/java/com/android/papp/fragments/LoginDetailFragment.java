@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.android.papp.R;
 import com.android.papp.activities.HomeActivity;
+import com.android.papp.constatnts.AppConstants;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.widget.AnyEditTextView;
 import com.android.papp.widget.AnyTextView;
@@ -131,12 +132,15 @@ public class LoginDetailFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.contBtnLogin:
                 if (isLEA) {
-                    showNextBuildToast();
+                    sharedPreferenceManager.putValue(AppConstants.KEY_IS_LEA, true);
                 } else {
-                    getBaseActivity().finish();
-                    getBaseActivity().openActivity(HomeActivity.class);
-
+                    sharedPreferenceManager.putValue(AppConstants.KEY_IS_LEA, false);
                 }
+
+
+                getBaseActivity().finish();
+                getBaseActivity().openActivity(HomeActivity.class);
+
                 break;
             case R.id.contFacebookLogin:
                 showNextBuildToast();

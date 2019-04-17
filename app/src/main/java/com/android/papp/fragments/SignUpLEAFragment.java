@@ -15,8 +15,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.papp.R;
+import com.android.papp.activities.HomeActivity;
 import com.android.papp.adapters.recyleradapters.SpecialityAdapter;
 import com.android.papp.callbacks.OnItemClickListener;
+import com.android.papp.constatnts.AppConstants;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.helperclasses.ui.helper.KeyboardHelper;
 import com.android.papp.helperclasses.ui.helper.UIHelper;
@@ -210,7 +212,9 @@ public class SignUpLEAFragment extends BaseFragment implements OnItemClickListen
                 KeyboardHelper.hideSoftKeyboard(getContext(), view);
                 break;
             case R.id.contBtnSignUp:
-                showNextBuildToast();
+                sharedPreferenceManager.putValue(AppConstants.KEY_IS_LEA, true);
+                getBaseActivity().finish();
+                getBaseActivity().openActivity(HomeActivity.class);
                 break;
             case R.id.contFacebookLogin:
                 showNextBuildToast();

@@ -87,10 +87,23 @@
 
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:rotation="-90"
-            android:src="@drawable/img_drop_down"
+            android:id="@+id/imgDone"
+            android:layout_width="@dimen/x25dp"
+            android:layout_height="@dimen/x25dp"
+            android:layout_marginRight="@dimen/x5dp"
+            android:padding="@dimen/x5dp"
+            android:src="@drawable/img_tick"
+            android:tint="@color/base_dark_gray"
+            android:visibility="visible" />
+
+
+        <ImageView
+            android:id="@+id/imgCancel"
+            android:layout_width="@dimen/x25dp"
+            android:layout_height="@dimen/x25dp"
+            android:padding="@dimen/x5dp"
+            android:src="@drawable/img_cancel"
+            android:tint="@color/base_dark_gray"
             android:visibility="visible" />
 
 

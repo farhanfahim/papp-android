@@ -92,7 +92,7 @@ public class AppConstants {
 
     /*******************Preferences KEYS******************/
     public static final String KEY_CURRENT_USER_MODEL = "userModel";
-    public static final String KEY_CARD_MEMBER_DETAIL = "cardMemberDetail";
+    public static final String KEY_IS_LEA = "is_user_lea";
     public static final String KEY_CARD_NUMBER = "card_number";
     public static final String KEY_CODE = "code";
     public static final String USER_NOTIFICATION_DATA = "USER_NOTIFICATION_DATA";

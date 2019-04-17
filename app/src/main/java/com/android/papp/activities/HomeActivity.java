@@ -11,15 +11,18 @@ import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import java.util.List;
-
 import com.android.papp.R;
+import com.android.papp.constatnts.AppConstants;
 import com.android.papp.fragments.DashboardCivilianFragment;
+import com.android.papp.fragments.DashboardLEAFragment;
 import com.android.papp.fragments.RightSideMenuFragment;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.libraries.residemenu.ResideMenu;
+import com.android.papp.managers.SharedPreferenceManager;
 import com.android.papp.utils.utility.Blur;
 import com.android.papp.utils.utility.Utils;
+
+import java.util.List;
 
 
 public class HomeActivity extends BaseActivity {
@@ -130,7 +133,12 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initFragments(String intentData) {
-        addDockableFragment(DashboardCivilianFragment.newInstance(), false);
+        if (SharedPreferenceManager.getInstance(this).getBoolean(AppConstants.KEY_IS_LEA)) {
+            addDockableFragment(DashboardLEAFragment.newInstance(), false);
+        } else {
+            addDockableFragment(DashboardCivilianFragment.newInstance(), false);
+
+        }
     }
 
     public FrameLayout getContMain() {

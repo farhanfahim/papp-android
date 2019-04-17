@@ -17,69 +17,53 @@ import android.widget.RelativeLayout;
 import com.android.papp.R;
 import com.android.papp.adapters.recyleradapters.SessionsAdapter;
 import com.android.papp.callbacks.OnItemClickListener;
-import com.android.papp.constatnts.AppConstants;
 import com.android.papp.constatnts.Constants;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.helperclasses.ui.helper.UIHelper;
-import com.android.papp.managers.DateManager;
 import com.android.papp.models.SpinnerModel;
+import com.android.papp.widget.AnyEditTextView;
 import com.android.papp.widget.AnyTextView;
 import com.android.papp.widget.TitleBar;
-import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
+import com.github.clans.fab.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
-import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
-public class ViewSessionFragment extends BaseFragment implements OnItemClickListener, SlyCalendarDialog.Callback {
+public class NewSessionRequestsFragment extends BaseFragment implements OnItemClickListener {
 
 
     Unbinder unbinder;
 
     SessionsAdapter adapter;
     ArrayList<SpinnerModel> arrData;
-
-
+    @BindView(R.id.edtSearchBar)
+    AnyEditTextView edtSearchBar;
+    @BindView(R.id.imgSearch)
+    ImageView imgSearch;
+    @BindView(R.id.contSearchBar)
+    LinearLayout contSearchBar;
+    @BindView(R.id.txtHeading)
+    AnyTextView txtHeading;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.empty_view)
     AnyTextView emptyView;
     @BindView(R.id.emptyview_container)
     LinearLayout emptyviewContainer;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
     @BindView(R.id.contParent)
     RelativeLayout contParent;
-    @BindView(R.id.contChat)
-    LinearLayout contChat;
-    @BindView(R.id.contSessions)
-    LinearLayout contSessions;
-    @BindView(R.id.imgHome)
-    ImageView imgHome;
-    @BindView(R.id.contBottomBar)
-    RelativeLayout contBottomBar;
-    @BindView(R.id.imgChat)
-    ImageView imgChat;
-    @BindView(R.id.txtChat)
-    AnyTextView txtChat;
-    @BindView(R.id.imgSession)
-    ImageView imgSession;
-    @BindView(R.id.txtSession)
-    AnyTextView txtSession;
-    @BindView(R.id.txtDate)
-    AnyTextView txtDate;
-    @BindView(R.id.contDate)
-    RoundKornerLinearLayout contDate;
 
 
-    public static ViewSessionFragment newInstance() {
+    public static NewSessionRequestsFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        ViewSessionFragment fragment = new ViewSessionFragment();
+        NewSessionRequestsFragment fragment = new NewSessionRequestsFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -91,7 +75,7 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
 
 
         arrData = new ArrayList<>();
-        adapter = new SessionsAdapter(getContext(), arrData, this, false);
+        adapter = new SessionsAdapter(getContext(), arrData, this, true);
 
 
     }
@@ -103,15 +87,15 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_view_sessions;
+        return R.layout.fragment_generic_recycler_view;
     }
 
     @Override
     public void setTitlebar(TitleBar titleBar) {
         titleBar.setVisibility(View.VISIBLE);
-        titleBar.setTitle("Sessions");
+        titleBar.setTitle("New Requests");
         titleBar.showResideMenu(getHomeActivity());
-        titleBar.showBackButtonInvisible();
+        titleBar.showBackButton(getBaseActivity());
     }
 
 
@@ -120,10 +104,11 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
         super.onViewCreated(view, savedInstanceState);
 
 
-        imgSession.setImageResource(R.drawable.img_sessions_selected);
-        txtSession.setTextColor(getContext().getResources().getColor(R.color.colorPrimaryDark));
         bindRecyclerView();
 
+
+        arrData.clear();
+        arrData.addAll(Constants.getAddDependentsArray2());
 
     }
 
@@ -171,21 +156,20 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
         switch (view.getId()) {
             case R.id.contParentLayout:
 
-                getBaseActivity().addDockableFragment(SessionDetailsFragment.newInstance(), true);
 
                 break;
 
 
             case R.id.imgDone:
-
-
+                arrData.remove(position);
+                UIHelper.showToast(getContext(), "Session request has been accepted");
+                adapter.notifyDataSetChanged();
                 break;
 
 
             case R.id.imgCancel:
-
-
                 arrData.remove(position);
+                UIHelper.showToast(getContext(), "Session has been cancelled");
                 adapter.notifyDataSetChanged();
 
                 break;
@@ -193,52 +177,4 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
 
     }
 
-    @OnClick({R.id.contChat, R.id.imgHome, R.id.contDate})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.contChat:
-                getBaseActivity().popBackStack();
-                getBaseActivity().addDockableFragment(ChatListsFragment.newInstance(), false);
-                break;
-            case R.id.contDate:
-                new SlyCalendarDialog()
-                        .setSingle(false)
-                        .setCallback(this)
-                        .show(getBaseActivity().getSupportFragmentManager(), "TAG_SLYCALENDAR");
-                break;
-            case R.id.imgHome:
-                getBaseActivity().popBackStack();
-                if (sharedPreferenceManager.getBoolean(AppConstants.KEY_IS_LEA)) {
-                    getBaseActivity().addDockableFragment(DashboardLEAFragment.newInstance(), false);
-                } else {
-                    getBaseActivity().addDockableFragment(DashboardCivilianFragment.newInstance(), false);
-                }
-                break;
-        }
-    }
-
-    @Override
-    public void onCancelled() {
-
-    }
-
-    @Override
-    public void onDataSelected(Calendar firstDate, Calendar secondDate, int hours, int minutes) {
-
-
-        if (firstDate == null) {
-            UIHelper.showShortToastInCenter(getBaseActivity(), "Please select date");
-            return;
-        }
-
-
-        if (secondDate == null) {
-            secondDate = firstDate;
-        }
-
-        txtDate.setText(DateManager.getFormattedDate(firstDate.getTimeInMillis()) + " - " + DateManager.getFormattedDate(secondDate.getTimeInMillis()));
-        arrData.clear();
-        arrData.addAll(Constants.getAddDependentsArray2());
-        adapter.notifyDataSetChanged();
-    }
 }

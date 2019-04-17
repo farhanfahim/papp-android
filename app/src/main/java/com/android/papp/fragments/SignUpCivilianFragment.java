@@ -18,6 +18,7 @@ import com.android.papp.activities.HomeActivity;
 import com.android.papp.adapters.recyleradapters.AddDependentsAdapter;
 import com.android.papp.callbacks.OnItemAdd;
 import com.android.papp.callbacks.OnItemClickListener;
+import com.android.papp.constatnts.AppConstants;
 import com.android.papp.constatnts.Constants;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.helperclasses.ui.helper.UIHelper;
@@ -180,6 +181,7 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
                 getBaseActivity().addDockableFragment(AddDependentFragment.newInstance(arrData), false);
                 break;
             case R.id.contBtnSignUp:
+                sharedPreferenceManager.putValue(AppConstants.KEY_IS_LEA, false);
                 getBaseActivity().finish();
                 getBaseActivity().openActivity(HomeActivity.class);
                 break;

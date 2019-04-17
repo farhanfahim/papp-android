@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="#EEE"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#EEE"
+        android:fillViewport="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/x20dp"
+            android:paddingTop="@dimen/x10dp"
+            android:paddingRight="@dimen/x20dp"
+            android:paddingBottom="@dimen/x10dp">
+
+
+            <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x10dp"
+                android:background="@color/c_white"
+                android:elevation="@dimen/x5dp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/x5dp"
+                app:corner_radius="@dimen/x3dp">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/x5dp"
+
+
+                    android:src="@drawable/img_search" />
+
+
+                <com.android.papp.widget.AnyEditTextView
+                    android:id="@+id/edtSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="Search"
+                    android:maxLength="20"
+                    android:padding="@dimen/x3dp"
+                    android:textColor="@color/txtDarkGrey"
+                    android:textColorHint="@color/txtGrey"
+                    android:textSize="@dimen/s12"
+                    app:fontFamily="@string/font_regular" />
+
+
+
+            </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x10dp"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/x3dp"
+                        android:text="Session Types"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s16"
+                        app:fontFamily="@string/font_regular" />
+
+
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvSessionTypes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x10dp"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/x3dp"
+                        android:text="New Request"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s16"
+                        app:fontFamily="@string/font_regular" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:id="@+id/txtViewAllNewRequest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/x3dp"
+                        android:text="View All"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/s12"
+                        app:fontFamily="@string/font_regular" />
+
+
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvNewRequest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x10dp"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/x3dp"
+                        android:text="Upcoming Sessions"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s16"
+                        app:fontFamily="@string/font_regular" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:id="@+id/txtViewAllUpcomingSessions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/x3dp"
+                        android:text="View All"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/s12"
+                        app:fontFamily="@string/font_regular" />
+
+
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvUpcomingSessions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+    <include layout="@layout/container_navigation_bar" />
+
+</LinearLayout>
