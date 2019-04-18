@@ -11,16 +11,13 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 
 import com.android.papp.R;
-import com.android.papp.adapters.recyleradapters.ReviewsAdapter;
-import com.android.papp.callbacks.OnItemAdd;
+import com.android.papp.adapters.recyleradapters.DependentsAdapter;
 import com.android.papp.callbacks.OnItemClickListener;
 import com.android.papp.constatnts.Constants;
 import com.android.papp.fragments.abstracts.BaseFragment;
-import com.android.papp.helperclasses.ui.helper.UIHelper;
 import com.android.papp.models.SpinnerModel;
 import com.android.papp.widget.AnyTextView;
 import com.android.papp.widget.TitleBar;
@@ -36,35 +33,46 @@ import butterknife.Unbinder;
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class ReviewsFragment extends BaseFragment implements OnItemClickListener, OnItemAdd {
+public class LEASessionDetailsFragment extends BaseFragment implements OnItemClickListener {
 
 
     Unbinder unbinder;
 
 
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
-    @BindView(R.id.empty_view)
-    AnyTextView emptyView;
-    @BindView(R.id.emptyview_container)
-    LinearLayout emptyviewContainer;
-    @BindView(R.id.contParent)
-    RelativeLayout contParent;
-    @BindView(R.id.contSend)
-    LinearLayout contSend;
-
-
-    ReviewsAdapter adapter;
+    DependentsAdapter adapter;
     ArrayList<SpinnerModel> arrData;
-    @BindView(R.id.contMessage)
-    LinearLayout contMessage;
+
+    @BindView(R.id.txtDesc)
+    AnyTextView txtDesc;
+    @BindView(R.id.rvDependents)
+    RecyclerView rvDependents;
+    @BindView(R.id.txtLocation)
+    AnyTextView txtLocation;
+    @BindView(R.id.txtDate)
+    AnyTextView txtDate;
+    @BindView(R.id.txtTime)
+    AnyTextView txtTime;
+    @BindView(R.id.txtMessage)
+    AnyTextView txtMessage;
+    @BindView(R.id.txtSessionType)
+    AnyTextView txtSessionType;
+    @BindView(R.id.imgOneOnOne)
+    ImageView imgOneOnOne;
+    @BindView(R.id.imgCall)
+    ImageView imgCall;
+    @BindView(R.id.imgVdoCall)
+    ImageView imgVdoCall;
+    @BindView(R.id.imgStop)
+    ImageView imgStop;
+    @BindView(R.id.txtTimer)
+    AnyTextView txtTimer;
 
 
-    public static ReviewsFragment newInstance() {
+    public static LEASessionDetailsFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        ReviewsFragment fragment = new ReviewsFragment();
+        LEASessionDetailsFragment fragment = new LEASessionDetailsFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -77,7 +85,7 @@ public class ReviewsFragment extends BaseFragment implements OnItemClickListener
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_reviews;
+        return R.layout.fragment_session_detail_lea;
     }
 
     @Override
@@ -85,7 +93,8 @@ public class ReviewsFragment extends BaseFragment implements OnItemClickListener
 
         titleBar.resetViews();
         titleBar.setVisibility(View.VISIBLE);
-        titleBar.setTitle("Reviews");
+        titleBar.setTitle("Session Details");
+        titleBar.showResideMenu(getHomeActivity());
         titleBar.showBackButton(getBaseActivity());
     }
 
@@ -95,7 +104,7 @@ public class ReviewsFragment extends BaseFragment implements OnItemClickListener
         super.onCreate(savedInstanceState);
 
         arrData = new ArrayList<>();
-        adapter = new ReviewsAdapter(getContext(), arrData, this);
+        adapter = new DependentsAdapter(getContext(), arrData, this);
     }
 
 
@@ -113,12 +122,6 @@ public class ReviewsFragment extends BaseFragment implements OnItemClickListener
         super.onViewCreated(view, savedInstanceState);
 
         bindRecyclerView();
-
-        if (isLEA()) {
-            contMessage.setVisibility(View.GONE);
-        } else {
-            contMessage.setVisibility(View.VISIBLE);
-        }
 
 
         if (onCreated) {
@@ -150,13 +153,13 @@ public class ReviewsFragment extends BaseFragment implements OnItemClickListener
 
 
     private void bindRecyclerView() {
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        ((DefaultItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvDependents.setLayoutManager(mLayoutManager);
+        ((DefaultItemAnimator) rvDependents.getItemAnimator()).setSupportsChangeAnimations(false);
         int resId = R.anim.layout_animation_fall_bottom;
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), resId);
 //        recylerView.setLayoutAnimation(animation);
-        recyclerView.setAdapter(adapter);
+        rvDependents.setAdapter(adapter);
     }
 
 
@@ -175,21 +178,35 @@ public class ReviewsFragment extends BaseFragment implements OnItemClickListener
     @Override
     public void onItemClick(int position, Object object, View view, Object type) {
 
-
-    }
-
-    @Override
-    public void onItemAdd(Object object) {
-//        arrCategories.add(new SpinnerModel("John Doe"));
-//        adapter.notifyDataSetChanged();
     }
 
 
-    @OnClick(R.id.contSend)
-    public void onViewClicked() {
-        UIHelper.showAlertDialogWithCallback("Thanks for submitting your review", "Review", (dialogInterface, i) -> {
-            dialogInterface.dismiss();
-            getBaseActivity().onBackPressed();
-        }, getContext());
+    @OnClick({R.id.imgOneOnOne, R.id.imgCall, R.id.imgVdoCall, R.id.imgStop})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.imgOneOnOne:
+                txtSessionType.setText("Stop Session");
+                imgCall.setVisibility(View.GONE);
+                imgOneOnOne.setVisibility(View.GONE);
+                imgVdoCall.setVisibility(View.GONE);
+                txtTimer.setVisibility(View.VISIBLE);
+                imgStop.setVisibility(View.VISIBLE);
+                break;
+            case R.id.imgCall:
+                getBaseActivity().addDockableFragment(AudioCallFragment.newInstance(), true);
+                break;
+            case R.id.imgVdoCall:
+                getBaseActivity().addDockableFragment(VideoCallFragment.newInstance(), true);
+
+                break;
+            case R.id.imgStop:
+                txtSessionType.setText("Start Session");
+                imgCall.setVisibility(View.VISIBLE);
+                imgOneOnOne.setVisibility(View.VISIBLE);
+                imgVdoCall.setVisibility(View.VISIBLE);
+                txtTimer.setVisibility(View.GONE);
+                imgStop.setVisibility(View.GONE);
+                break;
+        }
     }
 }

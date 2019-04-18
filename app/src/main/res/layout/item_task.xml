@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contParentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/x10dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/x20dp"
+        android:layout_marginRight="@dimen/x10dp"
+        android:gravity="center_vertical">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgProfile"
+            android:layout_width="@dimen/x40dp"
+            android:layout_height="@dimen/x40dp"
+            android:layout_marginRight="@dimen/x10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_trophy" />
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <com.android.papp.widget.AnyTextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:padding="@dimen/x2dp"
+                    android:singleLine="true"
+                    android:text="Donate blood at the hospital"
+                    android:textColor="@color/txtBlack"
+                    android:textSize="@dimen/s14"
+                    app:fontFamily="@string/font_regular" />
+
+
+            </LinearLayout>
+
+
+            <com.android.papp.widget.AnyTextView
+                android:id="@+id/txtDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:padding="@dimen/x2dp"
+                android:text="Reward: 150 points"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/s10"
+                app:fontFamily="@string/font_regular" />
+
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="@dimen/x25dp"
+            android:layout_height="@dimen/x25dp"
+            android:padding="@dimen/x5dp"
+            android:src="@drawable/img_next"
+            android:tint="@color/base_dark_gray"
+            android:visibility="visible" />
+
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1dp"
+        android:layout_marginTop="@dimen/x10dp"
+        android:background="@color/seperator_light_gray" />
+
+</LinearLayout>

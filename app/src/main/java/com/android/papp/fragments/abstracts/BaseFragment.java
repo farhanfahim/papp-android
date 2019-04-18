@@ -86,6 +86,11 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     }
 
+
+    public boolean isLEA() {
+        return sharedPreferenceManager.getBoolean(AppConstants.KEY_IS_LEA);
+    }
+
     public UserModel getCurrentUser() {
         return sharedPreferenceManager.getCurrentUser();
     }

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_user_call"
+    android:orientation="vertical"
+    android:padding="@dimen/x20dp">
+
+
+    <com.android.papp.widget.AnyTextView
+        android:id="@+id/txtCallerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Mark Twain"
+        android:textColor="@color/c_white"
+        android:textSize="@dimen/s18"
+        app:fontFamily="@string/font_medium"
+
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="right|bottom"
+        android:layout_marginBottom="@dimen/x20dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+
+        <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
+            android:layout_width="@dimen/x100dp"
+            android:layout_height="@dimen/x150dp"
+            android:background="@color/c_black"
+            android:padding="@dimen/x1dp"
+            app:corner_radius="@dimen/x10dp">
+
+
+            <ImageView
+                android:id="@+id/imgProfile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_placeholder_lea" />
+
+        </com.jcminarro.roundkornerlayout.RoundKornerFrameLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x20dp"
+        android:layout_marginRight="@dimen/x20dp">
+
+
+        <ImageView
+            android:id="@+id/imgMute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_background_call_button_grey"
+            android:padding="@dimen/x10dp"
+            android:src="@drawable/img_mute"
+
+            />
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+
+            <ImageView
+                android:id="@+id/imgCancelCall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_background_call_button_red"
+                android:padding="@dimen/x10dp"
+                android:src="@drawable/img_call_cancel"
+
+                />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_background_call_button_grey"
+            android:padding="@dimen/x10dp"
+
+            />
+
+
+    </LinearLayout>
+
+
+    <com.android.papp.widget.AnyTextView
+        android:id="@+id/txtTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/x10dp"
+        android:text="01:10"
+        android:textColor="@color/c_white"
+        android:textSize="@dimen/s14"
+        app:fontFamily="@string/font_medium"
+
+        />
+</LinearLayout>

@@ -162,7 +162,7 @@ public class UpcomingSessionFragment extends BaseFragment implements OnItemClick
         switch (view.getId()) {
             case R.id.contParentLayout:
 
-                getBaseActivity().addDockableFragment(SessionDetailsFragment.newInstance(), true);
+                getBaseActivity().addDockableFragment(LEASessionDetailsFragment.newInstance(), true);
 
                 break;
 

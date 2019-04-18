@@ -171,7 +171,12 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
         switch (view.getId()) {
             case R.id.contParentLayout:
 
-                getBaseActivity().addDockableFragment(SessionDetailsFragment.newInstance(), true);
+                if (sharedPreferenceManager.getBoolean(AppConstants.KEY_IS_LEA)) {
+                    getBaseActivity().addDockableFragment(LEASessionDetailsFragment.newInstance(), true);
+                } else {
+                    getBaseActivity().addDockableFragment(SessionDetailsFragment.newInstance(), true);
+
+                }
 
                 break;
 

@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.papp.R;
+import com.android.papp.activities.ChatActivity;
 import com.android.papp.adapters.recyleradapters.MedalAdapter;
 import com.android.papp.adapters.recyleradapters.SpecialityAdapter;
 import com.android.papp.callbacks.OnItemClickListener;
@@ -73,6 +74,14 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
 
     MedalAdapter medalAdapter;
     ArrayList<SpinnerModel> arrMedals;
+    @BindView(R.id.txtEdit)
+    AnyTextView txtEdit;
+    @BindView(R.id.txtScheduleMeeting)
+    AnyTextView txtScheduleMeeting;
+    @BindView(R.id.imgChat)
+    ImageView imgChat;
+    @BindView(R.id.contChat)
+    LinearLayout contChat;
 
 
     public static LEAProfileFragment newInstance() {
@@ -129,7 +138,24 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
         arrMedals.addAll(Constants.getMedalURL());
 
 
+        if (isLEA()) {
+            txtEdit.setVisibility(View.VISIBLE);
+            btnRight1.setVisibility(View.GONE);
+            txtScheduleMeeting.setVisibility(View.GONE);
+            contChat.setVisibility(View.GONE);
+            txtTitle.setText("My Profile");
+
+
+        } else {
+            txtScheduleMeeting.setVisibility(View.VISIBLE);
+            btnRight1.setVisibility(View.VISIBLE);
+            contChat.setVisibility(View.VISIBLE);
+            txtEdit.setVisibility(View.GONE);
+            txtTitle.setText("LEA Profile");
+        }
+
     }
+
 
     @Override
     public void setListeners() {
@@ -181,7 +207,7 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
 
     }
 
-    @OnClick({R.id.btnLeft1,R.id.txtScheduleMeeting, R.id.btnRight1, R.id.contMilestones, R.id.contReviews})
+    @OnClick({R.id.btnLeft1, R.id.txtScheduleMeeting, R.id.contChat, R.id.btnRight1, R.id.contMilestones, R.id.contReviews, R.id.txtEdit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txtScheduleMeeting:
@@ -195,8 +221,14 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
                 break;
             case R.id.contMilestones:
                 break;
+            case R.id.contChat:
+                getBaseActivity().openActivity(ChatActivity.class);
+                break;
             case R.id.contReviews:
                 getBaseActivity().addDockableFragment(ReviewsFragment.newInstance(), true);
+                break;
+            case R.id.txtEdit:
+                showNextBuildToast();
                 break;
         }
     }

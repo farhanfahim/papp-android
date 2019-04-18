@@ -56,11 +56,13 @@
 
 
     <LinearLayout
+        android:id="@+id/contMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/x20dp"
         android:background="#fff"
         android:elevation="@dimen/x10dp"
+        android:visibility="gone"
         android:orientation="vertical"
         android:padding="@dimen/x20dp">
 

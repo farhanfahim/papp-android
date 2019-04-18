@@ -237,7 +237,7 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
 
                 switch (view.getId()) {
                     case R.id.contParentLayout:
-                        getBaseActivity().addDockableFragment(SessionDetailsFragment.newInstance(), true);
+                        getBaseActivity().addDockableFragment(LEASessionDetailsFragment.newInstance(), true);
                         break;
 
                     case R.id.imgDone:

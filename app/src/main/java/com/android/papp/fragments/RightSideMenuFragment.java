@@ -43,6 +43,8 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
     LinearLayout contNofitications;
     @BindView(R.id.contEditProfile)
     LinearLayout contEditProfile;
+    @BindView(R.id.contMyProfile)
+    LinearLayout contMyProfile;
     @BindView(R.id.conSessionHistory)
     LinearLayout conSessionHistory;
     @BindView(R.id.contSessionPayoutHistory)
@@ -53,6 +55,8 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
     LinearLayout contGiftsAndRewards;
     @BindView(R.id.contMilestones)
     LinearLayout contMilestones;
+    @BindView(R.id.contTasks)
+    LinearLayout contTasks;
     @BindView(R.id.contAboutApp)
     LinearLayout contAboutApp;
     @BindView(R.id.contTermsAndConditions)
@@ -80,6 +84,13 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (sharedPreferenceManager.getBoolean(AppConstants.KEY_IS_LEA)) {
+            contEditProfile.setVisibility(View.GONE);
+            contMyProfile.setVisibility(View.VISIBLE);
+        } else {
+            contEditProfile.setVisibility(View.VISIBLE);
+            contMyProfile.setVisibility(View.GONE);
+        }
         ////        scrollToTop();
     }
 
@@ -134,7 +145,7 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
 //    }
 
 
-    @OnClick({R.id.imgBack, R.id.contNofitications, R.id.contEditProfile, R.id.conSessionHistory, R.id.contSessionPayoutHistory, R.id.contMyGifts, R.id.contGiftsAndRewards, R.id.contMilestones, R.id.contSponsors, R.id.contAboutApp, R.id.contTermsAndConditions, R.id.contLogout})
+    @OnClick({R.id.imgBack, R.id.contNofitications, R.id.contEditProfile, R.id.contMyProfile, R.id.conSessionHistory, R.id.contSessionPayoutHistory, R.id.contMyGifts, R.id.contGiftsAndRewards, R.id.contMilestones, R.id.contTasks, R.id.contSponsors, R.id.contAboutApp, R.id.contTermsAndConditions, R.id.contLogout})
     public void onViewClicked(View view) {
 
         closeMenu();
@@ -147,6 +158,9 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
                 break;
             case R.id.contEditProfile:
                 getBaseActivity().addDockableFragment(EditProfileFragment.newInstance(), false);
+                break;
+            case R.id.contMyProfile:
+                getBaseActivity().addDockableFragment(LEAProfileFragment.newInstance(), false);
                 break;
             case R.id.conSessionHistory:
                 getBaseActivity().addDockableFragment(SessionHistoryFragment.newInstance(), false);
@@ -162,6 +176,10 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
                 break;
             case R.id.contMilestones:
                 getBaseActivity().addDockableFragment(MilestoneFragment.newInstance(), false);
+                break;
+
+            case R.id.contTasks:
+                getBaseActivity().addDockableFragment(TasksFragment.newInstance(), false);
                 break;
             case R.id.contSponsors:
                 getBaseActivity().addDockableFragment(SponsorFragment.newInstance(), false);

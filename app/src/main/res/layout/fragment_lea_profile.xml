@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:background="@color/c_white"
+    android:fillViewport="true"
     android:orientation="vertical">
 
 
@@ -15,7 +15,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/x200dp"
+            android:layout_height="@dimen/x205dp"
             android:background="@drawable/img_header_blue_background"
             android:orientation="vertical">
 
@@ -80,16 +80,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x20dp"
-                android:layout_marginRight="@dimen/x20dp">
+                android:layout_marginRight="@dimen/x20dp"
+                android:layout_marginBottom="@dimen/x5dp">
 
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="@dimen/x80dp"
-                    android:layout_height="@dimen/x80dp"
-                    android:layout_marginRight="@dimen/x10dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/img_lea_placeholder2" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="@dimen/x80dp"
+                        android:layout_height="@dimen/x80dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_lea_placeholder2" />
+
+
+                    <com.android.papp.widget.AnyTextView
+                        android:id="@+id/txtEdit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Edit"
+
+                        android:textColor="@color/c_white"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_light" />
+
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -99,43 +119,84 @@
                     android:orientation="vertical">
 
 
-                    <com.android.papp.widget.AnyTextView
-                        android:id="@+id/txtName"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:text="Jason Brody"
-                        android:textColor="@color/c_white"
-                        android:textSize="@dimen/s18"
-                        app:typeface="@string/font_bold" />
+                        android:gravity="center_vertical">
 
 
-                    <com.android.papp.widget.AnyTextView
-                        android:id="@+id/txtDesignation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/x10dp"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:text="Traffic Police"
-                        android:textColor="@color/c_white"
-                        android:textSize="@dimen/s12"
-                        app:typeface="@string/font_light" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
 
-                    <com.android.papp.widget.AnyTextView
-                        android:id="@+id/txtLocation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/img_location"
-                        android:drawablePadding="@dimen/x5dp"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:text="Washington DC."
-                        android:textColor="@color/c_white"
-                        android:textSize="@dimen/s12"
-                        app:typeface="@string/font_light" />
+                            <com.android.papp.widget.AnyTextView
+                                android:id="@+id/txtName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:text="Jason Brody"
+                                android:textColor="@color/c_white"
+                                android:textSize="@dimen/s18"
+                                app:typeface="@string/font_bold" />
+
+
+                            <com.android.papp.widget.AnyTextView
+                                android:id="@+id/txtDesignation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/x10dp"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:text="Traffic Police"
+                                android:textColor="@color/c_white"
+                                android:textSize="@dimen/s12"
+                                app:typeface="@string/font_light" />
+
+
+                            <com.android.papp.widget.AnyTextView
+                                android:id="@+id/txtLocation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/img_location"
+                                android:drawablePadding="@dimen/x5dp"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:text="Washington DC."
+                                android:textColor="@color/c_white"
+                                android:textSize="@dimen/s12"
+                                app:typeface="@string/font_light" />
+
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/contChat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top"
+                            android:orientation="vertical">
+
+
+                            <ImageView
+                                android:id="@+id/imgChat"
+                                android:layout_width="@dimen/x40dp"
+                                android:layout_height="@dimen/x40dp"
+                                android:background="@drawable/shape_circle"
+                                android:elevation="@dimen/x5dp"
+                                android:padding="@dimen/x10dp"
+                                android:src="@drawable/img_chat2"
+                                android:tint="@color/colorPrimaryDark" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
 
 
                 </LinearLayout>
@@ -152,7 +213,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/x60dp"
             android:layout_marginLeft="@dimen/x30dp"
-            android:layout_marginTop="@dimen/x170dp"
+            android:layout_marginTop="@dimen/x175dp"
             android:layout_marginRight="@dimen/x30dp"
             android:background="@color/c_white"
             android:elevation="@dimen/x5dp"
@@ -501,10 +562,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/x20dp"
                 android:background="@drawable/img_button_blue"
                 android:gravity="center"
                 android:text="Schedule a meeting"
-                android:layout_marginTop="@dimen/x20dp"
                 android:textColor="@color/c_white"
 
                 />
