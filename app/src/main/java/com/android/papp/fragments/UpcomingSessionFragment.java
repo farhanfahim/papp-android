@@ -20,6 +20,7 @@ import com.android.papp.callbacks.OnItemClickListener;
 import com.android.papp.constatnts.AppConstants;
 import com.android.papp.constatnts.Constants;
 import com.android.papp.fragments.abstracts.BaseFragment;
+import com.android.papp.helperclasses.kotlinhelper.KotlinDataScripts;
 import com.android.papp.helperclasses.ui.helper.UIHelper;
 import com.android.papp.managers.DateManager;
 import com.android.papp.models.SpinnerModel;
@@ -158,7 +159,6 @@ public class UpcomingSessionFragment extends BaseFragment implements OnItemClick
 
     @Override
     public void onItemClick(int position, Object object, View view, Object type) {
-
         switch (view.getId()) {
             case R.id.contParentLayout:
 

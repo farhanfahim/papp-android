@@ -242,10 +242,9 @@
                 app:corner_radius="@dimen/x5dp">
 
                 <ImageView
-                    android:layout_width="@dimen/x25dp"
-                    android:layout_height="@dimen/x25dp"
-                    android:src="@drawable/img_add"
-                    android:tint="@color/txtDarkGrey" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_add_attachment" />
 
             </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 

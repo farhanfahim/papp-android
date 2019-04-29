@@ -35,14 +35,13 @@
 
                 <ImageView
                     android:id="@+id/imgBack"
-                    android:layout_width="@dimen/x35dp"
-                    android:layout_height="@dimen/x35dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:scaleType="fitCenter"
                     android:layout_gravity="right"
                     android:padding="@dimen/x5dp"
                     android:layout_marginBottom="@dimen/x10dp"
-                    android:rotation="180"
-                    android:src="@drawable/img_back_blue"
+                    android:src="@drawable/img_back2"
                     android:tint="@color/c_white" />
 
 
@@ -441,7 +440,8 @@
                         android:layout_width="@dimen/x20dp"
                         android:layout_height="@dimen/x20dp"
                         android:layout_marginRight="@dimen/x10dp"
-                        android:src="@drawable/img_milestones" />
+                        android:tint="#30ccff"
+                        android:src="@drawable/img_task" />
 
 
                     <com.android.papp.widget.AnyTextView
