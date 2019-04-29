@@ -69,16 +69,6 @@ public class DeviceUtils {
     }
 
 
-
-
-
-
-
-
-
-
-
-
     public static boolean isRooted(Context context) {
         boolean isTestBuild = isTestBuild();
         boolean hasSuperuserAPK = hasSuperuserAPK();

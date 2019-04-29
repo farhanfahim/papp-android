@@ -230,9 +230,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (DeviceUtils.isRooted(getApplicationContext())) {
-            showAlertDialogAndExitApp("This device is rooted. You can't use this app.");
-        }
+//        if (DeviceUtils.isRooted(getApplicationContext())) {
+//            showAlertDialogAndExitApp("This device is rooted. You can't use this app.");
+//        }
     }
 
     @Override
