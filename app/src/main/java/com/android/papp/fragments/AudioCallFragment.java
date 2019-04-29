@@ -121,9 +121,6 @@ public class AudioCallFragment extends BaseFragment {
 
     @OnClick(R.id.imgCancelCall)
     public void onViewClicked() {
-//        getBaseActivity().onBackPressed();
-
-
-        getBaseActivity().addDockableFragment(TestFragment.newInstance(true), false);
-    }
+        getBaseActivity().onBackPressed();
+     }
 }
