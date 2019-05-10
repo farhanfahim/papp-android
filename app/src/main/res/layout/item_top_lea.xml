@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/contParentLayout"
-    android:layout_width="@dimen/x80dp"
-    android:layout_height="@dimen/x80dp"
+    android:layout_width="@dimen/x100dp"
+    android:layout_height="@dimen/x100dp"
     android:layout_marginRight="@dimen/x10dp"
     android:orientation="vertical">
 

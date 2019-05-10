@@ -19,6 +19,7 @@ import com.android.papp.R;
 import com.android.papp.adapters.recyleradapters.CategoriesAdapter;
 import com.android.papp.adapters.recyleradapters.DependentsAdapter;
 import com.android.papp.adapters.recyleradapters.LEAAdapter;
+import com.android.papp.adapters.recyleradapters.TopLEAAdapter;
 import com.android.papp.callbacks.OnItemClickListener;
 import com.android.papp.constatnts.Constants;
 import com.android.papp.enums.LeaType;
@@ -77,7 +78,7 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
     ArrayList<SpinnerModel> arrMyLEA;
 
 
-    LEAAdapter topLEAAdapter;
+    TopLEAAdapter topLEAAdapter;
     ArrayList<SpinnerModel> arrTopLEA;
 
 
@@ -109,7 +110,7 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
 
 
         arrTopLEA = new ArrayList<>();
-        topLEAAdapter = new LEAAdapter(getContext(), arrTopLEA, this);
+        topLEAAdapter = new TopLEAAdapter(getContext(), arrTopLEA, this);
     }
 
     @Override
@@ -191,19 +192,19 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
         rvCategories.setAdapter(categoriesAdapter);
 
 
-        GridLayoutManager mLayoutManager2 = new GridLayoutManager(getContext(), 4);
+        RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvDependents.setLayoutManager(mLayoutManager2);
         ((DefaultItemAnimator) rvDependents.getItemAnimator()).setSupportsChangeAnimations(false);
         rvDependents.setAdapter(dependentsAdapter);
 
 
-        GridLayoutManager mLayoutManager3 = new GridLayoutManager(getContext(), 4);
+        RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvMyLEA.setLayoutManager(mLayoutManager3);
-        ((DefaultItemAnimator) rvDependents.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((DefaultItemAnimator) rvMyLEA.getItemAnimator()).setSupportsChangeAnimations(false);
         rvMyLEA.setAdapter(myLEAAdapter);
 
 
-        GridLayoutManager mLayoutManager4 = new GridLayoutManager(getContext(), 3);
+        RecyclerView.LayoutManager mLayoutManager4 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvTopLEA.setLayoutManager(mLayoutManager4);
         ((DefaultItemAnimator) rvTopLEA.getItemAnimator()).setSupportsChangeAnimations(false);
         rvTopLEA.setAdapter(topLEAAdapter);
