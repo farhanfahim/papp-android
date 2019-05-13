@@ -11,25 +11,20 @@
     <LinearLayout
         android:id="@+id/contBack"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:gravity="center_vertical"
-        android:padding="@dimen/x10dp"
-        android:layout_height="wrap_content">
-
+        android:padding="@dimen/x10dp">
 
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/x5dp"
-            android:src="@drawable/img_back_blue"/>
-
-
+            android:src="@drawable/img_back_blue" />
 
 
     </LinearLayout>
-
-
 
 
     <android.support.v4.widget.NestedScrollView
@@ -39,7 +34,6 @@
         android:fillViewport="true">
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -47,55 +41,49 @@
             android:orientation="vertical">
 
 
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/img_logo_white"/>
-
+                android:src="@drawable/img_logo_white" />
 
 
             <com.android.papp.widget.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Edit your profile"
-                android:gravity="center"
-                android:textSize="@dimen/s22"
                 android:layout_marginLeft="@dimen/x10dp"
                 android:layout_marginRight="@dimen/x10dp"
                 android:layout_marginBottom="@dimen/x5dp"
+                android:gravity="center"
+                android:text="Edit your profile"
                 android:textColor="@color/c_black"
-                app:fontFamily="@string/font_bold"/>
-
+                android:textSize="@dimen/s22"
+                app:fontFamily="@string/font_bold" />
 
 
             <com.android.papp.widget.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Edit or update your account information"
-                android:gravity="center"
-                android:textSize="@dimen/s14"
+                android:layout_marginLeft="@dimen/x10dp"
                 android:layout_marginRight="@dimen/x10dp"
                 android:layout_marginBottom="@dimen/x10dp"
-                android:layout_marginLeft="@dimen/x10dp"
+                android:gravity="center"
+                android:text="Edit or update your account information"
                 android:textColor="@color/txtGrey"
-                app:fontFamily="@string/font_regular"/>
-
+                android:textSize="@dimen/s14"
+                app:fontFamily="@string/font_regular" />
 
 
             <LinearLayout
                 android:id="@+id/contLogin"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:orientation="vertical"
-                android:elevation="@dimen/x10dp"
                 android:layout_marginLeft="@dimen/x20dp"
                 android:layout_marginRight="@dimen/x20dp"
                 android:layout_marginBottom="@dimen/x20dp"
+                android:layout_weight="1"
                 android:background="@color/c_white"
-                android:layout_weight="1">
-
-
+                android:elevation="@dimen/x10dp"
+                android:orientation="vertical">
 
 
                 <LinearLayout
@@ -103,6 +91,38 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="@dimen/x20dp">
+
+
+                    <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+                        android:id="@+id/contProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/x20dp"
+                        android:gravity="center">
+
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/imgProfile"
+                            android:layout_width="@dimen/x100dp"
+                            android:layout_height="@dimen/x100dp"
+                            android:clickable="false"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_placeholder_dependent"
+                            android:visibility="visible"
+                            app:civ_border_color="@color/colorPrimaryDark"
+                            app:civ_border_width="@dimen/x1dp" />
+
+                        <ImageButton
+                            android:id="@+id/btnCamera"
+                            android:layout_width="@dimen/x35dp"
+                            android:layout_height="@dimen/x35dp"
+                            android:layout_alignEnd="@+id/imgProfile"
+                            android:clickable="false"
+                            android:layout_alignBottom="@+id/imgProfile"
+                            android:background="@drawable/c_upload_photo"
+                            android:padding="@dimen/x10dp" />
+                    </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
 
 
                     <LinearLayout
@@ -149,10 +169,10 @@
                                         android:layout_height="wrap_content"
                                         android:background="@null"
                                         android:hint="Please Enter First Name"
-                                        android:text="Jason"
                                         android:inputType="textPersonName"
                                         android:maxLength="20"
                                         android:padding="@dimen/x3dp"
+                                        android:text="Jason"
                                         android:textColor="@color/txtDarkGrey"
                                         android:textColorHint="@color/txtGrey"
                                         android:textSize="@dimen/s12"
@@ -214,10 +234,10 @@
                                         android:layout_height="wrap_content"
                                         android:background="@null"
                                         android:hint="Please Enter Last Name"
-                                        android:text="Brody"
                                         android:inputType="textPersonName"
                                         android:maxLength="20"
                                         android:padding="@dimen/x3dp"
+                                        android:text="Brody"
                                         android:textColor="@color/txtDarkGrey"
                                         android:textColorHint="@color/txtGrey"
                                         android:textSize="@dimen/s12"
@@ -277,9 +297,9 @@
                                 android:background="@null"
                                 android:hint="Please Enter Email Address"
                                 android:inputType="textEmailAddress"
-                                android:text="jasonbrody@gmail.com"
                                 android:maxLength="50"
                                 android:padding="@dimen/x3dp"
+                                android:text="jasonbrody@gmail.com"
                                 android:textColor="@color/txtDarkGrey"
                                 android:textColorHint="@color/txtGrey"
                                 android:textSize="@dimen/s12"
@@ -334,8 +354,8 @@
                                 android:hint="Please Enter Password"
                                 android:inputType="textPassword"
                                 android:maxLength="50"
-                                android:text="ssdlkafkasldjfakdls"
                                 android:padding="@dimen/x3dp"
+                                android:text="ssdlkafkasldjfakdls"
                                 android:textColor="@color/txtDarkGrey"
                                 android:textColorHint="@color/txtGrey"
                                 android:textSize="@dimen/s12"
@@ -375,11 +395,6 @@
                         android:background="@color/seperator_light_gray" />
 
 
-
-
-
-
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -389,12 +404,10 @@
                         android:orientation="horizontal">
 
 
-
-
                         <com.android.papp.widget.AnyTextView
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:padding="@dimen/x3dp"
                             android:text="Dependents"
                             android:textColor="@color/txtBlack"
@@ -402,19 +415,18 @@
                             app:fontFamily="@string/font_regular" />
 
 
-
                         <LinearLayout
                             android:id="@+id/contAddDependents"
                             android:layout_width="wrap_content"
-                            android:gravity="center_vertical"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical">
 
 
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/x3dp"
-                                android:src="@drawable/img_add"/>
+                                android:src="@drawable/img_add" />
 
                             <com.android.papp.widget.AnyTextView
                                 android:layout_width="wrap_content"
@@ -429,16 +441,13 @@
                     </LinearLayout>
 
 
-
-
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginTop="@dimen/x10dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@color/c_white" />
-
 
 
                     <LinearLayout
@@ -474,9 +483,7 @@
                     </LinearLayout>
 
 
-
                 </LinearLayout>
-
 
 
             </LinearLayout>
@@ -486,11 +493,6 @@
 
 
     </android.support.v4.widget.NestedScrollView>
-
-
-
-
-
 
 
 </LinearLayout>

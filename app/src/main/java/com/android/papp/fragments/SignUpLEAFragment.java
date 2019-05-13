@@ -1,5 +1,6 @@
 package com.android.papp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -26,24 +28,29 @@ import com.android.papp.models.SpinnerModel;
 import com.android.papp.widget.AnyEditTextView;
 import com.android.papp.widget.AnyTextView;
 import com.android.papp.widget.TitleBar;
+import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class SignUpLEAFragment extends BaseFragment implements OnItemClickListener{
+public class SignUpLEAFragment extends BaseFragment implements OnItemClickListener {
 
 
     Unbinder unbinder;
-
-
 
 
     @BindView(R.id.edtFirstName)
@@ -78,9 +85,17 @@ public class SignUpLEAFragment extends BaseFragment implements OnItemClickListen
     LinearLayout contSocialLogin;
 
 
-
     SpecialityAdapter adapter;
     ArrayList<SpinnerModel> arrData;
+    @BindView(R.id.imgProfile)
+    CircleImageView imgProfile;
+    @BindView(R.id.btnCamera)
+    ImageButton btnCamera;
+    @BindView(R.id.contProfile)
+    RoundKornerRelativeLayout contProfile;
+
+    private File fileTemporaryProfilePicture;
+
 
     public static SignUpLEAFragment newInstance() {
 
@@ -197,11 +212,11 @@ public class SignUpLEAFragment extends BaseFragment implements OnItemClickListen
     }
 
 
-    @OnClick({R.id.imgAddSpecialization, R.id.contBtnSignUp, R.id.contFacebookLogin, R.id.contTwitterLogin})
+    @OnClick({R.id.imgAddSpecialization, R.id.contBtnSignUp, R.id.contFacebookLogin, R.id.contTwitterLogin, R.id.contProfile})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgAddSpecialization:
-                if (edtSpecialization.getStringTrimmed().isEmpty()){
+                if (edtSpecialization.getStringTrimmed().isEmpty()) {
                     UIHelper.showShortToastInCenter(getContext(), "Please write something");
                     return;
                 }
@@ -222,6 +237,42 @@ public class SignUpLEAFragment extends BaseFragment implements OnItemClickListen
             case R.id.contTwitterLogin:
                 showNextBuildToast();
                 break;
+            case R.id.contProfile:
+                UIHelper.cropImagePicker(getContext(), this);
+                break;
         }
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                fileTemporaryProfilePicture = new File(result.getUri().getPath());
+//                uploadImageFile(fileTemporaryProfilePicture.getPath(), result.getUri().toString());
+                setImageAfterResult(result.getUri().toString());
+
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+                error.printStackTrace();
+            }
+        }
+    }
+
+    private void setImageAfterResult(final String uploadFilePath) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ImageLoader.getInstance().displayImage(uploadFilePath, imgProfile);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
 }

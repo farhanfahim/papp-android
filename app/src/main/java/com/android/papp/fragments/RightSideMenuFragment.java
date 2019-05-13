@@ -23,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by khanhamza on 09-May-17.
@@ -65,6 +66,10 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
     LinearLayout contLogout;
     @BindView(R.id.scrollView)
     ScrollView scrollView;
+    @BindView(R.id.imgProfile)
+    CircleImageView imgProfile;
+    @BindView(R.id.contSponsors)
+    LinearLayout contSponsors;
 
     public static RightSideMenuFragment newInstance() {
 
@@ -87,9 +92,11 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
         if (sharedPreferenceManager.getBoolean(AppConstants.KEY_IS_LEA)) {
             contEditProfile.setVisibility(View.GONE);
             contMyProfile.setVisibility(View.VISIBLE);
+            imgProfile.setImageResource(R.drawable.img_lea_placeholder2);
         } else {
             contEditProfile.setVisibility(View.VISIBLE);
             contMyProfile.setVisibility(View.GONE);
+            imgProfile.setImageResource(R.drawable.img_placeholder_dependent);
         }
         ////        scrollToTop();
     }
@@ -157,7 +164,7 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
                 getBaseActivity().addDockableFragment(NotificationsFragment.newInstance(), false);
                 break;
             case R.id.contEditProfile:
-                getBaseActivity().addDockableFragment(EditProfileFragment.newInstance(), false);
+                getBaseActivity().addDockableFragment(EditCivilianProfileFragment.newInstance(), false);
                 break;
             case R.id.contMyProfile:
                 getBaseActivity().addDockableFragment(LEAProfileFragment.newInstance(), false);

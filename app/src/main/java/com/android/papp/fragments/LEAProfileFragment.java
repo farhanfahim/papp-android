@@ -228,7 +228,7 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
                 getBaseActivity().addDockableFragment(ReviewsFragment.newInstance(), true);
                 break;
             case R.id.txtEdit:
-                showNextBuildToast();
+                getBaseActivity().addDockableFragment(EditLeaProfileFragment.newInstance(), false);
                 break;
         }
     }

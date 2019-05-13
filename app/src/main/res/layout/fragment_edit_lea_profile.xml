@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/contBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:gravity="center_vertical"
+        android:padding="@dimen/x10dp">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/x5dp"
+            android:src="@drawable/img_back_blue" />
+
+
+    </LinearLayout>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_logo_white" />
+
+
+            <com.android.papp.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10dp"
+                android:layout_marginRight="@dimen/x10dp"
+                android:layout_marginBottom="@dimen/x5dp"
+                android:gravity="center"
+                android:text="Edit your profile"
+                android:textColor="@color/c_black"
+                android:textSize="@dimen/s22"
+                app:fontFamily="@string/font_bold" />
+
+
+            <com.android.papp.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10dp"
+                android:layout_marginRight="@dimen/x10dp"
+                android:layout_marginBottom="@dimen/x10dp"
+                android:gravity="center"
+                android:text="Edit or update your account information"
+                android:textColor="@color/txtGrey"
+                android:textSize="@dimen/s14"
+                app:fontFamily="@string/font_regular" />
+
+
+            <LinearLayout
+                android:id="@+id/contLogin"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="@dimen/x20dp"
+                android:layout_marginRight="@dimen/x20dp"
+                android:layout_marginBottom="@dimen/x20dp"
+                android:layout_weight="1"
+                android:background="@color/c_white"
+                android:elevation="@dimen/x10dp"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/x20dp">
+
+
+                    <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+                        android:id="@+id/contProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/x20dp"
+                        android:gravity="center">
+
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/imgProfile"
+                            android:layout_width="@dimen/x100dp"
+                            android:layout_height="@dimen/x100dp"
+                            android:clickable="false"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_lea_placeholder2"
+                            android:visibility="visible"
+                            app:civ_border_color="@color/colorPrimaryDark"
+                            app:civ_border_width="@dimen/x1dp" />
+
+                        <ImageButton
+                            android:id="@+id/btnCamera"
+                            android:layout_width="@dimen/x35dp"
+                            android:layout_height="@dimen/x35dp"
+                            android:layout_alignEnd="@+id/imgProfile"
+                            android:layout_alignBottom="@+id/imgProfile"
+                            android:background="@drawable/c_upload_photo"
+                            android:clickable="false"
+                            android:padding="@dimen/x10dp" />
+                    </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/x5dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical">
+
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical">
+
+
+                                    <com.android.papp.widget.AnyTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:padding="@dimen/x3dp"
+                                        android:text="First Name"
+                                        android:textColor="@color/colorPrimaryDark"
+                                        android:textSize="@dimen/s12"
+                                        app:fontFamily="@string/font_regular" />
+
+
+                                    <com.android.papp.widget.AnyEditTextView
+                                        android:id="@+id/edtFirstName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@null"
+                                        android:hint="Please Enter First Name"
+                                        android:inputType="textPersonName"
+                                        android:maxLength="20"
+                                        android:padding="@dimen/x3dp"
+                                        android:text="Jon"
+                                        android:textColor="@color/txtDarkGrey"
+                                        android:textColorHint="@color/txtGrey"
+                                        android:textSize="@dimen/s12"
+                                        app:fontFamily="@string/font_regular"
+                                        app:testType="personName" />
+
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/x1dp"
+                                android:layout_marginTop="@dimen/x5dp"
+                                android:layout_marginBottom="@dimen/x5dp"
+                                android:background="@color/seperator_light_gray" />
+
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/x5dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical">
+
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical">
+
+
+                                    <com.android.papp.widget.AnyTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:padding="@dimen/x3dp"
+                                        android:text="Last Name"
+                                        android:textColor="@color/colorPrimaryDark"
+                                        android:textSize="@dimen/s12"
+                                        app:fontFamily="@string/font_regular" />
+
+
+                                    <com.android.papp.widget.AnyEditTextView
+                                        android:id="@+id/edtLastName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@null"
+                                        android:hint="Please Enter Last Name"
+                                        android:inputType="textPersonName"
+                                        android:maxLength="20"
+                                        android:padding="@dimen/x3dp"
+                                        android:text="Doe"
+                                        android:textColor="@color/txtDarkGrey"
+                                        android:textColorHint="@color/txtGrey"
+                                        android:textSize="@dimen/s12"
+                                        app:fontFamily="@string/font_regular"
+                                        app:testType="personName" />
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/x1dp"
+                                android:layout_marginTop="@dimen/x5dp"
+                                android:layout_marginBottom="@dimen/x5dp"
+                                android:background="@color/seperator_light_gray" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+
+                            <com.android.papp.widget.AnyTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/x3dp"
+                                android:text="Your Email"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="@dimen/s12"
+                                app:fontFamily="@string/font_regular" />
+
+
+                            <com.android.papp.widget.AnyEditTextView
+                                android:id="@+id/edtEmailAddress"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="Please Enter Email Address"
+                                android:inputType="textEmailAddress"
+                                android:maxLength="50"
+                                android:padding="@dimen/x3dp"
+                                android:text="jondoe@papp.com"
+                                android:textColor="@color/txtDarkGrey"
+                                android:textColorHint="@color/txtGrey"
+                                android:textSize="@dimen/s12"
+                                app:fontFamily="@string/font_regular"
+                                app:testType="email" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x1dp"
+                        android:layout_marginTop="@dimen/x5dp"
+                        android:layout_marginBottom="@dimen/x10dp"
+                        android:background="@color/seperator_light_gray" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+
+                            <com.android.papp.widget.AnyTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/x3dp"
+                                android:text="Password"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="@dimen/s12"
+                                app:fontFamily="@string/font_regular" />
+
+
+                            <com.android.papp.widget.AnyEditTextView
+                                android:id="@+id/edtPassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="Please Enter Password"
+                                android:inputType="textPassword"
+                                android:maxLength="50"
+                                android:padding="@dimen/x3dp"
+                                android:text="dasfasdfasdfdasf"
+                                android:textColor="@color/txtDarkGrey"
+                                android:textColorHint="@color/txtGrey"
+                                android:textSize="@dimen/s12"
+                                app:fontFamily="@string/font_regular"
+                                app:testType="nocheck" />
+
+
+                        </LinearLayout>
+
+
+                        <com.android.papp.widget.AnyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/x5dp"
+                            android:padding="@dimen/x3dp"
+                            android:text="Strong"
+                            android:textColor="@color/base_green"
+                            android:textSize="@dimen/s12"
+                            app:fontFamily="@string/font_regular" />
+
+
+                        <ImageView
+                            android:layout_width="@dimen/x15dp"
+                            android:layout_height="@dimen/x15dp"
+                            android:layout_marginRight="@dimen/x5dp"
+                            android:src="@drawable/img_verify2" />
+
+
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x1dp"
+                        android:layout_marginTop="@dimen/x5dp"
+                        android:layout_marginBottom="@dimen/x10dp"
+                        android:background="@color/seperator_light_gray" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+
+                            <com.android.papp.widget.AnyTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/x3dp"
+                                android:text="Agency"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="@dimen/s12"
+                                app:fontFamily="@string/font_regular" />
+
+
+                            <com.android.papp.widget.AnyEditTextView
+                                android:id="@+id/edtAgency"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="Please Enter Agency"
+                                android:inputType="text"
+                                android:maxLength="30"
+                                android:padding="@dimen/x3dp"
+                                android:text="Alpha"
+                                android:textColor="@color/txtDarkGrey"
+                                android:textColorHint="@color/txtGrey"
+                                android:textSize="@dimen/s12"
+                                app:fontFamily="@string/font_regular"
+                                app:testType="alphaNumeric" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x1dp"
+                        android:layout_marginTop="@dimen/x5dp"
+                        android:layout_marginBottom="@dimen/x10dp"
+                        android:background="@color/seperator_light_gray" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+
+                            <com.android.papp.widget.AnyTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/x3dp"
+                                android:text="Department"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="@dimen/s12"
+                                app:fontFamily="@string/font_regular" />
+
+
+                            <com.android.papp.widget.AnyEditTextView
+                                android:id="@+id/edtDepartment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="Please Enter Department"
+                                android:inputType="text"
+                                android:maxLength="30"
+                                android:padding="@dimen/x3dp"
+                                android:text="Park Ranger"
+                                android:textColor="@color/txtDarkGrey"
+                                android:textColorHint="@color/txtGrey"
+                                android:textSize="@dimen/s12"
+                                app:fontFamily="@string/font_regular"
+                                app:testType="alphaNumeric" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x1dp"
+                        android:layout_marginTop="@dimen/x5dp"
+                        android:layout_marginBottom="@dimen/x10dp"
+                        android:background="@color/seperator_light_gray" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+
+                            <com.android.papp.widget.AnyTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/x3dp"
+                                android:text="Designation"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="@dimen/s12"
+                                app:fontFamily="@string/font_regular" />
+
+
+                            <com.android.papp.widget.AnyEditTextView
+                                android:id="@+id/edtDesignation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="Please Enter Designation"
+                                android:inputType="text"
+                                android:maxLength="30"
+                                android:padding="@dimen/x3dp"
+                                android:text="Officer"
+                                android:textColor="@color/txtDarkGrey"
+                                android:textColorHint="@color/txtGrey"
+                                android:textSize="@dimen/s12"
+                                app:fontFamily="@string/font_regular"
+                                app:testType="alphaNumeric" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x1dp"
+                        android:layout_marginTop="@dimen/x5dp"
+                        android:layout_marginBottom="@dimen/x10dp"
+                        android:background="@color/seperator_light_gray" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+
+                            <com.android.papp.widget.AnyTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/x3dp"
+                                android:text="Specializations"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="@dimen/s12"
+                                app:fontFamily="@string/font_regular" />
+
+
+                            <com.android.papp.widget.AnyEditTextView
+                                android:id="@+id/edtSpecialization"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="Please Enter Specializations"
+                                android:inputType="text"
+                                android:maxLength="30"
+                                android:padding="@dimen/x3dp"
+                                android:textColor="@color/txtDarkGrey"
+                                android:textColorHint="@color/txtGrey"
+                                android:textSize="@dimen/s12"
+                                app:fontFamily="@string/font_regular"
+                                app:testType="alphaNumeric" />
+
+                        </LinearLayout>
+
+
+                        <ImageView
+                            android:id="@+id/imgAddSpecialization"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/x10dp"
+                            android:src="@drawable/img_add" />
+
+
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x1dp"
+                        android:layout_marginTop="@dimen/x5dp"
+                        android:layout_marginBottom="@dimen/x10dp"
+                        android:background="@color/seperator_light_gray" />
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/c_white" />
+
+
+                    <LinearLayout
+                        android:id="@+id/contBtnUpdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/x5dp"
+                        android:background="@drawable/img_button_blue"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:layout_width="@dimen/x20dp"
+                            android:layout_height="@dimen/x20dp"
+                            android:layout_marginRight="@dimen/x8dp"
+                            android:src="@drawable/img_sign_up_add"
+                            android:tint="@color/c_white" />
+
+
+                        <com.android.papp.widget.AnyTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/x8dp"
+                            android:padding="@dimen/x3dp"
+                            android:text="Update"
+                            android:textColor="@color/c_white"
+                            android:textSize="@dimen/s14"
+                            app:fontFamily="@string/font_regular" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>
+
+

@@ -128,8 +128,7 @@ public class SponsorFragment extends BaseFragment implements OnItemClickListener
 
 
         arrData.clear();
-        arrData.addAll(Constants.getAddDependentsArray2());
-        arrData.addAll(Constants.getAddDependentsArray2());
+        arrData.addAll(Constants.getSponsorLogo());
         adapter.notifyDataSetChanged();
     }
 

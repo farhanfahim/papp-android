@@ -10,8 +10,10 @@ import android.widget.LinearLayout;
 
 import com.android.papp.R;
 import com.android.papp.callbacks.OnItemClickListener;
+import com.android.papp.libraries.imageloader.ImageLoaderHelper;
 import com.android.papp.models.SpinnerModel;
 import com.android.papp.widget.AnyTextView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ *
  */
 public class SponsorsAdapter extends RecyclerView.Adapter<SponsorsAdapter.ViewHolder> {
 
@@ -47,6 +50,7 @@ public class SponsorsAdapter extends RecyclerView.Adapter<SponsorsAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, int i) {
         SpinnerModel model = arrData.get(i);
 
+        ImageLoader.getInstance().displayImage(model.getText(), holder.imgSponsor);
 
         setListener(holder, model);
     }

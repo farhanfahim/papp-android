@@ -16,17 +16,14 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.android.papp.R;
-import com.android.papp.activities.HomeActivity;
 import com.android.papp.adapters.recyleradapters.AddDependentsAdapter;
 import com.android.papp.callbacks.OnItemAdd;
 import com.android.papp.callbacks.OnItemClickListener;
-import com.android.papp.constatnts.AppConstants;
 import com.android.papp.constatnts.Constants;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.helperclasses.ui.helper.UIHelper;
 import com.android.papp.models.SpinnerModel;
 import com.android.papp.widget.AnyEditTextView;
-import com.android.papp.widget.AnyTextView;
 import com.android.papp.widget.TitleBar;
 import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -47,10 +44,15 @@ import static android.app.Activity.RESULT_OK;
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class SignUpCivilianFragment extends BaseFragment implements OnItemClickListener, OnItemAdd {
+public class EditCivilianProfileFragment extends BaseFragment implements OnItemClickListener, OnItemAdd {
 
 
     Unbinder unbinder;
+
+    AddDependentsAdapter adapter;
+    ArrayList<SpinnerModel> arrData;
+    @BindView(R.id.contBack)
+    LinearLayout contBack;
     @BindView(R.id.edtFirstName)
     AnyEditTextView edtFirstName;
     @BindView(R.id.edtLastName)
@@ -63,19 +65,10 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
     LinearLayout contAddDependents;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.contBtnSignUp)
-    LinearLayout contBtnSignUp;
-    @BindView(R.id.txtOrLoginWith)
-    AnyTextView txtOrLoginWith;
-    @BindView(R.id.contFacebookLogin)
-    LinearLayout contFacebookLogin;
-    @BindView(R.id.contTwitterLogin)
-    LinearLayout contTwitterLogin;
-    @BindView(R.id.contSocialLogin)
-    LinearLayout contSocialLogin;
-
-    AddDependentsAdapter adapter;
-    ArrayList<SpinnerModel> arrData;
+    @BindView(R.id.contBtnUpdate)
+    LinearLayout contBtnUpdate;
+    @BindView(R.id.contLogin)
+    LinearLayout contLogin;
     @BindView(R.id.imgProfile)
     CircleImageView imgProfile;
     @BindView(R.id.btnCamera)
@@ -84,11 +77,11 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
     RoundKornerRelativeLayout contProfile;
     private File fileTemporaryProfilePicture;
 
-    public static SignUpCivilianFragment newInstance() {
+    public static EditCivilianProfileFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        SignUpCivilianFragment fragment = new SignUpCivilianFragment();
+        EditCivilianProfileFragment fragment = new EditCivilianProfileFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -101,12 +94,14 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_signup_civilian;
+        return R.layout.fragment_edit_civilian_profile;
     }
 
     @Override
     public void setTitlebar(TitleBar titleBar) {
 
+        titleBar.resetViews();
+        titleBar.setVisibility(View.GONE);
     }
 
 
@@ -187,22 +182,17 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
     }
 
 
-    @OnClick({R.id.contAddDependents, R.id.contBtnSignUp, R.id.contFacebookLogin, R.id.contTwitterLogin, R.id.contProfile})
+    @OnClick({R.id.contAddDependents, R.id.contBtnUpdate, R.id.contBack, R.id.contProfile})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.contAddDependents:
                 getBaseActivity().addDockableFragment(AddDependentFragment.newInstance(arrData), false);
                 break;
-            case R.id.contBtnSignUp:
-                sharedPreferenceManager.putValue(AppConstants.KEY_IS_LEA, false);
-                getBaseActivity().finish();
-                getBaseActivity().openActivity(HomeActivity.class);
+            case R.id.contBtnUpdate:
+                getBaseActivity().onBackPressed();
                 break;
-            case R.id.contFacebookLogin:
-                showNextBuildToast();
-                break;
-            case R.id.contTwitterLogin:
-                showNextBuildToast();
+            case R.id.contBack:
+                getBaseActivity().onBackPressed();
                 break;
             case R.id.contProfile:
                 UIHelper.cropImagePicker(getContext(), this);
@@ -259,6 +249,5 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
             }
         });
     }
-
 
 }

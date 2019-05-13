@@ -1,5 +1,6 @@
 package com.android.papp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,39 +12,58 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.papp.R;
 import com.android.papp.adapters.recyleradapters.AddDependentsAdapter;
+import com.android.papp.adapters.recyleradapters.SpecialityAdapter;
 import com.android.papp.callbacks.OnItemAdd;
 import com.android.papp.callbacks.OnItemClickListener;
 import com.android.papp.constatnts.Constants;
 import com.android.papp.fragments.abstracts.BaseFragment;
+import com.android.papp.helperclasses.ui.helper.KeyboardHelper;
 import com.android.papp.helperclasses.ui.helper.UIHelper;
 import com.android.papp.models.SpinnerModel;
 import com.android.papp.widget.AnyEditTextView;
 import com.android.papp.widget.TitleBar;
+import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class EditProfileFragment extends BaseFragment implements OnItemClickListener, OnItemAdd {
+public class EditLeaProfileFragment extends BaseFragment implements OnItemClickListener, OnItemAdd {
 
 
     Unbinder unbinder;
 
-    AddDependentsAdapter adapter;
+    SpecialityAdapter adapter;
     ArrayList<SpinnerModel> arrData;
+
+
     @BindView(R.id.contBack)
     LinearLayout contBack;
+    @BindView(R.id.imgProfile)
+    CircleImageView imgProfile;
+    @BindView(R.id.btnCamera)
+    ImageButton btnCamera;
+    @BindView(R.id.contProfile)
+    RoundKornerRelativeLayout contProfile;
     @BindView(R.id.edtFirstName)
     AnyEditTextView edtFirstName;
     @BindView(R.id.edtLastName)
@@ -52,8 +72,16 @@ public class EditProfileFragment extends BaseFragment implements OnItemClickList
     AnyEditTextView edtEmailAddress;
     @BindView(R.id.edtPassword)
     AnyEditTextView edtPassword;
-    @BindView(R.id.contAddDependents)
-    LinearLayout contAddDependents;
+    @BindView(R.id.edtAgency)
+    AnyEditTextView edtAgency;
+    @BindView(R.id.edtDepartment)
+    AnyEditTextView edtDepartment;
+    @BindView(R.id.edtDesignation)
+    AnyEditTextView edtDesignation;
+    @BindView(R.id.edtSpecialization)
+    AnyEditTextView edtSpecialization;
+    @BindView(R.id.imgAddSpecialization)
+    ImageView imgAddSpecialization;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.contBtnUpdate)
@@ -61,11 +89,13 @@ public class EditProfileFragment extends BaseFragment implements OnItemClickList
     @BindView(R.id.contLogin)
     LinearLayout contLogin;
 
-    public static EditProfileFragment newInstance() {
+    private File fileTemporaryProfilePicture;
+
+    public static EditLeaProfileFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        EditProfileFragment fragment = new EditProfileFragment();
+        EditLeaProfileFragment fragment = new EditLeaProfileFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -78,7 +108,7 @@ public class EditProfileFragment extends BaseFragment implements OnItemClickList
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_editprofile;
+        return R.layout.fragment_edit_lea_profile;
     }
 
     @Override
@@ -94,7 +124,7 @@ public class EditProfileFragment extends BaseFragment implements OnItemClickList
         super.onCreate(savedInstanceState);
 
         arrData = new ArrayList<>();
-        adapter = new AddDependentsAdapter(getContext(), arrData, this);
+        adapter = new SpecialityAdapter(getContext(), arrData, this, true);
     }
 
 
@@ -121,7 +151,7 @@ public class EditProfileFragment extends BaseFragment implements OnItemClickList
         }
 
         arrData.clear();
-        arrData.addAll(Constants.getAddDependentsArray());
+        arrData.addAll(Constants.getSpeciality());
         adapter.notifyDataSetChanged();
     }
 
@@ -143,7 +173,7 @@ public class EditProfileFragment extends BaseFragment implements OnItemClickList
 
 
     private void bindRecyclerView() {
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
         ((DefaultItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         int resId = R.anim.layout_animation_fall_bottom;
@@ -166,17 +196,28 @@ public class EditProfileFragment extends BaseFragment implements OnItemClickList
     }
 
 
-    @OnClick({R.id.contAddDependents, R.id.contBtnUpdate, R.id.contBack})
+    @OnClick({R.id.imgAddSpecialization, R.id.contBtnUpdate, R.id.contBack, R.id.contProfile})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.contAddDependents:
-                getBaseActivity().addDockableFragment(AddDependentFragment.newInstance(arrData), false);
+            case R.id.imgAddSpecialization:
+                if (edtSpecialization.getStringTrimmed().isEmpty()) {
+                    UIHelper.showShortToastInCenter(getContext(), "Please write something");
+                    return;
+                }
+                arrData.add(new SpinnerModel(edtSpecialization.getStringTrimmed()));
+                edtSpecialization.setText("");
+                KeyboardHelper.hideSoftKeyboardForced(getContext(), edtSpecialization);
+                adapter.notifyDataSetChanged();
+                KeyboardHelper.hideSoftKeyboard(getContext(), view);
                 break;
             case R.id.contBtnUpdate:
                 getBaseActivity().onBackPressed();
                 break;
             case R.id.contBack:
                 getBaseActivity().onBackPressed();
+                break;
+            case R.id.contProfile:
+                UIHelper.cropImagePicker(getContext(), this);
                 break;
         }
     }
@@ -198,4 +239,37 @@ public class EditProfileFragment extends BaseFragment implements OnItemClickList
 //        arrCategories.add(new SpinnerModel("John Doe"));
 //        adapter.notifyDataSetChanged();
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                fileTemporaryProfilePicture = new File(result.getUri().getPath());
+//                uploadImageFile(fileTemporaryProfilePicture.getPath(), result.getUri().toString());
+                setImageAfterResult(result.getUri().toString());
+
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+                error.printStackTrace();
+            }
+        }
+    }
+
+    private void setImageAfterResult(final String uploadFilePath) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ImageLoader.getInstance().displayImage(uploadFilePath, imgProfile);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
 }

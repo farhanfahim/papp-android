@@ -12,6 +12,7 @@ import com.android.papp.R;
 import com.android.papp.callbacks.OnItemClickListener;
 import com.android.papp.models.SpinnerModel;
 import com.android.papp.widget.AnyTextView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ *
  */
 public class LEAAdapter extends RecyclerView.Adapter<LEAAdapter.ViewHolder> {
 
@@ -49,6 +51,16 @@ public class LEAAdapter extends RecyclerView.Adapter<LEAAdapter.ViewHolder> {
 
 
         holder.txtName.setText(model.getText());
+
+        if (i == 1) {
+            ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_celebrity, holder.imgProfile);
+        } else if (i == 2) {
+            ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_tutor, holder.imgProfile);
+        } else if (i == 3) {
+            ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_counsellor, holder.imgProfile);
+        }
+
+
         setListener(holder, model);
     }
 
