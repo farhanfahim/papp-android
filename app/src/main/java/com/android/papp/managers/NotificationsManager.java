@@ -9,11 +9,11 @@
 //import android.net.Uri;
 //import android.support.v4.app.NotificationCompat;
 //
-//import com.android.structure.BaseApplication;
-//import com.android.structure.R;
-//import com.android.structure.activities.MainActivity;
-//import com.android.structure.constatnts.AppConstants;
-//import com.android.structure.managers.DateManager;
+//import com.android.papp.BaseApplication;
+//import com.android.papp.R;
+//import com.android.papp.activities.MainActivity;
+//import com.android.papp.constatnts.AppConstants;
+//import com.android.papp.managers.DateManager;
 //
 ///**
 // * Created by muhammadmuzammil on 7/25/2017.

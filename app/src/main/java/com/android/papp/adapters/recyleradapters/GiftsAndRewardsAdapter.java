@@ -12,6 +12,8 @@ import com.android.papp.R;
 import com.android.papp.callbacks.OnItemClickListener;
 import com.android.papp.models.SpinnerModel;
 import com.android.papp.widget.AnyTextView;
+import com.bumptech.glide.Glide;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ *
  */
 public class GiftsAndRewardsAdapter extends RecyclerView.Adapter<GiftsAndRewardsAdapter.ViewHolder> {
 
@@ -47,6 +50,48 @@ public class GiftsAndRewardsAdapter extends RecyclerView.Adapter<GiftsAndRewards
     public void onBindViewHolder(final ViewHolder holder, int i) {
         SpinnerModel model = arrData.get(i);
 
+        switch (i) {
+            case 0:
+                ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_client_2, holder.imgProfile);
+                break;
+
+            case 1:
+                ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_client_6, holder.imgProfile);
+                break;
+
+            case 2:
+                ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_client_7, holder.imgProfile);
+                break;
+
+            case 3:
+                ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_client_10, holder.imgProfile);
+                break;
+            case 4:
+                Glide.with(activity)
+                        .load(R.raw.gif_client_4)
+                        .into(holder.imgProfile);
+                break;
+
+            case 5:
+                Glide.with(activity)
+                        .load(R.raw.gif_client_5)
+                        .into(holder.imgProfile);
+                break;
+
+            case 6:
+                Glide.with(activity)
+                        .load(R.raw.gif_client_11)
+                        .into(holder.imgProfile);
+                break;
+
+            case 7:
+                Glide.with(activity)
+                        .load(R.raw.gif_client_12)
+                        .into(holder.imgProfile);
+                break;
+
+        }
+
         setListener(holder, model);
     }
 
@@ -58,7 +103,8 @@ public class GiftsAndRewardsAdapter extends RecyclerView.Adapter<GiftsAndRewards
 
     @Override
     public int getItemCount() {
-        return arrData.size();
+        // FIXME: 2019-05-17 Remove hardcoded count
+        return 10;
     }
 
 
@@ -71,7 +117,6 @@ public class GiftsAndRewardsAdapter extends RecyclerView.Adapter<GiftsAndRewards
         LinearLayout contRedeemButton;
         @BindView(R.id.contParentLayout)
         LinearLayout contParentLayout;
-
 
 
         ViewHolder(View view) {

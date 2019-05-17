@@ -52,11 +52,18 @@ public class TopLEAAdapter extends RecyclerView.Adapter<TopLEAAdapter.ViewHolder
 
         holder.txtName.setText(model.getText());
 
-        if (i == 1) {
-            ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_celebrity, holder.imgProfile);
+
+        if (i == 0) {
+            ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_client_8, holder.imgProfile);
+        } else if (i == 1) {
+            ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_client_9, holder.imgProfile);
         } else if (i == 2) {
-            ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_tutor, holder.imgProfile);
+            ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_client_1, holder.imgProfile);
         }
+
+
+
+
 
         setListener(holder, model);
     }

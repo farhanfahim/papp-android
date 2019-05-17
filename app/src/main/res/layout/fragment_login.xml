@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="@color/c_white">
-
+    android:background="@color/c_white"
+    android:fillViewport="true">
 
 
     <LinearLayout
@@ -15,51 +14,46 @@
         android:orientation="vertical">
 
 
-
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/x5dp"
             android:layout_marginBottom="@dimen/x5dp"
-            android:src="@drawable/img_logo_white"/>
-
+            android:src="@drawable/img_logo_white" />
 
 
         <com.android.papp.widget.AnyTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x10dp"
+            android:gravity="center"
             android:text="Welcome to the PAPP"
-            android:gravity="center"
-            android:textSize="@dimen/s22"
-            android:layout_marginBottom="@dimen/x10dp"
             android:textColor="@color/c_black"
-            app:fontFamily="@string/font_bold"/>
-
+            android:textSize="@dimen/s22"
+            app:fontFamily="@string/font_bold" />
 
 
         <com.android.papp.widget.AnyTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login to your account to get access to the dashboard"
-            android:gravity="center"
-            android:textSize="@dimen/s14"
             android:layout_marginBottom="@dimen/x10dp"
+            android:gravity="center"
+            android:text="Login to your account to get access to the dashboard"
             android:textColor="@color/txtGrey"
-            app:fontFamily="@string/font_regular"/>
-
+            android:textSize="@dimen/s14"
+            app:fontFamily="@string/font_regular" />
 
 
         <LinearLayout
             android:id="@+id/contLogin"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:elevation="@dimen/x10dp"
             android:layout_marginLeft="@dimen/x20dp"
             android:layout_marginRight="@dimen/x20dp"
-            android:background="@color/c_white">
-
+            android:layout_weight="1"
+            android:background="@color/c_white"
+            android:elevation="@dimen/x10dp"
+            android:orientation="vertical">
 
 
             <android.support.design.widget.TabLayout
@@ -81,12 +75,10 @@
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
 
         </LinearLayout>
-
-
 
 
         <com.android.papp.widget.AnyTextView
@@ -95,17 +87,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/x15dp"
             android:layout_marginBottom="@dimen/x15dp"
-            android:text="Forgot Password?"
             android:gravity="center|bottom"
-            android:textSize="@dimen/s14"
+            android:text="Forgot Password?"
             android:textColor="@color/txtDarkGrey"
-            app:fontFamily="@string/font_regular"/>
-
-
+            android:textSize="@dimen/s14"
+            app:fontFamily="@string/font_regular" />
 
 
     </LinearLayout>
-
 
 
 </ScrollView>

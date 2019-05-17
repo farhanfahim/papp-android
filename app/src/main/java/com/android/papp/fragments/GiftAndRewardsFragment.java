@@ -132,6 +132,8 @@ public class GiftAndRewardsFragment extends BaseFragment implements OnItemClickL
 
         arrData.clear();
         arrData.addAll(Constants.getAddDependentsArray2());
+        arrData.addAll(Constants.getAddDependentsArray2());
+        arrData.addAll(Constants.getAddDependentsArray2());
         adapter.notifyDataSetChanged();
     }
 

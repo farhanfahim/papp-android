@@ -1,4 +1,4 @@
-//package com.android.structure.libraries.table.view;
+//package com.android.papp.libraries.table.view;
 //
 //import android.content.Context;
 //import android.graphics.Bitmap;
@@ -25,7 +25,7 @@
 //import java.io.IOException;
 //import java.util.ArrayList;
 //
-//import com.android.structure.R;
+//import com.android.papp.R;
 //import CellPosition;
 //import ICellData;
 //import ISheetData;

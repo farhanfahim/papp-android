@@ -25,7 +25,7 @@
         <ImageView
             android:id="@+id/imgProfile"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/x50dp"
+            android:layout_height="@dimen/x70dp"
             android:layout_marginBottom="@dimen/x15dp"
             android:scaleType="fitStart"
             android:src="@drawable/img_sponsors_adidas" />
@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="Adidas Card"
+                        android:text="Bonus Gift"
                         android:textColor="@color/txtBlack"
                         android:textSize="@dimen/s14"
                         app:fontFamily="@string/font_regular" />

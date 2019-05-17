@@ -22,11 +22,11 @@ android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
     defaultConfig {
-        applicationId 'com.android.structure'
+        applicationId 'com.android.papp'
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
-        versionName "1.4"
+        versionName "1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -129,6 +129,8 @@ dependencies {
 
     implementation 'com.github.psinetron:slycalendarview:0.0.9'
     implementation 'io.huannguyen.swipeablerv:swipeable-rv:1.0.2'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
 }
 
