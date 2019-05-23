@@ -283,21 +283,23 @@
 
 
             <com.android.papp.widget.AnyTextView
+                android:id="@+id/txtPasswordStrength"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/x5dp"
                 android:padding="@dimen/x3dp"
-                android:text="Strong"
+                android:text=""
                 android:textColor="@color/base_green"
                 android:textSize="@dimen/s12"
                 app:fontFamily="@string/font_regular" />
 
 
             <ImageView
+                android:id="@+id/imgPasswordStrength"
                 android:layout_width="@dimen/x15dp"
                 android:layout_height="@dimen/x15dp"
                 android:layout_marginRight="@dimen/x5dp"
-                android:src="@drawable/img_verify2" />
+                android:src="@drawable/img_password" />
 
 
         </LinearLayout>
@@ -339,8 +341,8 @@
 
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/x13dp"
+                    android:layout_height="@dimen/x13dp"
                     android:layout_marginRight="@dimen/x3dp"
                     android:src="@drawable/img_add" />
 

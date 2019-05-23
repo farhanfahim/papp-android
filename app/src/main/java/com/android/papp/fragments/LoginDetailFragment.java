@@ -9,12 +9,20 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.android.papp.R;
-import com.android.papp.activities.HomeActivity;
 import com.android.papp.constatnts.AppConstants;
+import com.android.papp.enums.BaseURLTypes;
 import com.android.papp.fragments.abstracts.BaseFragment;
+import com.android.papp.managers.retrofit.WebServices;
+import com.android.papp.models.receiving_model.UserModel;
+import com.android.papp.models.sending_model.LoginSendingModel;
+import com.android.papp.models.wrappers.WebResponse;
 import com.android.papp.widget.AnyEditTextView;
 import com.android.papp.widget.AnyTextView;
 import com.android.papp.widget.TitleBar;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -131,15 +139,41 @@ public class LoginDetailFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.contBtnLogin:
-                if (isLEA) {
-                    sharedPreferenceManager.putValue(AppConstants.KEY_IS_LEA, true);
-                } else {
-                    sharedPreferenceManager.putValue(AppConstants.KEY_IS_LEA, false);
+
+                LoginSendingModel loginSendingModel = new LoginSendingModel();
+                loginSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID);
+                loginSendingModel.setEmail(edtEmailAddress.getStringTrimmed());
+                loginSendingModel.setPassword(edtPassword.getStringTrimmed());
+
+
+                new WebServices(getContext(), getToken(), BaseURLTypes.BASE_URL, true)
+                        .webServiceRequestAPIAnyObject("login", loginSendingModel.toString(),
+                                new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                                    @Override
+                                    public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                                    }
+
+                                    @Override
+                                    public void onError(Object object) {
+
+                                    }
+                                });
+
+                if (edtEmailAddress.testValidity() && edtPassword.testValidity()) {
+                    webCallLogin(loginSendingModel);
                 }
 
 
-                getBaseActivity().finish();
-                getBaseActivity().openActivity(HomeActivity.class);
+//                if (isLEA) {
+//                    sharedPreferenceManager.putValue(AppConstants.KEY_IS_LEA, true);
+//                } else {
+//                    sharedPreferenceManager.putValue(AppConstants.KEY_IS_LEA, false);
+//                }
+//
+//
+//                getBaseActivity().finish();
+//                getBaseActivity().openActivity(HomeActivity.class);
 
                 break;
             case R.id.contFacebookLogin:
@@ -153,4 +187,27 @@ public class LoginDetailFragment extends BaseFragment {
                 break;
         }
     }
+
+    public void webCallLogin(LoginSendingModel loginSendingModel) {
+        new WebServices(getContext(), "", BaseURLTypes.BASE_URL, true)
+                .webServiceRequestAPIAnyObject("login", loginSendingModel.toString(),
+                        new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                            @Override
+                            public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                                Type type = new TypeToken<ArrayList<UserModel>>() {
+                                }.getType();
+
+                                ArrayList<UserModel> userModel = getGson().fromJson(webResponse.result.toString(), type);
+
+                            }
+
+                            @Override
+                            public void onError(Object object) {
+
+                            }
+                        });
+    }
+
+
 }

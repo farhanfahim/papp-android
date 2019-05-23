@@ -9,7 +9,8 @@ import android.widget.LinearLayout;
 
 import com.android.papp.R;
 import com.android.papp.callbacks.OnItemClickListener;
-import com.android.papp.models.SpinnerModel;
+import com.android.papp.constatnts.AppConstants;
+import com.android.papp.models.receiving_model.Dependant;
 import com.android.papp.widget.AnyTextView;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
+ *
  */
 public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdapter.ViewHolder> {
 
@@ -26,9 +28,9 @@ public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdap
 
 
     private Context activity;
-    private List<SpinnerModel> arrData;
+    private List<Dependant> arrData;
 
-    public AddDependentsAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
+    public AddDependentsAdapter(Context activity, List<Dependant> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
@@ -45,13 +47,15 @@ public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdap
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        SpinnerModel model = arrData.get(i);
+        Dependant model = arrData.get(i);
 
-        holder.txtName.setText(model.getText());
+        holder.txtName.setText(model.getFirstName() + " " + model.getLastName());
+        holder.txtGender.setText(AppConstants.getGenderString(model.getGender()));
+
         setListener(holder, model);
     }
 
-    private void setListener(final ViewHolder holder, final SpinnerModel model) {
+    private void setListener(final ViewHolder holder, final Dependant model) {
         holder.txtRemove.
                 setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null));
     }

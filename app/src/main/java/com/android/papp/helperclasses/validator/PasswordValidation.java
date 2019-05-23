@@ -26,7 +26,7 @@ public class PasswordValidation extends Validator {
         if (edtConfirmPassword != null) {
             return et.getText().toString().equals(edtConfirmPassword.getText().toString());
         } else {
-            return et.getText().toString().length() >= 7;
+            return et.getText().toString().length() >= 6;
         }
     }
 

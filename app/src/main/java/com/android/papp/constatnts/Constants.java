@@ -42,7 +42,6 @@ public class Constants {
         ArrayList<SpinnerModel> arrayList = new ArrayList<>();
         arrayList.add(new SpinnerModel("Male"));
         arrayList.add(new SpinnerModel("Female"));
-        arrayList.add(new SpinnerModel("Unknown"));
         return arrayList;
 
     }

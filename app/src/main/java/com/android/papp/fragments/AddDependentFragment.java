@@ -3,7 +3,6 @@ package com.android.papp.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +10,15 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.android.papp.R;
-import com.android.papp.callbacks.OnItemAdd;
 import com.android.papp.callbacks.OnSpinnerOKPressedListener;
+import com.android.papp.constatnts.AppConstants;
 import com.android.papp.constatnts.Constants;
 import com.android.papp.fragments.abstracts.BaseFragment;
+import com.android.papp.helperclasses.DateHelper;
 import com.android.papp.helperclasses.ui.helper.UIHelper;
-import com.android.papp.managers.FileManager;
+import com.android.papp.managers.DateManager;
 import com.android.papp.models.IntWrapper;
-import com.android.papp.models.SpinnerModel;
+import com.android.papp.models.receiving_model.Dependant;
 import com.android.papp.widget.AnyEditTextView;
 import com.android.papp.widget.AnyTextView;
 import com.android.papp.widget.TitleBar;
@@ -26,7 +26,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -36,6 +35,7 @@ import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
+import static com.android.papp.managers.DateManager.sdfDOB;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
@@ -51,8 +51,8 @@ public class AddDependentFragment extends BaseFragment {
     AnyEditTextView edtFirstName;
     @BindView(R.id.edtLastName)
     AnyEditTextView edtLastName;
-    @BindView(R.id.txtAge)
-    AnyTextView txtAge;
+    @BindView(R.id.txtDOB)
+    AnyTextView txtDOB;
     @BindView(R.id.txtGender)
     AnyTextView txtGender;
     @BindView(R.id.imgDependentProfile)
@@ -68,14 +68,16 @@ public class AddDependentFragment extends BaseFragment {
     IntWrapper agePosition = new IntWrapper(0);
     IntWrapper genderPosition = new IntWrapper(0);
     private File fileTemporaryProfilePicture;
-    private ArrayList<SpinnerModel> arrData;
+    private ArrayList<Dependant> arrData;
+    private boolean isRegistrationProcess = false;
 
-    public static AddDependentFragment newInstance(ArrayList<SpinnerModel> arrData) {
+    public static AddDependentFragment newInstance(boolean isRegistrationProcess, ArrayList<Dependant> arrData) {
 
         Bundle args = new Bundle();
 
         AddDependentFragment fragment = new AddDependentFragment();
         fragment.arrData = arrData;
+        fragment.isRegistrationProcess = isRegistrationProcess;
         fragment.setArguments(args);
         return fragment;
     }
@@ -118,13 +120,11 @@ public class AddDependentFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setSpinnerData();
+        if (isRegistrationProcess) {
+            txtUploadPhoto.setVisibility(View.GONE);
+        }
     }
 
-
-    private void setSpinnerData() {
-
-    }
 
     private void showGenderSpinner() {
         UIHelper.showSpinnerDialog(this, Constants.getGenderArray(), "Select Gender", txtGender, null,
@@ -134,16 +134,6 @@ public class AddDependentFragment extends BaseFragment {
 
                     }
                 }, genderPosition);
-    }
-
-    private void showAgeSpinner() {
-        UIHelper.showSpinnerDialog(this, Constants.getAgeNumbersArray(), "Select Age", txtAge, null,
-                new OnSpinnerOKPressedListener() {
-                    @Override
-                    public void onItemSelect(Object data) {
-
-                    }
-                }, agePosition);
     }
 
 
@@ -174,8 +164,6 @@ public class AddDependentFragment extends BaseFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-
-
 
 
     @Override
@@ -211,8 +199,7 @@ public class AddDependentFragment extends BaseFragment {
     }
 
 
-
-    @OnClick({R.id.contBack, R.id.txtUploadPhoto, R.id.contAddMore, R.id.contBtnSave,R.id.txtAge, R.id.txtGender })
+    @OnClick({R.id.contBack, R.id.txtUploadPhoto, R.id.contAddMore, R.id.contBtnSave, R.id.txtDOB, R.id.txtGender})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.contBack:
@@ -226,15 +213,54 @@ public class AddDependentFragment extends BaseFragment {
             case R.id.txtGender:
                 showGenderSpinner();
                 break;
-            case R.id.txtAge:
-                showAgeSpinner();
+            case R.id.txtDOB:
+
+
+                if (txtDOB.getStringTrimmed().isEmpty()) {
+                    DateManager.showDatePicker(getContext(), txtDOB, AppConstants.DOB_FORMAT, null, true, false, null);
+                } else {
+                    DateManager.showDatePicker(getContext(), txtDOB, AppConstants.DOB_FORMAT, null, true, false, DateManager.getDate(sdfDOB, txtDOB.getStringTrimmed()));
+                }
+
+
                 break;
             case R.id.contBtnSave:
 
-                if (arrData != null) {
-                    arrData.add(new SpinnerModel("John Doe"));
+                // Validations
+
+                if (!edtFirstName.testValidity()) {
+                    UIHelper.showAlertDialog(getContext(), "Please enter valid First Name");
+                    return;
+                }
+
+                if (!edtLastName.testValidity()) {
+                    UIHelper.showAlertDialog(getContext(), "Please enter valid Last Name");
+                    return;
+                }
+
+                if (txtGender.getStringTrimmed().isEmpty()) {
+                    UIHelper.showAlertDialog(getContext(), "Please select Gender");
+                    return;
+                }
+
+
+                if (txtDOB.getStringTrimmed().isEmpty()) {
+                    UIHelper.showAlertDialog(getContext(), "Please select Date of Birth");
+                    return;
+                }
+
+
+                if (isRegistrationProcess && arrData != null) {
+                    Dependant dependant = new Dependant();
+                    dependant.setFirstName(edtFirstName.getStringTrimmed());
+                    dependant.setLastName(edtLastName.getStringTrimmed());
+                    dependant.setGender(AppConstants.getGenderInt(txtGender.getStringTrimmed()));
+                    dependant.setDob(txtDOB.getStringTrimmed());
+
+                    arrData.add(dependant);
                     getBaseActivity().popBackStack();
                 }
+
                 break;
         }
     }

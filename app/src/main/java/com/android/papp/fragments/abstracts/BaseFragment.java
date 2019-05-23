@@ -30,7 +30,6 @@ import com.android.papp.managers.FileManager;
 import com.android.papp.managers.SharedPreferenceManager;
 import com.android.papp.models.receiving_model.UserModel;
 import com.android.papp.models.wrappers.WebResponse;
-import com.gdacciaro.iOSDialog.iOSDialogBuilder;
 
 import java.io.File;
 
@@ -38,6 +37,8 @@ import com.android.papp.R;
 import com.android.papp.activities.BaseActivity;
 import com.android.papp.callbacks.OnNewPacketReceivedListener;
 import com.android.papp.widget.TitleBar;
+import com.google.gson.Gson;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -97,14 +98,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     public String getToken() {
         return sharedPreferenceManager.getString(AppConstants.KEY_TOKEN);
-    }
-
-    public String getOneTimeToken() {
-        return sharedPreferenceManager.getString(AppConstants.KEY_ONE_TIME_TOKEN);
-    }
-
-    public void putOneTimeToken(String token) {
-        sharedPreferenceManager.putValue(AppConstants.KEY_ONE_TIME_TOKEN, token);
     }
 
     public abstract int getDrawerLockMode();
@@ -210,6 +203,10 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     }
 
 
+    public Gson getGson() {
+        return getBaseActivity().getGson();
+    }
+
     public void saveAndOpenFile(WebResponse<String> webResponse) {
         String fileName = AppConstants.FILE_NAME + DateManager.getTime(DateManager.getCurrentMillis()) + ".pdf";
 
@@ -246,7 +243,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     }
 
 
-
     public static void logoutClick(final BaseFragment baseFragment) {
         Context context = baseFragment.getContext();
 
@@ -262,7 +258,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 //                })
 //                .setNegativeListener(context.getString(R.string.no), dialog -> dialog.dismiss())
 //                .build().show();
-
 
 
         final GenericDialogFragment genericDialogFragment = GenericDialogFragment.newInstance();
@@ -285,9 +280,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             }
         });
         genericDialogFragment.show(baseFragment.getBaseActivity().getSupportFragmentManager(), null);
-
-
-
 
 
     }

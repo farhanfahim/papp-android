@@ -1,13 +1,13 @@
-package com.android.papp.models.receiving_model;
+package com.android.papp.models.sending_model;
 
 import com.android.papp.managers.retrofit.GsonFactory;
+import com.android.papp.models.receiving_model.Dependant;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class UserModel {
-
+public class ParentSendingModel {
 
     @Expose
     @SerializedName("dependant")
@@ -15,12 +15,6 @@ public class UserModel {
     @Expose
     @SerializedName("role")
     private int role;
-    @Expose
-    @SerializedName("designation")
-    private String designation;
-    @Expose
-    @SerializedName("department_id")
-    private int departmentId;
     @Expose
     @SerializedName("device_type")
     private String deviceType;
@@ -39,12 +33,6 @@ public class UserModel {
     @Expose
     @SerializedName("image")
     private String image;
-    @Expose
-    @SerializedName("phone")
-    private String phone;
-    @Expose
-    @SerializedName("address")
-    private String address;
     @Expose
     @SerializedName("last_name")
     private String lastName;
@@ -67,22 +55,6 @@ public class UserModel {
 
     public void setRole(int role) {
         this.role = role;
-    }
-
-    public String getDesignation() {
-        return designation;
-    }
-
-    public void setDesignation(String designation) {
-        this.designation = designation;
-    }
-
-    public int getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
     }
 
     public String getDeviceType() {
@@ -131,22 +103,6 @@ public class UserModel {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getLastName() {

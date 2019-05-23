@@ -5,6 +5,7 @@ import android.support.annotation.WorkerThread;
 
 
 import com.android.papp.BuildConfig;
+import com.android.papp.constatnts.WebServiceConstants;
 import com.android.papp.libraries.fileloader.utility.AndroidFileManager;
 import com.android.papp.managers.retrofit.WebServices;
 
@@ -57,8 +58,7 @@ public class FileDownloader {
     @WorkerThread
     public File download() throws Exception {
         Request request = new Request.Builder()
-                .addHeader("Authorization", "Bearer " + WebServices.getBearerToken())
-                .addHeader("Requestor", "aku.edu")
+                .addHeader("Requestor", "header value")
                 .addHeader("Accept", "image/jpeg")
                 .url(uri).build();
         Response response = httpClient.newCall(request).execute();

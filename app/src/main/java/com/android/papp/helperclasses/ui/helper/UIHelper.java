@@ -126,6 +126,23 @@ public class UIHelper {
         alert.show();
     }
 
+
+    public static void showAlertDialog(Context context, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message)
+                .setTitle("Alert")
+                .setCancelable(true)
+                .setNegativeButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     public static void showAlertDialog(String message, CharSequence title,
                                        Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

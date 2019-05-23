@@ -8,19 +8,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class WebResponse<T> {
 
-    @SerializedName("ResponseMessage")
-    public String responseMessage;
+    @SerializedName("message")
+    public String message;
 
-    @SerializedName("ResponseCode")
-    public int responseCode;
+    @SerializedName("success")
+    private boolean success;
 
-    @SerializedName("ResponseType")
-    public String responseType;
-
-    @SerializedName("ResponseResult")
+    @SerializedName("data")
     public T result;
 
     public boolean isSuccess() {
-        return responseCode == 200;
+        return success;
     }
 }

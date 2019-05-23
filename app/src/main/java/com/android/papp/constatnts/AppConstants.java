@@ -51,12 +51,8 @@ public class AppConstants {
     public static final String OUTPUT_DATE_TIME_FORMAT = "EEEE dd,yyyy hh:mm a";
     public static final String INPUT_LAB_DATE_FORMAT_AM_PM = "mm/dd/yyyy hh:mm:ss a";
 
-    // Custom For AKUH
-    public static final String INPUT_DATE_FORMAT_IMMUNIZATION = "dd/MM/yyyy";
-    public static final String GENERAL_DATE_FORMAT = "dd-MM-yy";
-    public static final String FORMAT_PEOPLESOFT = "yyyy-MM-dd";
-    public static final String FORMAT_DATE_SHOW = "MMM dd, yyyy";
-    public static final String FORMAT_DATE_SEND = "dd/MM/yyyy HH:mm:ss";
+    // Custom
+    public static final String DOB_FORMAT = "yyyy-MM-dd";
 
 
     /**
@@ -68,7 +64,7 @@ public class AppConstants {
     public static final String DOC_PATH = ROOT_PATH + "/Docs";
 
     public static String getUserFolderPath(Context context) {
-        return DOC_PATH + "/" + SharedPreferenceManager.getInstance(context).getCurrentUser().getName();
+        return DOC_PATH + "/" + SharedPreferenceManager.getInstance(context).getCurrentUser().getFirstName();
     }
 
 
@@ -97,10 +93,7 @@ public class AppConstants {
     public static final String KEY_CODE = "code";
     public static final String USER_NOTIFICATION_DATA = "USER_NOTIFICATION_DATA";
     public static String FORCED_RESTART = "forced_restart";
-    public static final String KEY_REGISTER_VM = "register_vm";
     public static final String KEY_TOKEN = "getToken";
-    public static final String KEY_ONE_TIME_TOKEN = "one_time_token";
-    public static final String KEY_CROSS_TAB_DATA = "cross_tab";
     public static final String KEY_REGISTERED_DEVICE = "registered_device";
     public static final String KEY_INSERT_REGISTERED_DEVICE = "registered_device";
     public static final String KEY_FIREBASE_TOKEN_UPDATED = "FIREBASE_TOKEN_UPDATED";
@@ -123,8 +116,33 @@ public class AppConstants {
             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
 
     public static final String NO_RECORD_FOUND = "No Record Found";
+    public static String DEVICE_OS_ANDROID = "android";
+    public static int PARENT_ROLE = 3;
+    public static int MENTOR_ROLE = 5;
 
-    public static String DEVICE_OS_ANDROID = "ANDROID";
+
+    public static String getGenderString(int gender) {
+        switch (gender) {
+            case 0:
+                return "Female";
+            case 1:
+                return "Male";
+            default:
+                return "Male";
+        }
+    }
+
+
+    public static int getGenderInt(String gender) {
+        switch (gender) {
+            case "Female":
+                return 0;
+            case "Male":
+                return 1;
+            default:
+                return 1;
+        }
+    }
 
 
     private static String getDeviceID(Context context) {

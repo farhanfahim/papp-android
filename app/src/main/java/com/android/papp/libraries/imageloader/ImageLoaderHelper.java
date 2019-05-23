@@ -59,11 +59,11 @@ public class ImageLoaderHelper {
     }
 
     public static String getImageURL(String path, String requestMethod) {
-        return WebServiceConstants.GETIMAGE_BASE_URL + path + "&requestmethod=" + requestMethod;
+        return WebServiceConstants.BASE_URL + path + "&requestmethod=" + requestMethod;
     }
 
     public static String getUserImageURL(String path) {
-        return WebServiceConstants.GETIMAGE_BASE_URL + path + "&requestmethod=" + WebServiceConstants.METHOD_USER_GET_USER_IMAGE;
+        return WebServiceConstants.BASE_URL + path + "&requestmethod=" ;
     }
 
     public static DisplayImageOptions getOptionsSimple() {

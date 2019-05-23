@@ -21,8 +21,10 @@ import com.android.papp.fragments.abstracts.GenericDialogFragment;
 import com.android.papp.R;
 
 import com.android.papp.helperclasses.GooglePlaceHelper;
+import com.android.papp.managers.retrofit.GsonFactory;
 import com.android.papp.utils.DeviceUtils;
 import com.android.papp.widget.TitleBar;
+import com.google.gson.Gson;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -32,6 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private RightSideMenuFragment rightSideMenuFragment;
     public BaseFragment baseFragment;
     public GenericClickableInterface genericClickableInterface;
+    private Gson gson;
 
 
     @Override
@@ -41,6 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setAndBindTitleBar();
         drawerLayout = (DrawerLayout) findViewById(getDrawerLayoutId());
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        gson = GsonFactory.getSimpleGson();
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -55,7 +59,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 //            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 //            window.setStatusBarColor(getResources().getColor(android.R.color.transparent));
 //        }
-
 
 
         addDrawerFragment();
@@ -279,4 +282,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+
+    public Gson getGson() {
+        return gson;
+    }
 }

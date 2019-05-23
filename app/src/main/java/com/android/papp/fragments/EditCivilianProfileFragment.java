@@ -19,10 +19,10 @@ import com.android.papp.R;
 import com.android.papp.adapters.recyleradapters.AddDependentsAdapter;
 import com.android.papp.callbacks.OnItemAdd;
 import com.android.papp.callbacks.OnItemClickListener;
-import com.android.papp.constatnts.Constants;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.helperclasses.ui.helper.UIHelper;
 import com.android.papp.models.SpinnerModel;
+import com.android.papp.models.receiving_model.Dependant;
 import com.android.papp.widget.AnyEditTextView;
 import com.android.papp.widget.TitleBar;
 import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
@@ -50,7 +50,8 @@ public class EditCivilianProfileFragment extends BaseFragment implements OnItemC
     Unbinder unbinder;
 
     AddDependentsAdapter adapter;
-    ArrayList<SpinnerModel> arrData;
+    ArrayList<Dependant> arrData;
+
     @BindView(R.id.contBack)
     LinearLayout contBack;
     @BindView(R.id.edtFirstName)
@@ -137,7 +138,15 @@ public class EditCivilianProfileFragment extends BaseFragment implements OnItemC
         }
 
         arrData.clear();
-        arrData.addAll(Constants.getAddDependentsArray());
+        Dependant dependant = new Dependant();
+        dependant.setFirstName("Test");
+        dependant.setLastName("last");
+        dependant.setGender(1);
+
+
+        arrData.add(dependant);
+        arrData.add(dependant);
+        arrData.add(dependant);
         adapter.notifyDataSetChanged();
     }
 
@@ -186,7 +195,7 @@ public class EditCivilianProfileFragment extends BaseFragment implements OnItemC
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.contAddDependents:
-                getBaseActivity().addDockableFragment(AddDependentFragment.newInstance(arrData), false);
+                getBaseActivity().addDockableFragment(AddDependentFragment.newInstance(false, arrData), false);
                 break;
             case R.id.contBtnUpdate:
                 getBaseActivity().onBackPressed();

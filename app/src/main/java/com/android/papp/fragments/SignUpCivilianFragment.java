@@ -1,11 +1,14 @@
 package com.android.papp.fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +16,28 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.papp.R;
-import com.android.papp.activities.HomeActivity;
 import com.android.papp.adapters.recyleradapters.AddDependentsAdapter;
 import com.android.papp.callbacks.OnItemAdd;
 import com.android.papp.callbacks.OnItemClickListener;
 import com.android.papp.constatnts.AppConstants;
-import com.android.papp.constatnts.Constants;
+import com.android.papp.constatnts.WebServiceConstants;
+import com.android.papp.enums.BaseURLTypes;
+import com.android.papp.enums.FileType;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.helperclasses.ui.helper.UIHelper;
+import com.android.papp.helperclasses.validator.PasswordValidation;
+import com.android.papp.libraries.PasswordStrength;
+import com.android.papp.managers.retrofit.WebServices;
+import com.android.papp.managers.retrofit.entities.MultiFileModel;
 import com.android.papp.models.SpinnerModel;
+import com.android.papp.models.receiving_model.Dependant;
+import com.android.papp.models.receiving_model.UserModel;
+import com.android.papp.models.sending_model.ParentSendingModel;
+import com.android.papp.models.wrappers.WebResponse;
 import com.android.papp.widget.AnyEditTextView;
 import com.android.papp.widget.AnyTextView;
 import com.android.papp.widget.TitleBar;
@@ -42,6 +55,7 @@ import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
+import static com.android.papp.constatnts.AppConstants.PARENT_ROLE;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
@@ -75,13 +89,18 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
     LinearLayout contSocialLogin;
 
     AddDependentsAdapter adapter;
-    ArrayList<SpinnerModel> arrData;
+    ArrayList<Dependant> arrDependents;
+
     @BindView(R.id.imgProfile)
     CircleImageView imgProfile;
     @BindView(R.id.btnCamera)
     ImageButton btnCamera;
     @BindView(R.id.contProfile)
     RoundKornerRelativeLayout contProfile;
+    @BindView(R.id.txtPasswordStrength)
+    AnyTextView txtPasswordStrength;
+    @BindView(R.id.imgPasswordStrength)
+    ImageView imgPasswordStrength;
     private File fileTemporaryProfilePicture;
 
     public static SignUpCivilianFragment newInstance() {
@@ -114,8 +133,8 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        arrData = new ArrayList<>();
-        adapter = new AddDependentsAdapter(getContext(), arrData, this);
+        arrDependents = new ArrayList<>();
+        adapter = new AddDependentsAdapter(getContext(), arrDependents, this);
     }
 
 
@@ -134,21 +153,57 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
 
 
         bindRecyclerView();
+        edtPassword.addValidator(new PasswordValidation());
 
+        if (fileTemporaryProfilePicture != null) {
+            setImageAfterResult(Uri.fromFile(fileTemporaryProfilePicture).toString());
+        }
 
         if (onCreated) {
             adapter.notifyDataSetChanged();
             return;
         }
 
-        arrData.clear();
-        arrData.addAll(Constants.getAddDependentsArray());
-        adapter.notifyDataSetChanged();
+
     }
 
 
     @Override
     public void setListeners() {
+        edtPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                updatePasswordStrengthView(charSequence.toString());
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+    }
+
+    private void updatePasswordStrengthView(String password) {
+
+        if (password.isEmpty()) {
+            txtPasswordStrength.setText("");
+            imgPasswordStrength.setColorFilter(getContext().getResources().getColor(R.color.transparent));
+
+            return;
+        }
+
+        PasswordStrength str = PasswordStrength.calculateStrength(password);
+        txtPasswordStrength.setText(str.getText());
+        txtPasswordStrength.setTextColor(str.getColor());
+        imgPasswordStrength.setColorFilter(str.getColor());
+
 
     }
 
@@ -191,12 +246,10 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.contAddDependents:
-                getBaseActivity().addDockableFragment(AddDependentFragment.newInstance(arrData), false);
+                getBaseActivity().addDockableFragment(AddDependentFragment.newInstance(true, arrDependents), false);
                 break;
             case R.id.contBtnSignUp:
-                sharedPreferenceManager.putValue(AppConstants.KEY_IS_LEA, false);
-                getBaseActivity().finish();
-                getBaseActivity().openActivity(HomeActivity.class);
+                signUpWebCall();
                 break;
             case R.id.contFacebookLogin:
                 showNextBuildToast();
@@ -210,14 +263,82 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
         }
     }
 
+    public void signUpWebCall() {
+        // Validations
+
+        if (!edtFirstName.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Please enter valid First Name");
+            return;
+        }
+
+        if (!edtLastName.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Please enter valid Last Name");
+            return;
+        }
+
+        if (!edtEmailAddress.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Email Address not valid");
+            return;
+        }
+
+
+        if (!edtPassword.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Password not valid");
+            return;
+        }
+
+
+        if (arrDependents.isEmpty()) {
+            UIHelper.showAlertDialog(getContext(), "Kindly add Dependents");
+            return;
+        }
+
+
+        // Initialize Models
+
+        ParentSendingModel parentSendingModel = new ParentSendingModel();
+        ArrayList<MultiFileModel> arrMultiFileModel = new ArrayList<>();
+
+
+        // Adding Images
+        if (fileTemporaryProfilePicture != null) {
+            arrMultiFileModel.add(new MultiFileModel(fileTemporaryProfilePicture, FileType.IMAGE, "image"));
+        }
+
+
+        // Setting data
+
+        parentSendingModel.setFirstName(edtFirstName.getStringTrimmed());
+        parentSendingModel.setLastName(edtLastName.getStringTrimmed());
+        parentSendingModel.setEmail(edtEmailAddress.getStringTrimmed());
+        parentSendingModel.setPassword(edtPassword.getStringTrimmed());
+        parentSendingModel.setPasswordConfirmation(edtPassword.getStringTrimmed());
+        parentSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID);
+        parentSendingModel.setRole(PARENT_ROLE);
+        parentSendingModel.setDependant(arrDependents);
+
+        new WebServices(getContext(), "", BaseURLTypes.BASE_URL, true)
+                .webServiceUploadFileAPI(WebServiceConstants.PATH_REGISTER, arrMultiFileModel, parentSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                    @Override
+                    public void requestDataResponse(WebResponse<Object> webResponse) {
+                        UIHelper.showAlertDialog(getContext(), webResponse.result.toString());
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
+    }
+
     @Override
     public void onItemClick(int position, Object object, View view, Object type) {
 
-        SpinnerModel model = (SpinnerModel) object;
+        Dependant model = (Dependant) object;
 
-        UIHelper.showAlertDialog("Are you sure you want to remove " + model.getText() + "?",
+        UIHelper.showAlertDialog("Are you sure you want to remove " + model.getFirstName() + " " + model.getLastName() + "?",
                 "Alert", (dialogInterface, i) -> {
-                    arrData.remove(position);
+                    arrDependents.remove(position);
                     adapter.notifyDataSetChanged();
                 }, getContext());
     }

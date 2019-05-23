@@ -19,10 +19,10 @@ import com.android.papp.R;
 import com.android.papp.adapters.recyleradapters.AddDependentsAdapter;
 import com.android.papp.callbacks.OnItemAdd;
 import com.android.papp.callbacks.OnItemClickListener;
-import com.android.papp.constatnts.Constants;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.helperclasses.ui.helper.UIHelper;
 import com.android.papp.models.SpinnerModel;
+import com.android.papp.models.receiving_model.Dependant;
 import com.android.papp.widget.AnyEditTextView;
 import com.android.papp.widget.AnyTextView;
 import com.android.papp.widget.TitleBar;
@@ -63,7 +63,7 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
 
 
     AddDependentsAdapter adapter;
-    ArrayList<SpinnerModel> arrData;
+    ArrayList<Dependant> arrData;
 
 
     public static ViewAllDependentsFragment newInstance() {
@@ -130,7 +130,16 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
 
 
         arrData.clear();
-        arrData.addAll(Constants.getAddDependentsArray());
+        Dependant dependant = new Dependant();
+        dependant.setFirstName("Test");
+        dependant.setLastName("last");
+        dependant.setGender(1);
+
+
+        arrData.add(dependant);
+        arrData.add(dependant);
+        arrData.add(dependant);
+
         adapter.notifyDataSetChanged();
     }
 
@@ -198,7 +207,7 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
             case R.id.imgSearch:
                 break;
             case R.id.fab:
-                getBaseActivity().addDockableFragment(AddDependentFragment.newInstance(arrData), true);
+                getBaseActivity().addDockableFragment(AddDependentFragment.newInstance(false, arrData), true);
                 break;
         }
     }
