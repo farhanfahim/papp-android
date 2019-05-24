@@ -3,6 +3,7 @@ package com.android.papp.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,21 +32,23 @@ import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.helperclasses.ui.helper.UIHelper;
 import com.android.papp.helperclasses.validator.PasswordValidation;
 import com.android.papp.libraries.PasswordStrength;
+import com.android.papp.managers.retrofit.GsonFactory;
 import com.android.papp.managers.retrofit.WebServices;
 import com.android.papp.managers.retrofit.entities.MultiFileModel;
 import com.android.papp.models.SpinnerModel;
-import com.android.papp.models.receiving_model.Dependant;
-import com.android.papp.models.receiving_model.UserModel;
+import com.android.papp.models.sending_model.DependantSendingModel;
 import com.android.papp.models.sending_model.ParentSendingModel;
 import com.android.papp.models.wrappers.WebResponse;
 import com.android.papp.widget.AnyEditTextView;
 import com.android.papp.widget.AnyTextView;
 import com.android.papp.widget.TitleBar;
+import com.google.gson.reflect.TypeToken;
 import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -89,7 +92,7 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
     LinearLayout contSocialLogin;
 
     AddDependentsAdapter adapter;
-    ArrayList<Dependant> arrDependents;
+    ArrayList<DependantSendingModel> arrDependents;
 
     @BindView(R.id.imgProfile)
     CircleImageView imgProfile;
@@ -102,6 +105,7 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
     @BindView(R.id.imgPasswordStrength)
     ImageView imgPasswordStrength;
     private File fileTemporaryProfilePicture;
+
 
     public static SignUpCivilianFragment newInstance() {
 
@@ -166,7 +170,6 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
 
 
     }
-
 
     @Override
     public void setListeners() {
@@ -321,7 +324,7 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
                 .webServiceUploadFileAPI(WebServiceConstants.PATH_REGISTER, arrMultiFileModel, parentSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
                     @Override
                     public void requestDataResponse(WebResponse<Object> webResponse) {
-                        UIHelper.showAlertDialog(getContext(), webResponse.result.toString());
+
                     }
 
                     @Override
@@ -334,7 +337,7 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
     @Override
     public void onItemClick(int position, Object object, View view, Object type) {
 
-        Dependant model = (Dependant) object;
+        DependantSendingModel model = (DependantSendingModel) object;
 
         UIHelper.showAlertDialog("Are you sure you want to remove " + model.getFirstName() + " " + model.getLastName() + "?",
                 "Alert", (dialogInterface, i) -> {

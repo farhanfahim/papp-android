@@ -34,7 +34,7 @@ public interface WebServiceProxy {
 
 
     @POST("api/v1/{path}")
-    Call<WebResponse<Object>> webServiceRequestAPIForWebResponseAnyObject(
+    Call<WebResponse<Object>> postAPIWebResponseAnyObject(
             @Path("path") String postfix,
             @Body RequestBody requestData
     );
@@ -42,7 +42,7 @@ public interface WebServiceProxy {
 
     @Multipart
     @POST("api/v1/{path}")
-    Call<WebResponse<Object>> uploadFileRequestApi(
+    Call<WebResponse<Object>> postMultipartAPI(
             @Path("path") String postfix,
             @Part ArrayList<MultipartBody.Part> body
 
@@ -50,8 +50,10 @@ public interface WebServiceProxy {
 
 
     @GET("api/v1/{path}")
-    Call<String> getDataFromAPI(
-            @Path("path") String postfix
+    Call<WebResponse<Object>> getAPIForWebresponseAnyObject(
+            @Path("path") String postfix,
+            @Query("limit") int limit,
+            @Query("offset") int offset
     );
 
 

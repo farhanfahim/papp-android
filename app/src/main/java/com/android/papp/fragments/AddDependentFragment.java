@@ -14,11 +14,10 @@ import com.android.papp.callbacks.OnSpinnerOKPressedListener;
 import com.android.papp.constatnts.AppConstants;
 import com.android.papp.constatnts.Constants;
 import com.android.papp.fragments.abstracts.BaseFragment;
-import com.android.papp.helperclasses.DateHelper;
 import com.android.papp.helperclasses.ui.helper.UIHelper;
 import com.android.papp.managers.DateManager;
 import com.android.papp.models.IntWrapper;
-import com.android.papp.models.receiving_model.Dependant;
+import com.android.papp.models.sending_model.DependantSendingModel;
 import com.android.papp.widget.AnyEditTextView;
 import com.android.papp.widget.AnyTextView;
 import com.android.papp.widget.TitleBar;
@@ -65,13 +64,12 @@ public class AddDependentFragment extends BaseFragment {
     LinearLayout contBtnSave;
 
 
-    IntWrapper agePosition = new IntWrapper(0);
     IntWrapper genderPosition = new IntWrapper(0);
     private File fileTemporaryProfilePicture;
-    private ArrayList<Dependant> arrData;
+    private ArrayList<DependantSendingModel> arrData;
     private boolean isRegistrationProcess = false;
 
-    public static AddDependentFragment newInstance(boolean isRegistrationProcess, ArrayList<Dependant> arrData) {
+    public static AddDependentFragment newInstance(boolean isRegistrationProcess, ArrayList<DependantSendingModel> arrData) {
 
         Bundle args = new Bundle();
 
@@ -128,11 +126,7 @@ public class AddDependentFragment extends BaseFragment {
 
     private void showGenderSpinner() {
         UIHelper.showSpinnerDialog(this, Constants.getGenderArray(), "Select Gender", txtGender, null,
-                new OnSpinnerOKPressedListener() {
-                    @Override
-                    public void onItemSelect(Object data) {
-
-                    }
+                data -> {
                 }, genderPosition);
     }
 
@@ -251,7 +245,7 @@ public class AddDependentFragment extends BaseFragment {
 
 
                 if (isRegistrationProcess && arrData != null) {
-                    Dependant dependant = new Dependant();
+                    DependantSendingModel dependant = new DependantSendingModel();
                     dependant.setFirstName(edtFirstName.getStringTrimmed());
                     dependant.setLastName(edtLastName.getStringTrimmed());
                     dependant.setGender(AppConstants.getGenderInt(txtGender.getStringTrimmed()));

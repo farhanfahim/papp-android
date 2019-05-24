@@ -1,23 +1,31 @@
 package com.android.papp.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by hamza.ahmed on 3/16/2018.
  */
 
 public class SpinnerModel {
 
-
+    @Expose
+    @SerializedName("name")
     private String text;
+    @Expose
+    @SerializedName("id")
+    private int id = 0;
+
+
     private boolean isSelected = false;
-    private int positionInList = 0;
 
 
-    public int getPositionInList() {
-        return positionInList;
+    public int getId() {
+        return id;
     }
 
-    public void setPositionInList(int positionInList) {
-        this.positionInList = positionInList;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public SpinnerModel(String text) {
@@ -53,4 +61,5 @@ public class SpinnerModel {
         }
         return super.equals(obj);
     }
+
 }

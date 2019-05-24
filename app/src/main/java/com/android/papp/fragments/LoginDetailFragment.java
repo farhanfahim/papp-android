@@ -147,7 +147,7 @@ public class LoginDetailFragment extends BaseFragment {
 
 
                 new WebServices(getContext(), getToken(), BaseURLTypes.BASE_URL, true)
-                        .webServiceRequestAPIAnyObject("login", loginSendingModel.toString(),
+                        .postAPIAnyObject("login", loginSendingModel.toString(),
                                 new WebServices.IRequestWebResponseAnyObjectCallBack() {
                                     @Override
                                     public void requestDataResponse(WebResponse<Object> webResponse) {
@@ -190,7 +190,7 @@ public class LoginDetailFragment extends BaseFragment {
 
     public void webCallLogin(LoginSendingModel loginSendingModel) {
         new WebServices(getContext(), "", BaseURLTypes.BASE_URL, true)
-                .webServiceRequestAPIAnyObject("login", loginSendingModel.toString(),
+                .postAPIAnyObject("login", loginSendingModel.toString(),
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override
                             public void requestDataResponse(WebResponse<Object> webResponse) {

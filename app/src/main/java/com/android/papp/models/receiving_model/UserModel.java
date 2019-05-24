@@ -1,6 +1,7 @@
 package com.android.papp.models.receiving_model;
 
 import com.android.papp.managers.retrofit.GsonFactory;
+import com.android.papp.models.sending_model.DependantSendingModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,7 +12,7 @@ public class UserModel {
 
     @Expose
     @SerializedName("dependant")
-    private List<Dependant> dependant;
+    private List<DependantSendingModel> dependant;
     @Expose
     @SerializedName("role")
     private int role;
@@ -53,11 +54,11 @@ public class UserModel {
     private String firstName;
 
 
-    public List<Dependant> getDependant() {
+    public List<DependantSendingModel> getDependant() {
         return dependant;
     }
 
-    public void setDependant(List<Dependant> dependant) {
+    public void setDependant(List<DependantSendingModel> dependant) {
         this.dependant = dependant;
     }
 

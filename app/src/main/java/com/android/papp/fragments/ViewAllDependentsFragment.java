@@ -22,7 +22,7 @@ import com.android.papp.callbacks.OnItemClickListener;
 import com.android.papp.fragments.abstracts.BaseFragment;
 import com.android.papp.helperclasses.ui.helper.UIHelper;
 import com.android.papp.models.SpinnerModel;
-import com.android.papp.models.receiving_model.Dependant;
+import com.android.papp.models.sending_model.DependantSendingModel;
 import com.android.papp.widget.AnyEditTextView;
 import com.android.papp.widget.AnyTextView;
 import com.android.papp.widget.TitleBar;
@@ -63,7 +63,7 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
 
 
     AddDependentsAdapter adapter;
-    ArrayList<Dependant> arrData;
+    ArrayList<DependantSendingModel> arrData;
 
 
     public static ViewAllDependentsFragment newInstance() {
@@ -130,7 +130,7 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
 
 
         arrData.clear();
-        Dependant dependant = new Dependant();
+        DependantSendingModel dependant = new DependantSendingModel();
         dependant.setFirstName("Test");
         dependant.setLastName("last");
         dependant.setGender(1);

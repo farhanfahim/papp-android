@@ -40,8 +40,20 @@ public class KeyboardHelper {
         }
         InputMethodManager imm = (InputMethodManager) context
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
+        assert imm != null;
         imm.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
+
+    public static void hideSoftKeyboardFromWindow(Context context, View view) {
+        if (context == null) {
+            return;
+        }
+
+        InputMethodManager in = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        assert in != null;
+        in.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
+    }
+
 
     public static void showSoftKeyboard(Context context, EditText editText) {
 
@@ -64,8 +76,6 @@ public class KeyboardHelper {
         imm.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
         editText.requestFocus();
     }
-
-
 
 
 }

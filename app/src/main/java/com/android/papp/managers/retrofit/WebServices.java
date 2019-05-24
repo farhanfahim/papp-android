@@ -3,14 +3,9 @@ package com.android.papp.managers.retrofit;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
-import com.android.papp.constatnts.WebServiceConstants;
 import com.android.papp.managers.FileManager;
 import com.android.papp.managers.retrofit.entities.MultiFileModel;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.io.File;
@@ -142,7 +137,7 @@ public class WebServices {
 
         try {
             if (Helper.isNetworkConnected(mContext, true)) {
-                apiService.uploadFileRequestApi(path, partArrayList).enqueue(
+                apiService.postMultipartAPI(path, partArrayList).enqueue(
                         new Callback<WebResponse<Object>>() {
                             @Override
                             public void onResponse(Call<WebResponse<Object>> call, Response<WebResponse<Object>> response) {
@@ -188,12 +183,12 @@ public class WebServices {
     }
 
 
-    public Call<WebResponse<Object>> webServiceRequestAPIAnyObject(String path, String requestData, final IRequestWebResponseAnyObjectCallBack callBack) {
+    public Call<WebResponse<Object>> postAPIAnyObject(String path, String requestData, final IRequestWebResponseAnyObjectCallBack callBack) {
         RequestBody bodyRequestData = getRequestBody(okhttp3.MediaType.parse("application/json; charset=utf-8"), requestData);
 
 //        MultipartBody.Part multipartBody = MultipartBody.Part.create(bodyRequestData);
 
-        Call<WebResponse<Object>> webResponseCall = apiService.webServiceRequestAPIForWebResponseAnyObject(path, bodyRequestData);
+        Call<WebResponse<Object>> webResponseCall = apiService.postAPIWebResponseAnyObject(path, bodyRequestData);
 
         try {
             if (Helper.isNetworkConnected(mContext, true)) {
@@ -240,6 +235,60 @@ public class WebServices {
 
         return webResponseCall;
     }
+
+
+    public Call<WebResponse<Object>> getAPIAnyObject(String path, int limit, int offset, final IRequestWebResponseAnyObjectCallBack callBack) {
+
+        Call<WebResponse<Object>> webResponseCall = apiService.getAPIForWebresponseAnyObject(path, limit, offset);
+
+        try {
+            if (Helper.isNetworkConnected(mContext, true)) {
+                webResponseCall.enqueue(new Callback<WebResponse<Object>>() {
+                    @Override
+                    public void onResponse(Call<WebResponse<Object>> call, Response<WebResponse<Object>> response) {
+                        dismissDialog();
+
+                        if (response.body() == null) {
+                            callBack.onError("empty response");
+                            return;
+                        }
+
+                        if (response.isSuccessful() && response.body().isSuccess()) {
+                            if (callBack != null)
+                                callBack.requestDataResponse(response.body());
+                        } else if (response.code() == PARAMS_TOKEN_EXPIRE) {
+                            // FIXME: 2019-05-22 EXPIRE LOGIC
+                            UIHelper.showToast(mContext, "TOKEN EXPIRE");
+                        } else if (response.code() == PARAMS_TOKEN_BLACKLIST) {
+                            // FIXME: 2019-05-22 LOGOUT LOGIC
+                            UIHelper.showToast(mContext, "TOKEN BLACK LIST");
+                        } else {
+                            callBack.onError(errorToastForObject(response));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<WebResponse<Object>> call, Throwable t) {
+                        UIHelper.showShortToastInCenter(mContext, "Something went wrong, Please check your internet connection.");
+                        dismissDialog();
+                        callBack.onError("");
+                    }
+                });
+            } else {
+                dismissDialog();
+            }
+
+        } catch (Exception e) {
+            dismissDialog();
+            e.printStackTrace();
+
+        }
+
+        return webResponseCall;
+    }
+
+
+
 
     @NonNull
     public static MultipartBody.Part getMultipart(FileType fileType, File file, String keyName) {

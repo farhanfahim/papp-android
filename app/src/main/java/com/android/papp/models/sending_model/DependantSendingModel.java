@@ -1,10 +1,10 @@
-package com.android.papp.models.receiving_model;
+package com.android.papp.models.sending_model;
 
 import com.android.papp.managers.retrofit.GsonFactory;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Dependant {
+public class DependantSendingModel {
     @Expose
     @SerializedName("gender")
     private int gender;

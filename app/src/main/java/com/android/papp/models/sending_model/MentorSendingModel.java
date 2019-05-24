@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ParentSendingModel {
+public class MentorSendingModel {
 
     @Expose
     @SerializedName("dependant")

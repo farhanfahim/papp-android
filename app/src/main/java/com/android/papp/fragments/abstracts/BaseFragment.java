@@ -22,12 +22,14 @@ import com.android.papp.activities.HomeActivity;
 import com.android.papp.activities.MainActivity;
 import com.android.papp.callbacks.GenericClickableInterface;
 import com.android.papp.constatnts.AppConstants;
+import com.android.papp.enums.BaseURLTypes;
 import com.android.papp.helperclasses.ui.helper.KeyboardHelper;
 import com.android.papp.helperclasses.ui.helper.UIHelper;
 import com.android.papp.libraries.residemenu.ResideMenu;
 import com.android.papp.managers.DateManager;
 import com.android.papp.managers.FileManager;
 import com.android.papp.managers.SharedPreferenceManager;
+import com.android.papp.managers.retrofit.WebServices;
 import com.android.papp.models.receiving_model.UserModel;
 import com.android.papp.models.wrappers.WebResponse;
 
@@ -205,6 +207,12 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     public Gson getGson() {
         return getBaseActivity().getGson();
+    }
+
+
+    @android.support.annotation.NonNull
+    public WebServices getBaseWebService() {
+        return new WebServices(getContext(), getToken(), BaseURLTypes.BASE_URL, true);
     }
 
     public void saveAndOpenFile(WebResponse<String> webResponse) {

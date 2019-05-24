@@ -153,4 +153,12 @@
         <attr name="rsb_thumb_scale_ratio" format="float" />
     </declare-styleable>
 
+
+    <declare-styleable name="KMPAutoComplTextView">
+        <attr name="completionHighlightColor" format="reference|color" />
+        <attr name="completionTextColor" format="reference|color" />
+        <attr name="completionTextSize" format="dimension" />
+        <attr name="completionIgnoreCase" format="boolean" />
+    </declare-styleable>
+
 </resources>

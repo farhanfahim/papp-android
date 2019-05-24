@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import com.android.papp.R;
 import com.android.papp.callbacks.OnItemClickListener;
 import com.android.papp.constatnts.AppConstants;
-import com.android.papp.models.receiving_model.Dependant;
+import com.android.papp.models.sending_model.DependantSendingModel;
 import com.android.papp.widget.AnyTextView;
 
 import java.util.List;
@@ -28,9 +28,9 @@ public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdap
 
 
     private Context activity;
-    private List<Dependant> arrData;
+    private List<DependantSendingModel> arrData;
 
-    public AddDependentsAdapter(Context activity, List<Dependant> arrData, OnItemClickListener onItemClickListener) {
+    public AddDependentsAdapter(Context activity, List<DependantSendingModel> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
@@ -47,7 +47,7 @@ public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdap
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        Dependant model = arrData.get(i);
+        DependantSendingModel model = arrData.get(i);
 
         holder.txtName.setText(model.getFirstName() + " " + model.getLastName());
         holder.txtGender.setText(AppConstants.getGenderString(model.getGender()));
@@ -55,7 +55,7 @@ public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdap
         setListener(holder, model);
     }
 
-    private void setListener(final ViewHolder holder, final Dependant model) {
+    private void setListener(final ViewHolder holder, final DependantSendingModel model) {
         holder.txtRemove.
                 setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null));
     }
