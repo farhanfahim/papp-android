@@ -24,7 +24,7 @@
             android:padding="@dimen/x10dp"
             android:layout_height="wrap_content">
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -50,7 +50,7 @@
                 android:gravity="center_vertical"
                 android:layout_height="wrap_content">
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:id="@+id/txtDate"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -125,7 +125,7 @@
                 android:layout_height="@dimen/x60dp"
                 android:src="@drawable/img_email" />
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/empty_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

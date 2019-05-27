@@ -16,7 +16,7 @@
         android:orientation="vertical">
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/txtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
                 android:orientation="vertical">
 
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/x5dp"
@@ -75,7 +75,7 @@
                     android:textSize="@dimen/s14"
                     app:fontFamily="@string/font_regular" />
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:id="@+id/txtDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
                 android:orientation="vertical">
 
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/x5dp"
@@ -108,7 +108,7 @@
                     android:textSize="@dimen/s14"
                     app:fontFamily="@string/font_regular" />
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:id="@+id/txtDuration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
                 android:orientation="vertical">
 
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/x5dp"
@@ -152,7 +152,7 @@
                     android:textSize="@dimen/s14"
                     app:fontFamily="@string/font_regular" />
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:id="@+id/txtPoints"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -185,7 +185,7 @@
                 android:orientation="vertical">
 
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/x5dp"
@@ -196,7 +196,7 @@
                     android:textSize="@dimen/s14"
                     app:fontFamily="@string/font_regular" />
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:id="@+id/txtDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -214,7 +214,7 @@
         </LinearLayout>
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/txtAcceptChallenge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

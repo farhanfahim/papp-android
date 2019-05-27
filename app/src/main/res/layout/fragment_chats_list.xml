@@ -41,7 +41,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/img_search" />
 
-                <com.android.papp.widget.AnyEditTextView
+                <com.tekrevol.papp.widget.AnyEditTextView
                     android:id="@+id/edtSearchBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
             </LinearLayout>
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/txtHeading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
                 android:layout_height="@dimen/x60dp"
                 android:src="@drawable/img_email" />
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/empty_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

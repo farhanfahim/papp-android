@@ -32,7 +32,7 @@
             android:orientation="vertical">
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/txtTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                 app:fontFamily="@string/font_regular" />
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/txtPoints"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

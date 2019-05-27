@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content">
 
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:id="@+id/txtTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             </LinearLayout>
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/txtDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

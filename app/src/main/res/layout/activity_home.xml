@@ -27,7 +27,7 @@
                 android:layout_below="@id/titlebar"
                 android:layout_centerHorizontal="true" />
 
-            <com.android.papp.widget.TitleBar
+            <com.tekrevol.papp.widget.TitleBar
                 android:id="@+id/titlebar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

@@ -31,7 +31,7 @@
         >
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/txtMessageRcv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
             app:typeface="@string/font_regular" />
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/txtTimeRcv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

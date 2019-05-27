@@ -35,7 +35,7 @@
 
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -45,7 +45,7 @@
                 android:textSize="@dimen/s8"
                 app:fontFamily="@string/font_regular" />
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/txtSessionBy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
                 app:fontFamily="@string/font_medium" />
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -68,7 +68,7 @@
                 android:textSize="@dimen/s8"
                 app:fontFamily="@string/font_regular" />
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/txtSessionOn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
 
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -92,7 +92,7 @@
                 android:textSize="@dimen/s8"
                 app:fontFamily="@string/font_regular" />
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/txtLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                 app:fontFamily="@string/font_medium" />
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -115,7 +115,7 @@
                 android:textSize="@dimen/s8"
                 app:fontFamily="@string/font_regular" />
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/txtDependentsCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

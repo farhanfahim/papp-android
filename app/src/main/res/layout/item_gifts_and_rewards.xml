@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content">
 
 
-                    <com.android.papp.widget.AnyTextView
+                    <com.tekrevol.papp.widget.AnyTextView
                         android:id="@+id/txtPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                         app:fontFamily="@string/font_regular" />
 
 
-                    <com.android.papp.widget.AnyTextView
+                    <com.tekrevol.papp.widget.AnyTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -76,7 +76,7 @@
                 </LinearLayout>
 
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -100,7 +100,7 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/x5dp">
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/x3dp"

@@ -8,7 +8,7 @@
     android:padding="@dimen/x20dp">
 
 
-    <com.android.papp.widget.AnyTextView
+    <com.tekrevol.papp.widget.AnyTextView
         android:id="@+id/txtDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
     </android.support.v7.widget.RecyclerView>
 
 
-    <com.android.papp.widget.AnyTextView
+    <com.tekrevol.papp.widget.AnyTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -62,7 +62,7 @@
             android:src="@drawable/img_location_black" />
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/txtLocation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
     </LinearLayout>
 
 
-    <com.android.papp.widget.AnyTextView
+    <com.tekrevol.papp.widget.AnyTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -104,7 +104,7 @@
             android:src="@drawable/img_clock" />
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/txtDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
             app:typeface="@string/font_regular" />
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/txtTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/txtMessage"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -181,7 +181,7 @@
         app:corner_radius="@dimen/x5dp">
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/txtSessionType"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -242,7 +242,7 @@
     </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
 
-    <com.android.papp.widget.AnyTextView
+    <com.tekrevol.papp.widget.AnyTextView
         android:id="@+id/txtTimer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

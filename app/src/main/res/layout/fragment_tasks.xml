@@ -39,7 +39,7 @@
                     android:orientation="horizontal">
 
 
-                    <com.android.papp.widget.AnyTextView
+                    <com.tekrevol.papp.widget.AnyTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -82,7 +82,7 @@
                     android:orientation="horizontal">
 
 
-                    <com.android.papp.widget.AnyTextView
+                    <com.tekrevol.papp.widget.AnyTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -93,7 +93,7 @@
                         app:fontFamily="@string/font_regular" />
 
 
-                    <com.android.papp.widget.AnyTextView
+                    <com.tekrevol.papp.widget.AnyTextView
                         android:id="@+id/txtViewAllCompletedTasks"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
                     android:orientation="horizontal">
 
 
-                    <com.android.papp.widget.AnyTextView
+                    <com.tekrevol.papp.widget.AnyTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -147,7 +147,7 @@
                         app:fontFamily="@string/font_regular" />
 
 
-                    <com.android.papp.widget.AnyTextView
+                    <com.tekrevol.papp.widget.AnyTextView
                         android:id="@+id/txtViewAllUpcomingTasks"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

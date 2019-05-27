@@ -4,74 +4,72 @@
     android:id="@+id/contParentLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:paddingTop="@dimen/x5dp"
-    android:paddingBottom="@dimen/x10dp"
-    android:orientation="vertical">
+    android:paddingBottom="@dimen/x10dp">
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:gravity="center_vertical"
-        android:layout_height="match_parent">
-        
-        
+        android:layout_height="match_parent"
+        android:gravity="center_vertical">
+
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgDependentProfile"
             android:layout_width="@dimen/x50dp"
             android:layout_height="@dimen/x50dp"
-            android:scaleType="centerCrop"
             android:layout_marginRight="@dimen/x5dp"
-            android:src="@drawable/img_placeholder_dependent"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile_placeholder"
+            app:civ_border_color="@color/colorPrimary"
+            app:civ_border_width="2px" />
 
 
         <LinearLayout
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
 
 
-
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/txtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/x3dp"
-                android:text="Jason Brody"
-                android:singleLine="true"
                 android:ellipsize="end"
+                android:padding="@dimen/x3dp"
+                android:singleLine="true"
+                android:text="Dummy Text"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/s14"
                 app:fontFamily="@string/font_regular" />
 
 
-
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/txtGender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/x3dp"
-                android:text="Male"
-                android:singleLine="true"
                 android:ellipsize="end"
+                android:padding="@dimen/x3dp"
+                android:singleLine="true"
+                android:text="Male"
                 android:textColor="@color/txtDarkGrey"
                 android:textSize="@dimen/s12"
                 app:fontFamily="@string/font_regular" />
 
 
-
-
         </LinearLayout>
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/txtRemove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/x3dp"
-            android:text="Remove"
-            android:singleLine="true"
             android:ellipsize="end"
+            android:padding="@dimen/x3dp"
+            android:singleLine="true"
+            android:text="Remove"
             android:textColor="@color/txtBlack"
             android:textSize="@dimen/s14"
             app:fontFamily="@string/font_regular" />

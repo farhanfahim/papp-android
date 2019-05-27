@@ -33,7 +33,7 @@
                 android:src="@drawable/img_chat" />
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/txtChat"
                 app:fontFamily="@string/font_regular"
                 android:layout_width="match_parent"
@@ -80,7 +80,7 @@
                 android:src="@drawable/img_session" />
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/txtSession"
                 app:fontFamily="@string/font_regular"
                 android:layout_width="match_parent"

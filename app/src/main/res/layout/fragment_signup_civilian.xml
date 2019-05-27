@@ -73,7 +73,7 @@
                         android:orientation="vertical">
 
 
-                        <com.android.papp.widget.AnyTextView
+                        <com.tekrevol.papp.widget.AnyTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/x3dp"
@@ -83,7 +83,7 @@
                             app:fontFamily="@string/font_regular" />
 
 
-                        <com.android.papp.widget.AnyEditTextView
+                        <com.tekrevol.papp.widget.AnyEditTextView
                             android:id="@+id/edtFirstName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
                         android:orientation="vertical">
 
 
-                        <com.android.papp.widget.AnyTextView
+                        <com.tekrevol.papp.widget.AnyTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/x3dp"
@@ -147,7 +147,7 @@
                             app:fontFamily="@string/font_regular" />
 
 
-                        <com.android.papp.widget.AnyEditTextView
+                        <com.tekrevol.papp.widget.AnyEditTextView
                             android:id="@+id/edtLastName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -198,7 +198,7 @@
                 android:orientation="vertical">
 
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/x3dp"
@@ -208,7 +208,7 @@
                     app:fontFamily="@string/font_regular" />
 
 
-                <com.android.papp.widget.AnyEditTextView
+                <com.tekrevol.papp.widget.AnyEditTextView
                     android:id="@+id/edtEmailAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -253,7 +253,7 @@
                 android:orientation="vertical">
 
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/x3dp"
@@ -263,7 +263,7 @@
                     app:fontFamily="@string/font_regular" />
 
 
-                <com.android.papp.widget.AnyEditTextView
+                <com.tekrevol.papp.widget.AnyEditTextView
                     android:id="@+id/edtPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -282,7 +282,7 @@
             </LinearLayout>
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/txtPasswordStrength"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -322,7 +322,7 @@
             android:orientation="horizontal">
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -346,7 +346,7 @@
                     android:layout_marginRight="@dimen/x3dp"
                     android:src="@drawable/img_add" />
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Add Dependents"
@@ -387,7 +387,7 @@
                 android:tint="@color/c_white" />
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/x8dp"
@@ -401,7 +401,7 @@
         </LinearLayout>
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/txtOrLoginWith"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -437,7 +437,7 @@
                     android:src="@drawable/img_facebook_icon" />
 
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -475,7 +475,7 @@
                     android:src="@drawable/img_twitter_icon" />
 
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"

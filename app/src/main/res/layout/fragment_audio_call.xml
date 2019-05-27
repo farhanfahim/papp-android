@@ -70,7 +70,7 @@
         </android.support.constraint.ConstraintLayout>
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/txtCallerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
     </LinearLayout>
 
 
-    <com.android.papp.widget.AnyTextView
+    <com.tekrevol.papp.widget.AnyTextView
         android:id="@+id/txtTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

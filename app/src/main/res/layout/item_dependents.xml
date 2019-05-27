@@ -61,7 +61,7 @@
             android:src="#0B78C0" />
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/txtName"
             android:layout_width="match_parent"
             android:layout_below="@id/imgDependentProfile"

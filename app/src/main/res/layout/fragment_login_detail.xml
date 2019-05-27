@@ -37,7 +37,7 @@
                 android:orientation="vertical">
 
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/x3dp"
@@ -47,7 +47,7 @@
                     app:fontFamily="@string/font_regular" />
 
 
-                <com.android.papp.widget.AnyEditTextView
+                <com.tekrevol.papp.widget.AnyEditTextView
                     android:id="@+id/edtEmailAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -64,14 +64,6 @@
 
 
             </LinearLayout>
-
-
-            <ImageView
-                android:layout_width="@dimen/x15dp"
-                android:layout_height="@dimen/x15dp"
-                android:layout_marginRight="@dimen/x5dp"
-                android:src="@drawable/img_verified" />
-
 
         </LinearLayout>
 
@@ -108,7 +100,7 @@
                 android:orientation="vertical">
 
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/x3dp"
@@ -118,7 +110,7 @@
                     app:fontFamily="@string/font_regular" />
 
 
-                <com.android.papp.widget.AnyEditTextView
+                <com.tekrevol.papp.widget.AnyEditTextView
                     android:id="@+id/edtPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -149,7 +141,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/x8dp"
@@ -170,7 +162,7 @@
         </LinearLayout>
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/txtOrLoginWith"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -206,7 +198,7 @@
                     android:src="@drawable/img_facebook_icon" />
 
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -244,7 +236,7 @@
                     android:src="@drawable/img_twitter_icon" />
 
 
-                <com.android.papp.widget.AnyTextView
+                <com.tekrevol.papp.widget.AnyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -260,7 +252,7 @@
         </LinearLayout>
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/x5dp"
@@ -287,7 +279,7 @@
                 android:src="@drawable/img_sign_up_add" />
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"

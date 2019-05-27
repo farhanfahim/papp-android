@@ -68,7 +68,7 @@
                         android:src="@drawable/img_placeholder_dependent" />
 
 
-                    <com.android.papp.widget.AnyTextView
+                    <com.tekrevol.papp.widget.AnyTextView
                         android:id="@+id/txtUserName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
                         app:typeface="@string/font_bold" />
 
 
-                    <com.android.papp.widget.AnyTextView
+                    <com.tekrevol.papp.widget.AnyTextView
                         android:id="@+id/txtUserID"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
                             android:src="@drawable/img_notification" />
 
 
-                        <com.android.papp.widget.AnyTextView
+                        <com.tekrevol.papp.widget.AnyTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -158,7 +158,7 @@
                             android:src="@drawable/img_profile_icon" />
 
 
-                        <com.android.papp.widget.AnyTextView
+                        <com.tekrevol.papp.widget.AnyTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -206,7 +206,7 @@
                             android:src="@drawable/img_profile_icon" />
 
 
-                        <com.android.papp.widget.AnyTextView
+                        <com.tekrevol.papp.widget.AnyTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -255,7 +255,7 @@
                             android:src="@drawable/img_session_history" />
 
 
-                        <com.android.papp.widget.AnyTextView
+                        <com.tekrevol.papp.widget.AnyTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -306,7 +306,7 @@
                             android:src="@drawable/img_session_payout_history" />
 
 
-                        <com.android.papp.widget.AnyTextView
+                        <com.tekrevol.papp.widget.AnyTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -358,7 +358,7 @@
                             android:src="@drawable/img_gift2" />
 
 
-                        <com.android.papp.widget.AnyTextView
+                        <com.tekrevol.papp.widget.AnyTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -410,7 +410,7 @@
                             android:src="@drawable/img_gifts" />
 
 
-                        <com.android.papp.widget.AnyTextView
+                        <com.tekrevol.papp.widget.AnyTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -460,7 +460,7 @@
                             android:src="@drawable/img_task" />
 
 
-                        <com.android.papp.widget.AnyTextView
+                        <com.tekrevol.papp.widget.AnyTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -509,7 +509,7 @@
                             android:src="@drawable/img_milestones" />
 
 
-                        <com.android.papp.widget.AnyTextView
+                        <com.tekrevol.papp.widget.AnyTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -558,7 +558,7 @@
                             android:src="@drawable/img_gifts" />
 
 
-                        <com.android.papp.widget.AnyTextView
+                        <com.tekrevol.papp.widget.AnyTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -611,7 +611,7 @@
                             android:src="@drawable/img_about" />
 
 
-                        <com.android.papp.widget.AnyTextView
+                        <com.tekrevol.papp.widget.AnyTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -663,7 +663,7 @@
                             android:src="@drawable/img_terms_and_conditions" />
 
 
-                        <com.android.papp.widget.AnyTextView
+                        <com.tekrevol.papp.widget.AnyTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -709,7 +709,7 @@
                             android:src="@drawable/img_logout" />
 
 
-                        <com.android.papp.widget.AnyTextView
+                        <com.tekrevol.papp.widget.AnyTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"

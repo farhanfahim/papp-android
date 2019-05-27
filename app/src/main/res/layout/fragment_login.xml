@@ -22,7 +22,7 @@
             android:src="@drawable/img_logo_white" />
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x10dp"
@@ -33,7 +33,7 @@
             app:fontFamily="@string/font_bold" />
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x10dp"
@@ -71,7 +71,7 @@
                 app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
                 app:tabTextColor="@color/txtGrey" />
 
-            <com.android.papp.widget.CustomViewPager
+            <com.tekrevol.papp.widget.CustomViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -81,7 +81,7 @@
         </LinearLayout>
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/txtForgotPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

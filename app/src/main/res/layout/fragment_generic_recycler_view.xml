@@ -32,7 +32,7 @@
                 android:orientation="horizontal"
                 android:visibility="gone">
 
-                <com.android.papp.widget.AnyEditTextView
+                <com.tekrevol.papp.widget.AnyEditTextView
                     android:id="@+id/edtSearchBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
 
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/txtHeading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                 android:layout_height="@dimen/x60dp"
                 android:src="@drawable/img_email" />
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/empty_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

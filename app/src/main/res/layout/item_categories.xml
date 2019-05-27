@@ -16,7 +16,7 @@
     app:corner_radius="@dimen/x15dp">
 
 
-    <com.android.papp.widget.AnyTextView
+    <com.tekrevol.papp.widget.AnyTextView
         android:id="@+id/txtCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

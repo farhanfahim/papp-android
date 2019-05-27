@@ -18,7 +18,7 @@
         android:paddingBottom="@dimen/x10dp">
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/txtSetDateTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
             app:corner_radius="@dimen/x3dp">
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/txtLocation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
             app:corner_radius="@dimen/x3dp">
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -95,7 +95,7 @@
                 app:fontFamily="@string/font_regular" />
 
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:id="@+id/txtDependentsCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -154,7 +154,7 @@
             app:corner_radius="@dimen/x3dp">
 
 
-            <com.android.papp.widget.AnyEditTextView
+            <com.tekrevol.papp.widget.AnyEditTextView
                 android:id="@+id/edtMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -182,7 +182,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <com.android.papp.widget.AnyTextView
+            <com.tekrevol.papp.widget.AnyTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -201,7 +201,7 @@
 
 
 
-        <com.android.papp.widget.AnyTextView
+        <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/contSendRequest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
