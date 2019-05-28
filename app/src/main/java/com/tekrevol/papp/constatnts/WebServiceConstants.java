@@ -58,6 +58,15 @@ public class WebServiceConstants {
 
 
     /**
+     * QUERY PARAMS
+     */
+
+    public static final String Q_PARAM_ROLE = "role";
+    public static final String Q_PARAM_LIMIT = "limit";
+    public static final String Q_PARAM_OFFSET = "offset";
+
+
+    /**
      * STATUS
      */
 

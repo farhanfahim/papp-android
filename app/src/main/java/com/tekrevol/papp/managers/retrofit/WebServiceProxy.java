@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -19,6 +20,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 /**
  * Created by khanhamza on 09-Mar-17.
@@ -51,11 +53,8 @@ public interface WebServiceProxy {
 
 
     /**
-     *  GIVE role = 0, limit = 0, offset = 0 if dont want to use these parameters
      * @param postfix
-     * @param role
-     * @param limit
-     * @param offset
+     * @param queryMap
      * @return
      */
 
@@ -63,9 +62,7 @@ public interface WebServiceProxy {
     @GET("api/v1/{path}")
     Call<WebResponse<Object>> getAPIForWebresponseAnyObject(
             @Path("path") String postfix,
-            @Query("role") int role,
-            @Query("limit") int limit,
-            @Query("offset") int offset
+            @QueryMap Map<String, Object> queryMap
     );
 
 

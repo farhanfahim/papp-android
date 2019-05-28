@@ -148,7 +148,7 @@
 
 
                     <com.tekrevol.papp.widget.AnyTextView
-                        android:id="@+id/txtViewAllTopLEA"
+                        android:id="@+id/txtViewAllTopMentor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/x3dp"
@@ -200,7 +200,7 @@
 
 
                     <com.tekrevol.papp.widget.AnyTextView
-                        android:id="@+id/txtViewAllMyLEA"
+                        android:id="@+id/txtViewAllMyMentor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/x3dp"

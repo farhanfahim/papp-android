@@ -24,7 +24,7 @@ import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
-import com.tekrevol.papp.enums.LeaType;
+import com.tekrevol.papp.enums.MentorType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.managers.retrofit.WebServices;
@@ -37,6 +37,8 @@ import com.tekrevol.papp.widget.TitleBar;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,11 +54,11 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
     ImageView imgFilter;
     @BindView(R.id.rvCategories)
     RecyclerView rvCategories;
-    @BindView(R.id.txtViewAllTopLEA)
+    @BindView(R.id.txtViewAllTopMentor)
     AnyTextView txtViewAllTopLEA;
     @BindView(R.id.rvTopLEA)
     RecyclerView rvTopLEA;
-    @BindView(R.id.txtViewAllMyLEA)
+    @BindView(R.id.txtViewAllMyMentor)
     AnyTextView txtViewAllMyLEA;
     @BindView(R.id.rvMyLEA)
     RecyclerView rvMyLEA;
@@ -146,13 +148,23 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
         bindRecyclerView();
 
 
-        bindData();
+        if (onCreated) {
+            return;
+        }
 
+        bindData();
 
     }
 
     public void getTopMentors(int limit) {
-        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, AppConstants.MENTOR_ROLE, limit, 0, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, limit);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.MENTOR_ROLE);
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
             @Override
             public void requestDataResponse(WebResponse<Object> webResponse) {
                 Type type = new TypeToken<ArrayList<UserModel>>() {
@@ -173,6 +185,36 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
 
             }
         });
+    }
+
+
+    public void getAllTopMentors() {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.MENTOR_ROLE);
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap,
+                new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                    @Override
+                    public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                        Type type = new TypeToken<ArrayList<UserModel>>() {
+                        }.getType();
+                        ArrayList<UserModel> arrayList = GsonFactory.getSimpleGson()
+                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                        , type);
+
+                        getBaseActivity().addDockableFragment(ViewLEAListFragment.newInstance(MentorType.TOPMENTOR, arrayList), false);
+
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
     }
 
     public void bindData() {
@@ -248,16 +290,17 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
     }
 
 
-    @OnClick({R.id.imgFilter, R.id.txtViewAllTopLEA, R.id.txtViewAllMyLEA, R.id.txtViewAllDependents, R.id.contChat, R.id.contSessions, R.id.imgHome})
+    @OnClick({R.id.imgFilter, R.id.txtViewAllTopMentor, R.id.txtViewAllMyMentor, R.id.txtViewAllDependents, R.id.contChat, R.id.contSessions, R.id.imgHome})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgFilter:
                 break;
-            case R.id.txtViewAllTopLEA:
-                getBaseActivity().addDockableFragment(ViewLEAListFragment.newInstance(LeaType.TOPLEA), false);
+            case R.id.txtViewAllTopMentor:
+                getAllTopMentors();
                 break;
-            case R.id.txtViewAllMyLEA:
-                getBaseActivity().addDockableFragment(ViewLEAListFragment.newInstance(LeaType.MYLEA), false);
+            case R.id.txtViewAllMyMentor:
+                // FIXME: 2019-05-28 GET MY MENTORS CALL
+                getAllTopMentors();
                 break;
             case R.id.txtViewAllDependents:
                 getBaseActivity().addDockableFragment(ViewAllDependentsFragment.newInstance(), false);

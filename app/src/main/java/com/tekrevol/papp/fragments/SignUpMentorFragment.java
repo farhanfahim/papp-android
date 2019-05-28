@@ -53,6 +53,8 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -201,7 +203,12 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
 
 
     public void getDepartmentSpinnerList() {
-        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_DEPARTMENTS, 0, 0, 0, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_DEPARTMENTS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
             @Override
             public void requestDataResponse(WebResponse<Object> webResponse) {
                 Type type = new TypeToken<ArrayList<SpinnerModel>>() {
@@ -225,7 +232,11 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
 
 
     public void getSpecializations() {
-        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_SPECIALIZATIONS, 0, 0, 0, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_SPECIALIZATIONS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
             @Override
             public void requestDataResponse(WebResponse<Object> webResponse) {
                 Type type = new TypeToken<ArrayList<SpinnerModel>>() {
@@ -518,7 +529,7 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
                         UserModelWrapper userModelWrapper = getGson().fromJson(getGson().toJson(webResponse.result), UserModelWrapper.class);
                         sharedPreferenceManager.putValue(AppConstants.KEY_IS_MENTOR, true);
                         sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
-                        sharedPreferenceManager.putObject(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
+                        sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
                         getBaseActivity().finish();
                         getBaseActivity().openActivity(HomeActivity.class);
                     }

@@ -19,20 +19,13 @@ import com.android.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.LEAListAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.constatnts.Constants;
-import com.tekrevol.papp.enums.LeaType;
+import com.tekrevol.papp.enums.MentorType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.github.clans.fab.FloatingActionButton;
-import com.tekrevol.papp.constatnts.Constants;
-import com.tekrevol.papp.enums.LeaType;
-import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.models.SpinnerModel;
-import com.tekrevol.papp.widget.AnyEditTextView;
-import com.tekrevol.papp.widget.TitleBar;
 
 import java.util.ArrayList;
 
@@ -69,16 +62,18 @@ public class ViewLEAListFragment extends BaseFragment implements OnItemClickList
 
 
     LEAListAdapter adapter;
-    ArrayList<SpinnerModel> arrData;
-    private LeaType leaType;
+    ArrayList<UserModel> arrData;
+    private MentorType mentorType;
+    private ArrayList<UserModel> arrMentors;
 
 
-    public static ViewLEAListFragment newInstance(LeaType leaType) {
+    public static ViewLEAListFragment newInstance(MentorType mentorType, ArrayList<UserModel> arrMentors) {
 
         Bundle args = new Bundle();
 
         ViewLEAListFragment fragment = new ViewLEAListFragment();
-        fragment.leaType = leaType;
+        fragment.mentorType = mentorType;
+        fragment.arrMentors = arrMentors;
         fragment.setArguments(args);
         return fragment;
     }
@@ -99,11 +94,11 @@ public class ViewLEAListFragment extends BaseFragment implements OnItemClickList
 
         titleBar.resetViews();
         titleBar.setVisibility(View.VISIBLE);
-        switch (leaType) {
-            case MYLEA:
+        switch (mentorType) {
+            case MYMENTOR:
                 titleBar.setTitle("My Mentors");
                 break;
-            case TOPLEA:
+            case TOPMENTOR:
                 titleBar.setTitle("Top Mentors");
                 break;
         }
@@ -146,9 +141,8 @@ public class ViewLEAListFragment extends BaseFragment implements OnItemClickList
 
 
         arrData.clear();
-        arrData.addAll(Constants.getTopLEA());
-        arrData.addAll(Constants.getTopLEA());
-        arrData.addAll(Constants.getTopLEA());
+        arrData.addAll(arrMentors);
+
         adapter.notifyDataSetChanged();
     }
 

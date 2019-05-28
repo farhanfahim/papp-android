@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 import com.tekrevol.papp.enums.BaseURLTypes;
 import com.tekrevol.papp.enums.FileType;
@@ -227,15 +228,13 @@ public class WebServices {
      * WEB CALL GET
      *
      * @param path
-     * @param role
-     * @param limit
-     * @param offset
+     * @param queryMap
      * @param callBack
      * @return
      */
-    public Call<WebResponse<Object>> getAPIAnyObject(String path, int role, int limit, int offset, final IRequestWebResponseAnyObjectCallBack callBack) {
+    public Call<WebResponse<Object>> getAPIAnyObject(String path, Map<String, Object> queryMap, final IRequestWebResponseAnyObjectCallBack callBack) {
 
-        Call<WebResponse<Object>> webResponseCall = apiService.getAPIForWebresponseAnyObject(path, role, limit, offset);
+        Call<WebResponse<Object>> webResponseCall = apiService.getAPIForWebresponseAnyObject(path, queryMap);
 
         try {
             if (Helper.isNetworkConnected(mContext, true)) {
@@ -286,7 +285,18 @@ public class WebServices {
                 e.printStackTrace();
             }
 
-            errorToastForObject(error);
+
+            if (response.code() == WebServiceConstants.PARAMS_TOKEN_EXPIRE) {
+                // FIXME: 2019-05-22 EXPIRE LOGIC
+                UIHelper.showToast(mContext, "TOKEN ERROR " + PARAMS_TOKEN_EXPIRE);
+            } else if (response.code() == WebServiceConstants.PARAMS_TOKEN_BLACKLIST) {
+                // FIXME: 2019-05-22 LOGOUT LOGIC
+                UIHelper.showToast(mContext, "BLACK LIST ERROR " + PARAMS_TOKEN_BLACKLIST);
+            } else {
+                errorToastForObject(error);
+            }
+
+
             callBack.onError(error);
 
             return;
@@ -295,12 +305,6 @@ public class WebServices {
         if (response.isSuccessful() && response.body().isSuccess()) {
             if (callBack != null)
                 callBack.requestDataResponse(response.body());
-        } else if (response.code() == WebServiceConstants.PARAMS_TOKEN_EXPIRE) {
-            // FIXME: 2019-05-22 EXPIRE LOGIC
-            UIHelper.showToast(mContext, "TOKEN EXPIRE");
-        } else if (response.code() == WebServiceConstants.PARAMS_TOKEN_BLACKLIST) {
-            // FIXME: 2019-05-22 LOGOUT LOGIC
-            UIHelper.showToast(mContext, "BLACK LIST");
         } else {
             callBack.onError(errorToastForObject(response));
         }

@@ -178,7 +178,7 @@ public class LoginDetailFragment extends BaseFragment {
                                     sharedPreferenceManager.putValue(AppConstants.KEY_IS_MENTOR, false);
                                 }
                                 sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
-                                sharedPreferenceManager.putObject(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
+                                sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
                                 getBaseActivity().finish();
                                 getBaseActivity().openActivity(HomeActivity.class);
 
