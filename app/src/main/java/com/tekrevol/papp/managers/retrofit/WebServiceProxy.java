@@ -50,9 +50,20 @@ public interface WebServiceProxy {
     );
 
 
+    /**
+     *  GIVE role = 0, limit = 0, offset = 0 if dont want to use these parameters
+     * @param postfix
+     * @param role
+     * @param limit
+     * @param offset
+     * @return
+     */
+
+
     @GET("api/v1/{path}")
     Call<WebResponse<Object>> getAPIForWebresponseAnyObject(
             @Path("path") String postfix,
+            @Query("role") int role,
             @Query("limit") int limit,
             @Query("offset") int offset
     );

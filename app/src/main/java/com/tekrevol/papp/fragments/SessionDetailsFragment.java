@@ -19,6 +19,7 @@ import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
@@ -46,7 +47,7 @@ public class SessionDetailsFragment extends BaseFragment implements OnItemClickL
 
 
     DependentsAdapter adapter;
-    ArrayList<SpinnerModel> arrData;
+    ArrayList<UserModel> arrData;
     @BindView(R.id.txtDesc)
     AnyTextView txtDesc;
     @BindView(R.id.rvDependents)
@@ -130,7 +131,7 @@ public class SessionDetailsFragment extends BaseFragment implements OnItemClickL
 
 
         arrData.clear();
-        arrData.addAll(Constants.getAddDependentsArray2());
+        arrData.addAll(getCurrentUser().getDependants());
         adapter.notifyDataSetChanged();
     }
 

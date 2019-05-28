@@ -10,10 +10,11 @@ import android.widget.RelativeLayout;
 
 import com.android.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.receiving_model.UserModel;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
+ *
  */
 public class DependentsAdapter extends RecyclerView.Adapter<DependentsAdapter.ViewHolder> {
 
@@ -29,9 +31,9 @@ public class DependentsAdapter extends RecyclerView.Adapter<DependentsAdapter.Vi
     View itemView = null;
 
     private Context activity;
-    private List<SpinnerModel> arrData;
+    private List<UserModel> arrData;
 
-    public DependentsAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
+    public DependentsAdapter(Context activity, List<UserModel> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
@@ -47,7 +49,7 @@ public class DependentsAdapter extends RecyclerView.Adapter<DependentsAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        SpinnerModel model = arrData.get(i);
+        UserModel model = arrData.get(i);
 
 
         if (model.isSelected()) {
@@ -60,11 +62,13 @@ public class DependentsAdapter extends RecyclerView.Adapter<DependentsAdapter.Vi
         }
 
 
-        holder.txtName.setText(model.getText());
+        holder.txtName.setText(model.getUserDetails().getFullName());
+        ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgDependentProfile, model.getUserDetails().getImage());
+
         setListener(holder, model);
     }
 
-    private void setListener(final ViewHolder holder, final SpinnerModel model) {
+    private void setListener(final ViewHolder holder, final UserModel model) {
         holder.contParentLayout.
                 setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, itemView, DependentsAdapter.class.getSimpleName()));
     }
@@ -85,7 +89,6 @@ public class DependentsAdapter extends RecyclerView.Adapter<DependentsAdapter.Vi
         AnyTextView txtName;
         @BindView(R.id.contParentLayout)
         LinearLayout contParentLayout;
-
 
 
         ViewHolder(View view) {

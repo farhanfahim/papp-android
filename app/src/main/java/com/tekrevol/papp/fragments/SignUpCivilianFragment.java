@@ -339,6 +339,7 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
                         UserModelWrapper userModelWrapper = getGson().fromJson(getGson().toJson(webResponse.result), UserModelWrapper.class);
                         sharedPreferenceManager.putValue(AppConstants.KEY_IS_MENTOR, false);
                         sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
+                        sharedPreferenceManager.putObject(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
                         getBaseActivity().finish();
                         getBaseActivity().openActivity(HomeActivity.class);
                     }

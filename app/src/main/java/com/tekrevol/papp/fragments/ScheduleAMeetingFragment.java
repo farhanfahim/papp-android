@@ -3,6 +3,8 @@ package com.tekrevol.papp.fragments;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.UserHandle;
+import android.os.UserManager;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -24,6 +26,7 @@ import com.tekrevol.papp.helperclasses.GooglePlaceHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.DateManager;
 import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
@@ -68,9 +71,8 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
 
 
     DependentsAdapter dependentsAdapter;
-    ArrayList<SpinnerModel> arrDependents;
+    ArrayList<UserModel> arrDependents;
     GooglePlaceHelper googlePlaceHelper;
-
 
 
     public static ScheduleAMeetingFragment newInstance() {
@@ -121,7 +123,8 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
 
 
         arrDependents.clear();
-        arrDependents.addAll(Constants.getAddDependentsArray2());
+        arrDependents.addAll(getCurrentUser().getDependants());
+        dependentsAdapter.notifyDataSetChanged();
     }
 
     @Override

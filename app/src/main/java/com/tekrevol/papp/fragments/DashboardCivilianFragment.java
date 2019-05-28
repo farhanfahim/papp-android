@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,26 +15,27 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.papp.R;
+import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.adapters.recyleradapters.CategoriesAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.DependentsAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.LEAAdapter;
-import com.tekrevol.papp.adapters.recyleradapters.TopLEAAdapter;
+import com.tekrevol.papp.adapters.recyleradapters.TopMentorAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.Constants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.enums.LeaType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.managers.retrofit.GsonFactory;
+import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.receiving_model.UserModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
-import com.tekrevol.papp.adapters.recyleradapters.TopLEAAdapter;
-import com.tekrevol.papp.constatnts.Constants;
-import com.tekrevol.papp.enums.LeaType;
-import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.models.SpinnerModel;
-import com.tekrevol.papp.widget.AnyEditTextView;
-import com.tekrevol.papp.widget.TitleBar;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -79,15 +79,14 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
     ArrayList<SpinnerModel> arrCategories;
 
     DependentsAdapter dependentsAdapter;
-    ArrayList<SpinnerModel> arrDependents;
+    ArrayList<UserModel> arrDependents;
 
     LEAAdapter myLEAAdapter;
     ArrayList<SpinnerModel> arrMyLEA;
 
 
-    TopLEAAdapter topLEAAdapter;
-    ArrayList<SpinnerModel> arrTopLEA;
-
+    TopMentorAdapter topMentorAdapter;
+    ArrayList<UserModel> arrTopMentor;
 
 
     public static DashboardCivilianFragment newInstance() {
@@ -116,8 +115,8 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
         myLEAAdapter = new LEAAdapter(getContext(), arrMyLEA, this);
 
 
-        arrTopLEA = new ArrayList<>();
-        topLEAAdapter = new TopLEAAdapter(getContext(), arrTopLEA, this);
+        arrTopMentor = new ArrayList<>();
+        topMentorAdapter = new TopMentorAdapter(getContext(), arrTopMentor, this);
     }
 
     @Override
@@ -146,20 +145,51 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
 
         bindRecyclerView();
 
-        arrCategories.clear();
 
+        bindData();
+
+
+    }
+
+    public void getTopMentors(int limit) {
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, AppConstants.MENTOR_ROLE, limit, 0, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                Type type = new TypeToken<ArrayList<UserModel>>() {
+                }.getType();
+                ArrayList<UserModel> arrayList = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type);
+
+
+                arrTopMentor.clear();
+                arrTopMentor.addAll(arrayList);
+                topMentorAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
+    public void bindData() {
+        arrCategories.clear();
         arrCategories.addAll(Constants.getCategories());
         arrCategories.get(0).setSelected(true);
 
         arrDependents.clear();
-        arrDependents.addAll(Constants.getAddDependentsArray2());
+        arrDependents.addAll(getCurrentUser().getDependants());
 
         arrMyLEA.clear();
         arrMyLEA.addAll(Constants.getAddDependentsArray2());
 
+        dependentsAdapter.notifyDataSetChanged();
 
-        arrTopLEA.clear();
-        arrTopLEA.addAll(Constants.getTopLEA());
+
+        getTopMentors(3);
     }
 
     @Override
@@ -214,9 +244,8 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
         RecyclerView.LayoutManager mLayoutManager4 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvTopLEA.setLayoutManager(mLayoutManager4);
         ((DefaultItemAnimator) rvTopLEA.getItemAnimator()).setSupportsChangeAnimations(false);
-        rvTopLEA.setAdapter(topLEAAdapter);
+        rvTopLEA.setAdapter(topMentorAdapter);
     }
-
 
 
     @OnClick({R.id.imgFilter, R.id.txtViewAllTopLEA, R.id.txtViewAllMyLEA, R.id.txtViewAllDependents, R.id.contChat, R.id.contSessions, R.id.imgHome})

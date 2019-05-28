@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.tekrevol.papp.BaseApplication;
 import com.tekrevol.papp.managers.FileManager;
 import com.tekrevol.papp.managers.retrofit.entities.MultiFileModel;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -31,9 +33,13 @@ import org.json.JSONObject;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.tekrevol.papp.constatnts.WebServiceConstants.PARAMS_TOKEN_BLACKLIST;
 import static com.tekrevol.papp.constatnts.WebServiceConstants.PARAMS_TOKEN_EXPIRE;
@@ -148,25 +154,7 @@ public class WebServices {
                         new Callback<WebResponse<Object>>() {
                             @Override
                             public void onResponse(Call<WebResponse<Object>> call, Response<WebResponse<Object>> response) {
-                                dismissDialog();
-                                if (!IsResponseError(response)) {
-                                    String errorBody;
-                                    try {
-                                        errorBody = response.errorBody().string();
-                                        UIHelper.showShortToastInCenter(mContext, errorBody);
-                                        callBack.onError("");
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                    return;
-                                }
-
-                                if (hasValidStatus(response)) {
-                                    if (callBack != null)
-                                        callBack.requestDataResponse(response.body());
-                                } else {
-                                    callBack.onError(errorToastForObject(response));
-                                }
+                                validateIfWebResponse(response, callBack);
                             }
 
                             @Override
@@ -190,6 +178,15 @@ public class WebServices {
     }
 
 
+    /**
+     * WEB CALL POST
+     *
+     * @param path
+     * @param requestData
+     * @param callBack
+     * @return
+     */
+
     public Call<WebResponse<Object>> postAPIAnyObject(String path, String requestData, final IRequestWebResponseAnyObjectCallBack callBack) {
         RequestBody bodyRequestData = getRequestBody(okhttp3.MediaType.parse("application/json; charset=utf-8"), requestData);
 
@@ -202,25 +199,7 @@ public class WebServices {
                 webResponseCall.enqueue(new Callback<WebResponse<Object>>() {
                     @Override
                     public void onResponse(Call<WebResponse<Object>> call, Response<WebResponse<Object>> response) {
-                        dismissDialog();
-
-                        if (response.body() == null) {
-                            callBack.onError("empty response");
-                            return;
-                        }
-
-                        if (response.isSuccessful() && response.body().isSuccess()) {
-                            if (callBack != null)
-                                callBack.requestDataResponse(response.body());
-                        } else if (response.code() == WebServiceConstants.PARAMS_TOKEN_EXPIRE) {
-                            // FIXME: 2019-05-22 EXPIRE LOGIC
-                            UIHelper.showToast(mContext, "TOKEN EXPIRE");
-                        } else if (response.code() == WebServiceConstants.PARAMS_TOKEN_BLACKLIST) {
-                            // FIXME: 2019-05-22 LOGOUT LOGIC
-                            UIHelper.showToast(mContext, "BLACK LIST");
-                        } else {
-                            callBack.onError(errorToastForObject(response));
-                        }
+                        validateIfWebResponse(response, callBack);
                     }
 
                     @Override
@@ -244,34 +223,26 @@ public class WebServices {
     }
 
 
-    public Call<WebResponse<Object>> getAPIAnyObject(String path, int limit, int offset, final IRequestWebResponseAnyObjectCallBack callBack) {
+    /**
+     * WEB CALL GET
+     *
+     * @param path
+     * @param role
+     * @param limit
+     * @param offset
+     * @param callBack
+     * @return
+     */
+    public Call<WebResponse<Object>> getAPIAnyObject(String path, int role, int limit, int offset, final IRequestWebResponseAnyObjectCallBack callBack) {
 
-        Call<WebResponse<Object>> webResponseCall = apiService.getAPIForWebresponseAnyObject(path, limit, offset);
+        Call<WebResponse<Object>> webResponseCall = apiService.getAPIForWebresponseAnyObject(path, role, limit, offset);
 
         try {
             if (Helper.isNetworkConnected(mContext, true)) {
                 webResponseCall.enqueue(new Callback<WebResponse<Object>>() {
                     @Override
                     public void onResponse(Call<WebResponse<Object>> call, Response<WebResponse<Object>> response) {
-                        dismissDialog();
-
-                        if (response.body() == null) {
-                            callBack.onError("empty response");
-                            return;
-                        }
-
-                        if (response.isSuccessful() && response.body().isSuccess()) {
-                            if (callBack != null)
-                                callBack.requestDataResponse(response.body());
-                        } else if (response.code() == WebServiceConstants.PARAMS_TOKEN_EXPIRE) {
-                            // FIXME: 2019-05-22 EXPIRE LOGIC
-                            UIHelper.showToast(mContext, "TOKEN EXPIRE");
-                        } else if (response.code() == WebServiceConstants.PARAMS_TOKEN_BLACKLIST) {
-                            // FIXME: 2019-05-22 LOGOUT LOGIC
-                            UIHelper.showToast(mContext, "TOKEN BLACK LIST");
-                        } else {
-                            callBack.onError(errorToastForObject(response));
-                        }
+                        validateIfWebResponse(response, callBack);
                     }
 
                     @Override
@@ -295,7 +266,45 @@ public class WebServices {
     }
 
 
+    public void validateIfWebResponse(Response<WebResponse<Object>> response, IRequestWebResponseAnyObjectCallBack callBack) {
 
+        dismissDialog();
+        if (response.body() == null) {
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(WebServiceConstants.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create(GsonFactory.getSimpleGson()))
+                    .build();
+
+            Converter<ResponseBody, WebResponse<Object>> errorConverter =
+                    retrofit.responseBodyConverter(WebResponse.class, new Annotation[0]);
+            WebResponse<Object> error = null;
+
+            try {
+                error = errorConverter.convert(response.errorBody());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            errorToastForObject(error);
+            callBack.onError(error);
+
+            return;
+        }
+
+        if (response.isSuccessful() && response.body().isSuccess()) {
+            if (callBack != null)
+                callBack.requestDataResponse(response.body());
+        } else if (response.code() == WebServiceConstants.PARAMS_TOKEN_EXPIRE) {
+            // FIXME: 2019-05-22 EXPIRE LOGIC
+            UIHelper.showToast(mContext, "TOKEN EXPIRE");
+        } else if (response.code() == WebServiceConstants.PARAMS_TOKEN_BLACKLIST) {
+            // FIXME: 2019-05-22 LOGOUT LOGIC
+            UIHelper.showToast(mContext, "BLACK LIST");
+        } else {
+            callBack.onError(errorToastForObject(response));
+        }
+    }
 
     @NonNull
     public static MultipartBody.Part getMultipart(FileType fileType, File file, String keyName) {
@@ -316,6 +325,22 @@ public class WebServices {
         if (mDialog != null) {
             mDialog.dismiss();
         }
+    }
+
+
+    private String errorToastForObject(WebResponse<Object> response) {
+        String responseMessage = "";
+
+        if (response != null) {
+            responseMessage = response.message;
+        }
+
+        if (responseMessage.isEmpty()) {
+            UIHelper.showShortToastInCenter(mContext, "API Response Error");
+        } else {
+            UIHelper.showShortToastInCenter(mContext, responseMessage);
+        }
+        return responseMessage;
     }
 
 

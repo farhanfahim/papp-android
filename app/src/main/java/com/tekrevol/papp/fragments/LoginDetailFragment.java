@@ -14,6 +14,7 @@ import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.enums.BaseURLTypes;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.validator.PasswordValidation;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.sending_model.LoginSendingModel;
 import com.tekrevol.papp.models.wrappers.UserModelWrapper;
@@ -93,6 +94,8 @@ public class LoginDetailFragment extends BaseFragment {
             txtOrLoginWith.setVisibility(View.VISIBLE);
         }
 
+        edtPassword.addValidator(new PasswordValidation());
+
     }
 
 
@@ -156,7 +159,7 @@ public class LoginDetailFragment extends BaseFragment {
                 showNextBuildToast();
                 break;
             case R.id.contSignup:
-                getBaseActivity().addDockableFragment(SignUpFragment.newInstance(), true);
+                getBaseActivity().addDockableFragment(SignUpFragment.newInstance(isMentor), true);
                 break;
         }
     }
@@ -175,6 +178,7 @@ public class LoginDetailFragment extends BaseFragment {
                                     sharedPreferenceManager.putValue(AppConstants.KEY_IS_MENTOR, false);
                                 }
                                 sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
+                                sharedPreferenceManager.putObject(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
                                 getBaseActivity().finish();
                                 getBaseActivity().openActivity(HomeActivity.class);
 

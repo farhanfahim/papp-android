@@ -1,6 +1,7 @@
 package com.tekrevol.papp.fragments;
 
 import android.os.Bundle;
+import android.os.UserManager;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.tekrevol.papp.constatnts.Constants;
@@ -44,7 +46,7 @@ public class LEASessionDetailsFragment extends BaseFragment implements OnItemCli
 
 
     DependentsAdapter adapter;
-    ArrayList<SpinnerModel> arrData;
+    ArrayList<UserModel> arrData;
 
     @BindView(R.id.txtDesc)
     AnyTextView txtDesc;
@@ -135,7 +137,7 @@ public class LEASessionDetailsFragment extends BaseFragment implements OnItemCli
 
 
         arrData.clear();
-        arrData.addAll(Constants.getAddDependentsArray2());
+        arrData.addAll(getCurrentUser().getDependants());
         adapter.notifyDataSetChanged();
     }
 

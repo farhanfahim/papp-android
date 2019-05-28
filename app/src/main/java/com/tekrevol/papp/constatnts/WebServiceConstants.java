@@ -37,6 +37,7 @@ public class WebServiceConstants {
 
     // LOCAL
     public static final String BASE_URL = "http://papp.apps.fomarkmedia.com/";
+    public static final String IMAGE_BASE_URL = "http://papp.apps.fomarkmedia.com/api/resize/";
 
     // LIVE
 //    public static final String BASE_URL = "http://papp.apps.fomarkmedia.com/api/v1/;
@@ -53,6 +54,7 @@ public class WebServiceConstants {
     public static final String PATH_PROFILE = "profile";
     public static final String PATH_GET_DEPARTMENTS = "departments";
     public static final String PATH_GET_SPECIALIZATIONS = "specializations";
+    public static final String PATH_GET_USERS = "users";
 
 
     /**

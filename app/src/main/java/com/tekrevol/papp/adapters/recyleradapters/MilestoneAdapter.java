@@ -51,7 +51,7 @@ public class MilestoneAdapter extends RecyclerView.Adapter<MilestoneAdapter.View
     public void onBindViewHolder(final ViewHolder holder, int i) {
         SpinnerModel model = arrData.get(i);
 
-        ImageLoaderHelper.loadImageWithAnimations(activity,  holder.imgMedal, model.getText());
+        ImageLoaderHelper.loadImageWithAnimations( holder.imgMedal, model.getText());
 
         setListener(holder, model);
     }

@@ -25,45 +25,113 @@ import com.tekrevol.papp.constatnts.AppConstants;
 public class ImageLoaderHelper {
 
 
-    public static void loadImageWithConstantHeadersWithoutAnimation(Context context, ImageView imageView, String path) {
-        ImageLoader.getInstance().displayImage(ImageLoaderHelper.getUserImageURL(path),
+    /**
+     * WITHOUT ANIMATION, WITH HEADER
+     *
+     * @param context
+     * @param imageView
+     * @param url
+     */
+    public static void loadImageWithConstantHeadersWithoutAnimation(Context context, ImageView imageView, String url) {
+        ImageLoader.getInstance().displayImage(url,
                 imageView,
                 ImageLoaderHelper.getOptionsSimple(WebServiceConstants
                         .getHeaders(SharedPreferenceManager.getInstance(context).getString(AppConstants.KEY_TOKEN))));
     }
 
-    public static void loadImageWithConstantHeaders(Context context, ImageView imageView, String path) {
-        ImageLoader.getInstance().displayImage(ImageLoaderHelper.getUserImageURL(path),
+    /**
+     * WITH ANIMATION, WITH HEADER
+     *
+     * @param context
+     * @param imageView
+     * @param url
+     */
+    public static void loadImageWithConstantHeaders(Context context, ImageView imageView, String url) {
+        ImageLoader.getInstance().displayImage(url,
                 imageView,
                 ImageLoaderHelper.getOptionsWithAnimation(WebServiceConstants
                         .getHeaders(SharedPreferenceManager.getInstance(context).getString(AppConstants.KEY_TOKEN))));
     }
 
 
-    public static void loadImageWithAnimations(Context context, ImageView imageView, String path) {
-        ImageLoader.getInstance().displayImage(path,
+    /**
+     * WITHOUT ANIMATION, WITHOUT HEADER
+     *
+     * @param imageView
+     * @param url
+     */
+
+    public static void loadImageWithouAnimation(ImageView imageView, String url) {
+        ImageLoader.getInstance().displayImage(url,
+                imageView,
+                ImageLoaderHelper.getOptionsSimple());
+    }
+
+
+    /**
+     * WITH ANIMATION, WITHOUT HEADER
+     *
+     * @param imageView
+     * @param url
+     */
+
+    public static void loadImageWithAnimations(ImageView imageView, String url) {
+        ImageLoader.getInstance().displayImage(url,
                 imageView,
                 ImageLoaderHelper.getOptionsWithAnimation());
     }
 
 
-    public static void loadBase64Image(Context context, ImageView imageView, String base64) {
+
+    /**
+     * WITHOUT ANIMATION, WITHOUT HEADER, will create URL from path
+     *
+     * @param imageView
+     * @param path
+     */
+
+    public static void loadImageWithouAnimationByPath(ImageView imageView, String path) {
+        ImageLoader.getInstance().displayImage(getImageURLFromPath(path),
+                imageView,
+                ImageLoaderHelper.getOptionsSimple());
+    }
+
+
+    /**
+     * WITH ANIMATION, WITHOUT HEADER,  will create URL from path
+     *
+     * @param imageView
+     * @param path
+     */
+
+    public static void loadImageWithAnimationsByPath(ImageView imageView, String path) {
+        ImageLoader.getInstance().displayImage(getImageURLFromPath(path),
+                imageView,
+                ImageLoaderHelper.getOptionsWithAnimation());
+    }
+
+
+
+
+    public static void loadBase64Image(ImageView imageView, String base64) {
         byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
         if (decodedByte != null) {
             imageView.setImageBitmap(decodedByte);
         } else {
-            imageView.setImageResource(R.drawable.female_icon_filled);
+            imageView.setImageResource(R.drawable.profile_placeholder);
         }
     }
 
-    public static String getImageURL(String path, String requestMethod) {
-        return WebServiceConstants.BASE_URL + path + "&requestmethod=" + requestMethod;
+
+    public static String getImageURLFromPath(String path) {
+        return WebServiceConstants.IMAGE_BASE_URL + path;
     }
 
-    public static String getUserImageURL(String path) {
-        return WebServiceConstants.BASE_URL + path + "&requestmethod=" ;
+
+    public static String getImageURLFromPath(String path, String width, String height) {
+        return WebServiceConstants.IMAGE_BASE_URL + path + "?w=" + width + "&h=" + height;
     }
 
     public static DisplayImageOptions getOptionsSimple() {
@@ -89,9 +157,9 @@ public class ImageLoaderHelper {
     public static DisplayImageOptions getOptionsWithAnimation() {
 
         return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
-                .showImageForEmptyUri(R.color.c_light_grey)
-                .showImageOnFail(R.color.c_light_grey)
-                .showImageOnLoading(R.color.c_light_grey)
+                .showImageForEmptyUri(R.color.base_dark_gray)
+                .showImageOnFail(R.drawable.profile_placeholder)
+                .showImageOnLoading(R.drawable.profile_placeholder)
                 .imageScaleType(ImageScaleType.EXACTLY).displayer(new FadeInBitmapDisplayer(200)).build();
     }
 

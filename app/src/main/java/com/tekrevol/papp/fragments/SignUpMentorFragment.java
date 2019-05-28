@@ -201,7 +201,7 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
 
 
     public void getDepartmentSpinnerList() {
-        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_DEPARTMENTS, 0, 0, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_DEPARTMENTS, 0, 0, 0, new WebServices.IRequestWebResponseAnyObjectCallBack() {
             @Override
             public void requestDataResponse(WebResponse<Object> webResponse) {
                 Type type = new TypeToken<ArrayList<SpinnerModel>>() {
@@ -225,7 +225,7 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
 
 
     public void getSpecializations() {
-        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_SPECIALIZATIONS, 0, 0, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_SPECIALIZATIONS, 0, 0, 0, new WebServices.IRequestWebResponseAnyObjectCallBack() {
             @Override
             public void requestDataResponse(WebResponse<Object> webResponse) {
                 Type type = new TypeToken<ArrayList<SpinnerModel>>() {
@@ -518,6 +518,7 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
                         UserModelWrapper userModelWrapper = getGson().fromJson(getGson().toJson(webResponse.result), UserModelWrapper.class);
                         sharedPreferenceManager.putValue(AppConstants.KEY_IS_MENTOR, true);
                         sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
+                        sharedPreferenceManager.putObject(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
                         getBaseActivity().finish();
                         getBaseActivity().openActivity(HomeActivity.class);
                     }
