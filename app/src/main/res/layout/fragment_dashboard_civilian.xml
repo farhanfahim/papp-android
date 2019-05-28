@@ -54,6 +54,7 @@
                     android:hint="Search By Name"
                     android:maxLength="20"
                     android:padding="@dimen/x3dp"
+                    android:singleLine="true"
                     android:textColor="@color/txtDarkGrey"
                     android:textColorHint="@color/txtGrey"
                     android:textSize="@dimen/s12"
@@ -72,10 +73,10 @@
                     android:id="@+id/imgFilter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/x5dp"
-
-
-                    android:src="@drawable/img_filter" />
+                    android:padding="@dimen/x10dp"
+                    android:rotation="-90"
+                    android:src="@drawable/img_drop_down"
+                    android:tint="@color/colorPrimary" />
 
 
             </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>

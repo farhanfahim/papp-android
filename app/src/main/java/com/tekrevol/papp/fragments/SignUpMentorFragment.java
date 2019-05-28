@@ -382,7 +382,7 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
                 UIHelper.cropImagePicker(getContext(), this);
                 break;
             case R.id.txtDepartment:
-                UIHelper.showSpinnerDialog(this, arrDepartmentsSpinner, "Select Department", txtDepartment, null, new OnSpinnerOKPressedListener() {
+                UIHelper.showSpinnerDialog(this, arrDepartmentsSpinner, "Select Category", txtDepartment, null, new OnSpinnerOKPressedListener() {
                     @Override
                     public void onItemSelect(Object data) {
                         selectedDepartment = (SpinnerModel) data;

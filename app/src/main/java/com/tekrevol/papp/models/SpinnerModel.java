@@ -32,6 +32,11 @@ public class SpinnerModel {
         this.text = text;
     }
 
+    public SpinnerModel(String text, int id) {
+        this.text = text;
+        this.id = id;
+    }
+
     public String getText() {
         return text;
     }

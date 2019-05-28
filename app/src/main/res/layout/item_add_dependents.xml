@@ -58,6 +58,19 @@
                 android:textSize="@dimen/s12"
                 app:fontFamily="@string/font_regular" />
 
+            <com.tekrevol.papp.widget.AnyTextView
+                android:id="@+id/txtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:padding="@dimen/x3dp"
+                android:singleLine="true"
+                android:text="Email"
+                android:visibility="gone"
+                android:textColor="@color/txtDarkGrey"
+                android:textSize="@dimen/s12"
+                app:fontFamily="@string/font_regular" />
+
 
         </LinearLayout>
 

@@ -65,15 +65,17 @@ public class ViewLEAListFragment extends BaseFragment implements OnItemClickList
     ArrayList<UserModel> arrData;
     private MentorType mentorType;
     private ArrayList<UserModel> arrMentors;
+    private String text = "";
 
 
-    public static ViewLEAListFragment newInstance(MentorType mentorType, ArrayList<UserModel> arrMentors) {
+    public static ViewLEAListFragment newInstance(MentorType mentorType, ArrayList<UserModel> arrMentors, String text) {
 
         Bundle args = new Bundle();
 
         ViewLEAListFragment fragment = new ViewLEAListFragment();
         fragment.mentorType = mentorType;
         fragment.arrMentors = arrMentors;
+        fragment.text = text;
         fragment.setArguments(args);
         return fragment;
     }
@@ -100,6 +102,9 @@ public class ViewLEAListFragment extends BaseFragment implements OnItemClickList
                 break;
             case TOPMENTOR:
                 titleBar.setTitle("Top Mentors");
+                break;
+            case SEARCHMENTOR:
+                titleBar.setTitle("Search Result \"" + text + "\"");
                 break;
         }
 

@@ -16,6 +16,7 @@ import com.tekrevol.papp.callbacks.OnNewPacketReceivedListener;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.fragments.abstracts.GenericContentFragment;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.tekrevol.papp.widget.TitleBar;
@@ -39,8 +40,8 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
     ImageView imgBack;
     @BindView(R.id.txtUserName)
     AnyTextView txtUserName;
-    @BindView(R.id.txtUserID)
-    AnyTextView txtUserID;
+    @BindView(R.id.txtEmail)
+    AnyTextView txtEmail;
     @BindView(R.id.contNofitications)
     LinearLayout contNofitications;
     @BindView(R.id.contEditProfile)
@@ -93,13 +94,18 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
         if (sharedPreferenceManager.getBoolean(AppConstants.KEY_IS_MENTOR)) {
             contEditProfile.setVisibility(View.GONE);
             contMyProfile.setVisibility(View.VISIBLE);
-            imgProfile.setImageResource(R.drawable.img_lea_placeholder2);
         } else {
             contEditProfile.setVisibility(View.VISIBLE);
             contMyProfile.setVisibility(View.GONE);
-            imgProfile.setImageResource(R.drawable.img_placeholder_dependent);
         }
         ////        scrollToTop();
+
+
+        if (getCurrentUser() != null) {
+            ImageLoaderHelper.loadImageWithAnimationsByPath(imgProfile, getCurrentUser().getUserDetails().getImage());
+            txtUserName.setText(getCurrentUser().getUserDetails().getFullName());
+            txtEmail.setText(getCurrentUser().getEmail());
+        }
     }
 
     @Override

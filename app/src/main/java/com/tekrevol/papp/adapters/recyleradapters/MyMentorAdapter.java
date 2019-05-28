@@ -10,11 +10,10 @@ import android.widget.LinearLayout;
 
 import com.android.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.models.SpinnerModel;
 
 import java.util.List;
 
@@ -24,15 +23,15 @@ import butterknife.ButterKnife;
 /**
  *
  */
-public class LEAAdapter extends RecyclerView.Adapter<LEAAdapter.ViewHolder> {
+public class MyMentorAdapter extends RecyclerView.Adapter<MyMentorAdapter.ViewHolder> {
 
     private final OnItemClickListener onItemClick;
 
 
     private Context activity;
-    private List<SpinnerModel> arrData;
+    private List<UserModel> arrData;
 
-    public LEAAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
+    public MyMentorAdapter(Context activity, List<UserModel> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
@@ -49,26 +48,16 @@ public class LEAAdapter extends RecyclerView.Adapter<LEAAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        SpinnerModel model = arrData.get(i);
-
-
-        holder.txtName.setText(model.getText());
-
-        if (i == 1) {
-            ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_celebrity, holder.imgProfile);
-        } else if (i == 2) {
-            ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_tutor, holder.imgProfile);
-        } else if (i == 3) {
-            ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_counsellor, holder.imgProfile);
-        }
-
+        UserModel model = arrData.get(i);
+        holder.txtName.setText(model.getUserDetails().getFullName());
+        ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgProfile, model.getUserDetails().getImage());
 
         setListener(holder, model);
     }
 
-    private void setListener(final ViewHolder holder, final SpinnerModel model) {
+    private void setListener(final ViewHolder holder, final UserModel model) {
         holder.contParentLayout.
-                setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, LEAAdapter.class.getSimpleName()));
+                setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, MyMentorAdapter.class.getSimpleName()));
     }
 
 

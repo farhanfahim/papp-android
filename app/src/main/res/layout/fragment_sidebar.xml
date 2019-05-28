@@ -65,7 +65,7 @@
                         android:layout_width="@dimen/x80dp"
                         android:layout_height="@dimen/x80dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/img_placeholder_dependent" />
+                        android:src="@drawable/profile_placeholder" />
 
 
                     <com.tekrevol.papp.widget.AnyTextView
@@ -81,7 +81,7 @@
 
 
                     <com.tekrevol.papp.widget.AnyTextView
-                        android:id="@+id/txtUserID"
+                        android:id="@+id/txtEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"

@@ -18,14 +18,14 @@ import com.android.papp.R;
 import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.adapters.recyleradapters.CategoriesAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.DependentsAdapter;
-import com.tekrevol.papp.adapters.recyleradapters.LEAAdapter;
+import com.tekrevol.papp.adapters.recyleradapters.MyMentorAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.TopMentorAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.AppConstants;
-import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.enums.MentorType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.SpinnerModel;
@@ -81,10 +81,10 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
     ArrayList<SpinnerModel> arrCategories;
 
     DependentsAdapter dependentsAdapter;
-    ArrayList<UserModel> arrDependents;
 
-    LEAAdapter myLEAAdapter;
-    ArrayList<SpinnerModel> arrMyLEA;
+
+    MyMentorAdapter myMentorAdapter;
+    ArrayList<UserModel> arrMyMentor;
 
 
     TopMentorAdapter topMentorAdapter;
@@ -109,12 +109,11 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
         categoriesAdapter = new CategoriesAdapter(getContext(), arrCategories, this);
 
 
-        arrDependents = new ArrayList<>();
-        dependentsAdapter = new DependentsAdapter(getContext(), arrDependents, this);
+        dependentsAdapter = new DependentsAdapter(getContext(), getCurrentUser().getDependants(), this);
 
 
-        arrMyLEA = new ArrayList<>();
-        myLEAAdapter = new LEAAdapter(getContext(), arrMyLEA, this);
+        arrMyMentor = new ArrayList<>();
+        myMentorAdapter = new MyMentorAdapter(getContext(), arrMyMentor, this);
 
 
         arrTopMentor = new ArrayList<>();
@@ -162,6 +161,7 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
         queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, limit);
         queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
         queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.MENTOR_ROLE);
+        queryMap.put(WebServiceConstants.Q_PARAM_TOP_MENTOR, "yes");
 
 
         getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
@@ -188,11 +188,45 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
     }
 
 
-    public void getAllTopMentors() {
+    public void getMyMentors(int limit) {
+
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, limit);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.MENTOR_ROLE);
+        queryMap.put(WebServiceConstants.Q_PARAM_MY_MENTOR, "yes");
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                Type type = new TypeToken<ArrayList<UserModel>>() {
+                }.getType();
+                ArrayList<UserModel> arrayList = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type);
+
+
+                arrMyMentor.clear();
+                arrMyMentor.addAll(arrayList);
+                myMentorAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
+
+    public void searchMentors(String text) {
         Map<String, Object> queryMap = new HashMap<>();
         queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.MENTOR_ROLE);
-        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
         queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_SEARCH, text);
 
 
         getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap,
@@ -206,7 +240,82 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
                                 .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                         , type);
 
-                        getBaseActivity().addDockableFragment(ViewLEAListFragment.newInstance(MentorType.TOPMENTOR, arrayList), false);
+                        if (arrayList.isEmpty()) {
+                            UIHelper.showAlertDialog(getContext(), "No Mentors Found on \"" + text + "\"");
+                            return;
+                        }
+
+                        getBaseActivity().addDockableFragment(ViewLEAListFragment.newInstance(MentorType.SEARCHMENTOR, arrayList, text), false);
+
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
+    }
+
+    public void getAllMyMentors() {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.MENTOR_ROLE);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_MY_MENTOR, "yes");
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap,
+                new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                    @Override
+                    public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                        Type type = new TypeToken<ArrayList<UserModel>>() {
+                        }.getType();
+                        ArrayList<UserModel> arrayList = GsonFactory.getSimpleGson()
+                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                        , type);
+
+                        if (arrayList.isEmpty()) {
+                            UIHelper.showToast(getContext(), "No Mentors Found");
+                            return;
+                        }
+
+                        getBaseActivity().addDockableFragment(ViewLEAListFragment.newInstance(MentorType.MYMENTOR, arrayList, ""), false);
+
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
+    }
+
+    public void getAllTopMentors() {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.MENTOR_ROLE);
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_TOP_MENTOR, "yes");
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap,
+                new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                    @Override
+                    public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                        Type type = new TypeToken<ArrayList<UserModel>>() {
+                        }.getType();
+                        ArrayList<UserModel> arrayList = GsonFactory.getSimpleGson()
+                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                        , type);
+
+
+                        if (arrayList.isEmpty()) {
+                            UIHelper.showToast(getContext(), "No Mentors Found");
+                            return;
+                        }
+                        getBaseActivity().addDockableFragment(ViewLEAListFragment.newInstance(MentorType.TOPMENTOR, arrayList, ""), false);
 
                     }
 
@@ -218,20 +327,14 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
     }
 
     public void bindData() {
-        arrCategories.clear();
-        arrCategories.addAll(Constants.getCategories());
-        arrCategories.get(0).setSelected(true);
 
-        arrDependents.clear();
-        arrDependents.addAll(getCurrentUser().getDependants());
-
-        arrMyLEA.clear();
-        arrMyLEA.addAll(Constants.getAddDependentsArray2());
 
         dependentsAdapter.notifyDataSetChanged();
 
 
+        getCategoriesList();
         getTopMentors(3);
+        getMyMentors(4);
     }
 
     @Override
@@ -280,7 +383,7 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
         RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvMyLEA.setLayoutManager(mLayoutManager3);
         ((DefaultItemAnimator) rvMyLEA.getItemAnimator()).setSupportsChangeAnimations(false);
-        rvMyLEA.setAdapter(myLEAAdapter);
+        rvMyLEA.setAdapter(myMentorAdapter);
 
 
         RecyclerView.LayoutManager mLayoutManager4 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -294,13 +397,17 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgFilter:
+                if (edtSearch.getStringTrimmed().isEmpty()) {
+                    UIHelper.showAlertDialog(getContext(), "Kindly type something to search");
+                    return;
+                }
+                searchMentors(edtSearch.getStringTrimmed());
                 break;
             case R.id.txtViewAllTopMentor:
                 getAllTopMentors();
                 break;
             case R.id.txtViewAllMyMentor:
-                // FIXME: 2019-05-28 GET MY MENTORS CALL
-                getAllTopMentors();
+                getAllMyMentors();
                 break;
             case R.id.txtViewAllDependents:
                 getBaseActivity().addDockableFragment(ViewAllDependentsFragment.newInstance(), false);
@@ -329,12 +436,44 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
                 arrCategories.get(position).setSelected(true);
 
                 categoriesAdapter.notifyDataSetChanged();
-            } else if (((String) type).equalsIgnoreCase(LEAAdapter.class.getSimpleName())) {
+            } else if (((String) type).equalsIgnoreCase(MyMentorAdapter.class.getSimpleName())) {
                 getBaseActivity().addDockableFragment(LEAProfileFragment.newInstance(), true);
             }
 
         }
-
-
     }
+
+
+    public void getCategoriesList() {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_DEPARTMENTS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                Type type = new TypeToken<ArrayList<SpinnerModel>>() {
+                }.getType();
+                ArrayList<SpinnerModel> arrayList = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type);
+
+
+                arrCategories.clear();
+                arrCategories.add(new SpinnerModel("All", 0));
+                arrCategories.addAll(arrayList);
+                arrCategories.get(0).setSelected(true);
+
+                categoriesAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
 }
