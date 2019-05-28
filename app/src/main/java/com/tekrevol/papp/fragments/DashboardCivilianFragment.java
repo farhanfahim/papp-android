@@ -90,6 +90,8 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
     TopMentorAdapter topMentorAdapter;
     ArrayList<UserModel> arrTopMentor;
 
+    SpinnerModel selectedCategory;
+
 
     public static DashboardCivilianFragment newInstance() {
 
@@ -155,176 +157,6 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
 
     }
 
-    public void getTopMentors(int limit) {
-
-        Map<String, Object> queryMap = new HashMap<>();
-        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, limit);
-        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
-        queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.MENTOR_ROLE);
-        queryMap.put(WebServiceConstants.Q_PARAM_TOP_MENTOR, "yes");
-
-
-        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
-            @Override
-            public void requestDataResponse(WebResponse<Object> webResponse) {
-                Type type = new TypeToken<ArrayList<UserModel>>() {
-                }.getType();
-                ArrayList<UserModel> arrayList = GsonFactory.getSimpleGson()
-                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                , type);
-
-
-                arrTopMentor.clear();
-                arrTopMentor.addAll(arrayList);
-                topMentorAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onError(Object object) {
-
-            }
-        });
-    }
-
-
-    public void getMyMentors(int limit) {
-
-        Map<String, Object> queryMap = new HashMap<>();
-        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, limit);
-        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
-        queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.MENTOR_ROLE);
-        queryMap.put(WebServiceConstants.Q_PARAM_MY_MENTOR, "yes");
-
-
-        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
-            @Override
-            public void requestDataResponse(WebResponse<Object> webResponse) {
-                Type type = new TypeToken<ArrayList<UserModel>>() {
-                }.getType();
-                ArrayList<UserModel> arrayList = GsonFactory.getSimpleGson()
-                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                , type);
-
-
-                arrMyMentor.clear();
-                arrMyMentor.addAll(arrayList);
-                myMentorAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onError(Object object) {
-
-            }
-        });
-    }
-
-
-    public void searchMentors(String text) {
-        Map<String, Object> queryMap = new HashMap<>();
-        queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.MENTOR_ROLE);
-        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
-        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
-        queryMap.put(WebServiceConstants.Q_PARAM_SEARCH, text);
-
-
-        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap,
-                new WebServices.IRequestWebResponseAnyObjectCallBack() {
-                    @Override
-                    public void requestDataResponse(WebResponse<Object> webResponse) {
-
-                        Type type = new TypeToken<ArrayList<UserModel>>() {
-                        }.getType();
-                        ArrayList<UserModel> arrayList = GsonFactory.getSimpleGson()
-                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                        , type);
-
-                        if (arrayList.isEmpty()) {
-                            UIHelper.showAlertDialog(getContext(), "No Mentors Found on \"" + text + "\"");
-                            return;
-                        }
-
-                        getBaseActivity().addDockableFragment(ViewLEAListFragment.newInstance(MentorType.SEARCHMENTOR, arrayList, text), false);
-
-                    }
-
-                    @Override
-                    public void onError(Object object) {
-
-                    }
-                });
-    }
-
-    public void getAllMyMentors() {
-        Map<String, Object> queryMap = new HashMap<>();
-        queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.MENTOR_ROLE);
-        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
-        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
-        queryMap.put(WebServiceConstants.Q_PARAM_MY_MENTOR, "yes");
-
-
-        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap,
-                new WebServices.IRequestWebResponseAnyObjectCallBack() {
-                    @Override
-                    public void requestDataResponse(WebResponse<Object> webResponse) {
-
-                        Type type = new TypeToken<ArrayList<UserModel>>() {
-                        }.getType();
-                        ArrayList<UserModel> arrayList = GsonFactory.getSimpleGson()
-                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                        , type);
-
-                        if (arrayList.isEmpty()) {
-                            UIHelper.showToast(getContext(), "No Mentors Found");
-                            return;
-                        }
-
-                        getBaseActivity().addDockableFragment(ViewLEAListFragment.newInstance(MentorType.MYMENTOR, arrayList, ""), false);
-
-                    }
-
-                    @Override
-                    public void onError(Object object) {
-
-                    }
-                });
-    }
-
-    public void getAllTopMentors() {
-        Map<String, Object> queryMap = new HashMap<>();
-        queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.MENTOR_ROLE);
-        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
-        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
-        queryMap.put(WebServiceConstants.Q_PARAM_TOP_MENTOR, "yes");
-
-
-        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap,
-                new WebServices.IRequestWebResponseAnyObjectCallBack() {
-                    @Override
-                    public void requestDataResponse(WebResponse<Object> webResponse) {
-
-                        Type type = new TypeToken<ArrayList<UserModel>>() {
-                        }.getType();
-                        ArrayList<UserModel> arrayList = GsonFactory.getSimpleGson()
-                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                        , type);
-
-
-                        if (arrayList.isEmpty()) {
-                            UIHelper.showToast(getContext(), "No Mentors Found");
-                            return;
-                        }
-                        getBaseActivity().addDockableFragment(ViewLEAListFragment.newInstance(MentorType.TOPMENTOR, arrayList, ""), false);
-
-                    }
-
-                    @Override
-                    public void onError(Object object) {
-
-                    }
-                });
-    }
 
     public void bindData() {
 
@@ -434,8 +266,9 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
                 }
 
                 arrCategories.get(position).setSelected(true);
-
+                selectedCategory = arrCategories.get(position);
                 categoriesAdapter.notifyDataSetChanged();
+
             } else if (((String) type).equalsIgnoreCase(MyMentorAdapter.class.getSimpleName())) {
                 getBaseActivity().addDockableFragment(LEAProfileFragment.newInstance(), true);
             }
@@ -475,5 +308,191 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
             }
         });
     }
+
+
+    public void getTopMentors(int limit) {
+
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, limit);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.MENTOR_ROLE);
+        queryMap.put(WebServiceConstants.Q_PARAM_TOP_MENTOR, "yes");
+        if (selectedCategory != null && selectedCategory.getId() != 0) {
+            queryMap.put(WebServiceConstants.Q_PARAM_DEPT_ID, selectedCategory.getId());
+        }
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                Type type = new TypeToken<ArrayList<UserModel>>() {
+                }.getType();
+                ArrayList<UserModel> arrayList = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type);
+
+
+                arrTopMentor.clear();
+                arrTopMentor.addAll(arrayList);
+                topMentorAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
+
+    public void getMyMentors(int limit) {
+
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, limit);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.MENTOR_ROLE);
+        queryMap.put(WebServiceConstants.Q_PARAM_MY_MENTOR, "yes");
+        if (selectedCategory != null && selectedCategory.getId() != 0) {
+            queryMap.put(WebServiceConstants.Q_PARAM_DEPT_ID, selectedCategory.getId());
+        }
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                Type type = new TypeToken<ArrayList<UserModel>>() {
+                }.getType();
+                ArrayList<UserModel> arrayList = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type);
+
+
+                arrMyMentor.clear();
+                arrMyMentor.addAll(arrayList);
+                myMentorAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
+
+    public void searchMentors(String text) {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.MENTOR_ROLE);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_SEARCH, text);
+
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap,
+                new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                    @Override
+                    public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                        Type type = new TypeToken<ArrayList<UserModel>>() {
+                        }.getType();
+                        ArrayList<UserModel> arrayList = GsonFactory.getSimpleGson()
+                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                        , type);
+
+                        if (arrayList.isEmpty()) {
+                            UIHelper.showAlertDialog(getContext(), "No Mentors Found on \"" + text + "\"");
+                            return;
+                        }
+
+                        getBaseActivity().addDockableFragment(ViewLEAListFragment.newInstance(MentorType.SEARCHMENTOR, arrayList, text), false);
+
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
+    }
+
+    public void getAllMyMentors() {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.MENTOR_ROLE);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_MY_MENTOR, "yes");
+        if (selectedCategory != null && selectedCategory.getId() != 0) {
+            queryMap.put(WebServiceConstants.Q_PARAM_DEPT_ID, selectedCategory.getId());
+        }
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap,
+                new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                    @Override
+                    public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                        Type type = new TypeToken<ArrayList<UserModel>>() {
+                        }.getType();
+                        ArrayList<UserModel> arrayList = GsonFactory.getSimpleGson()
+                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                        , type);
+
+                        if (arrayList.isEmpty()) {
+                            UIHelper.showToast(getContext(), "No Mentors Found");
+                            return;
+                        }
+
+                        getBaseActivity().addDockableFragment(ViewLEAListFragment.newInstance(MentorType.MYMENTOR, arrayList, ""), false);
+
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
+    }
+
+    public void getAllTopMentors() {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.MENTOR_ROLE);
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_TOP_MENTOR, "yes");
+        if (selectedCategory != null && selectedCategory.getId() != 0) {
+            queryMap.put(WebServiceConstants.Q_PARAM_DEPT_ID, selectedCategory.getId());
+        }
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap,
+                new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                    @Override
+                    public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                        Type type = new TypeToken<ArrayList<UserModel>>() {
+                        }.getType();
+                        ArrayList<UserModel> arrayList = GsonFactory.getSimpleGson()
+                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                        , type);
+
+
+                        if (arrayList.isEmpty()) {
+                            UIHelper.showToast(getContext(), "No Mentors Found");
+                            return;
+                        }
+                        getBaseActivity().addDockableFragment(ViewLEAListFragment.newInstance(MentorType.TOPMENTOR, arrayList, ""), false);
+
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
+    }
+
 
 }
