@@ -55,6 +55,7 @@ public class WebServiceConstants {
     public static final String PATH_GET_DEPARTMENTS = "departments";
     public static final String PATH_GET_SPECIALIZATIONS = "specializations";
     public static final String PATH_GET_USERS = "users";
+    public static final String PATH_GET_REFRESH = "refresh";
 
 
     /**
@@ -68,7 +69,6 @@ public class WebServiceConstants {
     public static final String Q_PARAM_MY_MENTOR = "my_mentor";
     public static final String Q_PARAM_SEARCH = "search";
     public static final String Q_PARAM_DEPT_ID = "department_id";
-
 
 
     /**

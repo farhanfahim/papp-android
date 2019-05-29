@@ -20,7 +20,7 @@ public class UserModel {
     @SerializedName("access_token")
     private String accessToken;
     @Expose
-    @SerializedName("specializations")
+    @SerializedName("specialization")
     private List<SpinnerModel> specializations;
     @Expose
     @SerializedName("dependants")

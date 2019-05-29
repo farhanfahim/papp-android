@@ -29,6 +29,7 @@ import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.enums.BaseURLTypes;
 import com.tekrevol.papp.enums.FileType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.GooglePlaceHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.KeyboardHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.helperclasses.validator.PasswordValidation;
@@ -373,7 +374,19 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
 
                 break;
             case R.id.contFacebookLogin:
-                showNextBuildToast();
+                GooglePlaceHelper googlePlaceHelper = new GooglePlaceHelper(getBaseActivity(), GooglePlaceHelper.PLACE_AUTOCOMPLETE, new GooglePlaceHelper.GooglePlaceDataInterface() {
+                    @Override
+                    public void onPlaceActivityResult(double longitude, double latitude, String locationName) {
+
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                }, SignUpMentorFragment.this);
+
+                googlePlaceHelper.openAutocompleteActivity();
                 break;
             case R.id.contTwitterLogin:
                 showNextBuildToast();
@@ -522,7 +535,7 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
         mentorSendingModel.setAgency(edtAgency.getStringTrimmed());
         mentorSendingModel.setDesignation(edtDesignation.getStringTrimmed());
 
-        new WebServices(getContext(), "", BaseURLTypes.BASE_URL, true)
+        new WebServices(getBaseActivity(), "", BaseURLTypes.BASE_URL, true)
                 .postMultipartAPI(WebServiceConstants.PATH_REGISTER, arrMultiFileModel, mentorSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
                     @Override
                     public void requestDataResponse(WebResponse<Object> webResponse) {

@@ -214,6 +214,7 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
                 }, ScheduleAMeetingFragment.this);
 
                 googlePlaceHelper.openAutocompleteActivity();
+
                 break;
             case R.id.contSendRequest:
                 UIHelper.showAlertDialogWithCallback("Your session has been created.", "Session",

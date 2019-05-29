@@ -25,7 +25,7 @@ public class RatingDialogFragment extends DialogFragment implements
         RatingBar.OnRatingBarChangeListener {
 
 
-    @BindView(R.id.ratingbarDeliverySpeed)
+    @BindView(R.id.ratingbar)
     AppCompatRatingBar ratingbarDeliverySpeed;
     @BindView(R.id.ratingBarProductAccuracy)
     AppCompatRatingBar ratingBarProductAccuracy;
@@ -96,7 +96,7 @@ public class RatingDialogFragment extends DialogFragment implements
     public void onRatingChanged(RatingBar ratingBar, float rating, boolean b) {
         switch (ratingBar.getId()) {
 
-            case R.id.ratingbarDeliverySpeed:
+            case R.id.ratingbar:
                 ratingProductDeliverySpeed = rating;
                 break;
 

@@ -332,7 +332,7 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
         parentSendingModel.setRole(AppConstants.PARENT_ROLE);
         parentSendingModel.setDependant(arrDependents);
 
-        new WebServices(getContext(), "", BaseURLTypes.BASE_URL, true)
+        new WebServices(getBaseActivity(), "", BaseURLTypes.BASE_URL, true)
                 .postMultipartAPI(WebServiceConstants.PATH_REGISTER, arrMultiFileModel, parentSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
                     @Override
                     public void requestDataResponse(WebResponse<Object> webResponse) {

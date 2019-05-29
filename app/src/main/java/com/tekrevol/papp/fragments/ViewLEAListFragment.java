@@ -194,7 +194,7 @@ public class ViewLEAListFragment extends BaseFragment implements OnItemClickList
     @Override
     public void onItemClick(int position, Object object, View view, Object type) {
 
-        getBaseActivity().addDockableFragment(LEAProfileFragment.newInstance(), true);
+        getBaseActivity().addDockableFragment(LEAProfileFragment.newInstance((UserModel) object), true);
     }
 
     @Override

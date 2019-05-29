@@ -12,8 +12,6 @@ import com.android.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.models.SpinnerModel;
 import com.tekrevol.papp.widget.AnyTextView;
-import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.models.SpinnerModel;
 
 import java.util.List;
 
@@ -72,7 +70,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         CircleImageView imgProfile;
         @BindView(R.id.txtName)
         AnyTextView txtName;
-        @BindView(R.id.ratingbarDeliverySpeed)
+        @BindView(R.id.ratingbar)
         AppCompatRatingBar ratingbarDeliverySpeed;
         @BindView(R.id.txtDate)
         AnyTextView txtDate;

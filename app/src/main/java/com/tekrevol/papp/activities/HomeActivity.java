@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -33,7 +34,7 @@ public class HomeActivity extends BaseActivity {
     NavigationView navigationView;
     FrameLayout contMain;
     RelativeLayout contParentActivityLayout;
-
+    public SparseArray<String> sparseArrayDepartments = new SparseArray<String>();
 
 
     private RightSideMenuFragment rightSideMenuFragment;
@@ -43,7 +44,6 @@ public class HomeActivity extends BaseActivity {
     private Bitmap mDownScaled;
     private String mBackgroundFilename;
     private Bitmap background;
-
 
 
     @Override
@@ -81,7 +81,6 @@ public class HomeActivity extends BaseActivity {
     public ResideMenu getResideMenu() {
         return resideMenu;
     }
-
 
 
     public void setSideMenu(int direction) {
@@ -171,7 +170,6 @@ public class HomeActivity extends BaseActivity {
     }
 
 
-
 //    public ImageView getBlurImage() {
 //        return imageBlur;
 //    }
@@ -212,7 +210,6 @@ public class HomeActivity extends BaseActivity {
 //    public void removeBlurImage() {
 //        getBlurImage().setVisibility(View.GONE);
 //    }
-
 
 
 }

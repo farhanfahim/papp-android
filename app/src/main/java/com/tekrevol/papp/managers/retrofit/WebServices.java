@@ -1,11 +1,14 @@
 package com.tekrevol.papp.managers.retrofit;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 
-import com.tekrevol.papp.BaseApplication;
+import com.tekrevol.papp.activities.HomeActivity;
+import com.tekrevol.papp.activities.MainActivity;
+import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.managers.FileManager;
+import com.tekrevol.papp.managers.SharedPreferenceManager;
 import com.tekrevol.papp.managers.retrofit.entities.MultiFileModel;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -20,14 +23,9 @@ import com.tekrevol.papp.enums.BaseURLTypes;
 import com.tekrevol.papp.enums.FileType;
 import com.tekrevol.papp.helperclasses.Helper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+import com.tekrevol.papp.models.wrappers.UserModelWrapper;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
-import com.tekrevol.papp.enums.BaseURLTypes;
-import com.tekrevol.papp.enums.FileType;
-import com.tekrevol.papp.helperclasses.Helper;
-import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
-import com.tekrevol.papp.managers.retrofit.entities.MultiFileModel;
-import com.tekrevol.papp.models.wrappers.WebResponse;
 
 import org.json.JSONObject;
 
@@ -52,9 +50,9 @@ import static com.tekrevol.papp.constatnts.WebServiceConstants.PARAMS_TOKEN_EXPI
 public class WebServices {
     private WebServiceProxy apiService;
     private KProgressHUD mDialog;
-    private Context mContext;
+    private Activity activity;
 
-    public WebServices(Context activity, String token, BaseURLTypes baseURLTypes) {
+    public WebServices(Activity activity, String token, BaseURLTypes baseURLTypes) {
         switch (baseURLTypes) {
 
             case BASE_URL:
@@ -65,13 +63,13 @@ public class WebServices {
         }
 
 
-        mContext = activity;
-        mDialog = UIHelper.getProgressHUD(mContext);
-        if (!((Activity) mContext).isFinishing())
+        this.activity = activity;
+        mDialog = UIHelper.getProgressHUD(this.activity);
+        if (!((Activity) this.activity).isFinishing())
             mDialog.show();
     }
 
-    public WebServices(Context activity, String token, BaseURLTypes baseURLTypes, boolean isShowLoader) {
+    public WebServices(Activity activity, String token, BaseURLTypes baseURLTypes, boolean isShowLoader) {
         switch (baseURLTypes) {
             case BASE_URL:
                 apiService = WebServiceFactory.getInstanceBaseURL(token);
@@ -80,12 +78,12 @@ public class WebServices {
                 apiService = WebServiceFactory.getInstanceXML();
         }
 
-        mContext = activity;
+        this.activity = activity;
 
         if (isShowLoader) {
-            mDialog = UIHelper.getProgressHUD(mContext);
+            mDialog = UIHelper.getProgressHUD(this.activity);
 
-            if (!((Activity) mContext).isFinishing())
+            if (!((Activity) this.activity).isFinishing())
                 mDialog.show();
         }
 
@@ -139,7 +137,7 @@ public class WebServices {
             for (MultiFileModel multiFileModel : multiFileModelArrayList) {
                 if (multiFileModel.getFile() == null || !multiFileModel.getFile().exists()) {
                     dismissDialog();
-                    UIHelper.showShortToastInCenter(mContext, "File is empty.");
+                    UIHelper.showShortToastInCenter(activity, "File is empty.");
                     return;
                 }
 
@@ -150,7 +148,7 @@ public class WebServices {
 
 
         try {
-            if (Helper.isNetworkConnected(mContext, true)) {
+            if (Helper.isNetworkConnected(activity, true)) {
                 apiService.postMultipartAPI(path, partArrayList).enqueue(
                         new Callback<WebResponse<Object>>() {
                             @Override
@@ -160,7 +158,7 @@ public class WebServices {
 
                             @Override
                             public void onFailure(Call<WebResponse<Object>> call, Throwable t) {
-                                UIHelper.showShortToastInCenter(mContext, "Something went wrong, Please check your internet connection.");
+                                UIHelper.showShortToastInCenter(activity, "Something went wrong, Please check your internet connection.");
                                 dismissDialog();
                                 callBack.onError("");
                             }
@@ -196,7 +194,7 @@ public class WebServices {
         Call<WebResponse<Object>> webResponseCall = apiService.postAPIWebResponseAnyObject(path, bodyRequestData);
 
         try {
-            if (Helper.isNetworkConnected(mContext, true)) {
+            if (Helper.isNetworkConnected(activity, true)) {
                 webResponseCall.enqueue(new Callback<WebResponse<Object>>() {
                     @Override
                     public void onResponse(Call<WebResponse<Object>> call, Response<WebResponse<Object>> response) {
@@ -205,7 +203,7 @@ public class WebServices {
 
                     @Override
                     public void onFailure(Call<WebResponse<Object>> call, Throwable t) {
-                        UIHelper.showShortToastInCenter(mContext, "Something went wrong, Please check your internet connection.");
+                        UIHelper.showShortToastInCenter(activity, "Something went wrong, Please check your internet connection.");
                         dismissDialog();
                         callBack.onError("");
                     }
@@ -237,7 +235,7 @@ public class WebServices {
         Call<WebResponse<Object>> webResponseCall = apiService.getAPIForWebresponseAnyObject(path, queryMap);
 
         try {
-            if (Helper.isNetworkConnected(mContext, true)) {
+            if (Helper.isNetworkConnected(activity, true)) {
                 webResponseCall.enqueue(new Callback<WebResponse<Object>>() {
                     @Override
                     public void onResponse(Call<WebResponse<Object>> call, Response<WebResponse<Object>> response) {
@@ -246,7 +244,7 @@ public class WebServices {
 
                     @Override
                     public void onFailure(Call<WebResponse<Object>> call, Throwable t) {
-                        UIHelper.showShortToastInCenter(mContext, "Something went wrong, Please check your internet connection.");
+                        UIHelper.showShortToastInCenter(activity, "Something went wrong, Please check your internet connection.");
                         dismissDialog();
                         callBack.onError("");
                     }
@@ -288,10 +286,13 @@ public class WebServices {
 
             if (response.code() == WebServiceConstants.PARAMS_TOKEN_EXPIRE) {
                 // FIXME: 2019-05-22 EXPIRE LOGIC
-                UIHelper.showToast(mContext, "TOKEN ERROR " + PARAMS_TOKEN_EXPIRE);
+                UIHelper.showToast(activity, "TOKEN ERROR " + PARAMS_TOKEN_EXPIRE);
+                tokenRefresh();
+
+
             } else if (response.code() == WebServiceConstants.PARAMS_TOKEN_BLACKLIST) {
                 // FIXME: 2019-05-22 LOGOUT LOGIC
-                UIHelper.showToast(mContext, "BLACK LIST ERROR " + PARAMS_TOKEN_BLACKLIST);
+                UIHelper.showToast(activity, "BLACK LIST ERROR " + PARAMS_TOKEN_BLACKLIST);
             } else {
                 errorToastForObject(error);
             }
@@ -307,6 +308,64 @@ public class WebServices {
                 callBack.requestDataResponse(response.body());
         } else {
             callBack.onError(errorToastForObject(response));
+        }
+    }
+
+    public void tokenRefresh() {
+        RequestBody bodyRequestData = getRequestBody(okhttp3.MediaType.parse("application/json; charset=utf-8"), "");
+
+        Call<WebResponse<Object>> webResponseCall = apiService.postAPIWebResponseAnyObject(WebServiceConstants.PATH_GET_REFRESH, bodyRequestData);
+
+        try {
+            if (Helper.isNetworkConnected(activity, true)) {
+                webResponseCall.enqueue(new Callback<WebResponse<Object>>() {
+                    @Override
+                    public void onResponse(Call<WebResponse<Object>> call, Response<WebResponse<Object>> response) {
+
+                        if (response.body() == null) {
+                            UIHelper.showAlertDialog(activity, "Token Authentication Failed, Kindly login again");
+//                        SharedPreferenceManager.getInstance(activity).clearDB();
+//                        clearAllActivitiesExceptThis(MainActivity.class);
+                            return;
+                        }
+
+                        if (response.isSuccessful() && response.body().isSuccess()) {
+                            SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager.getInstance(activity);
+//                                UserModelWrapper userModelWrapper = GsonFactory.getSimpleGson().fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), UserModelWrapper.class);
+//
+//                                sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
+//                                sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
+//
+                            UIHelper.showAlertDialog(activity, "Token refreshed successfully");
+//                                if (activity instanceof HomeActivity) {
+//                                    reload();
+//                                } else {
+//                                    clearAllActivitiesExceptThis(HomeActivity.class);
+//                                }
+                        } else {
+                            UIHelper.showAlertDialog(activity, "Token Authentication Failed, Kindly login again");
+//                                SharedPreferenceManager.getInstance(activity).clearDB();
+//                                clearAllActivitiesExceptThis(MainActivity.class);
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<WebResponse<Object>> call, Throwable t) {
+                        dismissDialog();
+                        UIHelper.showAlertDialog(activity, "Token Authentication Failed, Kindly login again");
+//                        SharedPreferenceManager.getInstance(activity).clearDB();
+//                        clearAllActivitiesExceptThis(MainActivity.class);
+                    }
+                });
+            } else {
+                dismissDialog();
+            }
+
+        } catch (Exception e) {
+            dismissDialog();
+            e.printStackTrace();
+
         }
     }
 
@@ -340,9 +399,9 @@ public class WebServices {
         }
 
         if (responseMessage.isEmpty()) {
-            UIHelper.showShortToastInCenter(mContext, "API Response Error");
+            UIHelper.showShortToastInCenter(activity, "API Response Error");
         } else {
-            UIHelper.showShortToastInCenter(mContext, responseMessage);
+            UIHelper.showShortToastInCenter(activity, responseMessage);
         }
         return responseMessage;
     }
@@ -356,9 +415,9 @@ public class WebServices {
         }
 
         if (responseMessage.isEmpty()) {
-            UIHelper.showShortToastInCenter(mContext, "API Response Error ");
+            UIHelper.showShortToastInCenter(activity, "API Response Error ");
         } else {
-            UIHelper.showShortToastInCenter(mContext, responseMessage);
+            UIHelper.showShortToastInCenter(activity, responseMessage);
         }
         return responseMessage;
     }
@@ -375,5 +434,26 @@ public class WebServices {
 
         void onError(Object object);
     }
+
+
+    public void reload() {
+        Intent intent = activity.getIntent();
+        activity.overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        activity.finish();
+        activity.overridePendingTransition(0, 0);
+        activity.startActivity(intent);
+    }
+
+
+    public void clearAllActivitiesExceptThis(Class<?> cls) {
+        Intent intents = new Intent(activity, cls);
+        intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        activity.startActivity(intents);
+        activity.finish();
+    }
+
 
 }

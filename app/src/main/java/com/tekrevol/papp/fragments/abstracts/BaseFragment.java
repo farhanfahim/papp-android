@@ -224,7 +224,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     @android.support.annotation.NonNull
     public WebServices getBaseWebService() {
-        return new WebServices(getContext(), getToken(), BaseURLTypes.BASE_URL, true);
+        return new WebServices(getBaseActivity(), getToken(), BaseURLTypes.BASE_URL, true);
     }
 
     public void saveAndOpenFile(WebResponse<String> webResponse) {

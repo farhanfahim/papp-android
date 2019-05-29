@@ -28,14 +28,6 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/x8dp"
                 android:paddingRight="@dimen/x8dp">
-                <!--<ImageButton-->
-                <!--android:id="@+id/btnLeft1"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:background="@color/colorPrimary"-->
-                <!--android:padding="@dimen/x10dp"-->
-                <!--android:src="@drawable/ic_back" />-->
-
 
                 <TextView
                     android:id="@+id/btnLeft1"
@@ -58,7 +50,7 @@
                     android:ellipsize="end"
                     android:gravity="left|center_vertical"
                     android:singleLine="true"
-                    android:text="LEA Profile"
+                    android:text="Mentor Profile"
                     android:textColor="@color/c_white"
                     android:textSize="@dimen/s16"
                     app:typeface="@string/font_medium" />
@@ -90,6 +82,7 @@
                     android:orientation="vertical">
 
                     <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imgProfile"
                         android:layout_width="@dimen/x80dp"
                         android:layout_height="@dimen/x80dp"
                         android:layout_marginRight="@dimen/x10dp"
@@ -266,6 +259,7 @@
 
 
                     <com.tekrevol.papp.widget.AnyTextView
+                        android:id="@+id/txtAgency"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -298,6 +292,7 @@
 
 
                     <com.tekrevol.papp.widget.AnyTextView
+                        android:id="@+id/txtDepartment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -323,7 +318,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/x5dp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
 
                     <com.tekrevol.papp.widget.AnyTextView
@@ -351,9 +347,9 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/contPointsEarned"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/x5dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -371,6 +367,7 @@
 
 
                     <com.tekrevol.papp.widget.AnyTextView
+                        android:id="@+id/txtPoints"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -412,18 +409,18 @@
 
 
                     <android.support.v7.widget.AppCompatRatingBar
-                        android:id="@+id/ratingbarDeliverySpeed"
+                        android:id="@+id/ratingbar"
                         style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:isIndicator="true"
                         android:numStars="5"
-                        android:rating="4.5"
                         android:stepSize="0.5" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/contReviews"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/x5dp"
@@ -433,7 +430,6 @@
 
 
                     <LinearLayout
-                        android:id="@+id/contReviews"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -453,7 +449,7 @@
                             android:id="@+id/txtReviews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="(106)"
+                            android:text=""
                             android:textColor="@color/txtGrey"
                             android:textSize="@dimen/s14"
                             app:typeface="@string/font_regular" />
@@ -496,14 +492,14 @@
                         android:layout_marginBottom="@dimen/x5dp"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="Interest"
+                        android:text="Specialization"
                         android:textColor="@color/txtDarkGrey"
                         android:textSize="@dimen/s10"
                         app:typeface="@string/font_regular" />
 
 
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rvInterest"
+                        android:id="@+id/rvSpecialization"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
@@ -542,12 +538,12 @@
 
 
                     <com.tekrevol.papp.widget.AnyTextView
+                        android:id="@+id/txtPersonalInfo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/x5dp"
                         android:ellipsize="end"
                         android:maxLines="5"
-                        android:text="@string/personal_info"
                         android:textColor="@color/txtBlack"
                         android:textSize="@dimen/s10"
                         app:typeface="@string/font_regular" />

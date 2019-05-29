@@ -165,7 +165,7 @@ public class LoginDetailFragment extends BaseFragment {
     }
 
     public void webCallLogin(LoginSendingModel loginSendingModel) {
-        new WebServices(getContext(), "", BaseURLTypes.BASE_URL, true)
+        new WebServices(getBaseActivity(), "", BaseURLTypes.BASE_URL, true)
                 .postAPIAnyObject(WebServiceConstants.PATH_LOGIN, loginSendingModel.toString(),
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override

@@ -17,8 +17,8 @@ import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.fragments.abstracts.GenericContentFragment;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.widget.AnyTextView;
-import com.tekrevol.papp.widget.TitleBar;
 import com.tekrevol.papp.widget.TitleBar;
 
 import butterknife.BindView;
@@ -174,7 +174,7 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
                 getBaseActivity().addDockableFragment(EditCivilianProfileFragment.newInstance(), false);
                 break;
             case R.id.contMyProfile:
-                getBaseActivity().addDockableFragment(LEAProfileFragment.newInstance(), false);
+                getBaseActivity().addDockableFragment(LEAProfileFragment.newInstance(null), false);
                 break;
             case R.id.conSessionHistory:
                 getBaseActivity().addDockableFragment(SessionHistoryFragment.newInstance(), false);

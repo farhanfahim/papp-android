@@ -6,6 +6,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -268,9 +269,13 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
                 arrCategories.get(position).setSelected(true);
                 selectedCategory = arrCategories.get(position);
                 categoriesAdapter.notifyDataSetChanged();
+                getMyMentors(4);
+                getTopMentors(3);
 
             } else if (((String) type).equalsIgnoreCase(MyMentorAdapter.class.getSimpleName())) {
-                getBaseActivity().addDockableFragment(LEAProfileFragment.newInstance(), true);
+                getBaseActivity().addDockableFragment(LEAProfileFragment.newInstance((UserModel) object), true);
+            } else if (((String) type).equalsIgnoreCase(TopMentorAdapter.class.getSimpleName())) {
+                getBaseActivity().addDockableFragment(LEAProfileFragment.newInstance((UserModel) object), true);
             }
 
         }
@@ -297,6 +302,14 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
                 arrCategories.add(new SpinnerModel("All", 0));
                 arrCategories.addAll(arrayList);
                 arrCategories.get(0).setSelected(true);
+
+
+                getHomeActivity().sparseArrayDepartments.clear();
+
+                for (SpinnerModel model : arrCategories) {
+                    getHomeActivity().sparseArrayDepartments.put(model.getId(), model.getText());
+                }
+
 
                 categoriesAdapter.notifyDataSetChanged();
 
@@ -388,7 +401,6 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
         queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
         queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
         queryMap.put(WebServiceConstants.Q_PARAM_SEARCH, text);
-
 
 
         getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap,
