@@ -22,17 +22,10 @@ import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.DateManager;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.general.SpinnerModel;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
-import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapter;
-import com.tekrevol.papp.constatnts.AppConstants;
-import com.tekrevol.papp.constatnts.Constants;
-import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
-import com.tekrevol.papp.models.SpinnerModel;
-import com.tekrevol.papp.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.Calendar;

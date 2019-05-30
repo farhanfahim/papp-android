@@ -50,33 +50,26 @@
 
 
                     <com.tekrevol.papp.widget.AnyTextView
-                        android:id="@+id/txtPrice"
+                        android:id="@+id/txtItemName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/x5dp"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="15$"
+                        android:text="Item name"
                         android:textColor="@color/base_green"
                         android:textSize="@dimen/s14"
                         app:fontFamily="@string/font_regular" />
 
 
-                    <com.tekrevol.papp.widget.AnyTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:text="Bonus Gift"
-                        android:textColor="@color/txtBlack"
-                        android:textSize="@dimen/s14"
-                        app:fontFamily="@string/font_regular" />
+
 
 
                 </LinearLayout>
 
 
                 <com.tekrevol.papp.widget.AnyTextView
+                    android:id="@+id/txtPoints"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"

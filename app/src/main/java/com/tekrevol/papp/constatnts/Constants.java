@@ -1,8 +1,7 @@
 package com.tekrevol.papp.constatnts;
 
 import com.android.papp.R;
-import com.tekrevol.papp.models.SpinnerModel;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.general.SpinnerModel;
 
 import java.util.ArrayList;
 

@@ -16,27 +16,34 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.papp.R;
+import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.adapters.recyleradapters.GiftsAndRewardsAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.Constants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+import com.tekrevol.papp.managers.retrofit.GsonFactory;
+import com.tekrevol.papp.managers.retrofit.WebServices;
+import com.tekrevol.papp.models.receiving_model.GiftsModel;
+import com.tekrevol.papp.models.sending_model.GiftsSendingModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.github.clans.fab.FloatingActionButton;
-import com.tekrevol.papp.constatnts.Constants;
-import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.models.SpinnerModel;
-import com.tekrevol.papp.widget.AnyEditTextView;
-import com.tekrevol.papp.widget.TitleBar;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static com.tekrevol.papp.constatnts.WebServiceConstants.PATH_REDEEM_POINTS;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
@@ -67,7 +74,7 @@ public class GiftAndRewardsFragment extends BaseFragment implements OnItemClickL
 
 
     GiftsAndRewardsAdapter adapter;
-    ArrayList<SpinnerModel> arrData;
+    ArrayList<GiftsModel> arrData;
     @BindView(R.id.txtHeading)
     AnyTextView txtHeading;
 
@@ -127,7 +134,8 @@ public class GiftAndRewardsFragment extends BaseFragment implements OnItemClickL
         bindRecyclerView();
 
         txtHeading.setVisibility(View.VISIBLE);
-        txtHeading.setText("Total 25,000 Points");
+        txtHeading.setText("Total " + getCurrentUser().getUserDetails().getTotalPoints() + " Points");
+        getGifts();
 
         if (onCreated) {
             adapter.notifyDataSetChanged();
@@ -135,11 +143,6 @@ public class GiftAndRewardsFragment extends BaseFragment implements OnItemClickL
         }
 
 
-        arrData.clear();
-        arrData.addAll(Constants.getAddDependentsArray2());
-        arrData.addAll(Constants.getAddDependentsArray2());
-        arrData.addAll(Constants.getAddDependentsArray2());
-        adapter.notifyDataSetChanged();
     }
 
 
@@ -184,14 +187,58 @@ public class GiftAndRewardsFragment extends BaseFragment implements OnItemClickL
 
     @Override
     public void onItemClick(int position, Object object, View view, Object type) {
+        GiftsModel giftsModel = (GiftsModel) object;
+        GiftsSendingModel giftsSendingModel = new GiftsSendingModel(giftsModel.getPoints(), giftsModel.getId());
+
+        getBaseWebService().postAPIAnyObject(PATH_REDEEM_POINTS, giftsSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                UIHelper.showShortToastInCenter(getContext(), webResponse.message);
+                getBaseActivity().popBackStack();
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
 
 
     }
 
     @Override
     public void onItemAdd(Object object) {
-//        arrCategories.add(new SpinnerModel("John Doe"));
+//        arrCategories.add(new GiftsModel("John Doe"));
 //        adapter.notifyDataSetChanged();
     }
+
+    public void getGifts() {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GIFTS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                Type type = new TypeToken<ArrayList<GiftsModel>>() {
+                }.getType();
+                ArrayList<GiftsModel> arrayList = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type);
+
+
+                arrData.clear();
+                arrData.addAll(arrayList);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
 
 }

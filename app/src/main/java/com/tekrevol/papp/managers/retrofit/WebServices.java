@@ -285,8 +285,7 @@ public class WebServices {
 
 
             if (response.code() == WebServiceConstants.PARAMS_TOKEN_EXPIRE) {
-                // FIXME: 2019-05-22 EXPIRE LOGIC
-                UIHelper.showToast(activity, "TOKEN ERROR " + PARAMS_TOKEN_EXPIRE);
+//                UIHelper.showToast(activity, "TOKEN ERROR " + PARAMS_TOKEN_EXPIRE);
                 tokenRefresh();
 
 
@@ -324,28 +323,28 @@ public class WebServices {
 
                         if (response.body() == null) {
                             UIHelper.showAlertDialog(activity, "Token Authentication Failed, Kindly login again");
-//                        SharedPreferenceManager.getInstance(activity).clearDB();
-//                        clearAllActivitiesExceptThis(MainActivity.class);
+                            SharedPreferenceManager.getInstance(activity).clearDB();
+                            clearAllActivitiesExceptThis(MainActivity.class);
                             return;
                         }
 
                         if (response.isSuccessful() && response.body().isSuccess()) {
                             SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager.getInstance(activity);
-//                                UserModelWrapper userModelWrapper = GsonFactory.getSimpleGson().fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), UserModelWrapper.class);
-//
-//                                sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
-//                                sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
+                            UserModelWrapper userModelWrapper = GsonFactory.getSimpleGson().fromJson(GsonFactory.getSimpleGson().toJson(response.body().result), UserModelWrapper.class);
+
+                            sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
+                            sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
 //
                             UIHelper.showAlertDialog(activity, "Token refreshed successfully");
-//                                if (activity instanceof HomeActivity) {
-//                                    reload();
-//                                } else {
-//                                    clearAllActivitiesExceptThis(HomeActivity.class);
-//                                }
+                            if (activity instanceof HomeActivity) {
+                                reload();
+                            } else {
+                                clearAllActivitiesExceptThis(HomeActivity.class);
+                            }
                         } else {
                             UIHelper.showAlertDialog(activity, "Token Authentication Failed, Kindly login again");
-//                                SharedPreferenceManager.getInstance(activity).clearDB();
-//                                clearAllActivitiesExceptThis(MainActivity.class);
+                            SharedPreferenceManager.getInstance(activity).clearDB();
+                            clearAllActivitiesExceptThis(MainActivity.class);
                         }
 
                     }
@@ -354,8 +353,8 @@ public class WebServices {
                     public void onFailure(Call<WebResponse<Object>> call, Throwable t) {
                         dismissDialog();
                         UIHelper.showAlertDialog(activity, "Token Authentication Failed, Kindly login again");
-//                        SharedPreferenceManager.getInstance(activity).clearDB();
-//                        clearAllActivitiesExceptThis(MainActivity.class);
+                        SharedPreferenceManager.getInstance(activity).clearDB();
+                        clearAllActivitiesExceptThis(MainActivity.class);
                     }
                 });
             } else {

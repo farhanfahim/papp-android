@@ -25,7 +25,7 @@ import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.libraries.residemenu.ResideMenu;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.general.SpinnerModel;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
@@ -178,7 +178,7 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
         txtDepartment.setText(getHomeActivity().sparseArrayDepartments.get(mentorModel.getUserDetails().getDepartmentId(), ""));
 
         txtPoints.setText(mentorModel.getUserDetails().getTotalPoints() + " pts");
-//        ratingbar.setRating();
+//        ratingbar.setRating(mentorModel.getUserDetails().get);
 //        txtReviews.setText();     --> Reviews Count
         arrSpecialization.clear();
 

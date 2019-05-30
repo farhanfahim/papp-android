@@ -43,19 +43,20 @@ public class WebServiceConstants {
 //    public static final String BASE_URL = "http://papp.apps.fomarkmedia.com/api/v1/;
 
 
-    public static final String WS_KEY_GET_TOKEN = "getToken";
-
     /**
      * API PATHS NAMES
      */
 
     public static final String PATH_REGISTER = "register";
     public static final String PATH_LOGIN = "login";
-    public static final String PATH_PROFILE = "profile";
     public static final String PATH_GET_DEPARTMENTS = "departments";
     public static final String PATH_GET_SPECIALIZATIONS = "specializations";
     public static final String PATH_GET_USERS = "users";
     public static final String PATH_GET_REFRESH = "refresh";
+    public static final String PATH_PROFILE = "profile";
+    public static final String PATH_GIFTS = "gifts";
+    public static final String PATH_REDEEM_POINTS = "redeem-points";
+
 
 
     /**

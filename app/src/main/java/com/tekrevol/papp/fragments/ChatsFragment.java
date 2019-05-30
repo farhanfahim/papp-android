@@ -22,15 +22,9 @@ import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.general.SpinnerModel;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
-import com.tekrevol.papp.widget.TitleBar;
-import com.tekrevol.papp.constatnts.Constants;
-import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
-import com.tekrevol.papp.models.SpinnerModel;
-import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.TitleBar;
 
 import java.util.ArrayList;

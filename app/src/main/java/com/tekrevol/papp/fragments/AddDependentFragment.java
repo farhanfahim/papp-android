@@ -10,26 +10,17 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.android.papp.R;
-import com.tekrevol.papp.callbacks.OnSpinnerOKPressedListener;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.DateManager;
-import com.tekrevol.papp.models.IntWrapper;
+import com.tekrevol.papp.models.general.IntWrapper;
 import com.tekrevol.papp.models.sending_model.DependantSendingModel;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.tekrevol.papp.constatnts.AppConstants;
-import com.tekrevol.papp.constatnts.Constants;
-import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
-import com.tekrevol.papp.models.IntWrapper;
-import com.tekrevol.papp.models.sending_model.DependantSendingModel;
-import com.tekrevol.papp.widget.AnyEditTextView;
-import com.tekrevol.papp.widget.TitleBar;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;

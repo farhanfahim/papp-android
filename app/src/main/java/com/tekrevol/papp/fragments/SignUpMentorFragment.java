@@ -20,6 +20,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.papp.R;
+import com.google.gson.reflect.TypeToken;
+import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tekrevol.papp.activities.HomeActivity;
 import com.tekrevol.papp.adapters.recyleradapters.SpecialityAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
@@ -38,17 +41,15 @@ import com.tekrevol.papp.libraries.kmpautotextview.KMPAutoComplTextView;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.managers.retrofit.entities.MultiFileModel;
-import com.tekrevol.papp.models.IntWrapper;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.general.IntWrapper;
+import com.tekrevol.papp.models.general.LocationModel;
+import com.tekrevol.papp.models.general.SpinnerModel;
 import com.tekrevol.papp.models.sending_model.MentorSendingModel;
 import com.tekrevol.papp.models.wrappers.UserModelWrapper;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
-import com.google.gson.reflect.TypeToken;
-import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
@@ -64,7 +65,6 @@ import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
-import static com.tekrevol.papp.constatnts.AppConstants.MENTOR_ROLE;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
@@ -125,9 +125,16 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
     AnyTextView txtPasswordStrength;
     @BindView(R.id.imgPasswordStrength)
     ImageView imgPasswordStrength;
+    @BindView(R.id.txtLocation)
+    AnyTextView txtLocation;
+
+    LocationModel locationModel;
+    @BindView(R.id.contLocation)
+    LinearLayout contLocation;
 
 
     private File fileTemporaryProfilePicture;
+    GooglePlaceHelper googlePlaceHelper;
 
 
     public static SignUpMentorFragment newInstance() {
@@ -357,7 +364,7 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
     }
 
 
-    @OnClick({R.id.imgAddSpecialization, R.id.contBtnSignUp, R.id.contFacebookLogin, R.id.contTwitterLogin, R.id.contProfile, R.id.txtDepartment})
+    @OnClick({R.id.imgAddSpecialization, R.id.contBtnSignUp, R.id.contFacebookLogin, R.id.contTwitterLogin, R.id.contProfile, R.id.txtDepartment, R.id.txtLocation})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgAddSpecialization:
@@ -374,10 +381,21 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
 
                 break;
             case R.id.contFacebookLogin:
-                GooglePlaceHelper googlePlaceHelper = new GooglePlaceHelper(getBaseActivity(), GooglePlaceHelper.PLACE_AUTOCOMPLETE, new GooglePlaceHelper.GooglePlaceDataInterface() {
+                showNextBuildToast();
+                break;
+            case R.id.contTwitterLogin:
+                showNextBuildToast();
+                break;
+            case R.id.contProfile:
+                UIHelper.cropImagePicker(getContext(), this);
+                break;
+
+            case R.id.txtLocation:
+                googlePlaceHelper = new GooglePlaceHelper(getBaseActivity(), GooglePlaceHelper.PLACE_AUTOCOMPLETE, new GooglePlaceHelper.GooglePlaceDataInterface() {
                     @Override
                     public void onPlaceActivityResult(double longitude, double latitude, String locationName) {
-
+                        txtLocation.setText(locationName);
+                        locationModel = new LocationModel(latitude, longitude, locationName);
                     }
 
                     @Override
@@ -387,12 +405,7 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
                 }, SignUpMentorFragment.this);
 
                 googlePlaceHelper.openAutocompleteActivity();
-                break;
-            case R.id.contTwitterLogin:
-                showNextBuildToast();
-                break;
-            case R.id.contProfile:
-                UIHelper.cropImagePicker(getContext(), this);
+
                 break;
             case R.id.txtDepartment:
                 UIHelper.showSpinnerDialog(this, arrDepartmentsSpinner, "Select Category", txtDepartment, null, new OnSpinnerOKPressedListener() {
@@ -404,6 +417,7 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
                 break;
         }
     }
+
 
     public void addSpecialization(SpinnerModel spinnerModel) {
         if (spinnerModel == null) {
@@ -445,7 +459,10 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
                 Exception error = result.getError();
                 error.printStackTrace();
             }
+        } else if (googlePlaceHelper != null) {
+            googlePlaceHelper.onActivityResult(requestCode, resultCode, data);
         }
+
     }
 
     private void setImageAfterResult(final String uploadFilePath) {
@@ -503,6 +520,12 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
         }
 
 
+        if (txtLocation.getStringTrimmed().isEmpty() && locationModel == null) {
+            UIHelper.showAlertDialog(getContext(), "Please select location");
+            return;
+        }
+
+
         if (arrSelectedSpecialization.isEmpty()) {
             UIHelper.showAlertDialog(getContext(), "Kindly add Specialization");
             return;
@@ -534,6 +557,9 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
         mentorSendingModel.setDepartmentId(selectedDepartment.getId());
         mentorSendingModel.setAgency(edtAgency.getStringTrimmed());
         mentorSendingModel.setDesignation(edtDesignation.getStringTrimmed());
+        mentorSendingModel.setAddress(locationModel.getAddress());
+        mentorSendingModel.setLat(locationModel.getLat());
+        mentorSendingModel.setLng(locationModel.getLng());
 
         new WebServices(getBaseActivity(), "", BaseURLTypes.BASE_URL, true)
                 .postMultipartAPI(WebServiceConstants.PATH_REGISTER, arrMultiFileModel, mentorSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {

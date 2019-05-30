@@ -1,7 +1,7 @@
 package com.tekrevol.papp.models.receiving_model;
 
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.general.SpinnerModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

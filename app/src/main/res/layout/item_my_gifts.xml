@@ -95,7 +95,7 @@
 
 
                     <com.tekrevol.papp.widget.AnyTextView
-                        android:id="@+id/txtPrice"
+                        android:id="@+id/txtItemName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/x5dp"

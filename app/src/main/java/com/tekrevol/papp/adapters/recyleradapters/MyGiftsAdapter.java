@@ -10,10 +10,8 @@ import android.widget.LinearLayout;
 
 import com.android.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.general.SpinnerModel;
 import com.tekrevol.papp.widget.AnyTextView;
-import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.models.SpinnerModel;
 
 import java.util.List;
 
@@ -70,7 +68,7 @@ public class MyGiftsAdapter extends RecyclerView.Adapter<MyGiftsAdapter.ViewHold
         ImageView imgProfile;
         @BindView(R.id.txtToken)
         AnyTextView txtToken;
-        @BindView(R.id.txtPrice)
+        @BindView(R.id.txtItemName)
         AnyTextView txtPrice;
         @BindView(R.id.txtDate)
         AnyTextView txtDate;

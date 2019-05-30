@@ -51,6 +51,39 @@ public class UserDetails {
     @Expose
     @SerializedName("id")
     private int id;
+    @Expose
+    @SerializedName("avg_rating")
+    private double avgRating;
+    @Expose
+    @SerializedName("review_count")
+    private int review_count;
+    @Expose
+    @SerializedName("about")
+    private String about;
+
+    public double getAvgRating() {
+        return avgRating;
+    }
+
+    public void setAvgRating(double avgRating) {
+        this.avgRating = avgRating;
+    }
+
+    public int getReview_count() {
+        return review_count;
+    }
+
+    public void setReview_count(int review_count) {
+        this.review_count = review_count;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
 
     public int getTotalPoints() {
         return totalPoints;

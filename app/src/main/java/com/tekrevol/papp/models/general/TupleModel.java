@@ -1,4 +1,4 @@
-package com.tekrevol.papp.models;
+package com.tekrevol.papp.models.general;
 
 /**
  * Created by aqsa.sarwar on 2/21/2018.

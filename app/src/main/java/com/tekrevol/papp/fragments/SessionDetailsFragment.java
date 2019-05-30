@@ -16,17 +16,10 @@ import android.widget.LinearLayout;
 import com.android.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.DependentsAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.models.SpinnerModel;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
-import com.tekrevol.papp.widget.TitleBar;
-import com.tekrevol.papp.constatnts.Constants;
-import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.models.SpinnerModel;
-import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.TitleBar;
 
 import java.util.ArrayList;

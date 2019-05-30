@@ -1,7 +1,6 @@
 package com.tekrevol.papp.fragments;
 
 import android.os.Bundle;
-import android.os.UserManager;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,15 +16,9 @@ import android.widget.ImageView;
 import com.android.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.DependentsAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.models.SpinnerModel;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.widget.AnyTextView;
-import com.tekrevol.papp.widget.TitleBar;
-import com.tekrevol.papp.constatnts.Constants;
-import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.models.SpinnerModel;
 import com.tekrevol.papp.widget.TitleBar;
 
 import java.util.ArrayList;

@@ -1,7 +1,6 @@
 package com.tekrevol.papp.libraries.kmpautotextview;
 
-import com.tekrevol.papp.models.SpinnerModel;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.general.SpinnerModel;
 
 import java.io.Serializable;
 

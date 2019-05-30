@@ -35,7 +35,6 @@ import android.widget.Toast;
 
 import com.android.papp.R;
 import com.tekrevol.papp.activities.BaseActivity;
-import com.tekrevol.papp.adapters.SpinnerDialogAdapter;
 import com.tekrevol.papp.callbacks.GenericClickableInterface;
 import com.tekrevol.papp.callbacks.OnSpinnerItemClickListener;
 import com.tekrevol.papp.callbacks.OnSpinnerOKPressedListener;
@@ -43,15 +42,13 @@ import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.fragments.abstracts.GenericDialogFragment;
 import com.tekrevol.papp.fragments.dialogs.SpinnerDialogFragment;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
-import com.tekrevol.papp.models.IntWrapper;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.general.IntWrapper;
+import com.tekrevol.papp.models.general.SpinnerModel;
 import com.gdacciaro.iOSDialog.iOSDialogBuilder;
 import com.gdacciaro.iOSDialog.iOSDialogClickListener;
 import com.google.common.base.Strings;
 import com.google.gson.reflect.TypeToken;
 import com.kaopiz.kprogresshud.KProgressHUD;
-import com.tekrevol.papp.models.IntWrapper;
-import com.tekrevol.papp.models.SpinnerModel;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 

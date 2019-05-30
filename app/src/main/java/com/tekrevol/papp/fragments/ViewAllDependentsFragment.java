@@ -16,27 +16,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.papp.R;
-import com.tekrevol.papp.adapters.recyleradapters.AddDependentsAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.ViewAllDependentsAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
-import com.tekrevol.papp.models.SpinnerModel;
 import com.tekrevol.papp.models.receiving_model.UserModel;
-import com.tekrevol.papp.models.sending_model.DependantSendingModel;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.github.clans.fab.FloatingActionButton;
-import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
-import com.tekrevol.papp.models.SpinnerModel;
-import com.tekrevol.papp.models.sending_model.DependantSendingModel;
-import com.tekrevol.papp.widget.AnyEditTextView;
-import com.tekrevol.papp.widget.TitleBar;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

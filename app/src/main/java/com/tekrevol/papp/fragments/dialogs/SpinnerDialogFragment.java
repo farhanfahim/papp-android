@@ -6,20 +6,15 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.tekrevol.papp.adapters.SpinnerDialogAdapter;
 import com.tekrevol.papp.helperclasses.ui.helper.KeyboardHelper;
-import com.tekrevol.papp.models.SpinnerModel;
-import com.tekrevol.papp.widget.AnyEditTextView;
+import com.tekrevol.papp.models.general.SpinnerModel;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.recyclerview_layout.CustomLayoutManager;
 
@@ -34,8 +29,6 @@ import com.android.papp.R;
 
 import com.tekrevol.papp.callbacks.OnSpinnerItemClickListener;
 import com.tekrevol.papp.callbacks.OnSpinnerOKPressedListener;
-import com.tekrevol.papp.helperclasses.ui.helper.KeyboardHelper;
-import com.tekrevol.papp.models.SpinnerModel;
 
 import info.hoang8f.widget.FButton;
 

@@ -10,12 +10,11 @@ import android.widget.LinearLayout;
 
 import com.android.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.managers.SharedPreferenceManager;
+import com.tekrevol.papp.models.receiving_model.GiftsModel;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.bumptech.glide.Glide;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.models.SpinnerModel;
 
 import java.util.List;
 
@@ -29,14 +28,16 @@ public class GiftsAndRewardsAdapter extends RecyclerView.Adapter<GiftsAndRewards
 
     private final OnItemClickListener onItemClick;
 
+    private SharedPreferenceManager sharedPreferenceManager;
 
     private Context activity;
-    private List<SpinnerModel> arrData;
+    private List<GiftsModel> arrData;
 
-    public GiftsAndRewardsAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
+    public GiftsAndRewardsAdapter(Context activity, List<GiftsModel> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
+        this.sharedPreferenceManager = SharedPreferenceManager.getInstance(activity);
     }
 
     @Override
@@ -50,54 +51,31 @@ public class GiftsAndRewardsAdapter extends RecyclerView.Adapter<GiftsAndRewards
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        SpinnerModel model = arrData.get(i);
+        GiftsModel model = arrData.get(i);
 
-        switch (i) {
-            case 0:
-                ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_client_2, holder.imgProfile);
-                break;
 
-            case 1:
-                ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_client_6, holder.imgProfile);
-                break;
+        Glide.with(activity)
+                .load(ImageLoaderHelper.getImageURLFromPath(model.getImage()))
+                .error(R.drawable.app_icon_placeholder)
+                .into(holder.imgProfile);
 
-            case 2:
-                ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_client_7, holder.imgProfile);
-                break;
+        holder.txtItemName.setText(model.getItemName());
+        holder.txtPoints.setText("for " + model.getPoints() + " points");
 
-            case 3:
-                ImageLoader.getInstance().displayImage("drawable://" + R.drawable.img_client_10, holder.imgProfile);
-                break;
-            case 4:
-                Glide.with(activity)
-                        .load(R.raw.gif_client_4)
-                        .into(holder.imgProfile);
-                break;
 
-            case 5:
-                Glide.with(activity)
-                        .load(R.raw.gif_client_5)
-                        .into(holder.imgProfile);
-                break;
-
-            case 6:
-                Glide.with(activity)
-                        .load(R.raw.gif_client_11)
-                        .into(holder.imgProfile);
-                break;
-
-            case 7:
-                Glide.with(activity)
-                        .load(R.raw.gif_client_12)
-                        .into(holder.imgProfile);
-                break;
-
+        if (model.getPoints() > sharedPreferenceManager.getCurrentUser().getUserDetails().getTotalPoints()) {
+            holder.contRedeemButton.setAlpha(0.2f);
+            holder.contRedeemButton.setOnClickListener(null);
+        } else {
+            holder.contRedeemButton.setAlpha(1f);
+            setListener(holder, model);
         }
+
 
         setListener(holder, model);
     }
 
-    private void setListener(final ViewHolder holder, final SpinnerModel model) {
+    private void setListener(final ViewHolder holder, final GiftsModel model) {
         holder.contRedeemButton.
                 setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null));
     }
@@ -105,16 +83,17 @@ public class GiftsAndRewardsAdapter extends RecyclerView.Adapter<GiftsAndRewards
 
     @Override
     public int getItemCount() {
-        // FIXME: 2019-05-17 Remove hardcoded count
-        return 10;
+        return arrData.size();
     }
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.imgProfile)
         ImageView imgProfile;
-        @BindView(R.id.txtPrice)
-        AnyTextView txtPrice;
+        @BindView(R.id.txtItemName)
+        AnyTextView txtItemName;
+        @BindView(R.id.txtPoints)
+        AnyTextView txtPoints;
         @BindView(R.id.contRedeemButton)
         LinearLayout contRedeemButton;
         @BindView(R.id.contParentLayout)

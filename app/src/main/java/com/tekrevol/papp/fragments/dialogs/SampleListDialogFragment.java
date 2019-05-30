@@ -15,7 +15,7 @@ import android.view.animation.LayoutAnimationController;
 
 import com.tekrevol.papp.adapters.recyleradapters.SampleAdapter;
 import com.tekrevol.papp.helperclasses.ui.helper.KeyboardHelper;
-import com.tekrevol.papp.models.TupleModel;
+import com.tekrevol.papp.models.general.TupleModel;
 
 import java.util.ArrayList;
 
@@ -24,8 +24,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import com.android.papp.R;
-import com.tekrevol.papp.helperclasses.ui.helper.KeyboardHelper;
-import com.tekrevol.papp.models.TupleModel;
 
 /**
  * Created by khanhamza on 21-Feb-17.

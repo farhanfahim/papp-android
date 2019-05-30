@@ -8,11 +8,9 @@ import android.view.ViewGroup;
 
 import com.android.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.general.SpinnerModel;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
-import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.models.SpinnerModel;
 
 import java.util.List;
 

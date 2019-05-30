@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.papp.R;
-import com.tekrevol.papp.adapters.recyleradapters.AddDependentsAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.SpecialityAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
@@ -25,14 +24,11 @@ import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.KeyboardHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.general.SpinnerModel;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.tekrevol.papp.models.SpinnerModel;
-import com.tekrevol.papp.widget.AnyEditTextView;
-import com.tekrevol.papp.widget.TitleBar;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;

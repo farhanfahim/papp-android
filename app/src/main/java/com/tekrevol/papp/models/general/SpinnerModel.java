@@ -1,4 +1,4 @@
-package com.tekrevol.papp.models;
+package com.tekrevol.papp.models.general;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

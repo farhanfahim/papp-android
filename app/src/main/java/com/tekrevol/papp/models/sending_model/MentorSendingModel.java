@@ -1,10 +1,9 @@
 package com.tekrevol.papp.models.sending_model;
 
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
-import com.tekrevol.papp.models.SpinnerModel;
+import com.tekrevol.papp.models.general.SpinnerModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.tekrevol.papp.models.SpinnerModel;
 
 import java.util.List;
 
@@ -44,6 +43,18 @@ public class MentorSendingModel {
     @Expose
     @SerializedName("first_name")
     private String firstName;
+    @Expose
+    @SerializedName("about")
+    private String about;
+    @Expose
+    @SerializedName("address")
+    private String address;
+    @Expose
+    @SerializedName("lat")
+    private double lat;
+    @Expose
+    @SerializedName("lng")
+    private double lng;
 
     public List<SpinnerModel> getSpecialization() {
         return specialization;
@@ -53,6 +64,37 @@ public class MentorSendingModel {
         this.specialization = specialization;
     }
 
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
 
     public String getAgency() {
         return agency;
