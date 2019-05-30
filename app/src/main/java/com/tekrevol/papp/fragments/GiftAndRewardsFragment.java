@@ -20,6 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.adapters.recyleradapters.GiftsAndRewardsAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
@@ -27,6 +28,7 @@ import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.GiftsModel;
+import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.models.sending_model.GiftsSendingModel;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
@@ -194,6 +196,10 @@ public class GiftAndRewardsFragment extends BaseFragment implements OnItemClickL
             @Override
             public void requestDataResponse(WebResponse<Object> webResponse) {
                 UIHelper.showShortToastInCenter(getContext(), webResponse.message);
+                UserModel currentUser = getCurrentUser();
+                currentUser.getUserDetails().setTotalPoints(currentUser.getUserDetails().getTotalPoints() - giftsModel.getPoints());
+
+                sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser);
                 getBaseActivity().popBackStack();
             }
 

@@ -72,7 +72,7 @@ public class GiftsAndRewardsAdapter extends RecyclerView.Adapter<GiftsAndRewards
         }
 
 
-        setListener(holder, model);
+
     }
 
     private void setListener(final ViewHolder holder, final GiftsModel model) {
