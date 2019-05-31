@@ -1,6 +1,7 @@
 package com.tekrevol.papp.adapters.recyleradapters;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,9 @@ import android.widget.LinearLayout;
 
 import com.android.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
 import com.tekrevol.papp.widget.AnyTextView;
 
 import java.util.List;
@@ -19,23 +22,25 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
+ *
  */
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     private final OnItemClickListener onItemClick;
+    private final int status;
 
     private View itemView = null;
 
 
     private Context activity;
-    private List<SpinnerModel> arrData;
-    private boolean isUpcoming = false;
+    private List<TaskReceivingModel> arrData;
 
-    public TaskAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener, boolean isUpcoming) {
+
+    public TaskAdapter(Context activity, List<TaskReceivingModel> arrData, int status, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
-        this.isUpcoming = isUpcoming;
+        this.status = status;
     }
 
     @Override
@@ -48,31 +53,19 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        SpinnerModel model = arrData.get(i);
+        TaskReceivingModel model = arrData.get(i);
+
+        holder.txtTitle.setText(model.getTitle());
+        holder.txtDesc.setText("Reward: " + model.getRewardPoints() + " points");
+        ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgProfile, model.getIcon(), false);
 
 
-        if (isUpcoming) {
-            holder.txtTitle.setTextColor(activity.getResources().getColor(R.color.c_light_grey));
-            holder.txtDesc.setTextColor(activity.getResources().getColor(R.color.c_light_grey));
-            holder.imgProfile.setImageResource(R.drawable.img_background_call_button_grey);
-        } else {
-            holder.txtTitle.setTextColor(activity.getResources().getColor(R.color.txtBlack));
-            holder.txtDesc.setTextColor(activity.getResources().getColor(R.color.colorPrimaryDark));
-            holder.imgProfile.setImageResource(R.drawable.img_medal2);
-        }
         setListener(holder, model);
     }
 
-    private void setListener(final ViewHolder holder, final SpinnerModel model) {
-        if (isUpcoming) {
-            holder.contParentLayout.
-                    setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, itemView, TaskAdapter.class.getSimpleName()));
-
-        } else {
-            holder.contParentLayout.
-                    setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, itemView, TaskAdapter.class.getSimpleName() + "completed"));
-
-        }
+    private void setListener(final ViewHolder holder, final TaskReceivingModel model) {
+        holder.contParentLayout.
+                setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, itemView, status));
     }
 
 

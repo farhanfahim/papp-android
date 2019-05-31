@@ -56,7 +56,7 @@ public class WebServiceConstants {
     public static final String PATH_PROFILE = "profile";
     public static final String PATH_GIFTS = "gifts";
     public static final String PATH_REDEEM_POINTS = "redeem-points";
-
+    public static final String PATH_TASKS = "tasks";
 
 
     /**
@@ -70,6 +70,9 @@ public class WebServiceConstants {
     public static final String Q_PARAM_MY_MENTOR = "my_mentor";
     public static final String Q_PARAM_SEARCH = "search";
     public static final String Q_PARAM_DEPT_ID = "department_id";
+    public static final String Q_PARAM_TYPE = "type";
+    public static final String Q_PARAM_AVAILABLE = "available";
+    public static final String Q_PARAM_STATUS = "status";
 
 
     /**

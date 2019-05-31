@@ -10,6 +10,7 @@ import android.widget.ScrollView;
 
 import com.android.papp.R;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
@@ -48,12 +49,16 @@ public class TaskDetailsFragment extends BaseFragment {
     AnyTextView txtSubmit;
     @BindView(R.id.contParentLayout)
     ScrollView contParentLayout;
+    private TaskReceivingModel taskReceivingModel;
+    private int status;
 
-    public static TaskDetailsFragment newInstance() {
+    public static TaskDetailsFragment newInstance(TaskReceivingModel taskReceivingModel, int status) {
 
         Bundle args = new Bundle();
 
         TaskDetailsFragment fragment = new TaskDetailsFragment();
+        fragment.taskReceivingModel = taskReceivingModel;
+        fragment.status = status;
         fragment.setArguments(args);
         return fragment;
     }

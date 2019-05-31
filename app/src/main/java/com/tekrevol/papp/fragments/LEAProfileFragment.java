@@ -173,7 +173,7 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
         txtName.setText(mentorModel.getUserDetails().getFullName());
         txtDesignation.setText(mentorModel.getUserDetails().getDesignation());
 //        txtLocation.setText();
-        ImageLoaderHelper.loadImageWithAnimationsByPath(imgProfile, mentorModel.getUserDetails().getImage());
+        ImageLoaderHelper.loadImageWithAnimationsByPath(imgProfile, mentorModel.getUserDetails().getImage(), true);
         txtAgency.setText(mentorModel.getUserDetails().getAgency());
         txtDepartment.setText(getHomeActivity().sparseArrayDepartments.get(mentorModel.getUserDetails().getDepartmentId(), ""));
 

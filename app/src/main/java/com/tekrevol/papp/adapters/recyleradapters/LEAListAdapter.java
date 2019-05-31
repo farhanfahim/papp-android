@@ -12,7 +12,6 @@ import com.android.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.widget.AnyTextView;
-import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 
 import java.util.List;
@@ -51,7 +50,7 @@ public class LEAListAdapter extends RecyclerView.Adapter<LEAListAdapter.ViewHold
         UserModel model = arrData.get(i);
 
         holder.txtName.setText(model.getUserDetails().getFullName());
-        ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgProfile, model.getUserDetails().getImage());
+        ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgProfile, model.getUserDetails().getImage(), true);
 
         setListener(holder, model);
     }

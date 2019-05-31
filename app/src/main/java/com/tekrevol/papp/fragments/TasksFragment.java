@@ -12,21 +12,31 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.android.papp.R;
+import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.adapters.recyleradapters.OnGoingTaskAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.TaskAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.constatnts.Constants;
+import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.managers.retrofit.GsonFactory;
+import com.tekrevol.papp.managers.retrofit.WebServices;
+import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static com.tekrevol.papp.constatnts.AppConstants.TASK_STATUS_AVAILABLE;
 
 public class TasksFragment extends BaseFragment implements OnItemClickListener {
 
@@ -35,15 +45,20 @@ public class TasksFragment extends BaseFragment implements OnItemClickListener {
 
 
     OnGoingTaskAdapter adpOnGoingTask;
-    ArrayList<SpinnerModel> arrOnGoingTask;
+    ArrayList<TaskReceivingModel> arrOnGoingTask;
 
 
     TaskAdapter adapterCompletedTasks;
-    ArrayList<SpinnerModel> arrCompletedTasks;
+    ArrayList<TaskReceivingModel> arrCompletedTasks;
 
 
-    TaskAdapter adapterUpcomingSession;
-    ArrayList<SpinnerModel> arrUpcomingTasks;
+    TaskAdapter adapterUpcomingTasks;
+    ArrayList<TaskReceivingModel> arrUpcomingTasks;
+
+    TaskAdapter adapterPendingApproval;
+    ArrayList<TaskReceivingModel> arrPendingApproval;
+
+
     @BindView(R.id.rvOnGoingTasks)
     RecyclerView rvOnGoingTasks;
     @BindView(R.id.txtViewAllCompletedTasks)
@@ -54,6 +69,10 @@ public class TasksFragment extends BaseFragment implements OnItemClickListener {
     AnyTextView txtViewAllUpcomingTasks;
     @BindView(R.id.rvUpcomingTasks)
     RecyclerView rvUpcomingTasks;
+    @BindView(R.id.txtViewAllPendingApproval)
+    AnyTextView txtViewAllPendingApproval;
+    @BindView(R.id.rvPendingApproval)
+    RecyclerView rvPendingApproval;
 
 
     public static TasksFragment newInstance() {
@@ -71,15 +90,19 @@ public class TasksFragment extends BaseFragment implements OnItemClickListener {
         super.onCreate(savedInstanceState);
 
         arrOnGoingTask = new ArrayList<>();
-        adpOnGoingTask = new OnGoingTaskAdapter(getContext(), arrOnGoingTask, this);
+        adpOnGoingTask = new OnGoingTaskAdapter(getContext(), arrOnGoingTask, AppConstants.TASK_STATUS_ONGOING, this);
 
 
         arrCompletedTasks = new ArrayList<>();
-        adapterCompletedTasks = new TaskAdapter(getContext(), arrCompletedTasks, this, false);
+        adapterCompletedTasks = new TaskAdapter(getContext(), arrCompletedTasks, AppConstants.TASK_STATUS_COMPLETED, this);
 
 
         arrUpcomingTasks = new ArrayList<>();
-        adapterUpcomingSession = new TaskAdapter(getContext(), arrUpcomingTasks, this, true);
+        adapterUpcomingTasks = new TaskAdapter(getContext(), arrUpcomingTasks, TASK_STATUS_AVAILABLE, this);
+
+
+        arrPendingApproval = new ArrayList<>();
+        adapterPendingApproval = new TaskAdapter(getContext(), arrPendingApproval, AppConstants.TASK_STATUS_PENDING_ADMIN_APPROVAL, this);
 
 
     }
@@ -110,15 +133,11 @@ public class TasksFragment extends BaseFragment implements OnItemClickListener {
 
         bindRecyclerView();
 
-        arrOnGoingTask.clear();
-        arrOnGoingTask.add(new SpinnerModel(""));
+        getTasks(AppConstants.TASK_STATUS_ONGOING, false);
+        getTasks(AppConstants.TASK_STATUS_COMPLETED, false);
+        getTasks(AppConstants.TASK_STATUS_AVAILABLE, true);
+        getTasks(AppConstants.TASK_STATUS_PENDING_ADMIN_APPROVAL, false);
 
-        arrCompletedTasks.clear();
-        arrCompletedTasks.addAll(Constants.getAddDependentsArray());
-
-
-        arrUpcomingTasks.clear();
-        arrUpcomingTasks.addAll(Constants.getAddDependentsArray2());
     }
 
     @Override
@@ -167,7 +186,7 @@ public class TasksFragment extends BaseFragment implements OnItemClickListener {
         RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvUpcomingTasks.setLayoutManager(mLayoutManager3);
         ((DefaultItemAnimator) rvUpcomingTasks.getItemAnimator()).setSupportsChangeAnimations(false);
-        rvUpcomingTasks.setAdapter(adapterUpcomingSession);
+        rvUpcomingTasks.setAdapter(adapterUpcomingTasks);
 
 
     }
@@ -175,15 +194,21 @@ public class TasksFragment extends BaseFragment implements OnItemClickListener {
 
     @Override
     public void onItemClick(int position, Object object, View view, Object type) {
-        if (type instanceof String) {
-            if (((String) type).equalsIgnoreCase(OnGoingTaskAdapter.class.getSimpleName())) {
-                getBaseActivity().addDockableFragment(TaskDetailsFragment.newInstance(), true);
-            } else if (((String) type).equalsIgnoreCase(TaskAdapter.class.getSimpleName())) {
-                getBaseActivity().addDockableFragment(TaskSummaryFragment.newInstance(), true);
-            } else if (((String) type).equalsIgnoreCase(TaskAdapter.class.getSimpleName() + "completed")) {
-                showNextBuildToast();
-            }
 
+        TaskReceivingModel model = (TaskReceivingModel) object;
+
+        if (type instanceof Integer) {
+            int status = (int) type;
+
+            if (status == TASK_STATUS_AVAILABLE) {
+                getBaseActivity().addDockableFragment(TaskSummaryFragment.newInstance(model, status), true);
+            } else if (status == AppConstants.TASK_STATUS_COMPLETED) {
+                showNextBuildToast();
+            } else if (status == AppConstants.TASK_STATUS_PENDING_ADMIN_APPROVAL) {
+                showNextBuildToast();
+            } else if (status == AppConstants.TASK_STATUS_ONGOING) {
+                getBaseActivity().addDockableFragment(TaskDetailsFragment.newInstance(model, status), true);
+            }
 
         }
 
@@ -194,4 +219,66 @@ public class TasksFragment extends BaseFragment implements OnItemClickListener {
     public void onViewClicked() {
         showNextBuildToast();
     }
+
+
+    public void getTasks(int status, boolean isAvailable) {
+        Map<String, Object> queryMap = new HashMap<>();
+        if (isMentor()) {
+            queryMap.put(WebServiceConstants.Q_PARAM_TYPE, AppConstants.TASK_TYPE_MENTOR);
+        } else {
+            queryMap.put(WebServiceConstants.Q_PARAM_TYPE, AppConstants.TASK_TYPE_USER);
+        }
+
+        if (isAvailable) {
+            queryMap.put(WebServiceConstants.Q_PARAM_AVAILABLE, "true");
+        } else {
+            queryMap.put(WebServiceConstants.Q_PARAM_STATUS, status);
+        }
+
+
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 3);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_TASKS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                Type type = new TypeToken<ArrayList<TaskReceivingModel>>() {
+                }.getType();
+                ArrayList<TaskReceivingModel> arrayList = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type);
+
+
+                if (status == TASK_STATUS_AVAILABLE) {
+                    arrUpcomingTasks.clear();
+                    arrUpcomingTasks.addAll(arrayList);
+                    adapterUpcomingTasks.notifyDataSetChanged();
+
+                } else if (status == AppConstants.TASK_STATUS_COMPLETED) {
+
+                    arrCompletedTasks.clear();
+                    arrCompletedTasks.addAll(arrayList);
+                    adapterCompletedTasks.notifyDataSetChanged();
+
+                } else if (status == AppConstants.TASK_STATUS_PENDING_ADMIN_APPROVAL) {
+                    arrPendingApproval.clear();
+                    arrPendingApproval.addAll(arrayList);
+                    adapterPendingApproval.notifyDataSetChanged();
+                } else if (status == AppConstants.TASK_STATUS_ONGOING) {
+                    arrOnGoingTask.clear();
+                    arrOnGoingTask.addAll(arrayList);
+                    adpOnGoingTask.notifyDataSetChanged();
+                }
+
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
 }

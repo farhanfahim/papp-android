@@ -32,11 +32,11 @@ public class ImageLoaderHelper {
      * @param imageView
      * @param url
      */
-    public static void loadImageWithConstantHeadersWithoutAnimation(Context context, ImageView imageView, String url) {
+    public static void loadImageWithConstantHeadersWithoutAnimation(Context context, ImageView imageView, String url, boolean isUser) {
         ImageLoader.getInstance().displayImage(url,
                 imageView,
                 ImageLoaderHelper.getOptionsSimple(WebServiceConstants
-                        .getHeaders(SharedPreferenceManager.getInstance(context).getString(AppConstants.KEY_TOKEN))));
+                        .getHeaders(SharedPreferenceManager.getInstance(context).getString(AppConstants.KEY_TOKEN)), isUser));
     }
 
     /**
@@ -46,11 +46,11 @@ public class ImageLoaderHelper {
      * @param imageView
      * @param url
      */
-    public static void loadImageWithConstantHeaders(Context context, ImageView imageView, String url) {
+    public static void loadImageWithConstantHeaders(Context context, ImageView imageView, String url, boolean isUser) {
         ImageLoader.getInstance().displayImage(url,
                 imageView,
                 ImageLoaderHelper.getOptionsWithAnimation(WebServiceConstants
-                        .getHeaders(SharedPreferenceManager.getInstance(context).getString(AppConstants.KEY_TOKEN))));
+                        .getHeaders(SharedPreferenceManager.getInstance(context).getString(AppConstants.KEY_TOKEN)), isUser));
     }
 
 
@@ -61,10 +61,10 @@ public class ImageLoaderHelper {
      * @param url
      */
 
-    public static void loadImageWithouAnimation(ImageView imageView, String url) {
+    public static void loadImageWithouAnimation(ImageView imageView, String url, boolean isUser) {
         ImageLoader.getInstance().displayImage(url,
                 imageView,
-                ImageLoaderHelper.getOptionsSimple());
+                ImageLoaderHelper.getOptionsSimple(isUser));
     }
 
 
@@ -73,14 +73,14 @@ public class ImageLoaderHelper {
      *
      * @param imageView
      * @param url
+     * @param isUser
      */
 
-    public static void loadImageWithAnimations(ImageView imageView, String url) {
+    public static void loadImageWithAnimations(ImageView imageView, String url, boolean isUser) {
         ImageLoader.getInstance().displayImage(url,
                 imageView,
-                ImageLoaderHelper.getOptionsWithAnimation());
+                ImageLoaderHelper.getOptionsWithAnimation(isUser));
     }
-
 
 
     /**
@@ -90,10 +90,10 @@ public class ImageLoaderHelper {
      * @param path
      */
 
-    public static void loadImageWithouAnimationByPath(ImageView imageView, String path) {
+    public static void loadImageWithouAnimationByPath(ImageView imageView, String path, boolean isUser) {
         ImageLoader.getInstance().displayImage(getImageURLFromPath(path),
                 imageView,
-                ImageLoaderHelper.getOptionsSimple());
+                ImageLoaderHelper.getOptionsSimple(isUser));
     }
 
 
@@ -102,15 +102,14 @@ public class ImageLoaderHelper {
      *
      * @param imageView
      * @param path
+     * @param isUser
      */
 
-    public static void loadImageWithAnimationsByPath(ImageView imageView, String path) {
+    public static void loadImageWithAnimationsByPath(ImageView imageView, String path, boolean isUser) {
         ImageLoader.getInstance().displayImage(getImageURLFromPath(path),
                 imageView,
-                ImageLoaderHelper.getOptionsWithAnimation());
+                ImageLoaderHelper.getOptionsWithAnimation(isUser));
     }
-
-
 
 
     public static void loadBase64Image(ImageView imageView, String base64) {
@@ -134,43 +133,85 @@ public class ImageLoaderHelper {
         return WebServiceConstants.IMAGE_BASE_URL + path + "?w=" + width + "&h=" + height;
     }
 
-    public static DisplayImageOptions getOptionsSimple() {
+    public static DisplayImageOptions getOptionsSimple(boolean isUser) {
 
-        return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
-                .showImageForEmptyUri(R.color.base_dark_gray)
-                .showImageOnFail(R.drawable.profile_placeholder)
-                .showImageOnLoading(R.drawable.profile_placeholder)
-                .build();
+        if (isUser) {
+            return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
+                    .showImageForEmptyUri(R.color.base_dark_gray)
+                    .showImageOnFail(R.drawable.profile_placeholder)
+                    .showImageOnLoading(R.drawable.profile_placeholder)
+                    .build();
+        } else {
+            return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
+                    .showImageForEmptyUri(R.color.base_dark_gray)
+                    .showImageOnFail(R.drawable.app_icon_placeholder)
+                    .showImageOnLoading(R.drawable.app_icon_placeholder)
+                    .build();
+        }
+
+
     }
 
 
-    public static DisplayImageOptions getOptionsSimple(Map<String, String> headers) {
+    public static DisplayImageOptions getOptionsSimple(Map<String, String> headers, boolean isUser) {
 
-        return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
-                .showImageForEmptyUri(R.color.base_dark_gray)
-                .showImageOnFail(R.drawable.profile_placeholder)
-                .showImageOnLoading(R.drawable.profile_placeholder)
-                .extraForDownloader(headers)
-                .build();
+        if (isUser) {
+            return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
+                    .showImageForEmptyUri(R.color.base_dark_gray)
+                    .showImageOnFail(R.drawable.profile_placeholder)
+                    .showImageOnLoading(R.drawable.profile_placeholder)
+                    .extraForDownloader(headers)
+                    .build();
+        } else {
+            return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
+                    .showImageForEmptyUri(R.color.base_dark_gray)
+                    .showImageOnFail(R.drawable.app_icon_placeholder)
+                    .showImageOnLoading(R.drawable.app_icon_placeholder)
+                    .extraForDownloader(headers)
+                    .build();
+        }
+
+
     }
 
-    public static DisplayImageOptions getOptionsWithAnimation() {
+    public static DisplayImageOptions getOptionsWithAnimation(boolean isUser) {
 
-        return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
-                .showImageForEmptyUri(R.color.base_dark_gray)
-                .showImageOnFail(R.drawable.profile_placeholder)
-                .showImageOnLoading(R.drawable.profile_placeholder)
-                .imageScaleType(ImageScaleType.EXACTLY).displayer(new FadeInBitmapDisplayer(200)).build();
+        if (isUser) {
+            return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
+                    .showImageForEmptyUri(R.color.base_dark_gray)
+                    .showImageOnFail(R.drawable.profile_placeholder)
+                    .showImageOnLoading(R.drawable.profile_placeholder)
+                    .imageScaleType(ImageScaleType.EXACTLY).displayer(new FadeInBitmapDisplayer(200)).build();
+        } else {
+            return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
+                    .showImageForEmptyUri(R.color.base_dark_gray)
+                    .showImageOnFail(R.drawable.app_icon_placeholder)
+                    .showImageOnLoading(R.drawable.app_icon_placeholder)
+                    .imageScaleType(ImageScaleType.EXACTLY).displayer(new FadeInBitmapDisplayer(200)).build();
+        }
+
+
     }
 
 
-    public static DisplayImageOptions getOptionsWithAnimation(Map<String, String> headers) {
+    public static DisplayImageOptions getOptionsWithAnimation(Map<String, String> headers, boolean isUser) {
 
-        return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
-                .showImageForEmptyUri(R.color.base_dark_gray)
-                .showImageOnFail(R.drawable.profile_placeholder)
-                .showImageOnLoading(R.drawable.profile_placeholder)
-                .extraForDownloader(headers)
-                .imageScaleType(ImageScaleType.EXACTLY).displayer(new FadeInBitmapDisplayer(200)).build();
+        if (isUser) {
+            return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
+                    .showImageForEmptyUri(R.color.base_dark_gray)
+                    .showImageOnFail(R.drawable.profile_placeholder)
+                    .showImageOnLoading(R.drawable.profile_placeholder)
+                    .extraForDownloader(headers)
+                    .imageScaleType(ImageScaleType.EXACTLY).displayer(new FadeInBitmapDisplayer(200)).build();
+        } else {
+            return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
+                    .showImageForEmptyUri(R.color.base_dark_gray)
+                    .showImageOnFail(R.drawable.app_icon_placeholder)
+                    .showImageOnLoading(R.drawable.app_icon_placeholder)
+                    .extraForDownloader(headers)
+                    .imageScaleType(ImageScaleType.EXACTLY).displayer(new FadeInBitmapDisplayer(200)).build();
+        }
+
+
     }
 }

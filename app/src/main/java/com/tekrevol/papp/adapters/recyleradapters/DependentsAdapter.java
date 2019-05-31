@@ -13,8 +13,6 @@ import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.widget.AnyTextView;
-import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.models.receiving_model.UserModel;
 
 import java.util.List;
 
@@ -63,7 +61,7 @@ public class DependentsAdapter extends RecyclerView.Adapter<DependentsAdapter.Vi
 
 
         holder.txtName.setText(model.getUserDetails().getFullName());
-        ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgDependentProfile, model.getUserDetails().getImage());
+        ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgDependentProfile, model.getUserDetails().getImage(), true);
 
         setListener(holder, model);
     }

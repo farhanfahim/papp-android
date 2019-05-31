@@ -10,6 +10,7 @@ import android.widget.ScrollView;
 
 import com.android.papp.R;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
@@ -45,12 +46,16 @@ public class TaskSummaryFragment extends BaseFragment {
     AnyTextView txtAcceptChallenge;
     @BindView(R.id.contParentLayout)
     ScrollView contParentLayout;
+    private int status;
+    private TaskReceivingModel taskReceivingModel;
 
-    public static TaskSummaryFragment newInstance() {
+    public static TaskSummaryFragment newInstance(TaskReceivingModel taskReceivingModel, int status) {
 
         Bundle args = new Bundle();
 
         TaskSummaryFragment fragment = new TaskSummaryFragment();
+        fragment.taskReceivingModel = taskReceivingModel;
+        fragment.status = status;
         fragment.setArguments(args);
         return fragment;
     }

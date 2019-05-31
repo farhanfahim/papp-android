@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.android.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
 import com.tekrevol.papp.widget.AnyTextView;
 
 import java.util.List;
@@ -23,18 +24,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class OnGoingTaskAdapter extends RecyclerView.Adapter<OnGoingTaskAdapter.ViewHolder> {
 
     private final OnItemClickListener onItemClick;
+    private final int status;
 
 
     private View itemView = null;
 
 
     private Context activity;
-    private List<SpinnerModel> arrData;
+    private List<TaskReceivingModel> arrData;
 
-    public OnGoingTaskAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
+    public OnGoingTaskAdapter(Context activity, List<TaskReceivingModel> arrData, int status, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
+        this.status = status;
     }
 
     @Override
@@ -47,15 +50,15 @@ public class OnGoingTaskAdapter extends RecyclerView.Adapter<OnGoingTaskAdapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        SpinnerModel model = arrData.get(i);
+        TaskReceivingModel model = arrData.get(i);
 
 
         setListener(holder, model);
     }
 
-    private void setListener(final ViewHolder holder, final SpinnerModel model) {
+    private void setListener(final ViewHolder holder, final TaskReceivingModel model) {
         holder.contParentLayout.
-                setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, itemView, OnGoingTaskAdapter.class.getSimpleName()));
+                setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, itemView, status));
     }
 
 

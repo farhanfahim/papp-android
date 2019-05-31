@@ -54,7 +54,7 @@ public class ViewAllDependentsAdapter extends RecyclerView.Adapter<ViewAllDepend
         holder.txtName.setText(model.getUserDetails().getFullName());
         holder.txtGender.setText(AppConstants.getGenderString(model.getUserDetails().getGender()));
         holder.txtEmail.setText(model.getEmail());
-        ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgDependentProfile, model.getUserDetails().getImage());
+        ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgDependentProfile, model.getUserDetails().getImage(), true);
 
         setListener(holder, model);
     }

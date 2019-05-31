@@ -17,7 +17,6 @@ import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.fragments.abstracts.GenericContentFragment;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
-import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 
@@ -102,7 +101,7 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
 
 
         if (getCurrentUser() != null) {
-            ImageLoaderHelper.loadImageWithAnimationsByPath(imgProfile, getCurrentUser().getUserDetails().getImage());
+            ImageLoaderHelper.loadImageWithAnimationsByPath(imgProfile, getCurrentUser().getUserDetails().getImage(), true);
             txtUserName.setText(getCurrentUser().getUserDetails().getFullName());
             txtEmail.setText(getCurrentUser().getEmail());
         }

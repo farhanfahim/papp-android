@@ -87,20 +87,21 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="@dimen/x3dp"
-                        android:text="Completed Tasks"
+                        android:text="Available Tasks"
                         android:textColor="@color/txtBlack"
                         android:textSize="@dimen/s16"
                         app:fontFamily="@string/font_regular" />
 
 
                     <com.tekrevol.papp.widget.AnyTextView
-                        android:id="@+id/txtViewAllCompletedTasks"
+                        android:id="@+id/txtViewAllUpcomingTasks"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/x3dp"
                         android:text="View All"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="@dimen/s12"
+                        android:visibility="visible"
                         app:fontFamily="@string/font_regular" />
 
 
@@ -108,7 +109,7 @@
 
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rvCompletedTasks"
+                    android:id="@+id/rvUpcomingTasks"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/x10dp"
@@ -141,21 +142,20 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="@dimen/x3dp"
-                        android:text="Upcoming Tasks"
+                        android:text="Pending Approval Tasks"
                         android:textColor="@color/txtBlack"
                         android:textSize="@dimen/s16"
                         app:fontFamily="@string/font_regular" />
 
 
                     <com.tekrevol.papp.widget.AnyTextView
-                        android:id="@+id/txtViewAllUpcomingTasks"
+                        android:id="@+id/txtViewAllPendingApproval"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/x3dp"
                         android:text="View All"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="@dimen/s12"
-                        android:visibility="gone"
                         app:fontFamily="@string/font_regular" />
 
 
@@ -163,7 +163,61 @@
 
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rvUpcomingTasks"
+                    android:id="@+id/rvPendingApproval"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x10dp"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x20dp"
+                    android:layout_marginRight="@dimen/x20dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/x3dp"
+                        android:text="Completed Tasks"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s16"
+                        app:fontFamily="@string/font_regular" />
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:id="@+id/txtViewAllCompletedTasks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/x3dp"
+                        android:text="View All"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/s12"
+                        app:fontFamily="@string/font_regular" />
+
+
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvCompletedTasks"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/x10dp"

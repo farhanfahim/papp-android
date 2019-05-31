@@ -13,7 +13,6 @@ import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.widget.AnyTextView;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -54,7 +53,7 @@ public class TopMentorAdapter extends RecyclerView.Adapter<TopMentorAdapter.View
         holder.txtName.setText(model.getUserDetails().getFullName());
 
 
-        ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgProfile, model.getUserDetails().getImage());
+        ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgProfile, model.getUserDetails().getImage(), true);
 
 
         setListener(holder, model);

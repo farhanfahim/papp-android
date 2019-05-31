@@ -120,7 +120,12 @@ public class AppConstants {
     public static String DEVICE_OS_ANDROID = "android";
     public static int PARENT_ROLE = 3;
     public static int MENTOR_ROLE = 5;
-
+    public static int TASK_TYPE_USER = 10;
+    public static int TASK_TYPE_MENTOR = 20;
+    public static int TASK_STATUS_AVAILABLE = 0;
+    public static int TASK_STATUS_ONGOING = 10;
+    public static int TASK_STATUS_COMPLETED = 20;
+    public static int TASK_STATUS_PENDING_ADMIN_APPROVAL = 40;
 
     public static String getGenderString(int gender) {
         switch (gender) {
@@ -144,7 +149,6 @@ public class AppConstants {
                 return 1;
         }
     }
-
 
 
 //    public static RegisteredDeviceModel getRegisteredDevice(Context context, Activity activity) {
