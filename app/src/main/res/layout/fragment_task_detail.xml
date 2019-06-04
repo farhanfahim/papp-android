@@ -265,6 +265,7 @@
 
 
         <com.tekrevol.papp.widget.AnyTextView
+            android:id="@+id/txtStartedDuration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x5dp"

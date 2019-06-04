@@ -44,7 +44,7 @@ public class AppConstants {
      * Date Formats
      */
 
-    public static final String INPUT_DATE_FORMAT = "yyyy-dd-MM hh:mm:ss";
+    public static final String INPUT_DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
     public static final String INPUT_DATE_FORMAT_AM_PM = "yyyy-dd-MM hh:mm:ss a";
     public static final String OUTPUT_DATE_FORMAT = "EEEE dd,yyyy";
     public static final String INPUT_TIME_FORMAT = "yyyy-dd-MM hh:mm:ss a";

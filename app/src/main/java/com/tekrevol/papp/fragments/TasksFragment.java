@@ -19,6 +19,7 @@ import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
@@ -207,7 +208,11 @@ public class TasksFragment extends BaseFragment implements OnItemClickListener {
             } else if (status == AppConstants.TASK_STATUS_PENDING_ADMIN_APPROVAL) {
                 showNextBuildToast();
             } else if (status == AppConstants.TASK_STATUS_ONGOING) {
-                getBaseActivity().addDockableFragment(TaskDetailsFragment.newInstance(model, status), true);
+                if (model.getTaskUsers() == null) {
+                    UIHelper.showShortToastInCenter(getBaseActivity(), "Started date should not be empty");
+                } else {
+                    getBaseActivity().addDockableFragment(TaskDetailsFragment.newInstance(model, status), true);
+                }
             }
 
         }
@@ -223,15 +228,18 @@ public class TasksFragment extends BaseFragment implements OnItemClickListener {
 
     public void getTasks(int status, boolean isAvailable) {
         Map<String, Object> queryMap = new HashMap<>();
-        if (isMentor()) {
-            queryMap.put(WebServiceConstants.Q_PARAM_TYPE, AppConstants.TASK_TYPE_MENTOR);
-        } else {
-            queryMap.put(WebServiceConstants.Q_PARAM_TYPE, AppConstants.TASK_TYPE_USER);
-        }
+
 
         if (isAvailable) {
             queryMap.put(WebServiceConstants.Q_PARAM_AVAILABLE, "true");
         } else {
+
+            if (isMentor()) {
+                queryMap.put(WebServiceConstants.Q_PARAM_TYPE, AppConstants.TASK_TYPE_MENTOR);
+            } else {
+                queryMap.put(WebServiceConstants.Q_PARAM_TYPE, AppConstants.TASK_TYPE_USER);
+            }
+
             queryMap.put(WebServiceConstants.Q_PARAM_STATUS, status);
         }
 

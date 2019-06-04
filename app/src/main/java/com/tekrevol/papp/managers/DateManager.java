@@ -40,7 +40,7 @@ public class DateManager {
     private static SimpleDateFormat sdfUTCOutput = new SimpleDateFormat(AppConstants.OUTPUT_UTC);
 
 
-    // Custom FOR AKUH
+    // Custom
     public static SimpleDateFormat sdfDOB = new SimpleDateFormat(AppConstants.DOB_FORMAT);
 
 

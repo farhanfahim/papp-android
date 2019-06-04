@@ -9,8 +9,14 @@ import android.widget.AdapterView;
 import android.widget.ScrollView;
 
 import com.tekrevol.papp.R;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
+import com.tekrevol.papp.models.sending_model.TaskAcceptSendingModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
@@ -101,6 +107,14 @@ public class TaskSummaryFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+        txtTitle.setText(taskReceivingModel.getTitle());
+        ImageLoaderHelper.loadImageWithAnimationsByPath(imgTask, taskReceivingModel.getIcon(), false);
+        txtDate.setText(taskReceivingModel.getCreatedAt());
+        txtDuration.setText(taskReceivingModel.getDuration() + " days");
+        txtPoints.setText(taskReceivingModel.getRewardPoints() + " points");
+        txtDesc.setText(taskReceivingModel.getDescription());
+
     }
 
 
@@ -134,6 +148,22 @@ public class TaskSummaryFragment extends BaseFragment {
 
     @OnClick(R.id.txtAcceptChallenge)
     public void onViewClicked() {
-        getBaseActivity().onBackPressed();
+        TaskAcceptSendingModel taskAcceptSendingModel = new TaskAcceptSendingModel();
+        taskAcceptSendingModel.setTaskId(taskReceivingModel.getId());
+
+        getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_ACCEPT_TASK, taskAcceptSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                UIHelper.showShortToastInCenter(getContext(), webResponse.message);
+                getBaseActivity().onBackPressed();
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+
+
     }
 }

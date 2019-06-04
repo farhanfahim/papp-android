@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.helperclasses.DateHelper;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.models.general.SpinnerModel;
 import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
 import com.tekrevol.papp.widget.AnyTextView;
@@ -19,7 +21,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.tekrevol.papp.constatnts.AppConstants.INPUT_DATE_FORMAT;
+
 /**
+ *
  */
 public class OnGoingTaskAdapter extends RecyclerView.Adapter<OnGoingTaskAdapter.ViewHolder> {
 
@@ -51,6 +56,16 @@ public class OnGoingTaskAdapter extends RecyclerView.Adapter<OnGoingTaskAdapter.
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
         TaskReceivingModel model = arrData.get(i);
+
+        holder.txtTitle.setText(model.getTitle());
+        holder.txtDesc.setText("Reward: " + model.getRewardPoints() + " points");
+        if (model.getTaskUsers() != null) {
+            holder.txtDuration.setText("Started: " + DateHelper.getElapsedTimeNew(model.getTaskUsers().getStartDate(), INPUT_DATE_FORMAT));
+        } else {
+            holder.txtDuration.setText("Started: -");
+        }
+
+        ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgTask, model.getIcon(), false);
 
 
         setListener(holder, model);

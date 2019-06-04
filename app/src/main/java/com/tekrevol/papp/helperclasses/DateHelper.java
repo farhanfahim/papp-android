@@ -607,7 +607,7 @@ public class DateHelper {
         return (d1.before(d2)) ? d1 : d2;
     }
 
-    public static String getElapsedTimeNew(String sDate) {
+    public static String getElapsedTimeNew(String sDate, String format) {
         long between; // divide by 1000 to convert seconds
         long week = 0;
         long day = 0;
@@ -619,10 +619,12 @@ public class DateHelper {
 
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
         // "Fri Mar 07 16:34:38 GMT+05:00 2014"
-        DateFormat sdfNew = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy",
+//        DateFormat sdfNew = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy",
+//                Locale.US);
+        DateFormat sdfNew = new SimpleDateFormat(format,
                 Locale.US);
 
-        String systemTime = sdf.format(new Date()).toString();
+        String systemTime = sdf.format(new Date());
         String finalTime = "";
         try {
 

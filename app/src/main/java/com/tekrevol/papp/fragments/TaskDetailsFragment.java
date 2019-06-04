@@ -8,13 +8,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ScrollView;
 
+import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.DateHelper;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
 import com.tekrevol.papp.widget.AnyTextView;
-import com.tekrevol.papp.widget.TitleBar;
-import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
-import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.widget.TitleBar;
 
 import butterknife.BindView;
@@ -22,6 +22,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.tekrevol.papp.constatnts.AppConstants.INPUT_DATE_FORMAT;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
@@ -49,6 +51,8 @@ public class TaskDetailsFragment extends BaseFragment {
     AnyTextView txtSubmit;
     @BindView(R.id.contParentLayout)
     ScrollView contParentLayout;
+    @BindView(R.id.txtStartedDuration)
+    AnyTextView txtStartedDuration;
     private TaskReceivingModel taskReceivingModel;
     private int status;
 
@@ -103,6 +107,16 @@ public class TaskDetailsFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        txtTitle.setText(taskReceivingModel.getTitle());
+        ImageLoaderHelper.loadImageWithAnimationsByPath(imgTask, taskReceivingModel.getIcon(), false);
+        txtDate.setText(taskReceivingModel.getCreatedAt());
+        txtDuration.setText(taskReceivingModel.getDuration() + " days");
+        txtPoints.setText(taskReceivingModel.getRewardPoints() + " points");
+        txtDesc.setText(taskReceivingModel.getDescription());
+
+        txtStartedDuration.setText("Started: " + DateHelper.getElapsedTimeNew(taskReceivingModel.getTaskUsers().getStartDate(), INPUT_DATE_FORMAT));
+
 
     }
 

@@ -57,6 +57,7 @@ public class WebServiceConstants {
     public static final String PATH_GIFTS = "gifts";
     public static final String PATH_REDEEM_POINTS = "redeem-points";
     public static final String PATH_TASKS = "tasks";
+    public static final String PATH_ACCEPT_TASK = "task-users";
 
 
     /**

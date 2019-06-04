@@ -11,7 +11,7 @@ public class TaskReceivingModel {
 
     @Expose
     @SerializedName("task_users")
-    private List<Object> taskUsers;
+    private TaskUser taskUsers;
     @Expose
     @SerializedName("task_category")
     private TaskCategory taskCategory;
@@ -48,11 +48,11 @@ public class TaskReceivingModel {
 
 
 
-    public List<Object> getTaskUsers() {
+    public TaskUser getTaskUsers() {
         return taskUsers;
     }
 
-    public void setTaskUsers(List<Object> taskUsers) {
+    public void setTaskUsers(TaskUser taskUsers) {
         this.taskUsers = taskUsers;
     }
 
