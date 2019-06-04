@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 
 import com.tekrevol.papp.callbacks.OnSpinnerItemClickListener;
 import com.tekrevol.papp.callbacks.OnSpinnerOKPressedListener;

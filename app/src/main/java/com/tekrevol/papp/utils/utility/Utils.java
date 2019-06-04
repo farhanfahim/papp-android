@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 
 public class Utils {
 

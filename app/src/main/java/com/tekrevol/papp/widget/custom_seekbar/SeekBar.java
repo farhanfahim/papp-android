@@ -20,7 +20,7 @@ import android.util.AttributeSet;
 
 import java.text.DecimalFormat;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 
 
 public class SeekBar {

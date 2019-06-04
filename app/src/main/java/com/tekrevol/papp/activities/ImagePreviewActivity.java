@@ -12,7 +12,7 @@ import com.jsibbold.zoomage.ZoomageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 
 import static com.tekrevol.papp.constatnts.AppConstants.IMAGE_PREVIEW_TITLE;
 import static com.tekrevol.papp.constatnts.AppConstants.IMAGE_PREVIEW_URL;

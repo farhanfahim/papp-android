@@ -15,7 +15,7 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.Map;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.constatnts.AppConstants;
 
 /**

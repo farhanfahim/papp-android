@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 
 public class VerticalRangeSeekBar extends RangeSeekBar {
 

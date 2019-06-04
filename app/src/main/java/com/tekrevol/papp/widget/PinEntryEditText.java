@@ -29,7 +29,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.util.Locale;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 
 public class PinEntryEditText extends android.support.v7.widget.AppCompatEditText {
     private static final String XML_NAMESPACE_ANDROID = "http://schemas.android.com/apk/res/android";

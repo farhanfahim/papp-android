@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 import com.tekrevol.papp.activities.ChatActivity;
 import com.tekrevol.papp.adapters.recyleradapters.MedalAdapter;

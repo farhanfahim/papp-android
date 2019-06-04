@@ -17,7 +17,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 
 import java.io.File;
 import java.io.FileNotFoundException;

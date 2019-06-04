@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnNewPacketReceivedListener;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;

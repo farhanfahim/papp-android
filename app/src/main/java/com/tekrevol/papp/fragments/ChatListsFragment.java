@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.activities.ChatActivity;
 import com.tekrevol.papp.adapters.recyleradapters.ChatListAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;

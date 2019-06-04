@@ -16,7 +16,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 
 public class SwitchMultiButton extends View {
 

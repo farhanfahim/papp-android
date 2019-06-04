@@ -9,11 +9,11 @@
 //import android.net.Uri;
 //import android.support.v4.app.NotificationCompat;
 //
-//import com.android.papp.BaseApplication;
-//import com.android.papp.R;
-//import com.android.papp.activities.MainActivity;
-//import com.android.papp.constatnts.AppConstants;
-//import com.android.papp.managers.DateManager;
+//import com.tekrevol.papp.BaseApplication;
+//import com.tekrevol.papp.R;
+//import com.tekrevol.papp.activities.MainActivity;
+//import com.tekrevol.papp.constatnts.AppConstants;
+//import com.tekrevol.papp.managers.DateManager;
 //
 ///**
 // * Created by muhammadmuzammil on 7/25/2017.

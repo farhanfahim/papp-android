@@ -18,7 +18,7 @@ import com.tekrevol.papp.fragments.RightSideMenuFragment;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.fragments.abstracts.GenericDialogFragment;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 
 import com.tekrevol.papp.helperclasses.GooglePlaceHelper;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;

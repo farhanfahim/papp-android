@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.adapters.recyleradapters.OnGoingTaskAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.TaskAdapter;

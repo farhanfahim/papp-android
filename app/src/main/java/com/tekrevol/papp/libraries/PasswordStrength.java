@@ -2,7 +2,7 @@ package com.tekrevol.papp.libraries;
 
 import android.graphics.Color;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 
 public enum PasswordStrength {
 

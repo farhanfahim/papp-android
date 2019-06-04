@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 
 /**
  * Created by khanhamza on 21-Feb-17.

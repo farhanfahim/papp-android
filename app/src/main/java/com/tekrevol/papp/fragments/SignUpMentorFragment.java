@@ -19,7 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.google.gson.reflect.TypeToken;
 import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;

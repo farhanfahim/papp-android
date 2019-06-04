@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.CategoriesAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;

@@ -19,7 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.activities.HomeActivity;
 import com.nineoldandroids.view.ViewHelper;
 import com.tekrevol.papp.activities.HomeActivity;

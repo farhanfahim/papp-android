@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,12 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import com.android.papp.R;
+import com.modules.facebooklogin.FacebookHelper;
+import com.modules.facebooklogin.FacebookResponse;
+import com.modules.facebooklogin.FacebookUser;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.activities.HomeActivity;
 import com.tekrevol.papp.adapters.recyleradapters.AddDependentsAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;
@@ -43,21 +48,6 @@ import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.tekrevol.papp.activities.HomeActivity;
-import com.tekrevol.papp.constatnts.AppConstants;
-import com.tekrevol.papp.constatnts.WebServiceConstants;
-import com.tekrevol.papp.enums.BaseURLTypes;
-import com.tekrevol.papp.enums.FileType;
-import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
-import com.tekrevol.papp.helperclasses.validator.PasswordValidation;
-import com.tekrevol.papp.libraries.PasswordStrength;
-import com.tekrevol.papp.models.sending_model.DependantSendingModel;
-import com.tekrevol.papp.models.sending_model.ParentSendingModel;
-import com.tekrevol.papp.models.wrappers.UserModelWrapper;
-import com.tekrevol.papp.models.wrappers.WebResponse;
-import com.tekrevol.papp.widget.AnyEditTextView;
-import com.tekrevol.papp.widget.TitleBar;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
@@ -76,7 +66,7 @@ import static com.tekrevol.papp.constatnts.AppConstants.PARENT_ROLE;
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class SignUpCivilianFragment extends BaseFragment implements OnItemClickListener, OnItemAdd {
+public class SignUpCivilianFragment extends BaseFragment implements OnItemClickListener, OnItemAdd, FacebookResponse {
 
 
     Unbinder unbinder;
@@ -117,6 +107,9 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
     @BindView(R.id.imgPasswordStrength)
     ImageView imgPasswordStrength;
     private File fileTemporaryProfilePicture;
+
+    private FacebookHelper mFbHelper;
+
 
 
     public static SignUpCivilianFragment newInstance() {
@@ -167,6 +160,10 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //fb api initialization
+        mFbHelper = new FacebookHelper(this,
+                "id,name,email,gender,birthday,picture",
+                getBaseActivity());
 
         bindRecyclerView();
         edtPassword.addValidator(new PasswordValidation());
@@ -267,7 +264,7 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
                 signUpWebCall();
                 break;
             case R.id.contFacebookLogin:
-                showNextBuildToast();
+                mFbHelper.performSignIn(SignUpCivilianFragment.this);
                 break;
             case R.id.contTwitterLogin:
                 showNextBuildToast();
@@ -385,6 +382,8 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
                 Exception error = result.getError();
                 error.printStackTrace();
             }
+        } else {
+            mFbHelper.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -402,4 +401,30 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
     }
 
 
+
+    @Override
+    public void onFbSignInFail() {
+        Toast.makeText(getContext(), "Facebook sign in failed.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFbSignInSuccess() {
+        Toast.makeText(getBaseActivity(), "Facebook sign in success", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFbProfileReceived(FacebookUser facebookUser) {
+        Toast.makeText(getContext(), "Facebook user data: name= " + facebookUser.name + " email= " + facebookUser.email, Toast.LENGTH_SHORT).show();
+
+        Log.d("Person name: ", facebookUser.name + "");
+        Log.d("Person gender: ", facebookUser.gender + "");
+        Log.d("Person email: ", facebookUser.email + "");
+        Log.d("Person image: ", facebookUser.facebookID + "");
+    }
+
+    @Override
+    public void onFBSignOut() {
+        Toast.makeText(getContext(), "Facebook sign out success", Toast.LENGTH_SHORT).show();
+
+    }
 }

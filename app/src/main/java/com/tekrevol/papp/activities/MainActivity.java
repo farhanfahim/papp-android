@@ -18,7 +18,7 @@ import com.tekrevol.papp.managers.SharedPreferenceManager;
 
 import java.util.List;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 
 import com.tekrevol.papp.fragments.LoginFragment;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;

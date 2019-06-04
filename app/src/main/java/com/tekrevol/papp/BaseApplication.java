@@ -24,6 +24,7 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.tekrevol.papp.libraries.imageloader.CustomImageDownaloder;
 
+import io.fabric.sdk.android.Fabric;
 import io.reactivex.subjects.PublishSubject;
 import io.realm.Realm;
 
@@ -50,8 +51,13 @@ public class BaseApplication extends MultiDexApplication implements Application.
         // TODO: 12/20/2017 Enable it to use Calligraphy font library
 //        configureCalligraphyLibrary();
 
+        final Fabric fabric = new Fabric.Builder(this)
+                .kits(new Crashlytics())
+                .debuggable(true)
+                .build();
+
         // TODO: 11/1/2017 Enable Crash Lytics and Never Crash feature before releasing the app
-//        Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Crashlytics());
 //        neverCrash();
     }
 

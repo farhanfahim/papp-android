@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.tekrevol.papp.widget.AnyTextView;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.widget.TitleBar;
 import com.tekrevol.papp.widget.TitleBar;
 

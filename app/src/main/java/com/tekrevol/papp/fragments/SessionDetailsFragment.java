@@ -13,7 +13,7 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.DependentsAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;

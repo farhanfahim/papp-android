@@ -8,6 +8,9 @@ import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,6 +30,7 @@ import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
 import android.util.TypedValue;
@@ -48,9 +52,11 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Pattern;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import io.realm.RealmList;
 import io.realm.RealmModel;
 
@@ -354,7 +360,7 @@ public class Helper {
         shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_NAME, shortcutname);
         Parcelable icon = Intent.ShortcutIconResource.fromContext(mContext, R.mipmap.ic_launcher);
         shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);
-        shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, new Intent("com.android.papp"));
+        shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, new Intent("com.tekrevol.papp"));
         mContext.sendBroadcast(shortcutintent);
     }
 
@@ -560,4 +566,23 @@ public class Helper {
         textView.setTextColor(color);
         linearLayout.addView(textView);
     }
+
+
+     public static void printHashKey(Context context) {
+         // Add code to print out the key hash
+         try {
+             PackageInfo info = context.getPackageManager().getPackageInfo(
+                     context.getPackageName(),
+                     PackageManager.GET_SIGNATURES);
+             for (Signature signature : info.signatures) {
+                 MessageDigest md = MessageDigest.getInstance("SHA");
+                 md.update(signature.toByteArray());
+                 Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+             }
+         } catch (PackageManager.NameNotFoundException e) {
+
+         } catch (NoSuchAlgorithmException e) {
+
+         }
+     }
 }

@@ -33,7 +33,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.activities.BaseActivity;
 import com.tekrevol.papp.callbacks.GenericClickableInterface;
 import com.tekrevol.papp.callbacks.OnSpinnerItemClickListener;

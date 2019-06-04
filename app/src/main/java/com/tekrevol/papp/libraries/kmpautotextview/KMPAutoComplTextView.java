@@ -19,7 +19,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.models.general.SpinnerModel;
 
 import java.util.ArrayList;

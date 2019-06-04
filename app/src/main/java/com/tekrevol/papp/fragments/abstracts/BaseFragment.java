@@ -35,7 +35,7 @@ import com.tekrevol.papp.models.wrappers.WebResponse;
 
 import java.io.File;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.activities.BaseActivity;
 import com.tekrevol.papp.callbacks.OnNewPacketReceivedListener;
 import com.tekrevol.papp.widget.TitleBar;

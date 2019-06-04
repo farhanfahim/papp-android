@@ -13,7 +13,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.GenericClickableInterface;
 import info.hoang8f.widget.FButton;
 

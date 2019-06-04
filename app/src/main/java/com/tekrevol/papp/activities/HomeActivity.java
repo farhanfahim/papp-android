@@ -12,7 +12,7 @@ import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.fragments.DashboardCivilianFragment;
 import com.tekrevol.papp.fragments.DashboardLEAFragment;

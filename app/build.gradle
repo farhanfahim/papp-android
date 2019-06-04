@@ -124,7 +124,7 @@ dependencies {
     implementation 'com.jcminarro:RoundKornerLayouts:0.4.0'
     implementation 'com.github.jd-alexander:android-flat-button:v1.1'
     implementation 'me.grantland:autofittextview:0.2.1'
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
         transitive = true;
     }
 
@@ -138,14 +138,10 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
-    // Required only if Facebook login support is required
-    // Find the latest Facebook SDK releases here: https://goo.gl/Ce5L94
-//    implementation 'com.facebook.android:facebook-android-sdk:4.41.0'
 
-    // Required only if Twitter login support is required
-    // Find the latest Twitter SDK releases here: https://goo.gl/E5wZvQ
-//    implementation 'com.twitter.sdk.android:twitter-core:3.x'
 
+    compile 'com.google.android.gms:play-services-auth:16.0.1'
+    compile project(path: ':facebookloginsdk')
 
 }
 

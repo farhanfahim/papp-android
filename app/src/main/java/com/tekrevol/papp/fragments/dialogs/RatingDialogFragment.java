@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 
 import com.tekrevol.papp.callbacks.RatingBarDataInterface;
 

@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.tekrevol.papp.activities.BaseActivity;
 import com.tekrevol.papp.activities.HomeActivity;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.libraries.residemenu.ResideMenu;
 
 

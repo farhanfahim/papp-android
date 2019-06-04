@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.WorkerThread;
 
 
-import com.android.papp.BuildConfig;
+import com.tekrevol.papp.BuildConfig;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.libraries.fileloader.utility.AndroidFileManager;
 import com.tekrevol.papp.managers.retrofit.WebServices;

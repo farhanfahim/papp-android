@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.helperclasses.ui.helper.KeyboardHelper;
 

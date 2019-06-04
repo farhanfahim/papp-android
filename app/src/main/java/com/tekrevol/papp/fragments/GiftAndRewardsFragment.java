@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.adapters.recyleradapters.GiftsAndRewardsAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;

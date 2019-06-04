@@ -14,50 +14,16 @@
 
     <string name="pick_image_intent_text">Choose an image</string>
 
-    <!--Side Bar-->
     <string name="logout">Logout</string>
-    <!--Checkout Bar-->
 
-    <!--login-->
-    <!--login-->
-
-    <!--SignUp/Edit Profile-->
-    <!--SignUp/Edit Profile-->
-
-    <!--Login/SignUP-->
-    <!--Common in Login/SignUP-->
-
-    <!--verify Number-->
-    <!--verify Number-->
-
-    <!--common in Signup / verify Number/Edit Profile-->
-    <!--common in Signup / verify Number-->
-
-    <!--verification code  -->
-    <!--verification code-->
-
-    <!--fragment feedback-->
-    <!--fragment feedback-->
-
-    <!--shopping cart-->
-    <!--shopping cart-->
-
-
-    <!--sortby-->
-    <!--sortby-->
-
-    <!--success popup-->
     <string name="title">Title</string>
-    <!--success popup-->
 
 
-    <!--popup Rating -->
     <string name="do_you_want_to_rate_your_last_nshopping_experience">Do you want to rate your last  shopping experience?</string>
     <string name="delivery_speed">Delivery Speed</string>
     <string name="product_accuracy">Product accuracy</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <!--popup Rating-->
 
     <string name="login">Login</string>
     <string name="search">Search</string>
@@ -79,5 +45,8 @@
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</string>
     <string name="personal_info">During my 3 years as a police officer, I performed area patrols on  foot, bicycle and in patrol cars, responding to traffic incidents, domestic disputes and reports of criminal activity.</string>
 
+
+
+    <string name="action_settings">Settings</string>
 
 </resources>

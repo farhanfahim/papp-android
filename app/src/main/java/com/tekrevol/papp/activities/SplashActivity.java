@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.helperclasses.ui.helper.AnimationHelper;
 import com.tekrevol.papp.managers.SharedPreferenceManager;

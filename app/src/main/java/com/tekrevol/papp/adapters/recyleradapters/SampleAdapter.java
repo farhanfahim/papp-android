@@ -11,7 +11,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.android.papp.R;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.models.general.TupleModel;
 import com.tekrevol.papp.widget.AnyTextView;

@@ -1,4 +1,4 @@
-//package com.android.papp.helperclasses;
+//package com.tekrevol.papp.helperclasses;
 //
 //import android.app.Activity;
 //import android.content.Intent;
@@ -11,8 +11,8 @@
 //import com.paypal.android.sdk.payments.PaymentActivity;
 //import com.paypal.android.sdk.payments.PaymentConfirmation;
 //
-//import com.android.papp.helperclasses.ui.helper.UIHelper;
-//import com.android.papp.activities.BaseActivity;
+//import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+//import com.tekrevol.papp.activities.BaseActivity;
 //
 //import java.math.BigDecimal;
 //

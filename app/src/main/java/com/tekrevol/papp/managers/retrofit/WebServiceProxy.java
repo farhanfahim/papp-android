@@ -66,12 +66,5 @@ public interface WebServiceProxy {
     );
 
 
-//    @GET(WebServiceConstants.WS_KEY_AUTHENTICATE_USER)
-//    Call<Object> getAuthenticatedUserDetails(
-//            @Query("UserName") String userName,
-//            @Query("Application") String application
-//    );
-
-
 }
 
