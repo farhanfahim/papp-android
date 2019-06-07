@@ -1,7 +1,11 @@
 package com.tekrevol.papp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +14,21 @@ import android.widget.ScrollView;
 
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 import com.tekrevol.papp.R;
+import com.tekrevol.papp.adapters.recyleradapters.AttachmentAdapter;
+import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.fragments.abstracts.GenericDialogFragment;
 import com.tekrevol.papp.helperclasses.DateHelper;
+import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
+import com.theartofdev.edmodo.cropper.CropImage;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,13 +36,14 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.app.Activity.RESULT_OK;
 import static com.tekrevol.papp.constatnts.AppConstants.INPUT_DATE_FORMAT;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class TaskDetailsFragment extends BaseFragment {
+public class TaskDetailsFragment extends BaseFragment implements OnItemClickListener {
 
 
     Unbinder unbinder;
@@ -53,8 +67,15 @@ public class TaskDetailsFragment extends BaseFragment {
     ScrollView contParentLayout;
     @BindView(R.id.txtStartedDuration)
     AnyTextView txtStartedDuration;
+    @BindView(R.id.rvAttachments)
+    RecyclerView rvAttachments;
     private TaskReceivingModel taskReceivingModel;
     private int status;
+
+    AttachmentAdapter adapter;
+    ArrayList<String> arrAttachments;
+    private File fileTemporaryProfilePicture;
+    public final int ATTACHMENT_LIMIT_COUNT = 5;
 
     public static TaskDetailsFragment newInstance(TaskReceivingModel taskReceivingModel, int status) {
 
@@ -92,6 +113,9 @@ public class TaskDetailsFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        arrAttachments = new ArrayList<>();
+        adapter = new AttachmentAdapter(getContext(), arrAttachments, this);
+
     }
 
 
@@ -108,6 +132,8 @@ public class TaskDetailsFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        bindRecyclerView();
+
         txtTitle.setText(taskReceivingModel.getTitle());
         ImageLoaderHelper.loadImageWithAnimationsByPath(imgTask, taskReceivingModel.getIcon(), false);
         txtDate.setText(taskReceivingModel.getCreatedAt());
@@ -116,6 +142,16 @@ public class TaskDetailsFragment extends BaseFragment {
         txtDesc.setText(taskReceivingModel.getDescription());
 
         txtStartedDuration.setText("Started: " + DateHelper.getElapsedTimeNew(taskReceivingModel.getTaskUsers().getStartDate(), INPUT_DATE_FORMAT));
+
+
+    }
+
+
+    private void bindRecyclerView() {
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvAttachments.setLayoutManager(mLayoutManager);
+        ((DefaultItemAnimator) rvAttachments.getItemAnimator()).setSupportsChangeAnimations(false);
+        rvAttachments.setAdapter(adapter);
 
 
     }
@@ -149,15 +185,70 @@ public class TaskDetailsFragment extends BaseFragment {
         unbinder.unbind();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                fileTemporaryProfilePicture = new File(result.getUri().getPath());
+                arrAttachments.add(fileTemporaryProfilePicture.getPath());
+                adapter.notifyDataSetChanged();
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+                error.printStackTrace();
+            }
+        }
+    }
+
     @OnClick({R.id.imgAttachment, R.id.txtSubmit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgAttachment:
-                showNextBuildToast();
+
+                GenericDialogFragment genericDialogFragment = new GenericDialogFragment();
+                genericDialogFragment.setMessage("Please Choose Select Image to Select a single image from Gallery or to Capture image from Camera, Choose Select File(s) to select any File(s)");
+                genericDialogFragment.setButton1("Select Image", () ->
+                {
+                    genericDialogFragment.dismiss();
+                    if (arrAttachments.size() >= ATTACHMENT_LIMIT_COUNT) {
+                        UIHelper.showLongToastInCenter(getContext(), "You can't add more attachments than " + ATTACHMENT_LIMIT_COUNT);
+                        return;
+                    }
+                    UIHelper.cropImagePicker(getContext(), TaskDetailsFragment.this);
+                });
+                genericDialogFragment.setButton1Visibility(View.VISIBLE);
+                genericDialogFragment.setButton2("Select File(s)", () -> {
+                    genericDialogFragment.dismiss();
+                    if (arrAttachments.size() >= ATTACHMENT_LIMIT_COUNT) {
+                        UIHelper.showLongToastInCenter(getContext(), "You can't add more attachments than " + ATTACHMENT_LIMIT_COUNT);
+                        return;
+                    }
+                    showFilePicker();
+                });
+                genericDialogFragment.setButton1Visibility(View.VISIBLE);
+                genericDialogFragment.setTitle("Select Attachment");
+                genericDialogFragment.show(getBaseActivity().getSupportFragmentManager(), "Attachment Dialog");
+
+
                 break;
             case R.id.txtSubmit:
                 getBaseActivity().onBackPressed();
                 break;
         }
+    }
+
+    public void showFilePicker() {
+        UIHelper.showFilePickerDialog(getContext(), "Select Attachment", false, files -> {
+            arrAttachments.addAll(Arrays.asList(files));
+            adapter.notifyDataSetChanged();
+        });
+    }
+
+    @Override
+    public void onItemClick(int position, Object object, View view, Object type) {
+        arrAttachments.remove(position);
+        adapter.notifyDataSetChanged();
     }
 }

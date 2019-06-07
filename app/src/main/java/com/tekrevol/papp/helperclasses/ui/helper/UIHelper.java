@@ -33,6 +33,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.tutorialsandroid.filepicker.controller.DialogSelectionListener;
+import com.github.tutorialsandroid.filepicker.model.DialogConfigs;
+import com.github.tutorialsandroid.filepicker.model.DialogProperties;
+import com.github.tutorialsandroid.filepicker.view.FilePickerDialog;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.activities.BaseActivity;
 import com.tekrevol.papp.callbacks.GenericClickableInterface;
@@ -744,6 +748,29 @@ public class UIHelper {
                 .build().show();
 
 
+    }
+
+    public static FilePickerDialog showFilePickerDialog(Context context, String title, boolean isMultiSelect, DialogSelectionListener dialogSelectionListener) {
+        DialogProperties properties = new DialogProperties();
+        if (isMultiSelect) {
+            properties.selection_mode = DialogConfigs.MULTI_MODE;
+        } else {
+            properties.selection_mode = DialogConfigs.SINGLE_MODE;
+        }
+        properties.selection_type = DialogConfigs.FILE_SELECT;
+        properties.root = new File(DialogConfigs.DEFAULT_DIR);
+        properties.error_dir = new File(DialogConfigs.DEFAULT_DIR);
+        properties.offset = new File(DialogConfigs.DEFAULT_DIR);
+//        properties.extensions = new String[]{"jpg", "jpeg", "png", "gif", "wmv", "wma", "3gp", "mp3", "mp4", "avi", "mkv" ,"doc", "docx", "xls", "pdf"};
+        properties.extensions = new String[]{"jpg", "jpeg", "png", "pdf"};
+
+        FilePickerDialog dialog = new FilePickerDialog(context, properties);
+        dialog.setTitle(title);
+
+        dialog.setDialogSelectionListener(dialogSelectionListener);
+
+        dialog.show();
+        return dialog;
     }
 
 

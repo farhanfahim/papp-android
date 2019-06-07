@@ -251,6 +251,14 @@
         </LinearLayout>
 
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvAttachments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+
         <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/txtSubmit"
             android:layout_width="wrap_content"
