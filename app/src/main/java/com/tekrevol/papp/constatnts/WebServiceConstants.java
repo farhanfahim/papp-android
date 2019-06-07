@@ -58,6 +58,7 @@ public class WebServiceConstants {
     public static final String PATH_REDEEM_POINTS = "redeem-points";
     public static final String PATH_TASKS = "tasks";
     public static final String PATH_ACCEPT_TASK = "task-users";
+    public static final String PATH_COMPLETE_TASK = "upload-completed-task";
 
 
     /**
@@ -82,6 +83,13 @@ public class WebServiceConstants {
 
     public static final int PARAMS_TOKEN_EXPIRE = 401;
     public static final int PARAMS_TOKEN_BLACKLIST = 402;
+
+
+    /**
+     *  WSC KEYS
+     */
+
+    public static final String WSC_KEY_ATTACHMENT = "attachment";
 
 
 }

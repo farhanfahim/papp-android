@@ -16,12 +16,18 @@ import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.AttachmentAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
+import com.tekrevol.papp.enums.FileType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.fragments.abstracts.GenericDialogFragment;
 import com.tekrevol.papp.helperclasses.DateHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.managers.retrofit.WebServices;
+import com.tekrevol.papp.managers.retrofit.entities.MultiFileModel;
 import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
+import com.tekrevol.papp.models.sending_model.TaskAcceptSendingModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -38,6 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 import static com.tekrevol.papp.constatnts.AppConstants.INPUT_DATE_FORMAT;
+import static com.tekrevol.papp.constatnts.WebServiceConstants.WSC_KEY_ATTACHMENT;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
@@ -231,10 +238,36 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
                 genericDialogFragment.setTitle("Select Attachment");
                 genericDialogFragment.show(getBaseActivity().getSupportFragmentManager(), "Attachment Dialog");
 
-
                 break;
             case R.id.txtSubmit:
-                getBaseActivity().onBackPressed();
+
+                ArrayList<MultiFileModel> multiFileModelArrayList = new ArrayList<>();
+
+                for (String arrAttachment : arrAttachments) {
+                    if (arrAttachment.contains(".pdf")) {
+                        multiFileModelArrayList.add(new MultiFileModel(new File(arrAttachment), FileType.DOCUMENT, WSC_KEY_ATTACHMENT));
+                    } else {
+                        multiFileModelArrayList.add(new MultiFileModel(new File(arrAttachment), FileType.IMAGE, WSC_KEY_ATTACHMENT));
+                    }
+                }
+
+                TaskAcceptSendingModel taskAcceptSendingModel = new TaskAcceptSendingModel();
+                taskAcceptSendingModel.setTaskId(taskReceivingModel.getId());
+
+
+                getBaseWebService().postMultipartAPI(WebServiceConstants.PATH_COMPLETE_TASK, multiFileModelArrayList, taskAcceptSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                    @Override
+                    public void requestDataResponse(WebResponse<Object> webResponse) {
+                        UIHelper.showAlertDialog(getContext(), webResponse.result.toString());
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
+
+
                 break;
         }
     }

@@ -3,6 +3,7 @@ package com.tekrevol.papp.managers.retrofit;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.tekrevol.papp.activities.HomeActivity;
 import com.tekrevol.papp.activities.MainActivity;
@@ -175,6 +176,7 @@ public class WebServices {
 
         }
     }
+
 
 
     /**
