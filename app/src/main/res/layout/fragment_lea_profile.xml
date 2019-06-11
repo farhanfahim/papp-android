@@ -96,6 +96,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="Edit"
+                        android:padding="@dimen/x3dp"
 
                         android:textColor="@color/c_white"
                         android:textSize="@dimen/s12"
@@ -158,7 +159,7 @@
                                 android:drawablePadding="@dimen/x5dp"
                                 android:ellipsize="end"
                                 android:singleLine="true"
-                                android:text="Washington DC."
+                                android:text="N/A"
                                 android:textColor="@color/c_white"
                                 android:textSize="@dimen/s12"
                                 app:typeface="@string/font_light" />

@@ -16,19 +16,35 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tekrevol.papp.R;
+import com.tekrevol.papp.activities.HomeActivity;
 import com.tekrevol.papp.adapters.recyleradapters.SpecialityAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.constatnts.Constants;
+import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
+import com.tekrevol.papp.enums.BaseURLTypes;
+import com.tekrevol.papp.enums.FileType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.GooglePlaceHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.KeyboardHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.managers.retrofit.WebServices;
+import com.tekrevol.papp.managers.retrofit.entities.MultiFileModel;
+import com.tekrevol.papp.models.general.IntWrapper;
+import com.tekrevol.papp.models.general.LocationModel;
 import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.models.receiving_model.UserDetails;
+import com.tekrevol.papp.models.receiving_model.UserModel;
+import com.tekrevol.papp.models.sending_model.MentorEditProfileModel;
+import com.tekrevol.papp.models.wrappers.UserModelWrapper;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
+import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
-import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
@@ -52,9 +68,7 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
     Unbinder unbinder;
 
     SpecialityAdapter adapter;
-    ArrayList<SpinnerModel> arrData;
-
-
+    ArrayList<SpinnerModel> arrSelectedSpecialization;
     @BindView(R.id.contBack)
     LinearLayout contBack;
     @BindView(R.id.imgProfile)
@@ -68,13 +82,15 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
     @BindView(R.id.edtLastName)
     AnyEditTextView edtLastName;
     @BindView(R.id.edtEmailAddress)
-    AnyEditTextView edtEmailAddress;
-    @BindView(R.id.edtPassword)
-    AnyEditTextView edtPassword;
+    AnyTextView edtEmailAddress;
     @BindView(R.id.edtAgency)
     AnyEditTextView edtAgency;
-    @BindView(R.id.edtDepartment)
-    AnyEditTextView edtDepartment;
+    @BindView(R.id.txtDepartment)
+    AnyTextView txtDepartment;
+    @BindView(R.id.txtLocation)
+    AnyTextView txtLocation;
+    @BindView(R.id.contLocation)
+    LinearLayout contLocation;
     @BindView(R.id.edtDesignation)
     AnyEditTextView edtDesignation;
     @BindView(R.id.edtSpecialization)
@@ -83,12 +99,20 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
     ImageView imgAddSpecialization;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.edtPersonalInfo)
+    AnyEditTextView edtPersonalInfo;
     @BindView(R.id.contBtnUpdate)
     LinearLayout contBtnUpdate;
     @BindView(R.id.contLogin)
     LinearLayout contLogin;
 
+
     private File fileTemporaryProfilePicture;
+
+    LocationModel locationModel;
+    GooglePlaceHelper googlePlaceHelper;
+    IntWrapper departmentPosition = new IntWrapper(0);
+    SpinnerModel selectedDepartment;
 
     public static EditLeaProfileFragment newInstance() {
 
@@ -122,8 +146,8 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        arrData = new ArrayList<>();
-        adapter = new SpecialityAdapter(getContext(), arrData, this, true);
+        arrSelectedSpecialization = new ArrayList<>();
+        adapter = new SpecialityAdapter(getContext(), arrSelectedSpecialization, this, true);
     }
 
 
@@ -143,14 +167,23 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
 
         bindRecyclerView();
 
+        ImageLoaderHelper.loadImageWithAnimationsByPath(imgProfile, getCurrentUser().getUserDetails().getImage(), true);
+        edtFirstName.setText(getCurrentUser().getUserDetails().getFirstName());
+        edtLastName.setText(getCurrentUser().getUserDetails().getLastName());
+        edtEmailAddress.setText(getCurrentUser().getEmail());
+        edtAgency.setText(getCurrentUser().getUserDetails().getAgency());
+        txtDepartment.setText(getHomeActivity().sparseArrayDepartments.get(getCurrentUser().getUserDetails().getDepartmentId(), ""));
+        txtLocation.setText(getCurrentUser().getUserDetails().getAddress());
+        edtDesignation.setText(getCurrentUser().getUserDetails().getDesignation());
+        arrSelectedSpecialization.clear();
+        arrSelectedSpecialization.addAll(getCurrentUser().getSpecializations());
+        edtPersonalInfo.setText(getCurrentUser().getUserDetails().getAbout());
 
-        if (onCreated) {
-            adapter.notifyDataSetChanged();
-            return;
-        }
 
-        arrData.clear();
-        arrData.addAll(Constants.getSpeciality());
+        selectedDepartment = new SpinnerModel(txtDepartment.getStringTrimmed(), getCurrentUser().getUserDetails().getDepartmentId());
+        locationModel = new LocationModel(getCurrentUser().getUserDetails().getLat(), getCurrentUser().getUserDetails().getLng(), getCurrentUser().getUserDetails().getAddress());
+
+
         adapter.notifyDataSetChanged();
     }
 
@@ -203,14 +236,14 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
                     UIHelper.showShortToastInCenter(getContext(), "Please write something");
                     return;
                 }
-                arrData.add(new SpinnerModel(edtSpecialization.getStringTrimmed()));
+                arrSelectedSpecialization.add(new SpinnerModel(edtSpecialization.getStringTrimmed()));
                 edtSpecialization.setText("");
                 KeyboardHelper.hideSoftKeyboardForced(getContext(), edtSpecialization);
                 adapter.notifyDataSetChanged();
                 KeyboardHelper.hideSoftKeyboard(getContext(), view);
                 break;
             case R.id.contBtnUpdate:
-                getBaseActivity().onBackPressed();
+                editProfileCall();
                 break;
             case R.id.contBack:
                 getBaseActivity().onBackPressed();
@@ -228,7 +261,7 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
 
         UIHelper.showAlertDialog("Are you sure you want to remove " + model.getText() + "?",
                 "Alert", (dialogInterface, i) -> {
-                    arrData.remove(position);
+                    arrSelectedSpecialization.remove(position);
                     adapter.notifyDataSetChanged();
                 }, getContext());
     }
@@ -269,6 +302,94 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
                 }
             }
         });
+    }
+
+
+    public void editProfileCall() {
+        // Validations
+
+        if (!edtFirstName.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Please enter valid First Name");
+            return;
+        }
+
+        if (!edtLastName.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Please enter valid Last Name");
+            return;
+        }
+
+
+        if (!edtAgency.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Agency not valid");
+            return;
+        }
+
+        if (!edtDesignation.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Designation not valid");
+            return;
+        }
+
+        if (txtDepartment.getStringTrimmed().isEmpty() && selectedDepartment == null) {
+            UIHelper.showAlertDialog(getContext(), "Please select department");
+            return;
+        }
+
+
+        if (txtLocation.getStringTrimmed().isEmpty() && locationModel == null) {
+            UIHelper.showAlertDialog(getContext(), "Please select location");
+            return;
+        }
+
+
+        if (arrSelectedSpecialization.isEmpty()) {
+            UIHelper.showAlertDialog(getContext(), "Kindly add Specialization");
+            return;
+        }
+
+
+        // Initialize Models
+
+        MentorEditProfileModel mentorEditProfileModel = new MentorEditProfileModel();
+        ArrayList<MultiFileModel> arrMultiFileModel = new ArrayList<>();
+
+
+        // Adding Images
+        if (fileTemporaryProfilePicture != null) {
+            arrMultiFileModel.add(new MultiFileModel(fileTemporaryProfilePicture, FileType.IMAGE, "image"));
+        }
+
+
+        // Setting data
+
+        mentorEditProfileModel.setFirstName(edtFirstName.getStringTrimmed());
+        mentorEditProfileModel.setLastName(edtLastName.getStringTrimmed());
+        mentorEditProfileModel.setEmail(edtEmailAddress.getStringTrimmed());
+        mentorEditProfileModel.setAgency(edtAgency.getStringTrimmed());
+        mentorEditProfileModel.setDepartmentId(selectedDepartment.getId());
+        mentorEditProfileModel.setAddress(locationModel.getAddress());
+        mentorEditProfileModel.setLat(locationModel.getLat());
+        mentorEditProfileModel.setLng(locationModel.getLng());
+        mentorEditProfileModel.setDesignation(edtDesignation.getStringTrimmed());
+        mentorEditProfileModel.setSpecialization(arrSelectedSpecialization);
+        mentorEditProfileModel.setAbout(edtPersonalInfo.getStringTrimmed());
+
+        new WebServices(getBaseActivity(), getToken(), BaseURLTypes.BASE_URL, true)
+                .postMultipartAPI(WebServiceConstants.PATH_PROFILE, arrMultiFileModel, mentorEditProfileModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                    @Override
+                    public void requestDataResponse(WebResponse<Object> webResponse) {
+                        UserDetails userDetails = getGson().fromJson(getGson().toJson(webResponse.result), UserDetails.class);
+                        UserModel currentUser = sharedPreferenceManager.getCurrentUser();
+                        currentUser.setUserDetails(userDetails);
+                        sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser);
+                        getBaseActivity().finish();
+                        getBaseActivity().openActivity(HomeActivity.class);
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
     }
 
 }

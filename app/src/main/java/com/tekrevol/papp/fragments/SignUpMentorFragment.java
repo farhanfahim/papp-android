@@ -128,12 +128,12 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
     @BindView(R.id.txtLocation)
     AnyTextView txtLocation;
 
-    LocationModel locationModel;
     @BindView(R.id.contLocation)
     LinearLayout contLocation;
 
 
     private File fileTemporaryProfilePicture;
+    LocationModel locationModel;
     GooglePlaceHelper googlePlaceHelper;
 
 

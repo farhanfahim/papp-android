@@ -3,35 +3,36 @@ package com.tekrevol.papp.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tekrevol.papp.R;
-import com.tekrevol.papp.adapters.recyleradapters.AddDependentsAdapter;
-import com.tekrevol.papp.callbacks.OnItemAdd;
-import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.activities.HomeActivity;
 import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
+import com.tekrevol.papp.enums.BaseURLTypes;
 import com.tekrevol.papp.enums.FileType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.managers.retrofit.entities.MultiFileModel;
-import com.tekrevol.papp.models.general.SpinnerModel;
-import com.tekrevol.papp.models.sending_model.DependantSendingModel;
+import com.tekrevol.papp.models.receiving_model.UserDetails;
+import com.tekrevol.papp.models.receiving_model.UserModel;
+import com.tekrevol.papp.models.sending_model.ParentEditProfileModel;
 import com.tekrevol.papp.models.sending_model.ParentSendingModel;
+import com.tekrevol.papp.models.wrappers.UserModelWrapper;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
+import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
-import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
@@ -56,14 +57,18 @@ public class EditCivilianProfileFragment extends BaseFragment {
 
     @BindView(R.id.contBack)
     LinearLayout contBack;
+    @BindView(R.id.imgProfile)
+    CircleImageView imgProfile;
+    @BindView(R.id.btnCamera)
+    ImageButton btnCamera;
+    @BindView(R.id.contProfile)
+    RoundKornerRelativeLayout contProfile;
     @BindView(R.id.edtFirstName)
     AnyEditTextView edtFirstName;
     @BindView(R.id.edtLastName)
     AnyEditTextView edtLastName;
     @BindView(R.id.edtEmailAddress)
-    AnyEditTextView edtEmailAddress;
-    @BindView(R.id.edtPassword)
-    AnyEditTextView edtPassword;
+    AnyTextView edtEmailAddress;
     @BindView(R.id.contAddDependents)
     LinearLayout contAddDependents;
     @BindView(R.id.recyclerView)
@@ -72,12 +77,8 @@ public class EditCivilianProfileFragment extends BaseFragment {
     LinearLayout contBtnUpdate;
     @BindView(R.id.contLogin)
     LinearLayout contLogin;
-    @BindView(R.id.imgProfile)
-    CircleImageView imgProfile;
-    @BindView(R.id.btnCamera)
-    ImageButton btnCamera;
-    @BindView(R.id.contProfile)
-    RoundKornerRelativeLayout contProfile;
+
+
     private File fileTemporaryProfilePicture;
 
     public static EditCivilianProfileFragment newInstance() {
@@ -193,20 +194,10 @@ public class EditCivilianProfileFragment extends BaseFragment {
             return;
         }
 
-        if (!edtEmailAddress.testValidity()) {
-            UIHelper.showAlertDialog(getContext(), "Email Address not valid");
-            return;
-        }
-
-
-        if (!edtPassword.testValidity()) {
-            UIHelper.showAlertDialog(getContext(), "Password not valid");
-            return;
-        }
 
         // Initialize Models
 
-        ParentSendingModel parentSendingModel = new ParentSendingModel();
+        ParentEditProfileModel parentEditProfileModel = new ParentEditProfileModel();
         ArrayList<MultiFileModel> arrMultiFileModel = new ArrayList<>();
 
 
@@ -218,15 +209,26 @@ public class EditCivilianProfileFragment extends BaseFragment {
 
         // Setting data
 
-        parentSendingModel.setFirstName(edtFirstName.getStringTrimmed());
-        parentSendingModel.setLastName(edtLastName.getStringTrimmed());
-        parentSendingModel.setEmail(edtEmailAddress.getStringTrimmed());
-        parentSendingModel.setPassword(edtPassword.getStringTrimmed());
-        parentSendingModel.setPasswordConfirmation(edtPassword.getStringTrimmed());
-        parentSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID);
-        parentSendingModel.setRole(AppConstants.PARENT_ROLE);
+        parentEditProfileModel.setFirstName(edtFirstName.getStringTrimmed());
+        parentEditProfileModel.setLastName(edtLastName.getStringTrimmed());
 
-        showAPIRemainingToast();
+        new WebServices(getBaseActivity(), getToken(), BaseURLTypes.BASE_URL, true)
+                .postMultipartAPI(WebServiceConstants.PATH_PROFILE, arrMultiFileModel, parentEditProfileModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                    @Override
+                    public void requestDataResponse(WebResponse<Object> webResponse) {
+                        UserDetails userDetails = getGson().fromJson(getGson().toJson(webResponse.result), UserDetails.class);
+                        UserModel currentUser = sharedPreferenceManager.getCurrentUser();
+                        currentUser.setUserDetails(userDetails);
+                        sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser);
+                        getBaseActivity().finish();
+                        getBaseActivity().openActivity(HomeActivity.class);
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
     }
 
 

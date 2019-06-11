@@ -14,19 +14,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.CategoriesAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.Constants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+import com.tekrevol.papp.managers.retrofit.GsonFactory;
+import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -132,7 +140,7 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        getCategoriesList();
         bindRecyclerView();
 
         arrSessionTypes.clear();
@@ -276,4 +284,47 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
 
 
     }
+
+
+    public void getCategoriesList() {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_DEPARTMENTS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                Type type = new TypeToken<ArrayList<SpinnerModel>>() {
+                }.getType();
+                ArrayList<SpinnerModel> arrayList = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type);
+
+
+                ArrayList<SpinnerModel> arrCategories = new ArrayList<>();
+                arrCategories.clear();
+                arrCategories.add(new SpinnerModel("All", 0));
+                arrCategories.addAll(arrayList);
+                arrCategories.get(0).setSelected(true);
+
+
+                getHomeActivity().sparseArrayDepartments.clear();
+
+                for (SpinnerModel model : arrCategories) {
+                    getHomeActivity().sparseArrayDepartments.put(model.getId(), model.getText());
+                }
+
+
+                categoriesAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
 }
