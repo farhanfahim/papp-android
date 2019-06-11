@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.tekrevol.papp.R;
@@ -52,6 +53,8 @@ public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdap
     public void onBindViewHolder(final ViewHolder holder, int i) {
         DependantSendingModel model = arrData.get(i);
 
+        holder.imgEdit.setVisibility(View.GONE);
+
         holder.txtName.setText(model.getFirstName() + " " + model.getLastName());
         holder.txtGender.setText(AppConstants.getGenderString(model.getGender()));
 
@@ -59,7 +62,7 @@ public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdap
     }
 
     private void setListener(final ViewHolder holder, final DependantSendingModel model) {
-        holder.txtRemove.
+        holder.imgRemove.
                 setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null));
     }
 
@@ -75,8 +78,10 @@ public class AddDependentsAdapter extends RecyclerView.Adapter<AddDependentsAdap
         CircleImageView imgDependentProfile;
         @BindView(R.id.txtName)
         AnyTextView txtName;
-        @BindView(R.id.txtRemove)
-        AnyTextView txtRemove;
+        @BindView(R.id.imgRemove)
+        ImageView imgRemove;
+        @BindView(R.id.imgEdit)
+        ImageView imgEdit;
         @BindView(R.id.txtGender)
         AnyTextView txtGender;
         @BindView(R.id.contParentLayout)

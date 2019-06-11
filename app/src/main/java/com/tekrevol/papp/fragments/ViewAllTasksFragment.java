@@ -15,28 +15,32 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.tekrevol.papp.R;
-import com.tekrevol.papp.adapters.recyleradapters.ViewAllDependentsAdapter;
+import com.tekrevol.papp.adapters.recyleradapters.TaskAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
-import com.tekrevol.papp.models.receiving_model.UserModel;
+import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
-import com.github.clans.fab.FloatingActionButton;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static com.tekrevol.papp.constatnts.AppConstants.TASK_STATUS_AVAILABLE;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class ViewAllDependentsFragment extends BaseFragment implements OnItemClickListener, OnItemAdd {
+public class ViewAllTasksFragment extends BaseFragment implements OnItemClickListener, OnItemAdd {
 
 
     Unbinder unbinder;
@@ -59,14 +63,18 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
     RelativeLayout contParent;
 
 
-    ViewAllDependentsAdapter adapter;
+    TaskAdapter adapter;
+    ArrayList<TaskReceivingModel> arrData;
+    private int taskType;
 
 
-    public static ViewAllDependentsFragment newInstance() {
+    public static ViewAllTasksFragment newInstance(ArrayList<TaskReceivingModel> arrTasks, int taskType) {
 
         Bundle args = new Bundle();
 
-        ViewAllDependentsFragment fragment = new ViewAllDependentsFragment();
+        ViewAllTasksFragment fragment = new ViewAllTasksFragment();
+        fragment.arrData = arrTasks;
+        fragment.taskType = taskType;
         fragment.setArguments(args);
         return fragment;
     }
@@ -87,7 +95,14 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
 
         titleBar.resetViews();
         titleBar.setVisibility(View.VISIBLE);
-        titleBar.setTitle("My Dependents");
+        if (taskType == AppConstants.TASK_STATUS_AVAILABLE) {
+            titleBar.setTitle("Available Tasks");
+        } else if (taskType == AppConstants.TASK_STATUS_COMPLETED) {
+            titleBar.setTitle("Completed Tasks");
+        } else if (taskType == AppConstants.TASK_STATUS_PENDING_ADMIN_APPROVAL) {
+            titleBar.setTitle("Pending Tasks");
+        }
+
         titleBar.showBackButton(getBaseActivity());
     }
 
@@ -96,7 +111,7 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new ViewAllDependentsAdapter(getContext(), getCurrentUser().getDependants(), this);
+
     }
 
 
@@ -113,13 +128,12 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        adapter = new TaskAdapter(getContext(), arrData, taskType, this);
 
-        fab.setVisibility(View.VISIBLE);
+        fab.setVisibility(View.GONE);
         bindRecyclerView();
 
-
         adapter.notifyDataSetChanged();
-
     }
 
 
@@ -165,24 +179,27 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
     @Override
     public void onItemClick(int position, Object object, View view, Object type) {
 
-        UserModel model = (UserModel) object;
+        TaskReceivingModel model = (TaskReceivingModel) object;
 
-        switch (view.getId()) {
-            case R.id.imgRemove:
-                UIHelper.showAlertDialog("Are you sure you want to remove " + model.getUserDetails().getFullName() + "?",
-                        "Alert", (dialogInterface, i) -> {
-//                            getCurrentUser().getDependants().remove(position);
-//                            adapter.notifyDataSetChanged();
-                            showAPIRemainingToast();
-                        }, getContext());
-                break;
+        if (type instanceof Integer) {
+            int status = (int) type;
 
-            case R.id.imgEdit:
-                getBaseActivity().addDockableFragment(EditDependentFragment.newInstance(model), false);
-                break;
+            if (status == TASK_STATUS_AVAILABLE) {
+                getBaseActivity().addDockableFragment(TaskSummaryFragment.newInstance(model, status), true);
+            } else if (status == AppConstants.TASK_STATUS_COMPLETED) {
+                if (model.getTaskUsers() == null) {
+                    UIHelper.showShortToastInCenter(getBaseActivity(), "Started date should not be empty");
+                } else {
+                    getBaseActivity().addDockableFragment(TaskDetailsFragment.newInstance(model, status), true);
+                }
+            } else if (status == AppConstants.TASK_STATUS_PENDING_ADMIN_APPROVAL) {
+                if (model.getTaskUsers() == null) {
+                    UIHelper.showShortToastInCenter(getBaseActivity(), "Started date should not be empty");
+                } else {
+                    getBaseActivity().addDockableFragment(TaskDetailsFragment.newInstance(model, status), true);
+                }
+            }
         }
-
-
     }
 
     @Override
@@ -191,14 +208,4 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
 //        adapter.notifyDataSetChanged();
     }
 
-    @OnClick({R.id.imgSearch, R.id.fab})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.imgSearch:
-                break;
-            case R.id.fab:
-                getBaseActivity().addDockableFragment(AddDependentFragment.newInstance(false, null), true);
-                break;
-        }
-    }
 }

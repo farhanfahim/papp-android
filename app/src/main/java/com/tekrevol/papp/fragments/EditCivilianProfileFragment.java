@@ -19,10 +19,15 @@ import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.AddDependentsAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.enums.FileType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.managers.retrofit.entities.MultiFileModel;
 import com.tekrevol.papp.models.general.SpinnerModel;
 import com.tekrevol.papp.models.sending_model.DependantSendingModel;
+import com.tekrevol.papp.models.sending_model.ParentSendingModel;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
@@ -44,13 +49,10 @@ import static android.app.Activity.RESULT_OK;
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class EditCivilianProfileFragment extends BaseFragment implements OnItemClickListener, OnItemAdd {
+public class EditCivilianProfileFragment extends BaseFragment {
 
 
     Unbinder unbinder;
-
-    AddDependentsAdapter adapter;
-    ArrayList<DependantSendingModel> arrData;
 
     @BindView(R.id.contBack)
     LinearLayout contBack;
@@ -110,8 +112,6 @@ public class EditCivilianProfileFragment extends BaseFragment implements OnItemC
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        arrData = new ArrayList<>();
-        adapter = new AddDependentsAdapter(getContext(), arrData, this);
     }
 
 
@@ -128,26 +128,11 @@ public class EditCivilianProfileFragment extends BaseFragment implements OnItemC
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ImageLoaderHelper.loadImageWithAnimationsByPath(imgProfile, getCurrentUser().getUserDetails().getImage(), true);
+        edtFirstName.setText(getCurrentUser().getUserDetails().getFirstName());
+        edtLastName.setText(getCurrentUser().getUserDetails().getLastName());
+        edtEmailAddress.setText(getCurrentUser().getEmail());
 
-        bindRecyclerView();
-
-
-        if (onCreated) {
-            adapter.notifyDataSetChanged();
-            return;
-        }
-
-        arrData.clear();
-        DependantSendingModel dependant = new DependantSendingModel();
-        dependant.setFirstName("Test");
-        dependant.setLastName("last");
-        dependant.setGender(1);
-
-
-        arrData.add(dependant);
-        arrData.add(dependant);
-        arrData.add(dependant);
-        adapter.notifyDataSetChanged();
     }
 
 
@@ -167,17 +152,6 @@ public class EditCivilianProfileFragment extends BaseFragment implements OnItemC
     }
 
 
-    private void bindRecyclerView() {
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        ((DefaultItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
-        int resId = R.anim.layout_animation_fall_bottom;
-        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), resId);
-//        recylerView.setLayoutAnimation(animation);
-        recyclerView.setAdapter(adapter);
-    }
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -191,14 +165,11 @@ public class EditCivilianProfileFragment extends BaseFragment implements OnItemC
     }
 
 
-    @OnClick({R.id.contAddDependents, R.id.contBtnUpdate, R.id.contBack, R.id.contProfile})
+    @OnClick({R.id.contBtnUpdate, R.id.contBack, R.id.contProfile})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.contAddDependents:
-                getBaseActivity().addDockableFragment(AddDependentFragment.newInstance(false, arrData), false);
-                break;
             case R.id.contBtnUpdate:
-                getBaseActivity().onBackPressed();
+                editProfileCall();
                 break;
             case R.id.contBack:
                 getBaseActivity().onBackPressed();
@@ -209,22 +180,53 @@ public class EditCivilianProfileFragment extends BaseFragment implements OnItemC
         }
     }
 
-    @Override
-    public void onItemClick(int position, Object object, View view, Object type) {
+    public void editProfileCall() {
+        // Validations
 
-        SpinnerModel model = (SpinnerModel) object;
+        if (!edtFirstName.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Please enter valid First Name");
+            return;
+        }
 
-        UIHelper.showAlertDialog("Are you sure you want to remove " + model.getText() + "?",
-                "Alert", (dialogInterface, i) -> {
-                    arrData.remove(position);
-                    adapter.notifyDataSetChanged();
-                }, getContext());
-    }
+        if (!edtLastName.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Please enter valid Last Name");
+            return;
+        }
 
-    @Override
-    public void onItemAdd(Object object) {
-//        arrCategories.add(new SpinnerModel("John Doe"));
-//        adapter.notifyDataSetChanged();
+        if (!edtEmailAddress.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Email Address not valid");
+            return;
+        }
+
+
+        if (!edtPassword.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Password not valid");
+            return;
+        }
+
+        // Initialize Models
+
+        ParentSendingModel parentSendingModel = new ParentSendingModel();
+        ArrayList<MultiFileModel> arrMultiFileModel = new ArrayList<>();
+
+
+        // Adding Images
+        if (fileTemporaryProfilePicture != null) {
+            arrMultiFileModel.add(new MultiFileModel(fileTemporaryProfilePicture, FileType.IMAGE, "image"));
+        }
+
+
+        // Setting data
+
+        parentSendingModel.setFirstName(edtFirstName.getStringTrimmed());
+        parentSendingModel.setLastName(edtLastName.getStringTrimmed());
+        parentSendingModel.setEmail(edtEmailAddress.getStringTrimmed());
+        parentSendingModel.setPassword(edtPassword.getStringTrimmed());
+        parentSendingModel.setPasswordConfirmation(edtPassword.getStringTrimmed());
+        parentSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID);
+        parentSendingModel.setRole(AppConstants.PARENT_ROLE);
+
+        showAPIRemainingToast();
     }
 
 

@@ -120,6 +120,7 @@ public class AppConstants {
     public static String DEVICE_OS_ANDROID = "android";
     public static int PARENT_ROLE = 3;
     public static int MENTOR_ROLE = 5;
+    public static int DEPENDENT_ROLE = 4;
     public static int TASK_TYPE_USER = 10;
     public static int TASK_TYPE_MENTOR = 20;
     public static int TASK_STATUS_AVAILABLE = 0;

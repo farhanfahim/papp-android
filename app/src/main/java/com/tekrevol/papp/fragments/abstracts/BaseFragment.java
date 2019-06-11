@@ -216,6 +216,10 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         UIHelper.showToast(getContext(), "This feature is in progress");
     }
 
+    public void showAPIRemainingToast() {
+        UIHelper.showToast(getContext(), "API Remaining");
+    }
+
 
     public Gson getGson() {
         return getBaseActivity().getGson();

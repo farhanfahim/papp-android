@@ -9,22 +9,24 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+import com.tekrevol.papp.helperclasses.validator.PasswordValidation;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.managers.DateManager;
 import com.tekrevol.papp.models.general.IntWrapper;
+import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.models.sending_model.DependantSendingModel;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,16 +41,25 @@ import static com.tekrevol.papp.managers.DateManager.sdfDOB;
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class AddDependentFragment extends BaseFragment {
+public class EditDependentFragment extends BaseFragment {
 
 
     Unbinder unbinder;
+
+
+    IntWrapper genderPosition = new IntWrapper(0);
     @BindView(R.id.contBack)
     LinearLayout contBack;
+    @BindView(R.id.txtSetPassword)
+    AnyTextView txtSetPassword;
     @BindView(R.id.edtFirstName)
     AnyEditTextView edtFirstName;
     @BindView(R.id.edtLastName)
     AnyEditTextView edtLastName;
+    @BindView(R.id.edtEmailAddress)
+    AnyEditTextView edtEmailAddress;
+    @BindView(R.id.contEmailPassword)
+    LinearLayout contEmailPassword;
     @BindView(R.id.txtDOB)
     AnyTextView txtDOB;
     @BindView(R.id.txtGender)
@@ -62,19 +73,15 @@ public class AddDependentFragment extends BaseFragment {
     @BindView(R.id.contBtnSave)
     LinearLayout contBtnSave;
 
-
-    IntWrapper genderPosition = new IntWrapper(0);
     private File fileTemporaryProfilePicture;
-    private ArrayList<DependantSendingModel> arrData;
-    private boolean isRegistrationProcess = false;
+    private UserModel userModel;
 
-    public static AddDependentFragment newInstance(boolean isRegistrationProcess, ArrayList<DependantSendingModel> arrData) {
+    public static EditDependentFragment newInstance(UserModel userModel) {
 
         Bundle args = new Bundle();
 
-        AddDependentFragment fragment = new AddDependentFragment();
-        fragment.arrData = arrData;
-        fragment.isRegistrationProcess = isRegistrationProcess;
+        EditDependentFragment fragment = new EditDependentFragment();
+        fragment.userModel = userModel;
         fragment.setArguments(args);
         return fragment;
     }
@@ -92,14 +99,9 @@ public class AddDependentFragment extends BaseFragment {
 
     @Override
     public void setTitlebar(TitleBar titleBar) {
-        if (isRegistrationProcess) {
-            titleBar.setVisibility(View.GONE);
-        } else {
-            titleBar.setVisibility(View.VISIBLE);
-            titleBar.setTitle("Add Dependent");
-            titleBar.showBackButton(getBaseActivity());
-        }
-
+        titleBar.setVisibility(View.VISIBLE);
+        titleBar.setTitle("Edit Dependent");
+        titleBar.showBackButton(getBaseActivity());
     }
 
 
@@ -123,11 +125,22 @@ public class AddDependentFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (isRegistrationProcess) {
-            txtUploadPhoto.setVisibility(View.GONE);
-        } else {
-            contBack.setVisibility(View.GONE);
+        contBack.setVisibility(View.GONE);
+        contEmailPassword.setVisibility(View.VISIBLE);
+        txtSetPassword.setVisibility(View.VISIBLE);
+
+
+        edtFirstName.setText(userModel.getUserDetails().getFirstName());
+        edtLastName.setText(userModel.getUserDetails().getLastName());
+        edtEmailAddress.setText(userModel.getEmail());
+        // FIXME: 2019-06-11 DOB are remaining
+//        txtDOB.setText(userModel.get);
+        txtGender.setText(AppConstants.getGenderString(userModel.getUserDetails().getGender()));
+        if (userModel.getUserDetails().getImage() != null && !userModel.getUserDetails().getImage().isEmpty()) {
+            imgDependentProfile.setVisibility(View.VISIBLE);
+            ImageLoaderHelper.loadImageWithAnimationsByPath(imgDependentProfile, userModel.getUserDetails().getImage(), true);
         }
+
     }
 
 
@@ -200,7 +213,7 @@ public class AddDependentFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.contBack, R.id.txtUploadPhoto, R.id.contAddMore, R.id.contBtnSave, R.id.txtDOB, R.id.txtGender})
+    @OnClick({R.id.contBack, R.id.txtUploadPhoto, R.id.contAddMore, R.id.contBtnSave, R.id.txtDOB, R.id.txtGender, R.id.txtSetPassword})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.contBack:
@@ -214,8 +227,13 @@ public class AddDependentFragment extends BaseFragment {
             case R.id.txtGender:
                 showGenderSpinner();
                 break;
-            case R.id.txtDOB:
 
+            case R.id.txtSetPassword:
+                getBaseActivity().popBackStack();
+                getBaseActivity().addDockableFragment(ChangePasswordFragment.newInstance(userModel, AppConstants.DEPENDENT_ROLE), false);
+                break;
+
+            case R.id.txtDOB:
 
                 if (txtDOB.getStringTrimmed().isEmpty()) {
                     DateManager.showDatePicker(getContext(), txtDOB, AppConstants.DOB_FORMAT, null, true, false, null);
@@ -223,46 +241,54 @@ public class AddDependentFragment extends BaseFragment {
                     DateManager.showDatePicker(getContext(), txtDOB, AppConstants.DOB_FORMAT, null, true, false, DateManager.getDate(sdfDOB, txtDOB.getStringTrimmed()));
                 }
 
-
                 break;
             case R.id.contBtnSave:
-
-                // Validations
-
-                if (!edtFirstName.testValidity()) {
-                    UIHelper.showAlertDialog(getContext(), "Please enter valid First Name");
-                    return;
-                }
-
-                if (!edtLastName.testValidity()) {
-                    UIHelper.showAlertDialog(getContext(), "Please enter valid Last Name");
-                    return;
-                }
-
-                if (txtGender.getStringTrimmed().isEmpty()) {
-                    UIHelper.showAlertDialog(getContext(), "Please select Gender");
-                    return;
-                }
-
-
-                if (txtDOB.getStringTrimmed().isEmpty()) {
-                    UIHelper.showAlertDialog(getContext(), "Please select Date of Birth");
-                    return;
-                }
-
-
-                if (isRegistrationProcess && arrData != null) {
-                    DependantSendingModel dependant = new DependantSendingModel();
-                    dependant.setFirstName(edtFirstName.getStringTrimmed());
-                    dependant.setLastName(edtLastName.getStringTrimmed());
-                    dependant.setGender(AppConstants.getGenderInt(txtGender.getStringTrimmed()));
-                    dependant.setDob(txtDOB.getStringTrimmed());
-
-                    arrData.add(dependant);
-                    getBaseActivity().popBackStack();
-                }
+                editDependent();
 
                 break;
         }
+    }
+
+    public void editDependent() {
+        // Validations
+
+        if (!edtFirstName.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Please enter valid First Name");
+            return;
+        }
+
+        if (!edtLastName.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Please enter valid Last Name");
+            return;
+        }
+
+
+        if (!edtEmailAddress.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Please enter valid Email Address");
+            return;
+        }
+
+
+        if (txtGender.getStringTrimmed().isEmpty()) {
+            UIHelper.showAlertDialog(getContext(), "Please select Gender");
+            return;
+        }
+
+
+        if (txtDOB.getStringTrimmed().isEmpty()) {
+            UIHelper.showAlertDialog(getContext(), "Please select Date of Birth");
+            return;
+        }
+
+
+        DependantSendingModel dependant = new DependantSendingModel();
+        dependant.setFirstName(edtFirstName.getStringTrimmed());
+        dependant.setLastName(edtLastName.getStringTrimmed());
+        dependant.setGender(AppConstants.getGenderInt(txtGender.getStringTrimmed()));
+        dependant.setDob(txtDOB.getStringTrimmed());
+
+
+        showAPIRemainingToast();
+        getBaseActivity().popBackStack();
     }
 }

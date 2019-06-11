@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.tekrevol.papp.activities.BaseActivity;
 import com.tekrevol.papp.activities.HomeActivity;
 import com.tekrevol.papp.activities.MainActivity;
 import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.fragments.dialogs.ErrorDialogFragment;
 import com.tekrevol.papp.managers.FileManager;
 import com.tekrevol.papp.managers.SharedPreferenceManager;
 import com.tekrevol.papp.managers.retrofit.entities.MultiFileModel;
@@ -113,6 +115,81 @@ public class WebServices {
      * @param callBack
      */
 
+    public void postMultipartAPIWithSameKeyAttachments(String path, ArrayList<MultiFileModel> multiFileModelArrayList, String jsonStringBody,
+                                                       final IRequestWebResponseAnyObjectCallBack callBack) {
+
+        ArrayList<MultipartBody.Part> partArrayList = new ArrayList<>();
+
+        MultipartBody.Part[] attachments = new MultipartBody.Part[multiFileModelArrayList.size()];
+
+
+        if (jsonStringBody != null && !jsonStringBody.isEmpty()) {
+            try {
+                JSONObject jsonObject = new JSONObject(jsonStringBody);
+                Iterator<?> keys = jsonObject.keys();
+                while (keys.hasNext()) {
+                    String key = (String) keys.next();
+                    String value = jsonObject.getString(key);
+                    partArrayList.add(MultipartBody.Part.createFormData(key, value));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        if (!multiFileModelArrayList.isEmpty()) {
+            for (int i = 0; i < multiFileModelArrayList.size(); i++) {
+                if (multiFileModelArrayList.get(i).getFile() == null || !multiFileModelArrayList.get(i).getFile().exists()) {
+                    dismissDialog();
+                    UIHelper.showShortToastInCenter(activity, "File is empty.");
+                    return;
+                }
+
+                MultipartBody.Part multipart = getMultipart(multiFileModelArrayList.get(i).getFileType(), multiFileModelArrayList.get(i).getFile(), multiFileModelArrayList.get(i).getKeyName());
+                attachments[i] = multipart;
+            }
+        }
+
+
+        try {
+            if (Helper.isNetworkConnected(activity, true)) {
+                apiService.postMultipartWithSameKeyAPI(path, partArrayList, attachments).enqueue(
+                        new Callback<WebResponse<Object>>() {
+                            @Override
+                            public void onResponse(Call<WebResponse<Object>> call, Response<WebResponse<Object>> response) {
+                                validateIfWebResponse(response, callBack);
+                            }
+
+                            @Override
+                            public void onFailure(Call<WebResponse<Object>> call, Throwable t) {
+                                UIHelper.showShortToastInCenter(activity, "Something went wrong, Please check your internet connection.");
+                                dismissDialog();
+                                callBack.onError("");
+                            }
+                        });
+            } else {
+                dismissDialog();
+                callBack.onError("Internet Error");
+            }
+
+        } catch (
+                Exception e) {
+            dismissDialog();
+            e.printStackTrace();
+
+        }
+    }
+
+
+    /**
+     * TO UPLOAD FILE
+     *
+     * @param multiFileModelArrayList
+     * @param jsonStringBody
+     * @param callBack
+     */
+
     public void postMultipartAPI(String path, ArrayList<MultiFileModel> multiFileModelArrayList, String jsonStringBody,
                                  final IRequestWebResponseAnyObjectCallBack callBack) {
 
@@ -176,7 +253,6 @@ public class WebServices {
 
         }
     }
-
 
 
     /**
@@ -295,7 +371,7 @@ public class WebServices {
                 // FIXME: 2019-05-22 LOGOUT LOGIC
                 UIHelper.showToast(activity, "BLACK LIST ERROR " + PARAMS_TOKEN_BLACKLIST);
             } else {
-                errorToastForObject(error);
+                errorToastForObject(error, true);
             }
 
 
@@ -392,7 +468,7 @@ public class WebServices {
     }
 
 
-    private String errorToastForObject(WebResponse<Object> response) {
+    private String errorToastForObject(WebResponse<Object> response, boolean showDialogIfTrueToastIfFalse) {
         String responseMessage = "";
 
         if (response != null) {
@@ -402,7 +478,11 @@ public class WebServices {
         if (responseMessage.isEmpty()) {
             UIHelper.showShortToastInCenter(activity, "API Response Error");
         } else {
-            UIHelper.showShortToastInCenter(activity, responseMessage);
+            if (showDialogIfTrueToastIfFalse && activity instanceof BaseActivity) {
+                ErrorDialogFragment.newInstance(response.errorList, null).show(((BaseActivity) activity).getSupportFragmentManager(), "ErrorDialogFragment");
+            } else {
+                UIHelper.showShortToastInCenter(activity, responseMessage);
+            }
         }
         return responseMessage;
     }

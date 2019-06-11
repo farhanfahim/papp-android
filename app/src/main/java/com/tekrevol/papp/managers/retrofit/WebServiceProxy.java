@@ -52,6 +52,18 @@ public interface WebServiceProxy {
     );
 
 
+    @Multipart
+    @POST("api/v1/{path}")
+    Call<WebResponse<Object>> postMultipartWithSameKeyAPI(
+            @Path("path") String postfix,
+            @Part ArrayList<MultipartBody.Part> body,
+            @Part MultipartBody.Part[] attachment
+
+    );
+
+
+
+
     /**
      * @param postfix
      * @param queryMap

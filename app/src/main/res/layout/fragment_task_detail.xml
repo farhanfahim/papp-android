@@ -227,6 +227,7 @@
 
 
         <LinearLayout
+            android:id="@+id/contAttachment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -259,17 +260,39 @@
             app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
 
-        <com.tekrevol.papp.widget.AnyTextView
-            android:id="@+id/txtSubmit"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/contButtons"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/x20dp"
-            android:layout_marginBottom="@dimen/x20dp"
-            android:background="@drawable/img_button_blue"
-            android:gravity="center"
-            android:text="Submit"
-            android:textColor="@color/c_white" />
+            android:layout_marginBottom="@dimen/x20dp">
+
+            <com.tekrevol.papp.widget.AnyTextView
+                android:id="@+id/txtSubmit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_marginRight="@dimen/x10dp"
+                android:background="@drawable/img_button_blue"
+                android:gravity="center"
+                android:text="Submit"
+                android:textColor="@color/c_white" />
+
+
+            <com.tekrevol.papp.widget.AnyTextView
+                android:id="@+id/txtCancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/x10dp"
+                android:layout_weight="1"
+                android:background="@drawable/img_button_backgroun_amber"
+                android:gravity="center"
+                android:text="Cancel"
+                android:textColor="@color/c_white" />
+
+        </LinearLayout>
 
 
         <com.tekrevol.papp.widget.AnyTextView

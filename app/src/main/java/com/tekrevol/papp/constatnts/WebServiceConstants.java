@@ -34,10 +34,11 @@ public class WebServiceConstants {
      * BaseApplication Fabric enable
      */
 
-
-    // LOCAL
+     // LOCAL
     public static final String BASE_URL = "http://papp.apps.fomarkmedia.com/";
     public static final String IMAGE_BASE_URL = "http://papp.apps.fomarkmedia.com/api/resize/";
+//    public static final String BASE_URL = "http://192.168.29.49/papp/";
+//    public static final String IMAGE_BASE_URL = "http://192.168.29.49/papp/api/resize/";
 
     // LIVE
 //    public static final String BASE_URL = "http://papp.apps.fomarkmedia.com/api/v1/;

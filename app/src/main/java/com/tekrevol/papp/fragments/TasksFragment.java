@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import com.tekrevol.papp.R;
 import com.google.gson.reflect.TypeToken;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.OnGoingTaskAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.TaskAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
@@ -134,10 +134,10 @@ public class TasksFragment extends BaseFragment implements OnItemClickListener {
 
         bindRecyclerView();
 
-        getTasks(AppConstants.TASK_STATUS_ONGOING, false);
-        getTasks(AppConstants.TASK_STATUS_COMPLETED, false);
-        getTasks(AppConstants.TASK_STATUS_AVAILABLE, true);
-        getTasks(AppConstants.TASK_STATUS_PENDING_ADMIN_APPROVAL, false);
+        getTasks(AppConstants.TASK_STATUS_ONGOING, false, 0, false);
+        getTasks(AppConstants.TASK_STATUS_COMPLETED, false, 3, false);
+        getTasks(TASK_STATUS_AVAILABLE, true, 3, false);
+        getTasks(AppConstants.TASK_STATUS_PENDING_ADMIN_APPROVAL, false, 3, false);
 
     }
 
@@ -190,6 +190,12 @@ public class TasksFragment extends BaseFragment implements OnItemClickListener {
         rvUpcomingTasks.setAdapter(adapterUpcomingTasks);
 
 
+        RecyclerView.LayoutManager mLayoutManager4 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        rvPendingApproval.setLayoutManager(mLayoutManager4);
+        ((DefaultItemAnimator) rvPendingApproval.getItemAnimator()).setSupportsChangeAnimations(false);
+        rvPendingApproval.setAdapter(adapterPendingApproval);
+
+
     }
 
 
@@ -204,9 +210,17 @@ public class TasksFragment extends BaseFragment implements OnItemClickListener {
             if (status == TASK_STATUS_AVAILABLE) {
                 getBaseActivity().addDockableFragment(TaskSummaryFragment.newInstance(model, status), true);
             } else if (status == AppConstants.TASK_STATUS_COMPLETED) {
-                showNextBuildToast();
+                if (model.getTaskUsers() == null) {
+                    UIHelper.showShortToastInCenter(getBaseActivity(), "Started date should not be empty");
+                } else {
+                    getBaseActivity().addDockableFragment(TaskDetailsFragment.newInstance(model, status), true);
+                }
             } else if (status == AppConstants.TASK_STATUS_PENDING_ADMIN_APPROVAL) {
-                showNextBuildToast();
+                if (model.getTaskUsers() == null) {
+                    UIHelper.showShortToastInCenter(getBaseActivity(), "Started date should not be empty");
+                } else {
+                    getBaseActivity().addDockableFragment(TaskDetailsFragment.newInstance(model, status), true);
+                }
             } else if (status == AppConstants.TASK_STATUS_ONGOING) {
                 if (model.getTaskUsers() == null) {
                     UIHelper.showShortToastInCenter(getBaseActivity(), "Started date should not be empty");
@@ -220,32 +234,25 @@ public class TasksFragment extends BaseFragment implements OnItemClickListener {
 
     }
 
-    @OnClick(R.id.txtViewAllCompletedTasks)
-    public void onViewClicked() {
-        showNextBuildToast();
-    }
 
-
-    public void getTasks(int status, boolean isAvailable) {
+    public void getTasks(int status, boolean isAvailable, int limit, boolean isSwitchScreen) {
         Map<String, Object> queryMap = new HashMap<>();
 
 
         if (isAvailable) {
             queryMap.put(WebServiceConstants.Q_PARAM_AVAILABLE, "true");
-        } else {
-
             if (isMentor()) {
                 queryMap.put(WebServiceConstants.Q_PARAM_TYPE, AppConstants.TASK_TYPE_MENTOR);
             } else {
                 queryMap.put(WebServiceConstants.Q_PARAM_TYPE, AppConstants.TASK_TYPE_USER);
             }
-
+        } else {
             queryMap.put(WebServiceConstants.Q_PARAM_STATUS, status);
         }
 
 
-        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 3);
-        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, limit);
+//        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
 
 
         getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_TASKS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
@@ -259,20 +266,32 @@ public class TasksFragment extends BaseFragment implements OnItemClickListener {
 
 
                 if (status == TASK_STATUS_AVAILABLE) {
-                    arrUpcomingTasks.clear();
-                    arrUpcomingTasks.addAll(arrayList);
-                    adapterUpcomingTasks.notifyDataSetChanged();
+                    if (isSwitchScreen) {
+                        openAllTaskScreen(arrayList, status);
+
+                    } else {
+                        arrUpcomingTasks.clear();
+                        arrUpcomingTasks.addAll(arrayList);
+                        adapterUpcomingTasks.notifyDataSetChanged();
+                    }
 
                 } else if (status == AppConstants.TASK_STATUS_COMPLETED) {
-
-                    arrCompletedTasks.clear();
-                    arrCompletedTasks.addAll(arrayList);
-                    adapterCompletedTasks.notifyDataSetChanged();
+                    if (isSwitchScreen) {
+                        openAllTaskScreen(arrayList, status);
+                    } else {
+                        arrCompletedTasks.clear();
+                        arrCompletedTasks.addAll(arrayList);
+                        adapterCompletedTasks.notifyDataSetChanged();
+                    }
 
                 } else if (status == AppConstants.TASK_STATUS_PENDING_ADMIN_APPROVAL) {
-                    arrPendingApproval.clear();
-                    arrPendingApproval.addAll(arrayList);
-                    adapterPendingApproval.notifyDataSetChanged();
+                    if (isSwitchScreen) {
+                        openAllTaskScreen(arrayList, status);
+                    } else {
+                        arrPendingApproval.clear();
+                        arrPendingApproval.addAll(arrayList);
+                        adapterPendingApproval.notifyDataSetChanged();
+                    }
                 } else if (status == AppConstants.TASK_STATUS_ONGOING) {
                     arrOnGoingTask.clear();
                     arrOnGoingTask.addAll(arrayList);
@@ -289,4 +308,28 @@ public class TasksFragment extends BaseFragment implements OnItemClickListener {
         });
     }
 
+    public void openAllTaskScreen(ArrayList<TaskReceivingModel> arrayList, int status) {
+        if (arrayList.isEmpty()) {
+            UIHelper.showAlertDialog(getContext(), "No Task Found");
+        } else {
+            getBaseActivity().addDockableFragment(ViewAllTasksFragment.newInstance(arrayList, status), false);
+        }
+    }
+
+    @OnClick({R.id.txtViewAllUpcomingTasks, R.id.txtViewAllPendingApproval, R.id.txtViewAllCompletedTasks})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.txtViewAllUpcomingTasks:
+                getTasks(TASK_STATUS_AVAILABLE, true, 0, true);
+                break;
+
+            case R.id.txtViewAllPendingApproval:
+                getTasks(AppConstants.TASK_STATUS_PENDING_ADMIN_APPROVAL, false, 0, true);
+                break;
+
+            case R.id.txtViewAllCompletedTasks:
+                getTasks(AppConstants.TASK_STATUS_COMPLETED, false, 0, true);
+                break;
+        }
+    }
 }

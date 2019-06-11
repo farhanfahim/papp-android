@@ -118,9 +118,9 @@
                             android:layout_width="@dimen/x35dp"
                             android:layout_height="@dimen/x35dp"
                             android:layout_alignEnd="@+id/imgProfile"
-                            android:clickable="false"
                             android:layout_alignBottom="@+id/imgProfile"
                             android:background="@drawable/c_upload_photo"
+                            android:clickable="false"
                             android:padding="@dimen/x10dp" />
                     </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
 
@@ -325,6 +325,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
+
                         android:orientation="horizontal">
 
 
@@ -355,7 +356,6 @@
                                 android:inputType="textPassword"
                                 android:maxLength="50"
                                 android:padding="@dimen/x3dp"
-                                android:text="ssdlkafkasldjfakdls"
                                 android:textColor="@color/txtDarkGrey"
                                 android:textColorHint="@color/txtGrey"
                                 android:textSize="@dimen/s12"
@@ -366,22 +366,6 @@
                         </LinearLayout>
 
 
-                        <com.tekrevol.papp.widget.AnyTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/x5dp"
-                            android:padding="@dimen/x3dp"
-                            android:text="Strong"
-                            android:textColor="@color/base_green"
-                            android:textSize="@dimen/s12"
-                            app:fontFamily="@string/font_regular" />
-
-
-                        <ImageView
-                            android:layout_width="@dimen/x15dp"
-                            android:layout_height="@dimen/x15dp"
-                            android:layout_marginRight="@dimen/x5dp"
-                            android:src="@drawable/img_verify2" />
 
 
                     </LinearLayout>
@@ -401,7 +385,8 @@
                         android:layout_marginLeft="@dimen/x10dp"
                         android:layout_marginRight="@dimen/x10dp"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
 
                         <com.tekrevol.papp.widget.AnyTextView
@@ -447,7 +432,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/x10dp"
                         android:layout_marginBottom="10dp"
-                        android:background="@color/c_white" />
+                        android:background="@color/c_white"
+                        android:visibility="gone" />
 
 
                     <LinearLayout

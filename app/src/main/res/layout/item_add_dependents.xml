@@ -66,26 +66,36 @@
                 android:padding="@dimen/x3dp"
                 android:singleLine="true"
                 android:text="Email"
-                android:visibility="gone"
                 android:textColor="@color/txtDarkGrey"
                 android:textSize="@dimen/s12"
+                android:visibility="gone"
                 app:fontFamily="@string/font_regular" />
 
 
         </LinearLayout>
 
 
-        <com.tekrevol.papp.widget.AnyTextView
-            android:id="@+id/txtRemove"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:padding="@dimen/x3dp"
-            android:singleLine="true"
-            android:text="Remove"
-            android:textColor="@color/txtBlack"
-            android:textSize="@dimen/s14"
-            app:fontFamily="@string/font_regular" />
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/imgRemove"
+                android:layout_width="@dimen/x35dp"
+                android:layout_height="@dimen/x35dp"
+                android:padding="@dimen/x5dp"
+                android:src="@drawable/img_delete_96" />
+
+            <ImageView
+                android:id="@+id/imgEdit"
+                android:layout_width="@dimen/x35dp"
+                android:layout_height="@dimen/x35dp"
+                android:padding="@dimen/x5dp"
+                android:src="@drawable/img_edit_96" />
+
+
+        </LinearLayout>
 
 
     </LinearLayout>

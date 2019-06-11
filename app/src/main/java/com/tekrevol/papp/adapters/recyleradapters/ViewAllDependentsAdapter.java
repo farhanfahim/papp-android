@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.tekrevol.papp.R;
@@ -60,7 +61,9 @@ public class ViewAllDependentsAdapter extends RecyclerView.Adapter<ViewAllDepend
     }
 
     private void setListener(final ViewHolder holder, final UserModel model) {
-        holder.txtRemove.
+        holder.imgRemove.
+                setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null));
+        holder.imgEdit.
                 setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null));
     }
 
@@ -80,8 +83,10 @@ public class ViewAllDependentsAdapter extends RecyclerView.Adapter<ViewAllDepend
         AnyTextView txtGender;
         @BindView(R.id.txtEmail)
         AnyTextView txtEmail;
-        @BindView(R.id.txtRemove)
-        AnyTextView txtRemove;
+        @BindView(R.id.imgRemove)
+        ImageView imgRemove;
+        @BindView(R.id.imgEdit)
+        ImageView imgEdit;
         @BindView(R.id.contParentLayout)
         LinearLayout contParentLayout;
 

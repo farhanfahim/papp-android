@@ -10,12 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.AttachmentAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.enums.FileType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
@@ -76,6 +78,12 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
     AnyTextView txtStartedDuration;
     @BindView(R.id.rvAttachments)
     RecyclerView rvAttachments;
+    @BindView(R.id.txtCancel)
+    AnyTextView txtCancel;
+    @BindView(R.id.contButtons)
+    LinearLayout contButtons;
+    @BindView(R.id.contAttachment)
+    LinearLayout contAttachment;
     private TaskReceivingModel taskReceivingModel;
     private int status;
 
@@ -140,6 +148,13 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
         super.onViewCreated(view, savedInstanceState);
 
         bindRecyclerView();
+
+        if (status == AppConstants.TASK_STATUS_PENDING_ADMIN_APPROVAL || status == AppConstants.TASK_STATUS_COMPLETED) {
+            contButtons.setVisibility(View.GONE);
+            contAttachment.setVisibility(View.GONE);
+
+        }
+
 
         txtTitle.setText(taskReceivingModel.getTitle());
         ImageLoaderHelper.loadImageWithAnimationsByPath(imgTask, taskReceivingModel.getIcon(), false);
@@ -209,7 +224,7 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
         }
     }
 
-    @OnClick({R.id.imgAttachment, R.id.txtSubmit})
+    @OnClick({R.id.imgAttachment, R.id.txtSubmit, R.id.txtCancel})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgAttachment:
@@ -255,7 +270,7 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
                 taskAcceptSendingModel.setTaskId(taskReceivingModel.getId());
 
 
-                getBaseWebService().postMultipartAPI(WebServiceConstants.PATH_COMPLETE_TASK, multiFileModelArrayList, taskAcceptSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                getBaseWebService().postMultipartAPIWithSameKeyAttachments(WebServiceConstants.PATH_COMPLETE_TASK, multiFileModelArrayList, taskAcceptSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
                     @Override
                     public void requestDataResponse(WebResponse<Object> webResponse) {
                         UIHelper.showAlertDialog(getContext(), webResponse.result.toString());
@@ -268,6 +283,11 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
                 });
 
 
+                break;
+
+
+            case R.id.txtCancel:
+                showNextBuildToast();
                 break;
         }
     }

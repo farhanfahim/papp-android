@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <com.tekrevol.papp.widget.AnyTextView
+        android:id="@+id/txtLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:padding="@dimen/x5dp"
+        android:singleLine="true"
+        android:text="Label"
+        android:textColor="@color/txtBlack"
+        android:textSize="@dimen/s14"
+        app:typeface="@string/font_medium" />
+
+
+    <com.tekrevol.papp.widget.AnyTextView
+        android:id="@+id/txtMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:padding="@dimen/x5dp"
+        android:text="Label"
+        android:textColor="@color/txtGrey"
+        android:textSize="@dimen/s12"
+        app:typeface="@string/font_regular" />
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/seperator_light_gray" />
+
+</LinearLayout>
