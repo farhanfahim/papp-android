@@ -49,7 +49,7 @@ public class ErrorAdapter extends RecyclerView.Adapter<ErrorAdapter.ViewHolder> 
     public void onBindViewHolder(final ViewHolder holder, int i) {
         ErrorModel model = arrData.get(i);
 
-        holder.txtLabel.setText(i+1 + ". " + model.getLabel());
+        holder.txtLabel.setText(model.getLabel());
         holder.txtMessage.setText(model.getMessage());
 
     }

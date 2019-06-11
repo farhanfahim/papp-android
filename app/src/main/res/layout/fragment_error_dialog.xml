@@ -43,7 +43,7 @@
             android:id="@+id/rvErrors"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:minHeight="@dimen/x200dp"
+            android:minHeight="@dimen/x150dp"
             android:padding="@dimen/x3dp" />
 
         <info.hoang8f.widget.FButton
