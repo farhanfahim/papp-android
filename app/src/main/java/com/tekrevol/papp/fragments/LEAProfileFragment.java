@@ -23,6 +23,8 @@ import com.tekrevol.papp.adapters.recyleradapters.SpecialityAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.GooglePlaceHelper;
+import com.tekrevol.papp.helperclasses.StringHelper;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.libraries.residemenu.ResideMenu;
 import com.tekrevol.papp.models.general.SpinnerModel;
@@ -172,7 +174,7 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
 
         txtName.setText(mentorModel.getUserDetails().getFullName());
         txtDesignation.setText(mentorModel.getUserDetails().getDesignation());
-//        txtLocation.setText();
+        txtLocation.setText(mentorModel.getUserDetails().getAddress());
         ImageLoaderHelper.loadImageWithAnimationsByPath(imgProfile, mentorModel.getUserDetails().getImage(), true);
         txtAgency.setText(mentorModel.getUserDetails().getAgency());
         txtDepartment.setText(getHomeActivity().sparseArrayDepartments.get(mentorModel.getUserDetails().getDepartmentId(), ""));
@@ -180,6 +182,7 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
         txtPoints.setText(mentorModel.getUserDetails().getTotalPoints() + " pts");
 //        ratingbar.setRating(mentorModel.getUserDetails().get);
 //        txtReviews.setText();     --> Reviews Count
+        txtPersonalInfo.setText(mentorModel.getUserDetails().getAbout());
         arrSpecialization.clear();
 
         if (mentorModel.getSpecializations() != null && !mentorModel.getSpecializations().isEmpty()) {
@@ -246,7 +249,7 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
 
     }
 
-    @OnClick({R.id.btnLeft1, R.id.txtScheduleMeeting, R.id.contChat, R.id.btnRight1, R.id.contMilestones, R.id.contReviews, R.id.txtEdit})
+    @OnClick({R.id.btnLeft1, R.id.txtScheduleMeeting, R.id.contChat, R.id.btnRight1, R.id.contMilestones, R.id.contReviews, R.id.txtEdit, R.id.txtLocation})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txtScheduleMeeting:
@@ -264,10 +267,15 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
                 getBaseActivity().openActivity(ChatActivity.class);
                 break;
             case R.id.contReviews:
-                getBaseActivity().addDockableFragment(ReviewsFragment.newInstance(), true);
+                getBaseActivity().addDockableFragment(ReviewsFragment.newInstance(mentorModel), true);
                 break;
             case R.id.txtEdit:
                 getBaseActivity().addDockableFragment(EditLeaProfileFragment.newInstance(), false);
+                break;
+            case R.id.txtLocation:
+                if (!StringHelper.isNullOrEmpty(getCurrentUser().getUserDetails().getAddress())) {
+                    GooglePlaceHelper.intentOpenMap(getBaseActivity(), getCurrentUser().getUserDetails().getLat(), getCurrentUser().getUserDetails().getLng(), getCurrentUser().getUserDetails().getAddress());
+                }
                 break;
         }
     }

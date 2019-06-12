@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
 
         <LinearLayout
@@ -24,7 +24,7 @@
                 android:id="@+id/containerTitlebar1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x50dp"
-                android:layout_marginBottom="@dimen/x20dp"
+                android:layout_marginBottom="@dimen/x15dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/x8dp"
                 android:paddingRight="@dimen/x8dp">
@@ -90,17 +90,31 @@
                         android:src="@drawable/img_lea_placeholder2" />
 
 
-                    <com.tekrevol.papp.widget.AnyTextView
-                        android:id="@+id/txtEdit"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Edit"
-                        android:padding="@dimen/x3dp"
+                        android:gravity="center">
 
-                        android:textColor="@color/c_white"
-                        android:textSize="@dimen/s12"
-                        app:typeface="@string/font_light" />
+
+                        <ImageView
+                            android:layout_width="@dimen/x18dp"
+                            android:layout_height="@dimen/x18dp"
+                            android:src="@drawable/ic_action_edit" />
+
+                        <com.tekrevol.papp.widget.AnyTextView
+                            android:id="@+id/txtEdit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center"
+                            android:padding="@dimen/x5dp"
+                            android:text="Edit Profile"
+                            android:textColor="@color/c_white"
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_medium" />
+
+
+                    </LinearLayout>
 
 
                 </LinearLayout>

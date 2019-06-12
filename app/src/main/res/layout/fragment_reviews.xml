@@ -62,12 +62,25 @@
         android:layout_margin="@dimen/x20dp"
         android:background="#fff"
         android:elevation="@dimen/x10dp"
-        android:visibility="gone"
         android:orientation="vertical"
-        android:padding="@dimen/x20dp">
+        android:padding="@dimen/x20dp"
+        android:visibility="gone">
+
+
+        <android.support.v7.widget.AppCompatRatingBar
+            android:id="@+id/ratingbar"
+            style="?android:attr/ratingBarStyleIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x5dp"
+            android:isIndicator="false"
+            android:numStars="5"
+            android:rating="0"
+            android:stepSize="0.5" />
 
 
         <com.tekrevol.papp.widget.AnyEditTextView
+            android:id="@+id/edtReview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/c_white"

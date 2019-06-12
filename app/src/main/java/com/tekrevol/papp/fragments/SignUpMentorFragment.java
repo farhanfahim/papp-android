@@ -117,8 +117,8 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
 
     SpecialityAdapter adapter;
     ArrayList<SpinnerModel> arrSelectedSpecialization;
-    ArrayList<SpinnerModel> arrDepartmentsSpinner;
     ArrayList<SpinnerModel> arrSpecializationSpinner;
+    ArrayList<SpinnerModel> arrDepartmentsSpinner;
     IntWrapper departmentPosition = new IntWrapper(0);
     SpinnerModel selectedDepartment;
     @BindView(R.id.txtPasswordStrength)

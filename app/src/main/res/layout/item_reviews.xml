@@ -28,7 +28,7 @@
                 android:layout_height="@dimen/x50dp"
                 android:layout_marginRight="@dimen/x10dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/img_placeholder_dependent" />
+                android:src="@drawable/profile_placeholder" />
 
 
             <LinearLayout
@@ -45,7 +45,7 @@
                     android:ellipsize="end"
                     android:padding="@dimen/x2dp"
                     android:singleLine="true"
-                    android:text="Jason Brody"
+                    android:text="Name"
                     android:textColor="@color/txtBlack"
                     android:textSize="@dimen/s14"
                     app:fontFamily="@string/font_regular" />
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:isIndicator="true"
                     android:numStars="5"
-                    android:rating="4.5"
+                    android:rating="0"
                     android:stepSize="0.5" />
 
 
@@ -82,7 +82,7 @@
                     android:ellipsize="end"
                     android:padding="@dimen/x3dp"
                     android:singleLine="true"
-                    android:text="22/2/2019"
+                    android:text="Date"
                     android:textColor="@color/txtDarkGrey"
                     android:textSize="@dimen/s10"
                     app:fontFamily="@string/font_regular" />
@@ -95,7 +95,7 @@
                     android:ellipsize="end"
                     android:padding="@dimen/x3dp"
                     android:singleLine="true"
-                    android:text="03:00 pm"
+                    android:text="time"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/s14"
                     app:fontFamily="@string/font_regular" />
@@ -123,7 +123,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:padding="@dimen/x2dp"
-            android:text="During my 3 years as a police officer, I performed area patrols on  foot, bicycle and in patrol cars."
+            android:text="Review message"
             android:textColor="@color/txtDarkGrey"
             android:textSize="@dimen/s12"
             app:fontFamily="@string/font_regular" />

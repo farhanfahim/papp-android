@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.models.receiving_model.ReviewsModel;
 import com.tekrevol.papp.widget.AnyTextView;
 
 import java.util.List;
@@ -28,9 +29,9 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
 
     private Context activity;
-    private List<SpinnerModel> arrData;
+    private List<ReviewsModel> arrData;
 
-    public ReviewsAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
+    public ReviewsAdapter(Context activity, List<ReviewsModel> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
@@ -47,13 +48,16 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        SpinnerModel model = arrData.get(i);
+        ReviewsModel model = arrData.get(i);
 
-        holder.txtName.setText(model.getText());
+
+        holder.txtReviews.setText(model.getReview());
+        holder.ratingbarDeliverySpeed.setRating((float) model.getRating());
+
         setListener(holder, model);
     }
 
-    private void setListener(final ViewHolder holder, final SpinnerModel model) {
+    private void setListener(final ViewHolder holder, final ReviewsModel model) {
         holder.contParentLayout.
                 setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null));
     }

@@ -565,20 +565,22 @@
                                 app:fontFamily="@string/font_regular" />
 
 
-                            <com.tekrevol.papp.widget.AnyEditTextView
+
+                            <com.tekrevol.papp.libraries.kmpautotextview.KMPAutoComplTextView
                                 android:id="@+id/edtSpecialization"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"
                                 android:hint="Please Enter Specializations"
-                                android:inputType="text"
-                                android:maxLength="30"
+                                android:maxLength="50"
                                 android:padding="@dimen/x3dp"
                                 android:textColor="@color/txtDarkGrey"
                                 android:textColorHint="@color/txtGrey"
                                 android:textSize="@dimen/s12"
-                                app:fontFamily="@string/font_regular"
-                                app:testType="alphaNumeric" />
+                                app:completionHighlightColor="@color/colorPrimary"
+                                app:completionTextColor="@color/txtDarkGrey"
+                                app:completionTextSize="@dimen/s16" />
+
 
                         </LinearLayout>
 

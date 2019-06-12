@@ -15,19 +15,28 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.MyGiftsAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.Constants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.managers.retrofit.GsonFactory;
+import com.tekrevol.papp.managers.retrofit.WebServices;
+import com.tekrevol.papp.models.receiving_model.GiftsHistoryModel;
+import com.tekrevol.papp.models.receiving_model.GiftsModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.github.clans.fab.FloatingActionButton;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,7 +71,7 @@ public class MyGiftsFragment extends BaseFragment implements OnItemClickListener
 
 
     MyGiftsAdapter adapter;
-    ArrayList<SpinnerModel> arrData;
+    ArrayList<GiftsHistoryModel> arrData;
     @BindView(R.id.txtHeading)
     AnyTextView txtHeading;
 
@@ -118,21 +127,8 @@ public class MyGiftsFragment extends BaseFragment implements OnItemClickListener
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         bindRecyclerView();
-
-//        txtHeading.setVisibility(View.VISIBLE);
-//        txtHeading.setText("Total 25,000 Points");
-
-        if (onCreated) {
-            adapter.notifyDataSetChanged();
-            return;
-        }
-
-
-        arrData.clear();
-        arrData.addAll(Constants.getAddDependentsArray2());
-        adapter.notifyDataSetChanged();
+        getMyGifts();
     }
 
 
@@ -183,8 +179,37 @@ public class MyGiftsFragment extends BaseFragment implements OnItemClickListener
 
     @Override
     public void onItemAdd(Object object) {
-//        arrCategories.add(new SpinnerModel("John Doe"));
+//        arrCategories.add(new GiftsHistoryModel("John Doe"));
 //        adapter.notifyDataSetChanged();
+    }
+
+
+    public void getMyGifts() {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_REDEEM_POINTS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                Type type = new TypeToken<ArrayList<GiftsHistoryModel>>() {
+                }.getType();
+                ArrayList<GiftsHistoryModel> arrayList = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type);
+
+
+                arrData.clear();
+                arrData.addAll(arrayList);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
     }
 
 }

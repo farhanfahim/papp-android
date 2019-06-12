@@ -16,6 +16,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
 import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tekrevol.papp.R;
@@ -23,6 +26,7 @@ import com.tekrevol.papp.activities.HomeActivity;
 import com.tekrevol.papp.adapters.recyleradapters.SpecialityAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.callbacks.OnSpinnerOKPressedListener;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.enums.BaseURLTypes;
@@ -32,6 +36,8 @@ import com.tekrevol.papp.helperclasses.GooglePlaceHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.KeyboardHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.libraries.kmpautotextview.KMPAutoComplTextView;
+import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.managers.retrofit.entities.MultiFileModel;
 import com.tekrevol.papp.models.general.IntWrapper;
@@ -48,7 +54,10 @@ import com.tekrevol.papp.widget.TitleBar;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,13 +71,12 @@ import static android.app.Activity.RESULT_OK;
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class EditLeaProfileFragment extends BaseFragment implements OnItemClickListener, OnItemAdd {
+public class EditLeaProfileFragment extends BaseFragment implements OnItemClickListener {
 
 
     Unbinder unbinder;
 
-    SpecialityAdapter adapter;
-    ArrayList<SpinnerModel> arrSelectedSpecialization;
+
     @BindView(R.id.contBack)
     LinearLayout contBack;
     @BindView(R.id.imgProfile)
@@ -94,7 +102,7 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
     @BindView(R.id.edtDesignation)
     AnyEditTextView edtDesignation;
     @BindView(R.id.edtSpecialization)
-    AnyEditTextView edtSpecialization;
+    KMPAutoComplTextView edtSpecialization;
     @BindView(R.id.imgAddSpecialization)
     ImageView imgAddSpecialization;
     @BindView(R.id.recyclerView)
@@ -113,6 +121,10 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
     GooglePlaceHelper googlePlaceHelper;
     IntWrapper departmentPosition = new IntWrapper(0);
     SpinnerModel selectedDepartment;
+    SpecialityAdapter adapter;
+    ArrayList<SpinnerModel> arrSelectedSpecialization;
+    ArrayList<SpinnerModel> arrSpecializationSpinner;
+    ArrayList<SpinnerModel> arrDepartmentsSpinner;
 
     public static EditLeaProfileFragment newInstance() {
 
@@ -147,6 +159,8 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
         super.onCreate(savedInstanceState);
 
         arrSelectedSpecialization = new ArrayList<>();
+        arrSpecializationSpinner = new ArrayList<>();
+        arrDepartmentsSpinner = new ArrayList<>();
         adapter = new SpecialityAdapter(getContext(), arrSelectedSpecialization, this, true);
     }
 
@@ -167,6 +181,12 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
 
         bindRecyclerView();
 
+        getSpecializations();
+
+        bindData();
+    }
+
+    public void bindData() {
         ImageLoaderHelper.loadImageWithAnimationsByPath(imgProfile, getCurrentUser().getUserDetails().getImage(), true);
         edtFirstName.setText(getCurrentUser().getUserDetails().getFirstName());
         edtLastName.setText(getCurrentUser().getUserDetails().getLastName());
@@ -184,13 +204,18 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
         locationModel = new LocationModel(getCurrentUser().getUserDetails().getLat(), getCurrentUser().getUserDetails().getLng(), getCurrentUser().getUserDetails().getAddress());
 
 
+        arrDepartmentsSpinner.clear();
+        for (int i = 1; i < getHomeActivity().sparseArrayDepartments.size(); i++) {
+            arrDepartmentsSpinner.add(new SpinnerModel(getHomeActivity().sparseArrayDepartments.get(i), i));
+        }
+
         adapter.notifyDataSetChanged();
     }
 
 
     @Override
     public void setListeners() {
-
+        edtSpecialization.setOnPopupItemClickListener(this::addSpecialization);
     }
 
     @Override
@@ -228,20 +253,35 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
     }
 
 
-    @OnClick({R.id.imgAddSpecialization, R.id.contBtnUpdate, R.id.contBack, R.id.contProfile})
+    @OnClick({R.id.imgAddSpecialization, R.id.contBtnUpdate, R.id.contBack, R.id.contProfile, R.id.txtLocation, R.id.txtDepartment})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgAddSpecialization:
-                if (edtSpecialization.getStringTrimmed().isEmpty()) {
+                if (edtSpecialization.getText().toString().isEmpty()) {
                     UIHelper.showShortToastInCenter(getContext(), "Please write something");
                     return;
                 }
-                arrSelectedSpecialization.add(new SpinnerModel(edtSpecialization.getStringTrimmed()));
-                edtSpecialization.setText("");
-                KeyboardHelper.hideSoftKeyboardForced(getContext(), edtSpecialization);
-                adapter.notifyDataSetChanged();
-                KeyboardHelper.hideSoftKeyboard(getContext(), view);
+                addSpecialization(null);
                 break;
+
+            case R.id.txtLocation:
+                googlePlaceHelper = new GooglePlaceHelper(getBaseActivity(), GooglePlaceHelper.PLACE_AUTOCOMPLETE, new GooglePlaceHelper.GooglePlaceDataInterface() {
+                    @Override
+                    public void onPlaceActivityResult(double longitude, double latitude, String locationName) {
+                        txtLocation.setText(locationName);
+                        locationModel = new LocationModel(latitude, longitude, locationName);
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                }, EditLeaProfileFragment.this);
+
+                googlePlaceHelper.openAutocompleteActivity();
+
+                break;
+
             case R.id.contBtnUpdate:
                 editProfileCall();
                 break;
@@ -250,6 +290,14 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
                 break;
             case R.id.contProfile:
                 UIHelper.cropImagePicker(getContext(), this);
+                break;
+            case R.id.txtDepartment:
+                UIHelper.showSpinnerDialog(this, arrDepartmentsSpinner, "Select Category", txtDepartment, null, new OnSpinnerOKPressedListener() {
+                    @Override
+                    public void onItemSelect(Object data) {
+                        selectedDepartment = (SpinnerModel) data;
+                    }
+                }, departmentPosition);
                 break;
         }
     }
@@ -264,12 +312,6 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
                     arrSelectedSpecialization.remove(position);
                     adapter.notifyDataSetChanged();
                 }, getContext());
-    }
-
-    @Override
-    public void onItemAdd(Object object) {
-//        arrCategories.add(new SpinnerModel("John Doe"));
-//        adapter.notifyDataSetChanged();
     }
 
 
@@ -288,6 +330,8 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
                 Exception error = result.getError();
                 error.printStackTrace();
             }
+        } else if (googlePlaceHelper != null) {
+            googlePlaceHelper.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -302,6 +346,30 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
                 }
             }
         });
+    }
+
+    public void addSpecialization(SpinnerModel spinnerModel) {
+        if (spinnerModel == null) {
+            spinnerModel = new SpinnerModel(edtSpecialization.getText().toString());
+        }
+
+        for (SpinnerModel model : arrSelectedSpecialization) {
+            if (model.getText().equalsIgnoreCase(spinnerModel.getText())) {
+                UIHelper.showLongToastInCenter(getContext(), model.getText() + " is already present.");
+                return;
+            }
+        }
+
+
+        arrSelectedSpecialization.add(spinnerModel);
+
+        edtSpecialization.setText("");
+        KeyboardHelper.hideSoftKeyboardForced(getContext(), edtSpecialization);
+        KeyboardHelper.hideSoftKeyboard(getContext(), edtSpecialization);
+
+        KeyboardHelper.hideSoftKeyboardFromWindow(getContext(), edtSpecialization);
+
+        adapter.notifyDataSetChanged();
     }
 
 
@@ -377,8 +445,20 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
                 .postMultipartAPI(WebServiceConstants.PATH_PROFILE, arrMultiFileModel, mentorEditProfileModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
                     @Override
                     public void requestDataResponse(WebResponse<Object> webResponse) {
-                        UserDetails userDetails = getGson().fromJson(getGson().toJson(webResponse.result), UserDetails.class);
                         UserModel currentUser = sharedPreferenceManager.getCurrentUser();
+
+                        UserDetails userDetails = getGson().fromJson(getGson().toJson(webResponse.result), UserDetails.class);
+
+                        JsonArray specialization = getGson().toJsonTree(webResponse.result).getAsJsonObject().getAsJsonArray("specialization");
+                        if (specialization != null) {
+                            ArrayList<SpinnerModel> arrayList = new ArrayList<>();
+                            for (JsonElement jsonElement : specialization) {
+                                arrayList.add(getGson().fromJson(jsonElement, SpinnerModel.class));
+                            }
+                            currentUser.setSpecializations(arrayList);
+                        }
+
+
                         currentUser.setUserDetails(userDetails);
                         sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser);
                         getBaseActivity().finish();
@@ -390,6 +470,36 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
 
                     }
                 });
+    }
+
+
+    public void getSpecializations() {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_SPECIALIZATIONS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                Type type = new TypeToken<ArrayList<SpinnerModel>>() {
+                }.getType();
+                ArrayList<SpinnerModel> arrayList = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type);
+
+
+                arrSpecializationSpinner.clear();
+                arrSpecializationSpinner.addAll(arrayList);
+
+                edtSpecialization.setDatas(arrSpecializationSpinner);
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
     }
 
 }

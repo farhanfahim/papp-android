@@ -60,6 +60,7 @@ public class WebServiceConstants {
     public static final String PATH_TASKS = "tasks";
     public static final String PATH_ACCEPT_TASK = "task-users";
     public static final String PATH_COMPLETE_TASK = "upload-completed-task";
+    public static final String PATH_REVIEWS = "reviews";
 
 
     /**
@@ -76,6 +77,7 @@ public class WebServiceConstants {
     public static final String Q_PARAM_TYPE = "type";
     public static final String Q_PARAM_AVAILABLE = "available";
     public static final String Q_PARAM_STATUS = "status";
+    public static final String Q_PARAM_MENTOR_ID = "mentor_id";
 
 
     /**

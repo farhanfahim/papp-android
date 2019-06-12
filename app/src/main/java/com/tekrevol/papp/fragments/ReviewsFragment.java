@@ -2,6 +2,7 @@ package com.tekrevol.papp.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,14 +19,21 @@ import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.ReviewsAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.constatnts.Constants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
-import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.managers.retrofit.WebServices;
+import com.tekrevol.papp.models.receiving_model.ReviewsModel;
+import com.tekrevol.papp.models.receiving_model.UserModel;
+import com.tekrevol.papp.models.sending_model.ReviewsSendingModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
+import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,16 +63,22 @@ public class ReviewsFragment extends BaseFragment implements OnItemClickListener
 
 
     ReviewsAdapter adapter;
-    ArrayList<SpinnerModel> arrData;
+    ArrayList<ReviewsModel> arrData;
     @BindView(R.id.contMessage)
     LinearLayout contMessage;
+    @BindView(R.id.ratingbar)
+    AppCompatRatingBar ratingbar;
+    @BindView(R.id.edtReview)
+    AnyEditTextView edtReview;
+    private UserModel mentorModel;
 
 
-    public static ReviewsFragment newInstance() {
+    public static ReviewsFragment newInstance(UserModel mentorModel) {
 
         Bundle args = new Bundle();
 
         ReviewsFragment fragment = new ReviewsFragment();
+        fragment.mentorModel = mentorModel;
         fragment.setArguments(args);
         return fragment;
     }
@@ -120,16 +134,32 @@ public class ReviewsFragment extends BaseFragment implements OnItemClickListener
             contMessage.setVisibility(View.VISIBLE);
         }
 
-
-        if (onCreated) {
-            adapter.notifyDataSetChanged();
-            return;
-        }
+        getReviews();
 
 
         arrData.clear();
-        arrData.addAll(Constants.getAddDependentsArray2());
         adapter.notifyDataSetChanged();
+    }
+
+    public void getReviews() {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+        if (!isMentor()) {
+            queryMap.put(WebServiceConstants.Q_PARAM_MENTOR_ID, 0);
+        }
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_REVIEWS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
     }
 
 
@@ -180,16 +210,39 @@ public class ReviewsFragment extends BaseFragment implements OnItemClickListener
 
     @Override
     public void onItemAdd(Object object) {
-//        arrCategories.add(new SpinnerModel("John Doe"));
+//        arrCategories.add(new ReviewsModel("John Doe"));
 //        adapter.notifyDataSetChanged();
     }
 
 
     @OnClick(R.id.contSend)
     public void onViewClicked() {
-        UIHelper.showAlertDialogWithCallback("Thanks for submitting your review", "Review", (dialogInterface, i) -> {
-            dialogInterface.dismiss();
-            getBaseActivity().onBackPressed();
-        }, getContext());
+
+        if (!edtReview.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Kindly Write Something");
+            return;
+        }
+
+        ReviewsSendingModel reviewsSendingModel = new ReviewsSendingModel();
+        reviewsSendingModel.setMentorId(mentorModel.getId());
+        reviewsSendingModel.setRating(ratingbar.getRating());
+        reviewsSendingModel.setReview(edtReview.getStringTrimmed());
+
+        getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_REVIEWS, reviewsSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                UIHelper.showAlertDialogWithCallback("Thanks for submitting your review", "Review", (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                    getBaseActivity().onBackPressed();
+                }, getContext());
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+
+
     }
 }

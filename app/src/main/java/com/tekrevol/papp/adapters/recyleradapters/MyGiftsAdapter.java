@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.models.receiving_model.GiftsHistoryModel;
 import com.tekrevol.papp.widget.AnyTextView;
 
 import java.util.List;
@@ -19,17 +21,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ *
  */
 public class MyGiftsAdapter extends RecyclerView.Adapter<MyGiftsAdapter.ViewHolder> {
 
     private final OnItemClickListener onItemClick;
 
 
-
     private Context activity;
-    private List<SpinnerModel> arrData;
+    private List<GiftsHistoryModel> arrData;
 
-    public MyGiftsAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
+    public MyGiftsAdapter(Context activity, List<GiftsHistoryModel> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
@@ -46,12 +48,24 @@ public class MyGiftsAdapter extends RecyclerView.Adapter<MyGiftsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        SpinnerModel model = arrData.get(i);
+        GiftsHistoryModel model = arrData.get(i);
 
-        setListener(holder, model);
+
+        Glide.with(activity)
+                .load(ImageLoaderHelper.getImageURLFromPath(model.getGifts().getImage()))
+                .error(R.drawable.app_icon_placeholder)
+                .into(holder.imgProfile);
+
+        holder.txtItemName.setText(model.getGifts().getItemName());
+        holder.txtPoints.setText("for " + model.getPoints() + " points");
+        holder.txtDate.setText(model.getCreatedAt());
+
+
+
+//        setListener(holder, model);
     }
 
-    private void setListener(final ViewHolder holder, final SpinnerModel model) {
+    private void setListener(final ViewHolder holder, final GiftsHistoryModel model) {
         holder.contParentLayout.
                 setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null));
     }
@@ -69,11 +83,14 @@ public class MyGiftsAdapter extends RecyclerView.Adapter<MyGiftsAdapter.ViewHold
         @BindView(R.id.txtToken)
         AnyTextView txtToken;
         @BindView(R.id.txtItemName)
-        AnyTextView txtPrice;
+        AnyTextView txtItemName;
+        @BindView(R.id.txtPoints)
+        AnyTextView txtPoints;
         @BindView(R.id.txtDate)
         AnyTextView txtDate;
         @BindView(R.id.contParentLayout)
         LinearLayout contParentLayout;
+
 
 
         ViewHolder(View view) {
