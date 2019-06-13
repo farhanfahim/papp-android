@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.managers.DateManager;
 import com.tekrevol.papp.models.receiving_model.GiftsHistoryModel;
 import com.tekrevol.papp.widget.AnyTextView;
 
@@ -58,7 +59,7 @@ public class MyGiftsAdapter extends RecyclerView.Adapter<MyGiftsAdapter.ViewHold
 
         holder.txtItemName.setText(model.getGifts().getItemName());
         holder.txtPoints.setText("for " + model.getPoints() + " points");
-        holder.txtDate.setText(model.getCreatedAt());
+        holder.txtDate.setText(DateManager.convertToUserTimeZone(model.getCreatedAt()));
 
 
 

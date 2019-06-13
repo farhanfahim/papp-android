@@ -97,9 +97,11 @@
 
 
                         <ImageView
+                            android:id="@+id/imgEdit"
                             android:layout_width="@dimen/x18dp"
                             android:layout_height="@dimen/x18dp"
-                            android:src="@drawable/ic_action_edit" />
+                            android:src="@drawable/ic_action_edit"
+                            android:visibility="visible" />
 
                         <com.tekrevol.papp.widget.AnyTextView
                             android:id="@+id/txtEdit"

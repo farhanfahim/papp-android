@@ -5,11 +5,13 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
 
+import java.util.List;
+
 public class TaskUser {
 
     @Expose
     @SerializedName("attachment")
-    private String attachment;
+    private List<TaskAttachmentModel> attachment;
     @Expose
     @SerializedName("unlock")
     private int unlock;
@@ -29,11 +31,11 @@ public class TaskUser {
     @SerializedName("id")
     private int id;
 
-    public String getAttachment() {
+    public List<TaskAttachmentModel> getAttachment() {
         return attachment;
     }
 
-    public void setAttachment(String attachment) {
+    public void setAttachment(List<TaskAttachmentModel> attachment) {
         this.attachment = attachment;
     }
 

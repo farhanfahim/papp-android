@@ -17,6 +17,7 @@ import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.helperclasses.ui.helper.KeyboardHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -45,6 +46,29 @@ public class DateManager {
 
 
     // Methods
+
+    /**
+     * Conversion of "yyyy-MM-dd hh:mm:ss" this format to Local Time zone.
+     *
+     * @param date in "yyyy-MM-dd hh:mm:ss"
+     * @return
+     */
+    public static String convertToUserTimeZone(String date) {
+
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(AppConstants.INPUT_DATE_FORMAT, Locale.getDefault());
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+            Date parsedDate = simpleDateFormat.parse(date);
+
+            SimpleDateFormat sdf = new SimpleDateFormat(AppConstants.INPUT_DATE_FORMAT, Locale.getDefault());
+            return sdf.format(parsedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
 
     public static Date getDate(long millisecond) {
         return new Date(millisecond);

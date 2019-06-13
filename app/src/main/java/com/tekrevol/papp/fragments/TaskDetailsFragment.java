@@ -25,6 +25,7 @@ import com.tekrevol.papp.fragments.abstracts.GenericDialogFragment;
 import com.tekrevol.papp.helperclasses.DateHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.managers.DateManager;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.managers.retrofit.entities.MultiFileModel;
 import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
@@ -158,13 +159,12 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
 
         txtTitle.setText(taskReceivingModel.getTitle());
         ImageLoaderHelper.loadImageWithAnimationsByPath(imgTask, taskReceivingModel.getIcon(), false);
-        txtDate.setText(taskReceivingModel.getCreatedAt());
+        txtDate.setText(DateManager.convertToUserTimeZone(taskReceivingModel.getTaskUsers().getStartDate()));
         txtDuration.setText(taskReceivingModel.getDuration() + " days");
         txtPoints.setText(taskReceivingModel.getRewardPoints() + " points");
         txtDesc.setText(taskReceivingModel.getDescription());
 
-        txtStartedDuration.setText("Started: " + DateHelper.getElapsedTimeNew(taskReceivingModel.getTaskUsers().getStartDate(), INPUT_DATE_FORMAT));
-
+        txtStartedDuration.setText("Started: " + DateHelper.getElapsedTimeNew(DateManager.convertToUserTimeZone(taskReceivingModel.getTaskUsers().getStartDate()), INPUT_DATE_FORMAT));
 
     }
 
@@ -273,7 +273,8 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
                 getBaseWebService().postMultipartAPIWithSameKeyAttachments(WebServiceConstants.PATH_COMPLETE_TASK, multiFileModelArrayList, taskAcceptSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
                     @Override
                     public void requestDataResponse(WebResponse<Object> webResponse) {
-                        UIHelper.showAlertDialog(getContext(), webResponse.result.toString());
+                        getBaseActivity().popBackStack();
+                        UIHelper.showAlertDialog(getContext(), webResponse.message);
                     }
 
                     @Override

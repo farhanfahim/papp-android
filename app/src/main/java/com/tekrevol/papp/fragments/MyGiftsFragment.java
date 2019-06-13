@@ -201,7 +201,14 @@ public class MyGiftsFragment extends BaseFragment implements OnItemClickListener
 
 
                 arrData.clear();
-                arrData.addAll(arrayList);
+
+                if (arrayList.isEmpty()) {
+                    emptyviewContainer.setVisibility(View.VISIBLE);
+                } else {
+                    arrData.addAll(arrayList);
+                    emptyviewContainer.setVisibility(View.GONE);
+                }
+
                 adapter.notifyDataSetChanged();
             }
 

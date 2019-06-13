@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.tekrevol.papp.R;
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.activities.ChatActivity;
 import com.tekrevol.papp.adapters.recyleradapters.MedalAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.SpecialityAdapter;
@@ -97,6 +97,8 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
     AnyTextView txtPersonalInfo;
     @BindView(R.id.txtScheduleMeeting)
     AnyTextView txtScheduleMeeting;
+    @BindView(R.id.imgEdit)
+    ImageView imgEdit;
 
     private UserModel mentorModel;
 
@@ -151,12 +153,17 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
             mentorModel = getCurrentUser();
         }
 
-
         bindRecyclerView();
 
+        bindData();
 
+
+    }
+
+    public void bindData() {
         if (isMentor()) {
             txtEdit.setVisibility(View.VISIBLE);
+            imgEdit.setVisibility(View.VISIBLE);
             btnRight1.setVisibility(View.GONE);
             txtScheduleMeeting.setVisibility(View.GONE);
             contChat.setVisibility(View.GONE);
@@ -167,6 +174,7 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
             btnRight1.setVisibility(View.VISIBLE);
             contChat.setVisibility(View.VISIBLE);
             txtEdit.setVisibility(View.GONE);
+            imgEdit.setVisibility(View.GONE);
             txtTitle.setText("Mentor Profile");
             contPointsEarned.setVisibility(View.GONE);
         }
@@ -180,8 +188,8 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
         txtDepartment.setText(getHomeActivity().sparseArrayDepartments.get(mentorModel.getUserDetails().getDepartmentId(), ""));
 
         txtPoints.setText(mentorModel.getUserDetails().getTotalPoints() + " pts");
-//        ratingbar.setRating(mentorModel.getUserDetails().get);
-//        txtReviews.setText();     --> Reviews Count
+        ratingbar.setRating((float) mentorModel.getUserDetails().getAvgRating());
+        txtReviews.setText("(" + mentorModel.getUserDetails().getReview_count() + ")");
         txtPersonalInfo.setText(mentorModel.getUserDetails().getAbout());
         arrSpecialization.clear();
 
@@ -194,8 +202,6 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
 
 
         specialityAdapter.notifyDataSetChanged();
-
-
     }
 
 
@@ -273,9 +279,16 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
                 getBaseActivity().addDockableFragment(EditLeaProfileFragment.newInstance(), false);
                 break;
             case R.id.txtLocation:
-                if (!StringHelper.isNullOrEmpty(getCurrentUser().getUserDetails().getAddress())) {
-                    GooglePlaceHelper.intentOpenMap(getBaseActivity(), getCurrentUser().getUserDetails().getLat(), getCurrentUser().getUserDetails().getLng(), getCurrentUser().getUserDetails().getAddress());
+                if (isMentor()) {
+                    if (!StringHelper.isNullOrEmpty(getCurrentUser().getUserDetails().getAddress())) {
+                        GooglePlaceHelper.intentOpenMap(getBaseActivity(), getCurrentUser().getUserDetails().getLat(), getCurrentUser().getUserDetails().getLng(), getCurrentUser().getUserDetails().getAddress());
+                    }
+                } else {
+                    if (!StringHelper.isNullOrEmpty(mentorModel.getUserDetails().getAddress())) {
+                        GooglePlaceHelper.intentOpenMap(getBaseActivity(), mentorModel.getUserDetails().getLat(), mentorModel.getUserDetails().getLng(), mentorModel.getUserDetails().getAddress());
+                    }
                 }
+
                 break;
         }
     }

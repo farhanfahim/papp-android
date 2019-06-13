@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
+import com.tekrevol.papp.constatnts.AppConstants;
+
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -22,6 +24,9 @@ public class DateHelper {
     }
 
 
+
+
+
     public static String getFormattedDeliveryDateAndTime(String stringFromServer) {
         return convertToClientRequiredTimeZone(convertServerStringToRequiredDate(stringFromServer));
     }
@@ -33,7 +38,7 @@ public class DateHelper {
      * @param userSelectedDate
      * @return
      */
-    public static String convertToServerRequiredTimeZone(Date userSelectedDate) {
+    private static String convertToServerRequiredTimeZone(Date userSelectedDate) {
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
         return sdf.format(userSelectedDate);
@@ -46,7 +51,7 @@ public class DateHelper {
      * @param userSelectedDate
      * @return
      */
-    public static String convertToClientRequiredTimeZone(Date userSelectedDate) {
+    private static String convertToClientRequiredTimeZone(Date userSelectedDate) {
         String myFormat = "dd MMMM,yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         return sdf.format(userSelectedDate);
@@ -59,7 +64,7 @@ public class DateHelper {
      * @param stringFromServer
      * @return
      */
-    public static Date convertServerStringToRequiredDate(String stringFromServer) {
+    private static Date convertServerStringToRequiredDate(String stringFromServer) {
 
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -617,7 +622,7 @@ public class DateHelper {
         Date end;
         Date begin;
 
-        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+        DateFormat sdf = new SimpleDateFormat(AppConstants.INPUT_DATE_FORMAT, Locale.getDefault());
         // "Fri Mar 07 16:34:38 GMT+05:00 2014"
 //        DateFormat sdfNew = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy",
 //                Locale.US);

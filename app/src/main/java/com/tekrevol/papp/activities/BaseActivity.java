@@ -40,6 +40,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public BaseFragment baseFragment;
     public GenericClickableInterface genericClickableInterface;
     private Gson gson;
+    public boolean isReloadFragmentOnBack = false;
 
 
     @Override
@@ -241,15 +242,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 //        if (DeviceUtils.isRooted(getApplicationContext())) {
 //            showAlertDialogAndExitApp("This device is rooted. You can't use this app.");
 //        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == GooglePlaceHelper.REQUEST_CODE_AUTOCOMPLETE) {
-
-        }
     }
 
     public void notifyToAll(int event, Object data) {

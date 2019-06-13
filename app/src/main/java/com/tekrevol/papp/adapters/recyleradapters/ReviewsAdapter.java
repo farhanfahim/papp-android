@@ -10,6 +10,10 @@ import android.widget.LinearLayout;
 
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.helperclasses.DateHelper;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.managers.DateManager;
 import com.tekrevol.papp.models.general.SpinnerModel;
 import com.tekrevol.papp.models.receiving_model.ReviewsModel;
 import com.tekrevol.papp.widget.AnyTextView;
@@ -51,8 +55,16 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         ReviewsModel model = arrData.get(i);
 
 
-        holder.txtReviews.setText(model.getReview());
+        ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgProfile, model.getUser().getUserDetails().getImage(), true);
+        holder.txtName.setText(model.getUser().getUserDetails().getFullName());
         holder.ratingbarDeliverySpeed.setRating((float) model.getRating());
+        holder.txtReviews.setText(model.getReview());
+
+
+        String date = DateManager.convertToUserTimeZone(model.getCreatedAt());
+        holder.txtDate.setText(DateManager.getDate(date, AppConstants.DISPLAY_DATE_ONLY_FORMAT));
+        holder.txtTime.setText(DateManager.getDate(date, AppConstants.DISPLAY_TIME_ONLY_FORMAT));
+
 
         setListener(holder, model);
     }

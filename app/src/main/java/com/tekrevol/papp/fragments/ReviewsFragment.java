@@ -15,14 +15,18 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.ReviewsAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.managers.retrofit.WebServices;
+import com.tekrevol.papp.models.general.SpinnerModel;
 import com.tekrevol.papp.models.receiving_model.ReviewsModel;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.models.sending_model.ReviewsSendingModel;
@@ -31,6 +35,7 @@ import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -146,13 +151,29 @@ public class ReviewsFragment extends BaseFragment implements OnItemClickListener
         queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
         queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
         if (!isMentor()) {
-            queryMap.put(WebServiceConstants.Q_PARAM_MENTOR_ID, 0);
+            queryMap.put(WebServiceConstants.Q_PARAM_MENTOR_ID, mentorModel.getId());
         }
 
         getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_REVIEWS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
             @Override
             public void requestDataResponse(WebResponse<Object> webResponse) {
+                Type type = new TypeToken<ArrayList<ReviewsModel>>() {
+                }.getType();
+                ArrayList<ReviewsModel> arrayList = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type);
 
+
+                arrData.clear();
+
+                if (arrayList == null || arrayList.isEmpty()) {
+                    emptyviewContainer.setVisibility(View.VISIBLE);
+                } else {
+                    emptyviewContainer.setVisibility(View.GONE);
+                    arrData.addAll(arrayList);
+                }
+
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -231,9 +252,12 @@ public class ReviewsFragment extends BaseFragment implements OnItemClickListener
         getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_REVIEWS, reviewsSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
             @Override
             public void requestDataResponse(WebResponse<Object> webResponse) {
+
                 UIHelper.showAlertDialogWithCallback("Thanks for submitting your review", "Review", (dialogInterface, i) -> {
                     dialogInterface.dismiss();
-                    getBaseActivity().onBackPressed();
+                    getBaseActivity().isReloadFragmentOnBack = true;
+                    getBaseActivity().popStackTill(1);
+
                 }, getContext());
             }
 

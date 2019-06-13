@@ -22,6 +22,7 @@ import com.tekrevol.papp.activities.HomeActivity;
 import com.tekrevol.papp.activities.MainActivity;
 import com.tekrevol.papp.callbacks.GenericClickableInterface;
 import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.enums.BaseURLTypes;
 import com.tekrevol.papp.helperclasses.ui.helper.KeyboardHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
@@ -31,9 +32,12 @@ import com.tekrevol.papp.managers.FileManager;
 import com.tekrevol.papp.managers.SharedPreferenceManager;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.UserModel;
+import com.tekrevol.papp.models.wrappers.UserModelWrapper;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.activities.BaseActivity;
@@ -108,6 +112,10 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     public UserModel getCurrentUser() {
         return sharedPreferenceManager.getCurrentUser();
+    }
+
+    public void setCurrentUser(UserModel user) {
+        sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, user);
     }
 
     public String getToken() {
@@ -305,6 +313,40 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         });
         genericDialogFragment.show(baseFragment.getBaseActivity().getSupportFragmentManager(), null);
 
+
+    }
+
+
+    public void updateUser(WebServices.IRequestWebResponseAnyObjectCallBack iRequestWebResponseAnyObjectCallBack) {
+        Map<String, Object> queryMap = new HashMap<>();
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS + "/" + getCurrentUser().getId(), queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                UserModel userModel = getGson().fromJson(getGson().toJson(webResponse.result), UserModel.class);
+
+
+                userModel.setTokenType(getCurrentUser().getTokenType());
+                userModel.setAccessToken(getCurrentUser().getAccessToken());
+                userModel.setExpiresIn(getCurrentUser().getExpiresIn());
+
+                sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModel);
+
+                if (iRequestWebResponseAnyObjectCallBack != null) {
+                    iRequestWebResponseAnyObjectCallBack.requestDataResponse(webResponse);
+                }
+
+            }
+
+            @Override
+            public void onError(Object object) {
+                if (iRequestWebResponseAnyObjectCallBack != null) {
+                    iRequestWebResponseAnyObjectCallBack.onError(object);
+                }
+            }
+        });
 
     }
 }

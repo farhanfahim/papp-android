@@ -44,17 +44,19 @@ public class AppConstants {
      * Date Formats
      */
 
-    public static final String INPUT_DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
+    public static final String INPUT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String INPUT_DATE_FORMAT_AM_PM = "yyyy-dd-MM hh:mm:ss a";
     public static final String OUTPUT_DATE_FORMAT = "EEEE dd,yyyy";
     public static final String INPUT_TIME_FORMAT = "yyyy-dd-MM hh:mm:ss a";
     public static final String OUTPUT_TIME_FORMAT = "hh:mm a";
     public static final String OUTPUT_UTC = "yyyy-MM-dd'T'HH:mm:ss'Z'";
     public static final String OUTPUT_DATE_TIME_FORMAT = "EEEE dd,yyyy hh:mm a";
-    public static final String INPUT_LAB_DATE_FORMAT_AM_PM = "mm/dd/yyyy hh:mm:ss a";
+    public static final String INPUT_LAB_DATE_FORMAT_AM_PM = "MM/dd/yyyy hh:mm:ss a";
 
     // Custom
     public static final String DOB_FORMAT = "yyyy-MM-dd";
+    public static final String DISPLAY_DATE_ONLY_FORMAT = "dd MMM, YYYY";
+    public static final String DISPLAY_TIME_ONLY_FORMAT = "hh:mm a";
 
 
     /**

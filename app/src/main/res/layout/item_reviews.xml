@@ -11,9 +11,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingLeft="@dimen/x20dp"
-        android:paddingRight="@dimen/x20dp"
-        android:orientation="vertical">
+        android:paddingRight="@dimen/x20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,7 +51,6 @@
                     app:fontFamily="@string/font_regular" />
 
 
-
                 <android.support.v7.widget.AppCompatRatingBar
                     android:id="@+id/ratingbar"
                     style="?android:attr/ratingBarStyleSmall"
@@ -66,13 +65,11 @@
             </LinearLayout>
 
 
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical"
                 android:orientation="vertical">
-
 
 
                 <com.tekrevol.papp.widget.AnyTextView
@@ -85,6 +82,7 @@
                     android:text="Date"
                     android:textColor="@color/txtDarkGrey"
                     android:textSize="@dimen/s10"
+                    android:visibility="visible"
                     app:fontFamily="@string/font_regular" />
 
 
@@ -107,13 +105,12 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:rotation="-90"
                 android:src="@drawable/img_drop_down"
-                android:visibility="gone"
-                android:rotation="-90"/>
+                android:visibility="gone" />
 
 
         </LinearLayout>
-
 
 
         <com.tekrevol.papp.widget.AnyTextView
@@ -121,7 +118,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLength="250"
+            android:maxLines="5"
             android:padding="@dimen/x2dp"
             android:text="Review message"
             android:textColor="@color/txtDarkGrey"
@@ -129,9 +127,7 @@
             app:fontFamily="@string/font_regular" />
 
 
-
     </LinearLayout>
-
 
 
     <ImageView

@@ -13,6 +13,7 @@ import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.managers.DateManager;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
 import com.tekrevol.papp.models.sending_model.TaskAcceptSendingModel;
@@ -110,7 +111,7 @@ public class TaskSummaryFragment extends BaseFragment {
 
         txtTitle.setText(taskReceivingModel.getTitle());
         ImageLoaderHelper.loadImageWithAnimationsByPath(imgTask, taskReceivingModel.getIcon(), false);
-        txtDate.setText(taskReceivingModel.getCreatedAt());
+        txtDate.setText(DateManager.convertToUserTimeZone(taskReceivingModel.getCreatedAt()));
         txtDuration.setText(taskReceivingModel.getDuration() + " days");
         txtPoints.setText(taskReceivingModel.getRewardPoints() + " points");
         txtDesc.setText(taskReceivingModel.getDescription());

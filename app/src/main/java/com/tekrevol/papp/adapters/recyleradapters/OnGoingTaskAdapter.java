@@ -11,6 +11,7 @@ import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.helperclasses.DateHelper;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.managers.DateManager;
 import com.tekrevol.papp.models.general.SpinnerModel;
 import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
 import com.tekrevol.papp.widget.AnyTextView;
@@ -60,7 +61,7 @@ public class OnGoingTaskAdapter extends RecyclerView.Adapter<OnGoingTaskAdapter.
         holder.txtTitle.setText(model.getTitle());
         holder.txtDesc.setText("Reward: " + model.getRewardPoints() + " points");
         if (model.getTaskUsers() != null) {
-            holder.txtDuration.setText("Started: " + DateHelper.getElapsedTimeNew(model.getTaskUsers().getStartDate(), INPUT_DATE_FORMAT));
+            holder.txtDuration.setText("Started: " + DateHelper.getElapsedTimeNew(DateManager.convertToUserTimeZone(model.getTaskUsers().getStartDate()), INPUT_DATE_FORMAT));
         } else {
             holder.txtDuration.setText("Started: -");
         }

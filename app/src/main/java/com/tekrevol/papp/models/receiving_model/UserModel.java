@@ -32,6 +32,12 @@ public class UserModel {
     @SerializedName("email")
     private String email;
     @Expose
+    @SerializedName("chat_enabled")
+    private String chatEnabled;
+    @Expose
+    @SerializedName("review_enabled")
+    private String reviewEnabled;
+    @Expose
     @SerializedName("id")
     private int id;
 
@@ -43,6 +49,22 @@ public class UserModel {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+
+    public String getChatEnabled() {
+        return chatEnabled;
+    }
+
+    public void setChatEnabled(String chatEnabled) {
+        this.chatEnabled = chatEnabled;
+    }
+
+    public String getReviewEnabled() {
+        return reviewEnabled;
+    }
+
+    public void setReviewEnabled(String reviewEnabled) {
+        this.reviewEnabled = reviewEnabled;
     }
 
     public int getExpiresIn() {
