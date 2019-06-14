@@ -150,9 +150,8 @@ public class ReviewsFragment extends BaseFragment implements OnItemClickListener
         Map<String, Object> queryMap = new HashMap<>();
         queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
         queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
-        if (!isMentor()) {
-            queryMap.put(WebServiceConstants.Q_PARAM_MENTOR_ID, mentorModel.getId());
-        }
+        queryMap.put(WebServiceConstants.Q_PARAM_MENTOR_ID, mentorModel.getId());
+
 
         getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_REVIEWS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
             @Override

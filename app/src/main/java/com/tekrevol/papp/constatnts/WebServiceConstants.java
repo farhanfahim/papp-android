@@ -61,6 +61,7 @@ public class WebServiceConstants {
     public static final String PATH_ACCEPT_TASK = "task-users";
     public static final String PATH_COMPLETE_TASK = "upload-completed-task";
     public static final String PATH_REVIEWS = "reviews";
+    public static final String PATH_ADD_DEPENDENT = "addDependant";
 
 
 

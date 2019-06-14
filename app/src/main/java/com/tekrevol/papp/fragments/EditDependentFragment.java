@@ -11,22 +11,32 @@ import android.widget.LinearLayout;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tekrevol.papp.R;
+import com.tekrevol.papp.activities.HomeActivity;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.Constants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
+import com.tekrevol.papp.enums.BaseURLTypes;
+import com.tekrevol.papp.enums.FileType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.helperclasses.validator.PasswordValidation;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.managers.DateManager;
+import com.tekrevol.papp.managers.retrofit.WebServices;
+import com.tekrevol.papp.managers.retrofit.entities.MultiFileModel;
 import com.tekrevol.papp.models.general.IntWrapper;
+import com.tekrevol.papp.models.receiving_model.UserDetails;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.models.sending_model.DependantSendingModel;
+import com.tekrevol.papp.models.sending_model.ParentEditProfileModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -133,8 +143,7 @@ public class EditDependentFragment extends BaseFragment {
         edtFirstName.setText(userModel.getUserDetails().getFirstName());
         edtLastName.setText(userModel.getUserDetails().getLastName());
         edtEmailAddress.setText(userModel.getEmail());
-        // FIXME: 2019-06-11 DOB are remaining
-//        txtDOB.setText(userModel.get);
+        txtDOB.setText(userModel.getUserDetails().getDob());
         txtGender.setText(AppConstants.getGenderString(userModel.getUserDetails().getGender()));
         if (userModel.getUserDetails().getImage() != null && !userModel.getUserDetails().getImage().isEmpty()) {
             imgDependentProfile.setVisibility(View.VISIBLE);
@@ -291,4 +300,58 @@ public class EditDependentFragment extends BaseFragment {
         showAPIRemainingToast();
         getBaseActivity().popBackStack();
     }
+
+
+    public void editProfileCall() {
+        // Validations
+
+        if (!edtFirstName.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Please enter valid First Name");
+            return;
+        }
+
+        if (!edtLastName.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Please enter valid Last Name");
+            return;
+        }
+
+
+        // Initialize Models
+
+        ParentEditProfileModel parentEditProfileModel = new ParentEditProfileModel();
+        ArrayList<MultiFileModel> arrMultiFileModel = new ArrayList<>();
+
+
+        // Adding Images
+        if (fileTemporaryProfilePicture != null) {
+            arrMultiFileModel.add(new MultiFileModel(fileTemporaryProfilePicture, FileType.IMAGE, "image"));
+        }
+
+
+        // Setting data
+
+        parentEditProfileModel.setFirstName(edtFirstName.getStringTrimmed());
+        parentEditProfileModel.setLastName(edtLastName.getStringTrimmed());
+
+        new WebServices(getBaseActivity(), getToken(), BaseURLTypes.BASE_URL, true)
+                .postMultipartAPI(WebServiceConstants.PATH_PROFILE, arrMultiFileModel, parentEditProfileModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                    @Override
+                    public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                        UIHelper.showAlertDialog(getContext(), webResponse.result.toString());
+//                        UserDetails userDetails = getGson().fromJson(getGson().toJson(webResponse.result), UserDetails.class);
+//                        UserModel currentUser = sharedPreferenceManager.getCurrentUser();
+//                        currentUser.setUserDetails(userDetails);
+//                        sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser);
+//                        getBaseActivity().finish();
+//                        getBaseActivity().openActivity(HomeActivity.class);
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
+    }
+
 }

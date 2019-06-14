@@ -57,6 +57,9 @@ public class ErrorAdapter extends RecyclerView.Adapter<ErrorAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
+        if (arrData == null) {
+            return 0;
+        }
         return arrData.size();
     }
 

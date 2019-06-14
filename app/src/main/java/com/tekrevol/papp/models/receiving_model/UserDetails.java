@@ -64,11 +64,22 @@ public class UserDetails {
     @SerializedName("address")
     private String address;
     @Expose
+    @SerializedName("dob")
+    private String dob;
+    @Expose
     @SerializedName("lat")
     private double lat;
     @Expose
     @SerializedName("lng")
     private double lng;
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
 
     public String getAddress() {
         return address;

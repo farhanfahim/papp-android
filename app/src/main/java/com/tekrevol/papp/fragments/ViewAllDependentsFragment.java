@@ -96,7 +96,7 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new ViewAllDependentsAdapter(getContext(), getCurrentUser().getDependants(), this);
+
     }
 
 
@@ -115,8 +115,8 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
 
 
         fab.setVisibility(View.VISIBLE);
+        adapter = new ViewAllDependentsAdapter(getContext(), getCurrentUser().getDependants(), this);
         bindRecyclerView();
-
 
         adapter.notifyDataSetChanged();
 

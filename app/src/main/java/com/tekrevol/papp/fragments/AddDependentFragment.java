@@ -9,18 +9,27 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tekrevol.papp.R;
+import com.tekrevol.papp.activities.HomeActivity;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.Constants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
+import com.tekrevol.papp.enums.BaseURLTypes;
+import com.tekrevol.papp.enums.FileType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.DateManager;
+import com.tekrevol.papp.managers.retrofit.WebServices;
+import com.tekrevol.papp.managers.retrofit.entities.MultiFileModel;
 import com.tekrevol.papp.models.general.IntWrapper;
 import com.tekrevol.papp.models.sending_model.DependantSendingModel;
+import com.tekrevol.papp.models.sending_model.ParentSendingModel;
+import com.tekrevol.papp.models.wrappers.UserModelWrapper;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
@@ -62,8 +71,13 @@ public class AddDependentFragment extends BaseFragment {
     @BindView(R.id.contBtnSave)
     LinearLayout contBtnSave;
 
-
     IntWrapper genderPosition = new IntWrapper(0);
+    @BindView(R.id.txtSetPassword)
+    AnyTextView txtSetPassword;
+    @BindView(R.id.edtEmailAddress)
+    AnyEditTextView edtEmailAddress;
+    @BindView(R.id.contEmailPassword)
+    LinearLayout contEmailPassword;
     private File fileTemporaryProfilePicture;
     private ArrayList<DependantSendingModel> arrData;
     private boolean isRegistrationProcess = false;
@@ -125,9 +139,14 @@ public class AddDependentFragment extends BaseFragment {
 
         if (isRegistrationProcess) {
             txtUploadPhoto.setVisibility(View.GONE);
+
         } else {
             contBack.setVisibility(View.GONE);
         }
+
+
+        contEmailPassword.setVisibility(View.GONE);
+        txtSetPassword.setVisibility(View.GONE);
     }
 
 
@@ -251,18 +270,63 @@ public class AddDependentFragment extends BaseFragment {
                 }
 
 
-                if (isRegistrationProcess && arrData != null) {
-                    DependantSendingModel dependant = new DependantSendingModel();
-                    dependant.setFirstName(edtFirstName.getStringTrimmed());
-                    dependant.setLastName(edtLastName.getStringTrimmed());
-                    dependant.setGender(AppConstants.getGenderInt(txtGender.getStringTrimmed()));
-                    dependant.setDob(txtDOB.getStringTrimmed());
+                DependantSendingModel dependant = new DependantSendingModel();
+                dependant.setFirstName(edtFirstName.getStringTrimmed());
+                dependant.setLastName(edtLastName.getStringTrimmed());
+                dependant.setGender(AppConstants.getGenderInt(txtGender.getStringTrimmed()));
+                dependant.setDob(txtDOB.getStringTrimmed());
 
+
+                if (isRegistrationProcess && arrData != null) {
                     arrData.add(dependant);
                     getBaseActivity().popBackStack();
+                    return;
                 }
+
+                addDependentWebCall(dependant);
+
 
                 break;
         }
+    }
+
+
+    public void addDependentWebCall(DependantSendingModel dependantSendingModel) {
+
+
+        // Initialize Models
+
+        ArrayList<MultiFileModel> arrMultiFileModel = new ArrayList<>();
+
+
+        // Adding Images
+        if (fileTemporaryProfilePicture != null) {
+            arrMultiFileModel.add(new MultiFileModel(fileTemporaryProfilePicture, FileType.IMAGE, "image"));
+        }
+
+
+        getBaseWebService()
+                .postMultipartAPI(WebServiceConstants.PATH_ADD_DEPENDENT, arrMultiFileModel, dependantSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                    @Override
+                    public void requestDataResponse(WebResponse<Object> webResponse) {
+                        updateUser(new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                            @Override
+                            public void requestDataResponse(WebResponse<Object> webResponse) {
+//                                getBaseActivity().isReloadFragmentOnBack = true;
+                                getBaseActivity().popBackStack();
+                            }
+
+                            @Override
+                            public void onError(Object object) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
     }
 }

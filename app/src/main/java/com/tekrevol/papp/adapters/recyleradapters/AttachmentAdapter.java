@@ -35,6 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AttachmentAdapter extends RecyclerView.Adapter<AttachmentAdapter.ViewHolder> {
 
     private final OnItemClickListener onItemClick;
+    private boolean isViewOnly;
 
 
     private View itemView = null;
@@ -44,10 +45,19 @@ public class AttachmentAdapter extends RecyclerView.Adapter<AttachmentAdapter.Vi
     private List<String> arrData;
 
 
-    public AttachmentAdapter(Context activity, List<String> arrData, OnItemClickListener onItemClickListener) {
+    public AttachmentAdapter(Context activity, List<String> arrData, OnItemClickListener onItemClickListener, boolean isViewOnly) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
+        this.isViewOnly = isViewOnly;
+    }
+
+    public boolean isViewOnly() {
+        return isViewOnly;
+    }
+
+    public void setViewOnly(boolean viewOnly) {
+        isViewOnly = viewOnly;
     }
 
     @Override
@@ -61,6 +71,13 @@ public class AttachmentAdapter extends RecyclerView.Adapter<AttachmentAdapter.Vi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
         String model = arrData.get(i);
+
+
+        if (isViewOnly) {
+            ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgAttachment, model, false);
+            holder.imgDelete.setVisibility(View.GONE);
+            return;
+        }
 
         File file = new File(model);
         holder.txtFileName.setText(FileManager.getFileNameFromPath(model));

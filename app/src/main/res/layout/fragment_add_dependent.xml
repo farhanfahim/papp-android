@@ -274,7 +274,16 @@
                                 app:testType="email" />
 
 
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/x1dp"
+                                android:layout_marginTop="@dimen/x5dp"
+                                android:layout_marginBottom="@dimen/x5dp"
+                                android:background="@color/seperator_light_gray" />
+
                         </LinearLayout>
+
+
 
                     </LinearLayout>
 

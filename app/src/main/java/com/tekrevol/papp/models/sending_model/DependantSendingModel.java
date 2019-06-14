@@ -17,9 +17,6 @@ public class DependantSendingModel {
     @Expose
     @SerializedName("first_name")
     private String firstName;
-    @Expose
-    @SerializedName("image")
-    private String imageURL;
 
     public int getGender() {
         return gender;
@@ -51,14 +48,6 @@ public class DependantSendingModel {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-    }
-
-    public String getImageURL() {
-        return imageURL;
     }
 
     @Override

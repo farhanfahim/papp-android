@@ -3,7 +3,8 @@ package com.tekrevol.papp.enums;
 public enum FileType {
     IMAGE,
     VIDEO,
-    DOCUMENT;
+    APPLICATION,
+    DOCUMENT,;
 
 
     public String canonicalForm() {

@@ -28,6 +28,7 @@ import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.managers.DateManager;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.managers.retrofit.entities.MultiFileModel;
+import com.tekrevol.papp.models.receiving_model.TaskAttachmentModel;
 import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
 import com.tekrevol.papp.models.sending_model.TaskAcceptSendingModel;
 import com.tekrevol.papp.models.wrappers.WebResponse;
@@ -130,7 +131,7 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
         super.onCreate(savedInstanceState);
 
         arrAttachments = new ArrayList<>();
-        adapter = new AttachmentAdapter(getContext(), arrAttachments, this);
+        adapter = new AttachmentAdapter(getContext(), arrAttachments, this, false);
 
     }
 
@@ -150,9 +151,19 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
 
         bindRecyclerView();
 
+
         if (status == AppConstants.TASK_STATUS_PENDING_ADMIN_APPROVAL || status == AppConstants.TASK_STATUS_COMPLETED) {
+
             contButtons.setVisibility(View.GONE);
-            contAttachment.setVisibility(View.GONE);
+            imgAttachment.setVisibility(View.GONE);
+
+            arrAttachments.clear();
+            for (TaskAttachmentModel taskAttachmentModel : taskReceivingModel.getTaskUsers().getAttachment()) {
+                adapter.setViewOnly(true);
+                arrAttachments.add(taskAttachmentModel.getPath());
+            }
+
+            adapter.notifyDataSetChanged();
 
         }
 
@@ -260,7 +271,7 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
 
                 for (String arrAttachment : arrAttachments) {
                     if (arrAttachment.contains(".pdf")) {
-                        multiFileModelArrayList.add(new MultiFileModel(new File(arrAttachment), FileType.DOCUMENT, WSC_KEY_ATTACHMENT));
+                        multiFileModelArrayList.add(new MultiFileModel(new File(arrAttachment), FileType.APPLICATION, WSC_KEY_ATTACHMENT));
                     } else {
                         multiFileModelArrayList.add(new MultiFileModel(new File(arrAttachment), FileType.IMAGE, WSC_KEY_ATTACHMENT));
                     }

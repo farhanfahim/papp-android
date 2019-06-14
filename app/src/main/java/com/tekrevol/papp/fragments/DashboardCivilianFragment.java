@@ -111,9 +111,6 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
         categoriesAdapter = new CategoriesAdapter(getContext(), arrCategories, this);
 
 
-        dependentsAdapter = new DependentsAdapter(getContext(), getCurrentUser().getDependants(), this);
-
-
         arrMyMentor = new ArrayList<>();
         myMentorAdapter = new MyMentorAdapter(getContext(), arrMyMentor, this);
 
@@ -145,6 +142,7 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        dependentsAdapter = new DependentsAdapter(getContext(), getCurrentUser().getDependants(), this);
 
         bindRecyclerView();
 
@@ -153,6 +151,7 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
         }
 
         bindData();
+        getBaseActivity().isReloadFragmentOnBack = false;
 
     }
 
