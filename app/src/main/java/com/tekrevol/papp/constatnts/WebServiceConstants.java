@@ -62,6 +62,7 @@ public class WebServiceConstants {
     public static final String PATH_COMPLETE_TASK = "upload-completed-task";
     public static final String PATH_REVIEWS = "reviews";
     public static final String PATH_ADD_DEPENDENT = "addDependant";
+    public static final String PATH_CANCEL_TASK = "cancel-task";
 
 
 
@@ -94,7 +95,7 @@ public class WebServiceConstants {
      *  WSC KEYS
      */
 
-    public static final String WSC_KEY_ATTACHMENT = "attachment";
+    public static final String WSC_KEY_ATTACHMENT = "attachment[]";
 
 
 }

@@ -28,6 +28,7 @@ import com.tekrevol.papp.models.general.IntWrapper;
 import com.tekrevol.papp.models.receiving_model.UserDetails;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.models.sending_model.DependantSendingModel;
+import com.tekrevol.papp.models.sending_model.EditDependantSendingModel;
 import com.tekrevol.papp.models.sending_model.ParentEditProfileModel;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
@@ -271,13 +272,6 @@ public class EditDependentFragment extends BaseFragment {
             return;
         }
 
-
-        if (!edtEmailAddress.testValidity()) {
-            UIHelper.showAlertDialog(getContext(), "Please enter valid Email Address");
-            return;
-        }
-
-
         if (txtGender.getStringTrimmed().isEmpty()) {
             UIHelper.showAlertDialog(getContext(), "Please select Gender");
             return;
@@ -289,36 +283,14 @@ public class EditDependentFragment extends BaseFragment {
             return;
         }
 
-
-        DependantSendingModel dependant = new DependantSendingModel();
-        dependant.setFirstName(edtFirstName.getStringTrimmed());
-        dependant.setLastName(edtLastName.getStringTrimmed());
-        dependant.setGender(AppConstants.getGenderInt(txtGender.getStringTrimmed()));
-        dependant.setDob(txtDOB.getStringTrimmed());
-
-
-        showAPIRemainingToast();
-        getBaseActivity().popBackStack();
+        editProfileCall();
     }
 
 
     public void editProfileCall() {
-        // Validations
-
-        if (!edtFirstName.testValidity()) {
-            UIHelper.showAlertDialog(getContext(), "Please enter valid First Name");
-            return;
-        }
-
-        if (!edtLastName.testValidity()) {
-            UIHelper.showAlertDialog(getContext(), "Please enter valid Last Name");
-            return;
-        }
-
-
         // Initialize Models
 
-        ParentEditProfileModel parentEditProfileModel = new ParentEditProfileModel();
+        EditDependantSendingModel dependantSendingModel = new EditDependantSendingModel();
         ArrayList<MultiFileModel> arrMultiFileModel = new ArrayList<>();
 
 
@@ -330,21 +302,22 @@ public class EditDependentFragment extends BaseFragment {
 
         // Setting data
 
-        parentEditProfileModel.setFirstName(edtFirstName.getStringTrimmed());
-        parentEditProfileModel.setLastName(edtLastName.getStringTrimmed());
+        dependantSendingModel.setFirstName(edtFirstName.getStringTrimmed());
+        dependantSendingModel.setLastName(edtLastName.getStringTrimmed());
+        dependantSendingModel.setEmail(edtEmailAddress.getStringTrimmed());
+        dependantSendingModel.setDob(txtDOB.getStringTrimmed());
+        dependantSendingModel.setGender(AppConstants.getGenderInt(txtGender.getStringTrimmed()));
 
-        new WebServices(getBaseActivity(), getToken(), BaseURLTypes.BASE_URL, true)
-                .postMultipartAPI(WebServiceConstants.PATH_PROFILE, arrMultiFileModel, parentEditProfileModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+
+        getBaseWebService().putMultipartAPI(WebServiceConstants.PATH_GET_USERS + "/" + userModel.getId(), arrMultiFileModel, dependantSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                updateUser(new WebServices.IRequestWebResponseAnyObjectCallBack() {
                     @Override
                     public void requestDataResponse(WebResponse<Object> webResponse) {
-
-                        UIHelper.showAlertDialog(getContext(), webResponse.result.toString());
-//                        UserDetails userDetails = getGson().fromJson(getGson().toJson(webResponse.result), UserDetails.class);
-//                        UserModel currentUser = sharedPreferenceManager.getCurrentUser();
-//                        currentUser.setUserDetails(userDetails);
-//                        sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser);
-//                        getBaseActivity().finish();
-//                        getBaseActivity().openActivity(HomeActivity.class);
+//                                getBaseActivity().isReloadFragmentOnBack = true;
+                        getBaseActivity().popBackStack();
                     }
 
                     @Override
@@ -352,6 +325,14 @@ public class EditDependentFragment extends BaseFragment {
 
                     }
                 });
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
     }
 
 }

@@ -1,5 +1,6 @@
 package com.tekrevol.papp.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -90,7 +91,7 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
     private int status;
 
     AttachmentAdapter adapter;
-    ArrayList<String> arrAttachments;
+    ArrayList<TaskAttachmentModel> arrAttachments;
     private File fileTemporaryProfilePicture;
     public final int ATTACHMENT_LIMIT_COUNT = 5;
 
@@ -160,7 +161,7 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
             arrAttachments.clear();
             for (TaskAttachmentModel taskAttachmentModel : taskReceivingModel.getTaskUsers().getAttachment()) {
                 adapter.setViewOnly(true);
-                arrAttachments.add(taskAttachmentModel.getPath());
+                arrAttachments.add(taskAttachmentModel);
             }
 
             adapter.notifyDataSetChanged();
@@ -226,7 +227,9 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 fileTemporaryProfilePicture = new File(result.getUri().getPath());
-                arrAttachments.add(fileTemporaryProfilePicture.getPath());
+                TaskAttachmentModel taskAttachmentModel = new TaskAttachmentModel();
+                taskAttachmentModel.setPath(fileTemporaryProfilePicture.getPath());
+                arrAttachments.add(taskAttachmentModel);
                 adapter.notifyDataSetChanged();
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
@@ -269,11 +272,11 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
 
                 ArrayList<MultiFileModel> multiFileModelArrayList = new ArrayList<>();
 
-                for (String arrAttachment : arrAttachments) {
-                    if (arrAttachment.contains(".pdf")) {
-                        multiFileModelArrayList.add(new MultiFileModel(new File(arrAttachment), FileType.APPLICATION, WSC_KEY_ATTACHMENT));
+                for (TaskAttachmentModel attachmentModel : arrAttachments) {
+                    if (attachmentModel.getPath().contains(".pdf")) {
+                        multiFileModelArrayList.add(new MultiFileModel(new File(attachmentModel.getPath()), FileType.APPLICATION, WSC_KEY_ATTACHMENT));
                     } else {
-                        multiFileModelArrayList.add(new MultiFileModel(new File(arrAttachment), FileType.IMAGE, WSC_KEY_ATTACHMENT));
+                        multiFileModelArrayList.add(new MultiFileModel(new File(attachmentModel.getPath()), FileType.IMAGE, WSC_KEY_ATTACHMENT));
                     }
                 }
 
@@ -299,14 +302,43 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
 
 
             case R.id.txtCancel:
-                showNextBuildToast();
+                UIHelper.showAlertDialog("Do you really want to cancel this task?", "Cancel Task", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        cancelTaskAPI();
+                    }
+                }, getContext());
                 break;
         }
     }
 
+    public void cancelTaskAPI() {
+        TaskAcceptSendingModel model = new TaskAcceptSendingModel();
+        model.setTaskId(taskReceivingModel.getId());
+
+        getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_CANCEL_TASK, model.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                getBaseActivity().popBackStack();
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
     public void showFilePicker() {
         UIHelper.showFilePickerDialog(getContext(), "Select Attachment", false, files -> {
-            arrAttachments.addAll(Arrays.asList(files));
+
+            for (String file : files) {
+            TaskAttachmentModel taskAttachmentModel = new TaskAttachmentModel();
+            taskAttachmentModel.setPath(file);
+            arrAttachments.add(taskAttachmentModel);
+
+            }
+
             adapter.notifyDataSetChanged();
         });
     }

@@ -19,6 +19,7 @@ import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.managers.FileManager;
+import com.tekrevol.papp.models.receiving_model.TaskAttachmentModel;
 import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
 import com.tekrevol.papp.widget.AnyTextView;
 
@@ -42,10 +43,10 @@ public class AttachmentAdapter extends RecyclerView.Adapter<AttachmentAdapter.Vi
 
 
     private Context activity;
-    private List<String> arrData;
+    private List<TaskAttachmentModel> arrData;
 
 
-    public AttachmentAdapter(Context activity, List<String> arrData, OnItemClickListener onItemClickListener, boolean isViewOnly) {
+    public AttachmentAdapter(Context activity, List<TaskAttachmentModel> arrData, OnItemClickListener onItemClickListener, boolean isViewOnly) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
@@ -70,32 +71,33 @@ public class AttachmentAdapter extends RecyclerView.Adapter<AttachmentAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        String model = arrData.get(i);
+        TaskAttachmentModel model = arrData.get(i);
 
 
         if (isViewOnly) {
-            ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgAttachment, model, false);
+            ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgAttachment, model.getPath(), false);
+            holder.txtFileName.setText(model.getName());
             holder.imgDelete.setVisibility(View.GONE);
             return;
         }
 
-        File file = new File(model);
-        holder.txtFileName.setText(FileManager.getFileNameFromPath(model));
+        File file = new File(model.getPath());
+        holder.txtFileName.setText(FileManager.getFileNameFromPath(model.getPath()));
 
-        model = Uri.fromFile(file).toString();
+        String uri = Uri.fromFile(file).toString();
 
 
-        if (model.contains(".jpg") || model.contains(".jpeg") || model.contains(".png")) {
-            ImageLoader.getInstance().displayImage(model, holder.imgAttachment);
-        } else if (model.contains(".pdf")) {
-            setPdfThumbnail(Uri.parse(model), holder.imgAttachment);
+        if (uri.contains(".jpg") || uri.contains(".jpeg") || uri.contains(".png")) {
+            ImageLoader.getInstance().displayImage(uri, holder.imgAttachment);
+        } else if (uri.contains(".pdf")) {
+            setPdfThumbnail(Uri.parse(uri), holder.imgAttachment);
         }
 
 
         setListener(holder, model);
     }
 
-    private void setListener(final ViewHolder holder, final String model) {
+    private void setListener(final ViewHolder holder, final TaskAttachmentModel model) {
         holder.imgDelete.
                 setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, itemView, ""));
     }

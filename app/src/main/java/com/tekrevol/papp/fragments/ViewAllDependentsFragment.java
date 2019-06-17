@@ -19,13 +19,19 @@ import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.ViewAllDependentsAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.UserModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.github.clans.fab.FloatingActionButton;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,6 +65,7 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
     RelativeLayout contParent;
 
 
+    ArrayList<UserModel> arrData;
     ViewAllDependentsAdapter adapter;
 
 
@@ -96,6 +103,8 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        arrData = new ArrayList<>();
+        adapter = new ViewAllDependentsAdapter(getContext(), arrData, this);
 
     }
 
@@ -115,9 +124,10 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
 
 
         fab.setVisibility(View.VISIBLE);
-        adapter = new ViewAllDependentsAdapter(getContext(), getCurrentUser().getDependants(), this);
-        bindRecyclerView();
 
+        bindRecyclerView();
+        arrData.clear();
+        arrData.addAll(getCurrentUser().getDependants());
         adapter.notifyDataSetChanged();
 
     }
@@ -171,9 +181,24 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
             case R.id.imgRemove:
                 UIHelper.showAlertDialog("Are you sure you want to remove " + model.getUserDetails().getFullName() + "?",
                         "Alert", (dialogInterface, i) -> {
-//                            getCurrentUser().getDependants().remove(position);
-//                            adapter.notifyDataSetChanged();
-                            showAPIRemainingToast();
+
+                            getBaseWebService().deleteAPIAnyObject(WebServiceConstants.PATH_GET_USERS + "/" + model.getId(), "",
+                                    new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                                        @Override
+                                        public void requestDataResponse(WebResponse<Object> webResponse) {
+                                            UserModel userModel = getCurrentUser();
+                                            userModel.getDependants().remove(position);
+                                            setCurrentUser(userModel);
+                                            arrData.clear();
+                                            arrData.addAll(userModel.getDependants());
+                                            adapter.notifyDataSetChanged();
+                                        }
+
+                                        @Override
+                                        public void onError(Object object) {
+
+                                        }
+                                    });
                         }, getContext());
                 break;
 

@@ -3,7 +3,6 @@ package com.tekrevol.papp.managers.retrofit;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.tekrevol.papp.activities.BaseActivity;
 import com.tekrevol.papp.activities.HomeActivity;
@@ -44,7 +43,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.tekrevol.papp.constatnts.WebServiceConstants.PARAMS_TOKEN_BLACKLIST;
-import static com.tekrevol.papp.constatnts.WebServiceConstants.PARAMS_TOKEN_EXPIRE;
 
 /**
  * Created by hamzakhan on 6/30/2017.
@@ -182,6 +180,82 @@ public class WebServices {
     }
 
 
+
+    /**
+     * TO UPLOAD FILE
+     *
+     * @param multiFileModelArrayList
+     * @param jsonStringBody
+     * @param callBack
+     */
+
+    public void putMultipartAPI(String path, ArrayList<MultiFileModel> multiFileModelArrayList, String jsonStringBody,
+                                 final IRequestWebResponseAnyObjectCallBack callBack) {
+
+        ArrayList<MultipartBody.Part> partArrayList = new ArrayList<>();
+
+
+        if (jsonStringBody != null && !jsonStringBody.isEmpty()) {
+            try {
+                JSONObject jsonObject = new JSONObject(jsonStringBody);
+                Iterator<?> keys = jsonObject.keys();
+                while (keys.hasNext()) {
+                    String key = (String) keys.next();
+                    String value = jsonObject.getString(key);
+                    partArrayList.add(MultipartBody.Part.createFormData(key, value));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        if (multiFileModelArrayList != null && !multiFileModelArrayList.isEmpty()) {
+            for (MultiFileModel multiFileModel : multiFileModelArrayList) {
+                if (multiFileModel.getFile() == null || !multiFileModel.getFile().exists()) {
+                    dismissDialog();
+                    UIHelper.showShortToastInCenter(activity, "File is empty.");
+                    return;
+                }
+
+                MultipartBody.Part multipart = getMultipart(multiFileModel.getFileType(), multiFileModel.getFile(), multiFileModel.getKeyName());
+                partArrayList.add(multipart);
+            }
+        }
+
+        // Method Spoofing
+        partArrayList.add(MultipartBody.Part.createFormData("_method", "PUT"));
+
+
+        try {
+            if (Helper.isNetworkConnected(activity, true)) {
+                apiService.postMultipartAPI(path, partArrayList).enqueue(
+                        new Callback<WebResponse<Object>>() {
+                            @Override
+                            public void onResponse(Call<WebResponse<Object>> call, Response<WebResponse<Object>> response) {
+                                validateIfWebResponse(response, callBack);
+                            }
+
+                            @Override
+                            public void onFailure(Call<WebResponse<Object>> call, Throwable t) {
+                                UIHelper.showShortToastInCenter(activity, "Something went wrong, Please check your internet connection.");
+                                dismissDialog();
+                                callBack.onError("");
+                            }
+                        });
+            } else {
+                dismissDialog();
+                callBack.onError("Internet Error");
+            }
+
+        } catch (
+                Exception e) {
+            dismissDialog();
+            e.printStackTrace();
+
+        }
+    }
+
     /**
      * TO UPLOAD FILE
      *
@@ -252,6 +326,51 @@ public class WebServices {
             e.printStackTrace();
 
         }
+    }
+
+
+    /**
+     * WEB CALL DELETE
+     *
+     * @param path
+     * @param requestData can give null or empty
+     * @param callBack
+     * @return
+     */
+
+    public Call<WebResponse<Object>> deleteAPIAnyObject(String path, String requestData, final IRequestWebResponseAnyObjectCallBack callBack) {
+//        RequestBody bodyRequestData = getRequestBody(okhttp3.MediaType.parse("application/json; charset=utf-8"), requestData);
+
+//        MultipartBody.Part multipartBody = MultipartBody.Part.create(bodyRequestData);
+
+        Call<WebResponse<Object>> webResponseCall = apiService.deleteAPIWebResponseAnyObject(path);
+
+        try {
+            if (Helper.isNetworkConnected(activity, true)) {
+                webResponseCall.enqueue(new Callback<WebResponse<Object>>() {
+                    @Override
+                    public void onResponse(Call<WebResponse<Object>> call, Response<WebResponse<Object>> response) {
+                        validateIfWebResponse(response, callBack);
+                    }
+
+                    @Override
+                    public void onFailure(Call<WebResponse<Object>> call, Throwable t) {
+                        UIHelper.showShortToastInCenter(activity, "Something went wrong, Please check your internet connection.");
+                        dismissDialog();
+                        callBack.onError("");
+                    }
+                });
+            } else {
+                dismissDialog();
+            }
+
+        } catch (Exception e) {
+            dismissDialog();
+            e.printStackTrace();
+
+        }
+
+        return webResponseCall;
     }
 
 
