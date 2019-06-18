@@ -17,6 +17,7 @@ import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.DependentsAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.models.receiving_model.SessionRecievingModel;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
@@ -65,13 +66,17 @@ public class LEASessionDetailsFragment extends BaseFragment implements OnItemCli
     ImageView imgStop;
     @BindView(R.id.txtTimer)
     AnyTextView txtTimer;
+    private SessionRecievingModel sessionRecievingModel;
+    private boolean isUpcomingAccepted;
 
 
-    public static LEASessionDetailsFragment newInstance() {
+    public static LEASessionDetailsFragment newInstance(SessionRecievingModel sessionRecievingModel, boolean isUpcomingAccepted) {
 
         Bundle args = new Bundle();
 
         LEASessionDetailsFragment fragment = new LEASessionDetailsFragment();
+        fragment.sessionRecievingModel = sessionRecievingModel;
+        fragment.isUpcomingAccepted = isUpcomingAccepted;
         fragment.setArguments(args);
         return fragment;
     }

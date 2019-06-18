@@ -28,7 +28,6 @@ import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.general.SpinnerModel;
 import com.tekrevol.papp.models.receiving_model.SessionRecievingModel;
-import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
@@ -112,11 +111,11 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
 
 
         arrNewRequest = new ArrayList<>();
-        adapterNewRequest = new SessionsAdapter(getContext(), arrNewRequest, this, true);
+        adapterNewRequest = new SessionsAdapter(getContext(), arrNewRequest, this, false);
 
 
         arrUpcomingSession = new ArrayList<>();
-        adapterUpcomingSession = new SessionsAdapter(getContext(), arrUpcomingSession, this, false);
+        adapterUpcomingSession = new SessionsAdapter(getContext(), arrUpcomingSession, this, true);
 
 
     }
@@ -274,7 +273,7 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
 
                 switch (view.getId()) {
                     case R.id.contParentLayout:
-                        getBaseActivity().addDockableFragment(LEASessionDetailsFragment.newInstance(), true);
+                        getBaseActivity().addDockableFragment(LEASessionDetailsFragment.newInstance((SessionRecievingModel) object, true), true);
                         break;
 
                     case R.id.imgDone:
@@ -289,6 +288,10 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
             } else if (((String) type).equalsIgnoreCase(SessionsAdapter.class.getSimpleName() + "request")) {
 
                 switch (view.getId()) {
+
+                    case R.id.contParentLayout:
+                        getBaseActivity().addDockableFragment(LEASessionDetailsFragment.newInstance((SessionRecievingModel) object, false), true);
+                        break;
 
                     case R.id.imgDone:
                         arrUpcomingSession.add((SessionRecievingModel) object);
@@ -354,7 +357,7 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
     }
 
 
-    public void getSessions(int limit, boolean isAcceptedSessions) {
+    public void getSessions(int limit, boolean isAcceptedUpcomingSessions) {
 
         Map<String, Object> queryMap = new HashMap<>();
         queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, limit);
@@ -364,7 +367,7 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
             queryMap.put(WebServiceConstants.Q_PARAM_TYPE_FILTER, selectedSessionType);
         }
 
-        if (isAcceptedSessions) {
+        if (isAcceptedUpcomingSessions) {
             queryMap.put(WebServiceConstants.Q_PARAM_UPCOMING_SESSION_REQUEST, "yes");
         }
 
@@ -379,7 +382,7 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
                                 , type);
 
 
-                if (isAcceptedSessions) {
+                if (isAcceptedUpcomingSessions) {
                     arrUpcomingSession.clear();
                     arrUpcomingSession.addAll(arrayList);
                 } else {

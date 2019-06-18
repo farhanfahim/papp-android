@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.tekrevol.papp.R;
-import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapterDummy;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.Constants;
@@ -155,7 +154,7 @@ public class UpcomingSessionFragment extends BaseFragment implements OnItemClick
         switch (view.getId()) {
             case R.id.contParentLayout:
 
-                getBaseActivity().addDockableFragment(LEASessionDetailsFragment.newInstance(), true);
+                getBaseActivity().addDockableFragment(LEASessionDetailsFragment.newInstance((SessionRecievingModel) object, onCreated), true);
 
                 break;
 

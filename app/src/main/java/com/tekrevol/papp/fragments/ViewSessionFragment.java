@@ -15,10 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.tekrevol.papp.R;
-import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapterDummy;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
@@ -172,7 +170,7 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
             case R.id.contParentLayout:
 
                 if (isMentor()) {
-                    getBaseActivity().addDockableFragment(LEASessionDetailsFragment.newInstance(), true);
+                    getBaseActivity().addDockableFragment(LEASessionDetailsFragment.newInstance((SessionRecievingModel) object, onCreated), true);
                 } else {
                     getBaseActivity().addDockableFragment(SessionDetailsFragment.newInstance(), true);
 

@@ -10,7 +10,9 @@ import android.widget.LinearLayout;
 
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.managers.DateManager;
 import com.tekrevol.papp.models.receiving_model.SessionRecievingModel;
 import com.tekrevol.papp.widget.AnyTextView;
 
@@ -21,6 +23,7 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
+ *
  */
 public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ViewHolder> {
 
@@ -29,13 +32,13 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ViewHo
 
     private Context activity;
     private List<SessionRecievingModel> arrData;
-    private boolean isSessionRequest = false;
+    private boolean isAcceptedUpcomingSession;
 
-    public SessionsAdapter(Context activity, List<SessionRecievingModel> arrData, OnItemClickListener onItemClickListener, boolean isSessionRequest) {
+    public SessionsAdapter(Context activity, List<SessionRecievingModel> arrData, OnItemClickListener onItemClickListener, boolean isAcceptedUpcomingSession) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
-        this.isSessionRequest = isSessionRequest;
+        this.isAcceptedUpcomingSession = isAcceptedUpcomingSession;
     }
 
     @Override
@@ -51,11 +54,21 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ViewHo
         SessionRecievingModel model = arrData.get(i);
 
 
-        if (isSessionRequest) {
-            holder.imgDone.setVisibility(View.VISIBLE);
-        } else {
+        if (isAcceptedUpcomingSession) {
             holder.imgDone.setVisibility(View.GONE);
+//            holder.imgCancel.setVisibility(View.GONE);
+        } else {
+            holder.imgDone.setVisibility(View.VISIBLE);
+//            holder.imgCancel.setVisibility(View.VISIBLE);
         }
+
+        ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgProfile, model.getUser().getUserDetails().getImage(), true);
+
+
+//        String date = DateManager.convertToUserTimeZone(model.getCreatedAt());
+        holder.txtDate.setText(DateManager.getDate(model.getScheduleDate(), AppConstants.DISPLAY_DATE_ONLY_FORMAT));
+        holder.txtTime.setText(DateManager.getDate(model.getScheduleDate(), AppConstants.DISPLAY_TIME_ONLY_FORMAT));
+        holder.txtDesc.setText("with dependent of " + model.getUser().getUserDetails().getFullName());
 
 
         setListener(holder, model);
@@ -64,16 +77,7 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ViewHo
     private void setListener(final ViewHolder holder, final SessionRecievingModel model) {
 
 
-        if (isSessionRequest) {
-
-            holder.imgCancel.
-                    setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, SessionsAdapter.class.getSimpleName() + "request"));
-
-            holder.imgDone.
-                    setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, SessionsAdapter.class.getSimpleName()+ "request"));
-
-        } else {
-
+        if (isAcceptedUpcomingSession) {
             holder.contParentLayout.
                     setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, SessionsAdapter.class.getSimpleName()));
 
@@ -82,6 +86,19 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ViewHo
 
             holder.imgDone.
                     setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, SessionsAdapter.class.getSimpleName()));
+
+        } else {
+
+            holder.contParentLayout.
+                    setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, SessionsAdapter.class.getSimpleName() + "request"));
+
+            holder.imgCancel.
+                    setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, SessionsAdapter.class.getSimpleName() + "request"));
+
+            holder.imgDone.
+                    setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, SessionsAdapter.class.getSimpleName() + "request"));
+
+
         }
 
     }
