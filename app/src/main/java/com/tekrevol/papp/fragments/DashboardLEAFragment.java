@@ -19,6 +19,7 @@ import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.CategoriesAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
@@ -26,6 +27,8 @@ import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.models.receiving_model.SessionRecievingModel;
+import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
@@ -77,16 +80,17 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
     RelativeLayout contBottomBar;
 
 
-    CategoriesAdapter categoriesAdapter;
+    CategoriesAdapter sessionTypesAdapter;
     ArrayList<SpinnerModel> arrSessionTypes;
 
 
     SessionsAdapter adapterNewRequest;
-    ArrayList<SpinnerModel> arrNewRequest;
+    ArrayList<SessionRecievingModel> arrNewRequest;
 
 
     SessionsAdapter adapterUpcomingSession;
-    ArrayList<SpinnerModel> arrUpcomingSession;
+    ArrayList<SessionRecievingModel> arrUpcomingSession;
+    private int selectedSessionType;
 
 
     public static DashboardLEAFragment newInstance() {
@@ -104,7 +108,7 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
         super.onCreate(savedInstanceState);
 
         arrSessionTypes = new ArrayList<>();
-        categoriesAdapter = new CategoriesAdapter(getContext(), arrSessionTypes, this);
+        sessionTypesAdapter = new CategoriesAdapter(getContext(), arrSessionTypes, this);
 
 
         arrNewRequest = new ArrayList<>();
@@ -140,20 +144,23 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getCategoriesList();
         bindRecyclerView();
 
         arrSessionTypes.clear();
-
         arrSessionTypes.addAll(Constants.getSessionTypes());
         arrSessionTypes.get(0).setSelected(true);
+        sessionTypesAdapter.notifyDataSetChanged();
 
-        arrNewRequest.clear();
-        arrNewRequest.addAll(Constants.getAddDependentsArray2());
+        getSessions(4, false);
+        getSessions(4, true);
 
 
-        arrUpcomingSession.clear();
-        arrUpcomingSession.addAll(Constants.getAddDependentsArray2());
+        if (onCreated) {
+            return;
+        }
+        getCategoriesList();
+
+
     }
 
     @Override
@@ -190,7 +197,7 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvSessionTypes.setLayoutManager(mLayoutManager);
         ((DefaultItemAnimator) rvSessionTypes.getItemAnimator()).setSupportsChangeAnimations(false);
-        rvSessionTypes.setAdapter(categoriesAdapter);
+        rvSessionTypes.setAdapter(sessionTypesAdapter);
 
 
         RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -240,7 +247,29 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
 
                 arrSessionTypes.get(position).setSelected(true);
 
-                categoriesAdapter.notifyDataSetChanged();
+                switch (position) {
+                    case 0:
+                        selectedSessionType = 0;
+                        break;
+
+                    case 1:
+                        selectedSessionType = AppConstants.SESSION_TYPE_AUDIO;
+                        break;
+
+                    case 2:
+                        selectedSessionType = AppConstants.SESSION_TYPE_VIDEO;
+                        break;
+
+                    case 3:
+                        selectedSessionType = AppConstants.SESSION_TYPE_ONE_ON_ONE;
+                        break;
+                }
+
+                getSessions(4, false);
+                getSessions(4, true);
+
+                sessionTypesAdapter.notifyDataSetChanged();
+
             } else if (((String) type).equalsIgnoreCase(SessionsAdapter.class.getSimpleName())) {
 
                 switch (view.getId()) {
@@ -262,7 +291,7 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
                 switch (view.getId()) {
 
                     case R.id.imgDone:
-                        arrUpcomingSession.add((SpinnerModel) object);
+                        arrUpcomingSession.add((SessionRecievingModel) object);
                         arrNewRequest.remove(position);
                         UIHelper.showToast(getContext(), "Session request has been accepted");
                         adapterNewRequest.notifyDataSetChanged();
@@ -315,8 +344,52 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
                     getHomeActivity().sparseArrayDepartments.put(model.getId(), model.getText());
                 }
 
+            }
 
-                categoriesAdapter.notifyDataSetChanged();
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
+
+    public void getSessions(int limit, boolean isAcceptedSessions) {
+
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, limit);
+        queryMap.put(WebServiceConstants.Q_PARAM_CURRENT_MENTOR, "yes");
+
+        if (selectedSessionType != 0) {
+            queryMap.put(WebServiceConstants.Q_PARAM_TYPE_FILTER, selectedSessionType);
+        }
+
+        if (isAcceptedSessions) {
+            queryMap.put(WebServiceConstants.Q_PARAM_UPCOMING_SESSION_REQUEST, "yes");
+        }
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_SESSIONS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                Type type = new TypeToken<ArrayList<SessionRecievingModel>>() {
+                }.getType();
+                ArrayList<SessionRecievingModel> arrayList = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type);
+
+
+                if (isAcceptedSessions) {
+                    arrUpcomingSession.clear();
+                    arrUpcomingSession.addAll(arrayList);
+                } else {
+                    arrNewRequest.clear();
+                    arrNewRequest.addAll(arrayList);
+                }
+
+
+                adapterUpcomingSession.notifyDataSetChanged();
+                adapterNewRequest.notifyDataSetChanged();
 
             }
 

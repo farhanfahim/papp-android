@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.tekrevol.papp.fragments.LoginDetailFragment;
 import com.tekrevol.papp.helperclasses.RunTimePermissions;
 import com.tekrevol.papp.managers.SharedPreferenceManager;
 

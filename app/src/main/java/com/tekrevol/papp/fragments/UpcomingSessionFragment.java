@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapter;
+import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapterDummy;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
@@ -37,8 +38,9 @@ public class UpcomingSessionFragment extends BaseFragment implements OnItemClick
 
     Unbinder unbinder;
 
-    SessionsAdapter adapter;
+    SessionsAdapterDummy adapter;
     ArrayList<SpinnerModel> arrData;
+
     @BindView(R.id.edtSearchBar)
     AnyEditTextView edtSearchBar;
     @BindView(R.id.imgSearch)
@@ -75,7 +77,7 @@ public class UpcomingSessionFragment extends BaseFragment implements OnItemClick
 
 
         arrData = new ArrayList<>();
-        adapter = new SessionsAdapter(getContext(), arrData, this, false);
+        adapter = new SessionsAdapterDummy(getContext(), arrData, this, false);
 
 
     }
@@ -103,13 +105,10 @@ public class UpcomingSessionFragment extends BaseFragment implements OnItemClick
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         bindRecyclerView();
-
 
         arrData.clear();
         arrData.addAll(Constants.getAddDependentsArray2());
-
 
     }
 

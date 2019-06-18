@@ -72,7 +72,7 @@ public class HomeActivity extends BaseActivity {
 
         setSideMenu(ResideMenu.DIRECTION_RIGHT);
 
-        initFragments("");
+        initFragments();
 
 
     }
@@ -133,8 +133,8 @@ public class HomeActivity extends BaseActivity {
         return R.id.contDrawer;
     }
 
-    private void initFragments(String intentData) {
-        if (SharedPreferenceManager.getInstance(this).getBoolean(AppConstants.KEY_IS_MENTOR)) {
+    private void initFragments() {
+        if (SharedPreferenceManager.getInstance(this).isMentor()) {
             addDockableFragment(DashboardLEAFragment.newInstance(), false);
         } else {
             addDockableFragment(DashboardCivilianFragment.newInstance(), false);

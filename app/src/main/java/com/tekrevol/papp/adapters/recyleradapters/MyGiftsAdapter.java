@@ -52,6 +52,16 @@ public class MyGiftsAdapter extends RecyclerView.Adapter<MyGiftsAdapter.ViewHold
         GiftsHistoryModel model = arrData.get(i);
 
 
+        if (model.getGifts() == null) {
+            holder.txtItemName.setText("");
+
+            holder.txtPoints.setText("for " + model.getPoints() + " points");
+            holder.txtDate.setText(DateManager.convertToUserTimeZone(model.getCreatedAt()));
+
+            return;
+        }
+
+
         Glide.with(activity)
                 .load(ImageLoaderHelper.getImageURLFromPath(model.getGifts().getImage()))
                 .error(R.drawable.app_icon_placeholder)

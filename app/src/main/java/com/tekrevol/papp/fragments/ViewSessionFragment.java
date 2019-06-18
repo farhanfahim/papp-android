@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapter;
+import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapterDummy;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.Constants;
@@ -41,7 +42,7 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
 
     Unbinder unbinder;
 
-    SessionsAdapter adapter;
+    SessionsAdapterDummy adapter;
     ArrayList<SpinnerModel> arrData;
 
 
@@ -89,9 +90,8 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         arrData = new ArrayList<>();
-        adapter = new SessionsAdapter(getContext(), arrData, this, false);
+        adapter = new SessionsAdapterDummy(getContext(), arrData, this, false);
 
 
     }
@@ -171,7 +171,7 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
         switch (view.getId()) {
             case R.id.contParentLayout:
 
-                if (sharedPreferenceManager.getBoolean(AppConstants.KEY_IS_MENTOR)) {
+                if (isMentor()) {
                     getBaseActivity().addDockableFragment(LEASessionDetailsFragment.newInstance(), true);
                 } else {
                     getBaseActivity().addDockableFragment(SessionDetailsFragment.newInstance(), true);
@@ -213,7 +213,7 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
                 break;
             case R.id.imgHome:
                 getBaseActivity().popBackStack();
-                if (sharedPreferenceManager.getBoolean(AppConstants.KEY_IS_MENTOR)) {
+                if (isMentor()) {
                     getBaseActivity().addDockableFragment(DashboardLEAFragment.newInstance(), false);
                 } else {
                     getBaseActivity().addDockableFragment(DashboardCivilianFragment.newInstance(), false);

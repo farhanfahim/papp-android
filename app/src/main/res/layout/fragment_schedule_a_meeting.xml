@@ -17,16 +17,64 @@
         android:paddingRight="@dimen/x20dp"
         android:paddingBottom="@dimen/x10dp">
 
-
         <com.tekrevol.papp.widget.AnyTextView
-            android:id="@+id/txtSetDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/x3dp"
+            android:text="Schedule Date and Time"
+            android:textColor="@color/txtBlack"
+            android:textSize="@dimen/s12"
+            app:typeface="@string/font_regular" />
+
+
+        <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+            android:id="@+id/contDTTM"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x10dp"
-            android:background="@drawable/img_button_blue"
-            android:gravity="center"
-            android:text="Set Date and Time"
-            android:textColor="@color/c_white" />
+            android:background="@color/c_white"
+            android:elevation="@dimen/x5dp"
+            android:gravity="center_vertical"
+            android:padding="@dimen/x10dp"
+            app:corner_radius="@dimen/x3dp">
+
+
+            <com.tekrevol.papp.widget.AnyTextView
+                android:id="@+id/txtSetDateTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:ellipsize="end"
+                android:hint="Please Select Date and Time"
+                android:padding="@dimen/x3dp"
+                android:singleLine="true"
+                android:textColor="@color/txtBlack"
+                android:textColorHint="@color/txtGrey"
+                android:textSize="@dimen/s14"
+                app:fontFamily="@string/font_regular" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/x5dp"
+                android:rotation="270"
+                android:src="@drawable/img_drop_down"
+                android:tint="@color/c_black" />
+
+
+        </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+        <com.tekrevol.papp.widget.AnyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/x3dp"
+            android:text="Location (For meet up session only)"
+            android:textColor="@color/txtBlack"
+            android:textSize="@dimen/s12"
+            app:typeface="@string/font_regular" />
 
 
         <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
@@ -48,7 +96,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:ellipsize="end"
-                android:hint="Specify Location"
+                android:hint="Please Specify Location"
                 android:padding="@dimen/x3dp"
                 android:singleLine="true"
                 android:textColor="@color/txtBlack"
@@ -56,12 +104,12 @@
                 android:textSize="@dimen/s14"
                 app:fontFamily="@string/font_regular" />
 
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/x5dp"
-                android:src="@drawable/img_search"
+                android:rotation="270"
+                android:src="@drawable/img_drop_down"
                 android:tint="@color/c_black" />
 
 
@@ -88,7 +136,7 @@
                 android:ellipsize="end"
                 android:padding="@dimen/x3dp"
                 android:singleLine="true"
-                android:text="Choose Dependents"
+                android:text="Choose Dependent"
                 android:textColor="@color/txtBlack"
                 android:textColorHint="@color/txtGrey"
                 android:textSize="@dimen/s14"
@@ -104,10 +152,11 @@
                 android:maxLength="3"
                 android:padding="@dimen/x3dp"
                 android:singleLine="true"
-                android:text="1"
+                android:text="0"
                 android:textColor="@color/txtGrey"
                 android:textColorHint="@color/txtGrey"
                 android:textSize="@dimen/s14"
+                android:visibility="gone"
                 app:fontFamily="@string/font_regular" />
 
 
@@ -122,33 +171,20 @@
         </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
 
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvDependents"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="@dimen/x10dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvDependents"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
-
-
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" />
 
 
         <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/x10dp"
             android:layout_weight="1"
             android:background="#fff"
             android:elevation="@dimen/x5dp"
-            android:layout_marginBottom="@dimen/x10dp"
             android:orientation="vertical"
             android:padding="@dimen/x20dp"
             app:corner_radius="@dimen/x3dp">
@@ -170,11 +206,10 @@
         </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginBottom="@dimen/x10dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x10dp">
 
 
             <CheckBox
@@ -200,6 +235,31 @@
         </LinearLayout>
 
 
+        <RadioGroup
+            android:id="@+id/rgCallType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x10dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+
+            <RadioButton
+                android:id="@+id/rbAudioCall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Audio Call" />
+
+
+            <RadioButton
+                android:id="@+id/rbVideoCall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Video Call" />
+
+
+        </RadioGroup>
+
 
         <com.tekrevol.papp.widget.AnyTextView
             android:id="@+id/contSendRequest"
@@ -212,10 +272,7 @@
             android:textColor="@color/c_white" />
 
 
-
     </LinearLayout>
-
-
 
 
 </android.support.v4.widget.NestedScrollView>

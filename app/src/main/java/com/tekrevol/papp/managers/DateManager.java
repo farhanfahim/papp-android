@@ -549,7 +549,7 @@ public class DateManager {
 
 
             if (textView != null) {
-                textView.setText(sdf.format(myCalendar.getTime()));
+                textView.setText(DateManager.sdfDateInput.format(myCalendar.getTime()));
             }
 
             if (onCalendarUpdate != null) {

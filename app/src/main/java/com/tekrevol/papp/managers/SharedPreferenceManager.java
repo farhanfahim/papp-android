@@ -111,6 +111,27 @@ public class SharedPreferenceManager {
         return getObject(AppConstants.KEY_CURRENT_USER_MODEL, UserModel.class);
     }
 
+    public boolean isMentor() {
+        if (getCurrentUser() == null || getCurrentUser().getRoles_csv() == 0) {
+            return false;
+        }
+        return getCurrentUser().getRoles_csv() == AppConstants.MENTOR_ROLE;
+    }
+
+    public boolean isDependent() {
+        if (getCurrentUser() == null || getCurrentUser().getRoles_csv() == 0) {
+            return false;
+        }
+        return getCurrentUser().getRoles_csv() == DEPENDENT_ROLE;
+    }
+
+    public boolean isParent() {
+        if (getCurrentUser() == null || getCurrentUser().getRoles_csv() == 0) {
+            return false;
+        }
+        return getCurrentUser().getRoles_csv() == PARENT_ROLE;
+    }
+
     public boolean isForcedRestart() {
         return getBoolean(AppConstants.FORCED_RESTART);
     }

@@ -15,8 +15,6 @@ public class LoginPagerAdapter extends FragmentStatePagerAdapter {
 
 
 
-
-
     public LoginPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -37,20 +35,20 @@ public class LoginPagerAdapter extends FragmentStatePagerAdapter {
         switch (position) {
 
             case 0:
-                return LoginDetailFragment.newInstance(false);
+                return LoginDetailFragment.newInstance();
 
             case 1:
-                return LoginDetailFragment.newInstance(true);
+                return LoginDetailFragment.newInstance();
 
             default:
-                return LoginDetailFragment.newInstance(false);
+                return LoginDetailFragment.newInstance();
         }
     }
 
 
     @Override
     public int getCount() {
-        return 2;
+        return 1;
     }
 
 
@@ -59,13 +57,13 @@ public class LoginPagerAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Login as Civilian";
+                return "Login";
 
             case 1:
-                return "Login as Agent";
+                return "Login";
 
             default:
-                return "Login as Civilian";
+                return "Login";
 
         }
     }

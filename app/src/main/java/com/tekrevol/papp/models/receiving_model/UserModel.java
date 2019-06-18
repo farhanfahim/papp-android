@@ -38,6 +38,9 @@ public class UserModel {
     @SerializedName("review_enabled")
     private String reviewEnabled;
     @Expose
+    @SerializedName("roles_csv")
+    private String roles_csv;
+    @Expose
     @SerializedName("id")
     private int id;
 
@@ -49,6 +52,17 @@ public class UserModel {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+
+    public int getRoles_csv() {
+        if (roles_csv == null || roles_csv.isEmpty()) {
+            return 0;
+        }
+        return Integer.valueOf(roles_csv);
+    }
+
+    public void setRoles_csv(String roles_csv) {
+        this.roles_csv = roles_csv;
     }
 
     public String getChatEnabled() {

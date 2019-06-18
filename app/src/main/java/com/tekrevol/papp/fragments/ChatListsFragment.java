@@ -233,7 +233,7 @@ public class ChatListsFragment extends BaseFragment implements OnItemClickListen
                 break;
             case R.id.imgHome:
                 getBaseActivity().popBackStack();
-                if (sharedPreferenceManager.getBoolean(AppConstants.KEY_IS_MENTOR)) {
+                if (isMentor()) {
                     getBaseActivity().addDockableFragment(DashboardLEAFragment.newInstance(), false);
                 } else {
                     getBaseActivity().addDockableFragment(DashboardCivilianFragment.newInstance(), false);

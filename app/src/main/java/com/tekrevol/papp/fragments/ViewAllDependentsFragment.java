@@ -192,6 +192,8 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
                                             arrData.clear();
                                             arrData.addAll(userModel.getDependants());
                                             adapter.notifyDataSetChanged();
+
+                                            UIHelper.showToast(getContext(), webResponse.message);
                                         }
 
                                         @Override

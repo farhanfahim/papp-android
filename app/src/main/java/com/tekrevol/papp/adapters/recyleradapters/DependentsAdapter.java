@@ -59,9 +59,8 @@ public class DependentsAdapter extends RecyclerView.Adapter<DependentsAdapter.Vi
             holder.txtName.setTextColor(activity.getResources().getColor(R.color.txtDarkGrey));
         }
 
-
         holder.txtName.setText(model.getUserDetails().getFullName());
-        ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgDependentProfile, model.getUserDetails().getImage(), true);
+        ImageLoaderHelper.loadImageWithouAnimationByPath(holder.imgDependentProfile, model.getUserDetails().getImage(), true);
 
         setListener(holder, model);
     }

@@ -129,6 +129,9 @@ public class AppConstants {
     public static int TASK_STATUS_ONGOING = 10;
     public static int TASK_STATUS_COMPLETED = 20;
     public static int TASK_STATUS_PENDING_ADMIN_APPROVAL = 40;
+    public static int SESSION_TYPE_AUDIO = 10;
+    public static int SESSION_TYPE_VIDEO = 20;
+    public static int SESSION_TYPE_ONE_ON_ONE = 30;
 
     public static String getGenderString(int gender) {
         switch (gender) {

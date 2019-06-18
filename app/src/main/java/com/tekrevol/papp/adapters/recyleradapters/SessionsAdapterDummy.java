@@ -22,16 +22,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  */
-public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ViewHolder> {
+public class SessionsAdapterDummy extends RecyclerView.Adapter<SessionsAdapterDummy.ViewHolder> {
 
     private final OnItemClickListener onItemClick;
     View itemView = null;
 
     private Context activity;
-    private List<SessionRecievingModel> arrData;
+    private List<SpinnerModel> arrData;
     private boolean isSessionRequest = false;
 
-    public SessionsAdapter(Context activity, List<SessionRecievingModel> arrData, OnItemClickListener onItemClickListener, boolean isSessionRequest) {
+    public SessionsAdapterDummy(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener, boolean isSessionRequest) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
@@ -48,7 +48,7 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        SessionRecievingModel model = arrData.get(i);
+        SpinnerModel model = arrData.get(i);
 
 
         if (isSessionRequest) {
@@ -61,27 +61,27 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ViewHo
         setListener(holder, model);
     }
 
-    private void setListener(final ViewHolder holder, final SessionRecievingModel model) {
+    private void setListener(final ViewHolder holder, final SpinnerModel model) {
 
 
         if (isSessionRequest) {
 
             holder.imgCancel.
-                    setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, SessionsAdapter.class.getSimpleName() + "request"));
+                    setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, SessionsAdapterDummy.class.getSimpleName() + "request"));
 
             holder.imgDone.
-                    setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, SessionsAdapter.class.getSimpleName()+ "request"));
+                    setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, SessionsAdapterDummy.class.getSimpleName()+ "request"));
 
         } else {
 
             holder.contParentLayout.
-                    setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, SessionsAdapter.class.getSimpleName()));
+                    setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, SessionsAdapterDummy.class.getSimpleName()));
 
             holder.imgCancel.
-                    setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, SessionsAdapter.class.getSimpleName()));
+                    setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, SessionsAdapterDummy.class.getSimpleName()));
 
             holder.imgDone.
-                    setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, SessionsAdapter.class.getSimpleName()));
+                    setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, SessionsAdapterDummy.class.getSimpleName()));
         }
 
     }

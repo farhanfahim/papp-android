@@ -62,6 +62,9 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
+import static com.tekrevol.papp.constatnts.AppConstants.DEPENDENT_ROLE;
+import static com.tekrevol.papp.constatnts.AppConstants.PARENT_ROLE;
+
 
 /**
  * Created by khanhamza on 10-Feb-17.
@@ -106,12 +109,30 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     }
 
 
-    public boolean isMentor() {
-        return sharedPreferenceManager.getBoolean(AppConstants.KEY_IS_MENTOR);
-    }
-
     public UserModel getCurrentUser() {
         return sharedPreferenceManager.getCurrentUser();
+    }
+
+
+    public boolean isMentor() {
+        if (getCurrentUser() == null || getCurrentUser().getRoles_csv() == 0) {
+            return false;
+        }
+        return getCurrentUser().getRoles_csv() == AppConstants.MENTOR_ROLE;
+    }
+
+    public boolean isDependent() {
+        if (getCurrentUser() == null || getCurrentUser().getRoles_csv() == 0) {
+            return false;
+        }
+        return getCurrentUser().getRoles_csv() == DEPENDENT_ROLE;
+    }
+
+    public boolean isParent() {
+        if (getCurrentUser() == null || getCurrentUser().getRoles_csv() == 0) {
+            return false;
+        }
+        return getCurrentUser().getRoles_csv() == PARENT_ROLE;
     }
 
     public void setCurrentUser(UserModel user) {

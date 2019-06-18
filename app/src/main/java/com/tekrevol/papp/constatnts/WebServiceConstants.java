@@ -34,7 +34,7 @@ public class WebServiceConstants {
      * BaseApplication Fabric enable
      */
 
-     // LOCAL
+    // LOCAL
     public static final String BASE_URL = "http://papp.apps.fomarkmedia.com/";
     public static final String IMAGE_BASE_URL = "http://papp.apps.fomarkmedia.com/api/resize/";
 //    public static final String BASE_URL = "http://192.168.29.49/papp/";
@@ -63,7 +63,8 @@ public class WebServiceConstants {
     public static final String PATH_REVIEWS = "reviews";
     public static final String PATH_ADD_DEPENDENT = "addDependant";
     public static final String PATH_CANCEL_TASK = "cancel-task";
-
+    public static final String PATH_CHANGE_DEPENDENT_PASSWORD = "change-dependant-password";
+    public static final String PATH_SESSIONS = "sessions";
 
 
     /**
@@ -81,6 +82,10 @@ public class WebServiceConstants {
     public static final String Q_PARAM_AVAILABLE = "available";
     public static final String Q_PARAM_STATUS = "status";
     public static final String Q_PARAM_MENTOR_ID = "mentor_id";
+    public static final String Q_PARAM_CURRENT_MENTOR = "current_mentor";
+    public static final String Q_PARAM_SESSION_HISTORY = "session_history";
+    public static final String Q_PARAM_TYPE_FILTER = "type_filter";
+    public static final String Q_PARAM_UPCOMING_SESSION_REQUEST = "upcoming_session_request";
 
 
     /**
@@ -92,7 +97,7 @@ public class WebServiceConstants {
 
 
     /**
-     *  WSC KEYS
+     * WSC KEYS
      */
 
     public static final String WSC_KEY_ATTACHMENT = "attachment[]";

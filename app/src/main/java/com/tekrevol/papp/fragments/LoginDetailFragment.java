@@ -52,14 +52,12 @@ public class LoginDetailFragment extends BaseFragment {
     AnyTextView txtOrLoginWith;
     @BindView(R.id.contSocialLogin)
     LinearLayout contSocialLogin;
-    private boolean isMentor;
 
-    public static LoginDetailFragment newInstance(boolean isLEA) {
+    public static LoginDetailFragment newInstance() {
 
         Bundle args = new Bundle();
 
         LoginDetailFragment fragment = new LoginDetailFragment();
-        fragment.isMentor = isLEA;
         fragment.setArguments(args);
         return fragment;
     }
@@ -86,13 +84,8 @@ public class LoginDetailFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        if (isMentor) {
-            contSocialLogin.setVisibility(View.GONE);
-            txtOrLoginWith.setVisibility(View.GONE);
-        } else {
-            contSocialLogin.setVisibility(View.VISIBLE);
-            txtOrLoginWith.setVisibility(View.VISIBLE);
-        }
+        contSocialLogin.setVisibility(View.VISIBLE);
+        txtOrLoginWith.setVisibility(View.VISIBLE);
 
         edtPassword.addValidator(new PasswordValidation());
 
@@ -159,7 +152,7 @@ public class LoginDetailFragment extends BaseFragment {
                 showNextBuildToast();
                 break;
             case R.id.contSignup:
-                getBaseActivity().addDockableFragment(SignUpFragment.newInstance(isMentor), true);
+                getBaseActivity().addDockableFragment(SignUpFragment.newInstance(), true);
                 break;
         }
     }
@@ -172,11 +165,6 @@ public class LoginDetailFragment extends BaseFragment {
                             public void requestDataResponse(WebResponse<Object> webResponse) {
 
                                 UserModelWrapper userModelWrapper = getGson().fromJson(getGson().toJson(webResponse.result), UserModelWrapper.class);
-                                if (isMentor) {
-                                    sharedPreferenceManager.putValue(AppConstants.KEY_IS_MENTOR, true);
-                                } else {
-                                    sharedPreferenceManager.putValue(AppConstants.KEY_IS_MENTOR, false);
-                                }
                                 sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
                                 sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
                                 getBaseActivity().finish();

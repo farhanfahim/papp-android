@@ -27,17 +27,6 @@ public class Constants {
 
     }
 
-
-    public static ArrayList<SpinnerModel> getTopLEA() {
-        ArrayList<SpinnerModel> arrayList = new ArrayList<>();
-        arrayList.add(new SpinnerModel("Alexandra"));
-        arrayList.add(new SpinnerModel("Silvester"));
-        arrayList.add(new SpinnerModel("Jain Bush"));
-        return arrayList;
-
-    }
-
-
     public static ArrayList<SpinnerModel> getGenderArray() {
         ArrayList<SpinnerModel> arrayList = new ArrayList<>();
         arrayList.add(new SpinnerModel("Male"));
@@ -46,41 +35,15 @@ public class Constants {
 
     }
 
-
-    public static ArrayList<SpinnerModel> getAgeNumbersArray() {
-        ArrayList<SpinnerModel> arrayList = new ArrayList<>();
-
-
-        for (int i = 3; i < 120; i++) {
-            arrayList.add(new SpinnerModel(i + " years"));
-        }
-
-        return arrayList;
-
-    }
-
-
     public static ArrayList<SpinnerModel> getSessionTypes() {
         ArrayList<SpinnerModel> arrayList = new ArrayList<>();
-        arrayList.add(new SpinnerModel("Video Call"));
+        arrayList.add(new SpinnerModel("All"));
         arrayList.add(new SpinnerModel("Audio Call"));
+        arrayList.add(new SpinnerModel("Video Call"));
         arrayList.add(new SpinnerModel("One on One"));
-        arrayList.add(new SpinnerModel("Chat"));
         return arrayList;
 
     }
-
-    public static ArrayList<SpinnerModel> getSpeciality() {
-        ArrayList<SpinnerModel> arrayList = new ArrayList<>();
-        arrayList.add(new SpinnerModel("Leadership"));
-        arrayList.add(new SpinnerModel("SOPS"));
-        arrayList.add(new SpinnerModel("Personal Traits"));
-        arrayList.add(new SpinnerModel("Swimming"));
-        arrayList.add(new SpinnerModel("Cycling"));
-        return arrayList;
-
-    }
-
 
     public static ArrayList<SpinnerModel> getMedalURL() {
         ArrayList<SpinnerModel> arrayList = new ArrayList<>();

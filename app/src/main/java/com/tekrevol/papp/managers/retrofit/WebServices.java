@@ -180,7 +180,6 @@ public class WebServices {
     }
 
 
-
     /**
      * TO UPLOAD FILE
      *
@@ -190,7 +189,7 @@ public class WebServices {
      */
 
     public void putMultipartAPI(String path, ArrayList<MultiFileModel> multiFileModelArrayList, String jsonStringBody,
-                                 final IRequestWebResponseAnyObjectCallBack callBack) {
+                                final IRequestWebResponseAnyObjectCallBack callBack) {
 
         ArrayList<MultipartBody.Part> partArrayList = new ArrayList<>();
 
@@ -487,8 +486,9 @@ public class WebServices {
 
 
             } else if (response.code() == WebServiceConstants.PARAMS_TOKEN_BLACKLIST) {
-                // FIXME: 2019-05-22 LOGOUT LOGIC
-                UIHelper.showToast(activity, "BLACK LIST ERROR " + PARAMS_TOKEN_BLACKLIST);
+                UIHelper.showAlertDialog(activity, "Token Authentication Failed, Kindly login again");
+                SharedPreferenceManager.getInstance(activity).clearDB();
+                clearAllActivitiesExceptThis(MainActivity.class);
             } else {
                 errorToastForObject(error, true);
             }

@@ -566,7 +566,6 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
                     @Override
                     public void requestDataResponse(WebResponse<Object> webResponse) {
                         UserModelWrapper userModelWrapper = getGson().fromJson(getGson().toJson(webResponse.result), UserModelWrapper.class);
-                        sharedPreferenceManager.putValue(AppConstants.KEY_IS_MENTOR, true);
                         sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
                         sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
                         getBaseActivity().finish();

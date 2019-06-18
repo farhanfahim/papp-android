@@ -13,23 +13,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
+import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.DependentsAdapter;
-import com.tekrevol.papp.callbacks.OnCalendarUpdate;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.GooglePlaceHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.DateManager;
+import com.tekrevol.papp.managers.retrofit.WebServices;
+import com.tekrevol.papp.models.general.LocationModel;
 import com.tekrevol.papp.models.receiving_model.UserModel;
+import com.tekrevol.papp.models.sending_model.SessionSendingModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
-import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,13 +69,26 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
     DependentsAdapter dependentsAdapter;
     ArrayList<UserModel> arrDependents;
     GooglePlaceHelper googlePlaceHelper;
+    @BindView(R.id.contDTTM)
+    RoundKornerLinearLayout contDTTM;
+    @BindView(R.id.rbAudioCall)
+    RadioButton rbAudioCall;
+    @BindView(R.id.rbVideoCall)
+    RadioButton rbVideoCall;
+    @BindView(R.id.rgCallType)
+    RadioGroup rgCallType;
+    private UserModel mentorModel;
+
+    UserModel selectedDependent;
+    LocationModel locationModel;
 
 
-    public static ScheduleAMeetingFragment newInstance() {
+    public static ScheduleAMeetingFragment newInstance(UserModel mentorModel) {
 
         Bundle args = new Bundle();
 
         ScheduleAMeetingFragment fragment = new ScheduleAMeetingFragment();
+        fragment.mentorModel = mentorModel;
         fragment.setArguments(args);
         return fragment;
     }
@@ -97,7 +117,7 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
     @Override
     public void setTitlebar(TitleBar titleBar) {
         titleBar.setVisibility(View.VISIBLE);
-        titleBar.setTitle("Connect with Roger");
+        titleBar.setTitle("Connect with " + mentorModel.getUserDetails().getFullName());
         titleBar.showResideMenu(getHomeActivity());
         titleBar.showBackButton(getBaseActivity());
     }
@@ -119,6 +139,14 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
     @Override
     public void setListeners() {
 
+        cbOnline.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                UIHelper.showShortToastInCenter(getBaseActivity(), "Please select online session type.");
+                rgCallType.setVisibility(View.VISIBLE);
+            } else {
+                rgCallType.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -159,7 +187,12 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
     @Override
     public void onItemClick(int position, Object object, View view, Object type) {
 
-        arrDependents.get(position).setSelected(!arrDependents.get(position).isSelected());
+        for (int i = 0; i < arrDependents.size(); i++) {
+            arrDependents.get(i).setSelected(false);
+        }
+
+        arrDependents.get(position).setSelected(true);
+        selectedDependent = arrDependents.get(position);
         dependentsAdapter.notifyDataSetChanged();
 
 
@@ -177,22 +210,18 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
 
     }
 
-    @OnClick({R.id.txtSetDateTime, R.id.contLocation, R.id.contSendRequest})
+    @OnClick({R.id.contDTTM, R.id.contLocation, R.id.contSendRequest})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.txtSetDateTime:
-                DateManager.showDateTimePicker(getContext(), null, new OnCalendarUpdate() {
-                    @Override
-                    public void onCalendarUpdate(Calendar calendar) {
-
-                    }
-                }, true);
+            case R.id.contDTTM:
+                DateManager.showDateTimePicker(getContext(), txtSetDateTime, null, true);
                 break;
             case R.id.contLocation:
                 googlePlaceHelper = new GooglePlaceHelper(getBaseActivity(), GooglePlaceHelper.PLACE_PICKER, new GooglePlaceHelper.GooglePlaceDataInterface() {
                     @Override
                     public void onPlaceActivityResult(double longitude, double latitude, String locationName) {
 
+                        locationModel = new LocationModel(latitude, longitude, locationName);
                         txtLocation.setText(locationName);
                     }
 
@@ -206,14 +235,81 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
 
                 break;
             case R.id.contSendRequest:
-                UIHelper.showAlertDialogWithCallback("Your session has been created.", "Session",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                getBaseActivity().popStackTill(1);
-                            }
-                        }, getContext());
+                createSession();
                 break;
         }
+    }
+
+    public void createSession() {
+
+        // Validations
+
+        if (txtSetDateTime.getStringTrimmed().isEmpty()) {
+            UIHelper.showAlertDialog(getContext(), "Please select valid Date and Time");
+            return;
+        }
+
+        if (cbOnline.isChecked()) {
+            if (!rbAudioCall.isChecked() && !rbVideoCall.isChecked()) {
+                UIHelper.showAlertDialog(getContext(), "Please select online session type");
+                return;
+            }
+        } else {
+            if (txtLocation.getStringTrimmed().isEmpty()) {
+                UIHelper.showAlertDialog(getContext(), "Please select location");
+                return;
+            }
+        }
+
+
+        if (selectedDependent == null) {
+            UIHelper.showAlertDialog(getContext(), "Please select a dependent");
+            return;
+        }
+
+
+        // Setting model
+
+        SessionSendingModel sessionSendingModel = new SessionSendingModel();
+        sessionSendingModel.setScheduleDate(txtSetDateTime.getStringTrimmed());
+
+        if (!txtLocation.getStringTrimmed().isEmpty()) {
+            sessionSendingModel.setAddress(txtLocation.getStringTrimmed());
+            sessionSendingModel.setLat(String.valueOf(locationModel.getLat()));
+            sessionSendingModel.setLng(String.valueOf(locationModel.getLng()));
+        }
+
+        ArrayList<SessionSendingModel.SessionUser> sessionUserArrayList = new ArrayList<>();
+        sessionUserArrayList.add(new SessionSendingModel.SessionUser(selectedDependent.getId()));
+
+        sessionSendingModel.setSessionUser(sessionUserArrayList);
+        sessionSendingModel.setMessage(edtMessage.getStringTrimmed());
+
+        if (cbOnline.isChecked()) {
+            sessionSendingModel.setIsOnline(1);
+            if (rbAudioCall.isChecked()) {
+                sessionSendingModel.setSessionType(AppConstants.SESSION_TYPE_AUDIO);
+            } else if (rbVideoCall.isChecked()) {
+                sessionSendingModel.setSessionType(AppConstants.SESSION_TYPE_VIDEO);
+            }
+        } else {
+            sessionSendingModel.setIsOnline(0);
+            sessionSendingModel.setSessionType(AppConstants.SESSION_TYPE_ONE_ON_ONE);
+        }
+
+        sessionSendingModel.setMentorId(mentorModel.getId());
+
+        getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_SESSIONS, sessionSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                UIHelper.showAlertDialogWithCallback(webResponse.message, "Session",
+                        (dialogInterface, i) -> getBaseActivity().popStackTill(1), getContext());
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
     }
 }

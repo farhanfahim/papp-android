@@ -16,7 +16,7 @@ import com.tekrevol.papp.fragments.SignUpMentorFragment;
 public class SignupPagerAdapter extends FragmentStatePagerAdapter {
 
 
-    public SignupPagerAdapter(FragmentManager fm, boolean isFromMentor) {
+    public SignupPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

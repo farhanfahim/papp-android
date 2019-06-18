@@ -46,7 +46,7 @@ public class SplashActivity extends AppCompatActivity {
 
         contParentLayout.setVisibility(View.INVISIBLE);
 
-        if (SharedPreferenceManager.getInstance(SplashActivity.this).getBoolean(AppConstants.KEY_IS_MENTOR)) {
+        if (SharedPreferenceManager.getInstance(SplashActivity.this).isMentor()) {
             imgBackground.setImageResource(R.drawable.img_splash_mentor);
             contParentLayout.setVisibility(VISIBLE);
         }

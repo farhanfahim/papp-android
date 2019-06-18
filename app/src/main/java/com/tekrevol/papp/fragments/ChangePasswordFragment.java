@@ -13,8 +13,11 @@ import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.helperclasses.validator.PasswordValidation;
+import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.models.sending_model.DependantSendingModel;
+import com.tekrevol.papp.models.sending_model.DependentChangePasswordSendingModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
@@ -25,6 +28,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static com.tekrevol.papp.constatnts.WebServiceConstants.PATH_CHANGE_DEPENDENT_PASSWORD;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
@@ -176,7 +181,24 @@ public class ChangePasswordFragment extends BaseFragment {
             return;
         }
 
-        showAPIRemainingToast();
-        getBaseActivity().popBackStack();
+        if (role == AppConstants.DEPENDENT_ROLE) {
+
+            DependentChangePasswordSendingModel dependentChangePasswordSendingModel = new DependentChangePasswordSendingModel();
+            dependentChangePasswordSendingModel.setEmail(txtEmailAddress.getStringTrimmed());
+            dependentChangePasswordSendingModel.setPassword(edtNewPassword.getStringTrimmed());
+
+            getBaseWebService().postAPIAnyObject(PATH_CHANGE_DEPENDENT_PASSWORD, dependentChangePasswordSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                @Override
+                public void requestDataResponse(WebResponse<Object> webResponse) {
+                    UIHelper.showToast(getContext(), webResponse.message);
+                    getBaseActivity().popBackStack();
+                }
+
+                @Override
+                public void onError(Object object) {
+
+                }
+            });
+        }
     }
 }

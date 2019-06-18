@@ -90,7 +90,7 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (sharedPreferenceManager.getBoolean(AppConstants.KEY_IS_MENTOR)) {
+        if (sharedPreferenceManager.isMentor()) {
             contEditProfile.setVisibility(View.GONE);
             contMyProfile.setVisibility(View.VISIBLE);
         } else {

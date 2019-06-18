@@ -40,14 +40,12 @@ public class SignUpFragment extends BaseFragment {
     LinearLayout contLogin;
 
     private SignupPagerAdapter adapter;
-    private boolean isFromMentor = false;
 
-    public static SignUpFragment newInstance(boolean isFromMentor) {
+    public static SignUpFragment newInstance() {
 
         Bundle args = new Bundle();
 
         SignUpFragment fragment = new SignUpFragment();
-        fragment.isFromMentor = isFromMentor;
         fragment.setArguments(args);
         return fragment;
     }
@@ -79,13 +77,13 @@ public class SignUpFragment extends BaseFragment {
 
 
     private void setViewPagerAdapter() {
-        adapter = new SignupPagerAdapter(getChildFragmentManager(), isFromMentor);
+        adapter = new SignupPagerAdapter(getChildFragmentManager());
         viewpager.setAdapter(adapter);
         viewpager.setPagingEnabled(true);
         tabs.setupWithViewPager(viewpager);
-        if (isFromMentor) {
-            viewpager.setCurrentItem(1);
-        }
+//        if (isFromMentor) {
+//            viewpager.setCurrentItem(1);
+//        }
 
     }
 
