@@ -22,6 +22,7 @@ import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.DateManager;
 import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.models.receiving_model.SessionRecievingModel;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
@@ -170,7 +171,7 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
             case R.id.contParentLayout:
 
                 if (isMentor()) {
-                    getBaseActivity().addDockableFragment(LEASessionDetailsFragment.newInstance((SessionRecievingModel) object, onCreated), true);
+                    getBaseActivity().addDockableFragment(MentorSessionDetailsFragment.newInstance((SessionRecievingModel) object), true);
                 } else {
                     getBaseActivity().addDockableFragment(SessionDetailsFragment.newInstance(), true);
 

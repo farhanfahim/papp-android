@@ -89,6 +89,14 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
 
     SessionsAdapter adapterUpcomingSession;
     ArrayList<SessionRecievingModel> arrUpcomingSession;
+    @BindView(R.id.contNewRequest)
+    LinearLayout contNewRequest;
+    @BindView(R.id.contUpcomingSessions)
+    LinearLayout contUpcomingSessions;
+    @BindView(R.id.txtNewRequest)
+    AnyTextView txtNewRequest;
+    @BindView(R.id.txtUpcomingSession)
+    AnyTextView txtUpcomingSession;
     private int selectedSessionType;
 
 
@@ -273,7 +281,7 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
 
                 switch (view.getId()) {
                     case R.id.contParentLayout:
-                        getBaseActivity().addDockableFragment(LEASessionDetailsFragment.newInstance((SessionRecievingModel) object, true), true);
+                        getBaseActivity().addDockableFragment(MentorSessionDetailsFragment.newInstance((SessionRecievingModel) object), true);
                         break;
 
                     case R.id.imgDone:
@@ -290,7 +298,7 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
                 switch (view.getId()) {
 
                     case R.id.contParentLayout:
-                        getBaseActivity().addDockableFragment(LEASessionDetailsFragment.newInstance((SessionRecievingModel) object, false), true);
+                        getBaseActivity().addDockableFragment(MentorSessionDetailsFragment.newInstance((SessionRecievingModel) object), true);
                         break;
 
                     case R.id.imgDone:
@@ -385,9 +393,24 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
                 if (isAcceptedUpcomingSessions) {
                     arrUpcomingSession.clear();
                     arrUpcomingSession.addAll(arrayList);
+                    if (arrUpcomingSession.isEmpty()) {
+                        txtUpcomingSession.setVisibility(View.GONE);
+                        txtViewAllNewRequest.setVisibility(View.GONE);
+                    } else {
+                        txtUpcomingSession.setVisibility(View.VISIBLE);
+                        txtViewAllNewRequest.setVisibility(View.VISIBLE);
+                    }
+
                 } else {
                     arrNewRequest.clear();
                     arrNewRequest.addAll(arrayList);
+                    if (arrNewRequest.isEmpty()) {
+                        txtNewRequest.setVisibility(View.GONE);
+                        txtViewAllUpcomingSessions.setVisibility(View.GONE);
+                    } else {
+                        txtNewRequest.setVisibility(View.VISIBLE);
+                        txtViewAllUpcomingSessions.setVisibility(View.VISIBLE);
+                    }
                 }
 
 

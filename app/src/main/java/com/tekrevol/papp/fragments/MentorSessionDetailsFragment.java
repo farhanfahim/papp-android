@@ -12,12 +12,18 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.DependentsAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.GooglePlaceHelper;
+import com.tekrevol.papp.managers.DateManager;
 import com.tekrevol.papp.models.receiving_model.SessionRecievingModel;
+import com.tekrevol.papp.models.receiving_model.SessionUsers;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
@@ -33,7 +39,7 @@ import butterknife.Unbinder;
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class LEASessionDetailsFragment extends BaseFragment implements OnItemClickListener {
+public class MentorSessionDetailsFragment extends BaseFragment implements OnItemClickListener {
 
 
     Unbinder unbinder;
@@ -66,17 +72,29 @@ public class LEASessionDetailsFragment extends BaseFragment implements OnItemCli
     ImageView imgStop;
     @BindView(R.id.txtTimer)
     AnyTextView txtTimer;
+    @BindView(R.id.contAccept)
+    LinearLayout contAccept;
+    @BindView(R.id.contReject)
+    LinearLayout contReject;
+    @BindView(R.id.contRequest)
+    LinearLayout contRequest;
+    @BindView(R.id.contSessionStartOptions)
+    RoundKornerLinearLayout contSessionStartOptions;
+    @BindView(R.id.contPlace)
+    LinearLayout contPlace;
+    @BindView(R.id.txtSessionTypeDesc)
+    AnyTextView txtSessionTypeDesc;
+    @BindView(R.id.contSessionType)
+    LinearLayout contSessionType;
     private SessionRecievingModel sessionRecievingModel;
-    private boolean isUpcomingAccepted;
 
 
-    public static LEASessionDetailsFragment newInstance(SessionRecievingModel sessionRecievingModel, boolean isUpcomingAccepted) {
+    public static MentorSessionDetailsFragment newInstance(SessionRecievingModel sessionRecievingModel) {
 
         Bundle args = new Bundle();
 
-        LEASessionDetailsFragment fragment = new LEASessionDetailsFragment();
+        MentorSessionDetailsFragment fragment = new MentorSessionDetailsFragment();
         fragment.sessionRecievingModel = sessionRecievingModel;
-        fragment.isUpcomingAccepted = isUpcomingAccepted;
         fragment.setArguments(args);
         return fragment;
     }
@@ -97,8 +115,8 @@ public class LEASessionDetailsFragment extends BaseFragment implements OnItemCli
 
         titleBar.resetViews();
         titleBar.setVisibility(View.VISIBLE);
-        titleBar.setTitle("Session UserDetails");
-        titleBar.showResideMenu(getHomeActivity());
+        titleBar.setTitle("Session Details");
+//        titleBar.showResideMenu(getHomeActivity());
         titleBar.showBackButton(getBaseActivity());
     }
 
@@ -128,15 +146,66 @@ public class LEASessionDetailsFragment extends BaseFragment implements OnItemCli
         bindRecyclerView();
 
 
-        if (onCreated) {
-            adapter.notifyDataSetChanged();
-            return;
+        bindData();
+
+
+    }
+
+    public void bindData() {
+
+        if (sessionRecievingModel.getStatus() == AppConstants.SESSION_STATUS_PENDING) {
+            contRequest.setVisibility(View.VISIBLE);
+            contSessionStartOptions.setVisibility(View.GONE);
+        } else if (sessionRecievingModel.getStatus() == AppConstants.SESSION_ACCEPTED_BY_MENTOR) {
+            contRequest.setVisibility(View.GONE);
+            contSessionStartOptions.setVisibility(View.VISIBLE);
+
+            imgOneOnOne.setVisibility(View.GONE);
+            imgCall.setVisibility(View.GONE);
+            imgVdoCall.setVisibility(View.GONE);
+
+            if (sessionRecievingModel.getSessionType() == AppConstants.SESSION_TYPE_AUDIO) {
+                imgCall.setVisibility(View.VISIBLE);
+            } else if (sessionRecievingModel.getSessionType() == AppConstants.SESSION_TYPE_VIDEO) {
+                imgVdoCall.setVisibility(View.VISIBLE);
+            } else if (sessionRecievingModel.getSessionType() == AppConstants.SESSION_TYPE_ONE_ON_ONE) {
+                imgOneOnOne.setVisibility(View.VISIBLE);
+            }
+
+        } else {
+            contRequest.setVisibility(View.GONE);
+            contSessionStartOptions.setVisibility(View.GONE);
+        }
+
+        if (sessionRecievingModel.getSessionType() == AppConstants.SESSION_TYPE_ONE_ON_ONE) {
+            contPlace.setVisibility(View.VISIBLE);
+        } else {
+            contPlace.setVisibility(View.GONE);
         }
 
 
+        txtDesc.setText("Session with Dependent of " + sessionRecievingModel.getUser().getUserDetails().getFullName());
+        txtLocation.setText(sessionRecievingModel.getAddress());
+        txtDate.setText(DateManager.getDate(sessionRecievingModel.getScheduleDate(), AppConstants.DISPLAY_DATE_ONLY_FORMAT) + " - ");
+        txtTime.setText(DateManager.getDate(sessionRecievingModel.getScheduleDate(), AppConstants.DISPLAY_TIME_ONLY_FORMAT));
+        txtMessage.setText(sessionRecievingModel.getMessage());
+        txtSessionTypeDesc.setText(sessionRecievingModel.getTypeText());
+
+
         arrData.clear();
-        arrData.addAll(getCurrentUser().getDependants());
+
+        for (SessionUsers sessionUser : sessionRecievingModel.getSessionUsers()) {
+            for (UserModel dependant : sessionRecievingModel.getUser().getDependants()) {
+                if (dependant.getId() == sessionUser.getDependantId()) {
+                    arrData.add(dependant);
+                }
+            }
+
+        }
+
         adapter.notifyDataSetChanged();
+
+
     }
 
 
@@ -185,7 +254,7 @@ public class LEASessionDetailsFragment extends BaseFragment implements OnItemCli
     }
 
 
-    @OnClick({R.id.imgOneOnOne, R.id.imgCall, R.id.imgVdoCall, R.id.imgStop})
+    @OnClick({R.id.imgOneOnOne, R.id.imgCall, R.id.imgVdoCall, R.id.txtLocation , R.id.imgStop, R.id.contAccept, R.id.contReject})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgOneOnOne:
@@ -201,7 +270,6 @@ public class LEASessionDetailsFragment extends BaseFragment implements OnItemCli
                 break;
             case R.id.imgVdoCall:
                 getBaseActivity().addDockableFragment(VideoCallFragment.newInstance(), true);
-
                 break;
             case R.id.imgStop:
                 txtSessionType.setText("Start Session");
@@ -210,6 +278,18 @@ public class LEASessionDetailsFragment extends BaseFragment implements OnItemCli
                 imgVdoCall.setVisibility(View.VISIBLE);
                 txtTimer.setVisibility(View.GONE);
                 imgStop.setVisibility(View.GONE);
+                break;
+
+            case R.id.txtLocation:
+                GooglePlaceHelper.intentOpenMap(getBaseActivity(), Double.valueOf(sessionRecievingModel.getLat()), Double.valueOf(sessionRecievingModel.getLng()), sessionRecievingModel.getAddress());
+                break;
+
+            case R.id.contAccept:
+
+                break;
+
+            case R.id.contReject:
+
                 break;
         }
     }
