@@ -43,6 +43,17 @@ public class SessionSendingModel {
     @Expose
     @SerializedName("mentor_id")
     private int mentorId;
+    @Expose
+    @SerializedName("duration")
+    private int duration;
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 
     public List<SessionUser> getSessionUser() {
         return sessionUser;

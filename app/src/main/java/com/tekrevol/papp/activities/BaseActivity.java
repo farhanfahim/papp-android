@@ -251,7 +251,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void refreshFragment(BaseFragment fragment) {
         popBackStack();
         addDockableFragment(fragment, false);
-
     }
 
     public void setGenericClickableInterface(GenericClickableInterface genericClickableInterface) {

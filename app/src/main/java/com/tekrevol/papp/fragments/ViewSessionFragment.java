@@ -14,21 +14,30 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.R;
+import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapterDummy;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.Constants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.DateManager;
+import com.tekrevol.papp.managers.retrofit.GsonFactory;
+import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.general.SpinnerModel;
 import com.tekrevol.papp.models.receiving_model.SessionRecievingModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,8 +50,8 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
 
     Unbinder unbinder;
 
-    SessionsAdapterDummy adapter;
-    ArrayList<SpinnerModel> arrData;
+    SessionsAdapter adapter;
+    ArrayList<SessionRecievingModel> arrData;
 
 
     @BindView(R.id.recyclerView)
@@ -75,6 +84,10 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
     RoundKornerLinearLayout contDate;
 
 
+    String startDate = "";
+    String endDate = "";
+
+
     public static ViewSessionFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -90,7 +103,7 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
         super.onCreate(savedInstanceState);
 
         arrData = new ArrayList<>();
-        adapter = new SessionsAdapterDummy(getContext(), arrData, this, false);
+        adapter = new SessionsAdapter(getContext(), arrData, this, isMentor());
 
 
     }
@@ -174,24 +187,18 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
                     getBaseActivity().addDockableFragment(MentorSessionDetailsFragment.newInstance((SessionRecievingModel) object), true);
                 } else {
                     getBaseActivity().addDockableFragment(SessionDetailsFragment.newInstance(), true);
-
                 }
 
                 break;
 
 
             case R.id.imgDone:
-
-
+                acceptSessionAPI(((SessionRecievingModel) object).getId());
                 break;
 
 
             case R.id.imgCancel:
-
-
-                arrData.remove(position);
-                adapter.notifyDataSetChanged();
-
+                declineSessionAPI(((SessionRecievingModel) object).getId());
                 break;
         }
 
@@ -235,14 +242,102 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
             return;
         }
 
+        firstDate.set(Calendar.HOUR_OF_DAY, 0);
+        firstDate.set(Calendar.MINUTE, 0);
+        firstDate.set(Calendar.SECOND, 0);
 
         if (secondDate == null) {
-            secondDate = firstDate;
+            secondDate = Calendar.getInstance();
+            secondDate.setTimeInMillis(firstDate.getTimeInMillis());
         }
 
-        txtDate.setText(DateManager.getFormattedDate(firstDate.getTimeInMillis()) + " - " + DateManager.getFormattedDate(secondDate.getTimeInMillis()));
-        arrData.clear();
-        arrData.addAll(Constants.getAddDependentsArray2());
-        adapter.notifyDataSetChanged();
+        secondDate.set(Calendar.HOUR_OF_DAY, 23);
+        secondDate.set(Calendar.MINUTE, 59);
+        secondDate.set(Calendar.SECOND, 59);
+
+        startDate = DateManager.getFormattedDate(DateManager.sdfDateInput, firstDate.getTimeInMillis());
+        endDate = DateManager.getFormattedDate(DateManager.sdfDateInput, secondDate.getTimeInMillis());
+
+        txtDate.setText(startDate + " - " + endDate);
+
+        getSessions();
+
     }
+
+
+
+
+
+    public void getSessions() {
+
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+
+        queryMap.put(WebServiceConstants.Q_PARAM_SESSION_FROM, startDate);
+        queryMap.put(WebServiceConstants.Q_PARAM_SESSION_TO, endDate);
+
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_SESSIONS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                Type type = new TypeToken<ArrayList<SessionRecievingModel>>() {
+                }.getType();
+                ArrayList<SessionRecievingModel> arrayList = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type);
+
+
+                arrData.clear();
+                arrData.addAll(arrayList);
+                if (arrData.isEmpty()) {
+                    emptyviewContainer.setVisibility(View.VISIBLE);
+                } else {
+                    emptyviewContainer.setVisibility(View.GONE);
+                }
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
+
+
+
+
+    private void acceptSessionAPI(int id) {
+        getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_ACCEPT_SESSION + id, "", new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                UIHelper.showShortToastInCenter(getContext(), webResponse.message);
+                getSessions();
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
+    private void declineSessionAPI(int id) {
+        getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_DECLINE_SESSION + id, "", new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                UIHelper.showShortToastInCenter(getContext(), webResponse.message);
+                getSessions();
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
 }

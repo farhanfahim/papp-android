@@ -116,6 +116,57 @@
         </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
 
+
+        <com.tekrevol.papp.widget.AnyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/x3dp"
+            android:text="Select Duration"
+            android:textColor="@color/txtBlack"
+            android:textSize="@dimen/s12"
+            app:typeface="@string/font_regular" />
+
+
+        <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+            android:id="@+id/contDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x10dp"
+            android:background="@color/c_white"
+            android:elevation="@dimen/x5dp"
+            android:gravity="center_vertical"
+            android:padding="@dimen/x10dp"
+            app:corner_radius="@dimen/x3dp">
+
+
+            <com.tekrevol.papp.widget.AnyTextView
+                android:id="@+id/txtDuration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:ellipsize="end"
+                android:hint="Please select session duration"
+                android:padding="@dimen/x3dp"
+                android:singleLine="true"
+                android:textColor="@color/txtBlack"
+                android:textColorHint="@color/txtGrey"
+                android:textSize="@dimen/s14"
+                app:fontFamily="@string/font_regular" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/x5dp"
+                android:rotation="270"
+                android:src="@drawable/img_drop_down"
+                android:tint="@color/c_black" />
+
+
+        </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+
         <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
             android:id="@+id/contDependents"
             android:layout_width="match_parent"

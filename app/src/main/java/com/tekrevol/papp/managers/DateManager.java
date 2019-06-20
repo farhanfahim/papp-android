@@ -32,7 +32,7 @@ import java.util.TimeZone;
 public class DateManager {
 
 
-    private static SimpleDateFormat sdfDateInput = new SimpleDateFormat(AppConstants.INPUT_DATE_FORMAT);
+    public static SimpleDateFormat sdfDateInput = new SimpleDateFormat(AppConstants.INPUT_DATE_FORMAT);
     private static SimpleDateFormat sdfDateInputAmPm = new SimpleDateFormat(AppConstants.INPUT_DATE_FORMAT_AM_PM);
     private static SimpleDateFormat sdfLabDateInputAmPm = new SimpleDateFormat(AppConstants.INPUT_LAB_DATE_FORMAT_AM_PM);
     private static SimpleDateFormat sdfDateOuput = new SimpleDateFormat(AppConstants.OUTPUT_DATE_FORMAT);
@@ -177,6 +177,11 @@ public class DateManager {
     public static String getFormattedDate(long millis) {
         if (millis == 0) return "";
         return sdfDateOuput.format(DateManager.getDate(millis));
+    }
+
+    public static String getFormattedDate(SimpleDateFormat sdf, long millis) {
+        if (millis == 0) return "";
+        return sdf.format(DateManager.getDate(millis));
     }
 
     public static String getCustomFormattedDate(String format, Date date) {

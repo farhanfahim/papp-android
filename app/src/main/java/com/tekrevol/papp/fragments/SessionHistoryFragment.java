@@ -15,19 +15,28 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.SessionHistoryAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.Constants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.managers.retrofit.GsonFactory;
+import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.models.receiving_model.SessionRecievingModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.github.clans.fab.FloatingActionButton;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,7 +71,7 @@ public class SessionHistoryFragment extends BaseFragment implements OnItemClickL
 
 
     SessionHistoryAdapter adapter;
-    ArrayList<SpinnerModel> arrData;
+    ArrayList<SessionRecievingModel> arrData;
 
 
     public static SessionHistoryFragment newInstance() {
@@ -100,7 +109,7 @@ public class SessionHistoryFragment extends BaseFragment implements OnItemClickL
         super.onCreate(savedInstanceState);
 
         arrData = new ArrayList<>();
-        adapter = new SessionHistoryAdapter(getContext(), arrData, this);
+        adapter = new SessionHistoryAdapter(getContext(), arrData, this, isMentor());
     }
 
 
@@ -126,9 +135,8 @@ public class SessionHistoryFragment extends BaseFragment implements OnItemClickL
         }
 
 
-        arrData.clear();
-        arrData.addAll(Constants.getAddDependentsArray2());
-        adapter.notifyDataSetChanged();
+        getSessions();
+
     }
 
 
@@ -181,6 +189,47 @@ public class SessionHistoryFragment extends BaseFragment implements OnItemClickL
     public void onItemAdd(Object object) {
 //        arrCategories.add(new SpinnerModel("John Doe"));
 //        adapter.notifyDataSetChanged();
+    }
+
+
+    public void getSessions() {
+
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+
+        if (isMentor()) {
+            queryMap.put(WebServiceConstants.Q_PARAM_SESSION_HISTORY, 2);
+        } else {
+            queryMap.put(WebServiceConstants.Q_PARAM_SESSION_HISTORY, 1);
+        }
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_SESSIONS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                Type type = new TypeToken<ArrayList<SessionRecievingModel>>() {
+                }.getType();
+                ArrayList<SessionRecievingModel> arrayList = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type);
+
+
+                arrData.clear();
+                arrData.addAll(arrayList);
+                if (arrData.isEmpty()) {
+                    emptyviewContainer.setVisibility(View.VISIBLE);
+                } else {
+                    emptyviewContainer.setVisibility(View.GONE);
+                }
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
     }
 
 }

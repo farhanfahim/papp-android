@@ -65,6 +65,10 @@ public class WebServiceConstants {
     public static final String PATH_CANCEL_TASK = "cancel-task";
     public static final String PATH_CHANGE_DEPENDENT_PASSWORD = "change-dependant-password";
     public static final String PATH_SESSIONS = "sessions";
+    public static final String PATH_ACCEPT_SESSION = "accept-session-request/";
+    public static final String PATH_DECLINE_SESSION = "decline-session-request/";
+    public static final String PATH_COMPLETE_SESSION = "complete-session/";
+    public static final String PATH_START_SESSION = "start-session/";
 
 
     /**
@@ -84,6 +88,8 @@ public class WebServiceConstants {
     public static final String Q_PARAM_MENTOR_ID = "mentor_id";
     public static final String Q_PARAM_CURRENT_MENTOR = "current_mentor";
     public static final String Q_PARAM_SESSION_HISTORY = "session_history";
+    public static final String Q_PARAM_SESSION_FROM = "session_from";
+    public static final String Q_PARAM_SESSION_TO = "session_to";
     public static final String Q_PARAM_TYPE_FILTER = "type_filter";
     public static final String Q_PARAM_UPCOMING_SESSION_REQUEST = "upcoming_session_request";
 

@@ -10,7 +10,11 @@ import android.widget.LinearLayout;
 
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.helperclasses.StringHelper;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.models.receiving_model.SessionRecievingModel;
+import com.tekrevol.papp.models.receiving_model.SessionUsers;
+import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.widget.AnyTextView;
 
 import java.util.List;
@@ -19,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ *
  */
 public class SessionHistoryAdapter extends RecyclerView.Adapter<SessionHistoryAdapter.ViewHolder> {
 
@@ -26,12 +31,14 @@ public class SessionHistoryAdapter extends RecyclerView.Adapter<SessionHistoryAd
 
 
     private Context activity;
-    private List<SpinnerModel> arrData;
+    private List<SessionRecievingModel> arrData;
+    private boolean isMentor;
 
-    public SessionHistoryAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
+    public SessionHistoryAdapter(Context activity, List<SessionRecievingModel> arrData, OnItemClickListener onItemClickListener, boolean isMentor) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
+        this.isMentor = isMentor;
     }
 
     @Override
@@ -45,12 +52,44 @@ public class SessionHistoryAdapter extends RecyclerView.Adapter<SessionHistoryAd
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        SpinnerModel model = arrData.get(i);
+        SessionRecievingModel model = arrData.get(i);
+
+        if (isMentor) {
+            holder.txtSessionByTitle.setText("Session Conducted with:");
+            holder.txtSessionByDesc.setText(model.getUser().getUserDetails().getFullName());
+            ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgProfile, model.getUser().getUserDetails().getImage(), true);
+        } else {
+            holder.txtSessionByTitle.setText("Session Conducted by:");
+            holder.txtSessionByDesc.setText(model.getMentor().getUserDetails().getFullName());
+            ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgProfile, model.getMentor().getUserDetails().getImage(), true);
+        }
+
+        if (StringHelper.isNullOrEmpty(model.getAddress())) {
+            holder.txtLocation.setText("Online Session");
+        } else {
+            holder.txtLocation.setText(model.getAddress());
+        }
+
+        holder.txtSessionOn.setText(model.getStartDate());
+
+        // FIXME: 2019-06-20 Remove query and ask waqar to give dependent name
+
+        for (SessionUsers sessionUser : model.getSessionUsers()) {
+            for (UserModel dependant : model.getUser().getDependants()) {
+                if (dependant.getId() == sessionUser.getDependantId()) {
+                    holder.txtDependentName.setText(dependant.getUserDetails().getFullName());
+                    break;
+                }
+            }
+
+        }
+
+
 
         setListener(holder, model);
     }
 
-    private void setListener(final ViewHolder holder, final SpinnerModel model) {
+    private void setListener(final ViewHolder holder, final SessionRecievingModel model) {
         holder.contParentLayout.
                 setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null));
     }
@@ -63,14 +102,16 @@ public class SessionHistoryAdapter extends RecyclerView.Adapter<SessionHistoryAd
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.txtSessionBy)
-        AnyTextView txtSessionBy;
+        @BindView(R.id.txtSessionByTitle)
+        AnyTextView txtSessionByTitle;
+        @BindView(R.id.txtSessionByDesc)
+        AnyTextView txtSessionByDesc;
         @BindView(R.id.txtSessionOn)
         AnyTextView txtSessionOn;
         @BindView(R.id.txtLocation)
         AnyTextView txtLocation;
-        @BindView(R.id.txtDependentsCount)
-        AnyTextView txtDependentsCount;
+        @BindView(R.id.txtDependentName)
+        AnyTextView txtDependentName;
         @BindView(R.id.imgProfile)
         ImageView imgProfile;
         @BindView(R.id.contParentLayout)

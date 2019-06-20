@@ -133,7 +133,7 @@ public class AppConstants {
     public static int SESSION_TYPE_VIDEO = 20;
     public static int SESSION_TYPE_ONE_ON_ONE = 30;
     public static int SESSION_STATUS_PENDING = 0;
-    public static int SESSION_ACCEPTED_BY_MENTOR = 1;
+    public static int SESSION_STATUS_ACCEPTED_BY_MENTOR = 1;
     public static int SESSION_STATUS_COMPLETED = 2;
 
 

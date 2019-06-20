@@ -25,11 +25,9 @@
             android:scaleType="centerCrop"
             android:src="@drawable/img_placeholder_dependent" />
 
-
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="vertical">
 
 
@@ -38,73 +36,107 @@
                 android:layout_height="wrap_content">
 
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.tekrevol.papp.widget.AnyTextView
+                            android:id="@+id/txtDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:padding="@dimen/x2dp"
+                            android:singleLine="true"
+                            android:text="Tuesday 26 Feb"
+                            android:textColor="@color/txtBlack"
+                            android:textSize="@dimen/s14"
+                            app:fontFamily="@string/font_regular" />
+
+                        <com.tekrevol.papp.widget.AnyTextView
+                            android:id="@+id/txtTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/x10dp"
+                            android:layout_marginRight="@dimen/x10dp"
+                            android:ellipsize="end"
+                            android:padding="@dimen/x2dp"
+                            android:singleLine="true"
+                            android:text="3:00 am"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/s12"
+                            app:fontFamily="@string/font_regular" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgDone"
+                    android:layout_width="@dimen/x25dp"
+                    android:layout_height="@dimen/x25dp"
+                    android:layout_marginRight="@dimen/x5dp"
+                    android:padding="@dimen/x5dp"
+                    android:src="@drawable/img_tick"
+                    android:tint="@color/base_dark_gray"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/imgCancel"
+                    android:layout_width="@dimen/x25dp"
+                    android:layout_height="@dimen/x25dp"
+                    android:padding="@dimen/x5dp"
+                    android:src="@drawable/img_cancel"
+                    android:tint="@color/base_dark_gray"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
                 <com.tekrevol.papp.widget.AnyTextView
-                    android:id="@+id/txtDate"
+                    android:id="@+id/txtDesc"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ellipsize="end"
+                    android:maxLines="2"
                     android:padding="@dimen/x2dp"
-                    android:singleLine="true"
-                    android:text="Tuesday 26 Feb"
-                    android:textColor="@color/txtBlack"
-                    android:textSize="@dimen/s14"
+                    android:text="With dependent of Wikki"
+                    android:textColor="@color/txtDarkGrey"
+                    android:textSize="@dimen/s12"
                     app:fontFamily="@string/font_regular" />
 
 
                 <com.tekrevol.papp.widget.AnyTextView
-                    android:id="@+id/txtTime"
+                    android:id="@+id/txtDuration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/x10dp"
-                    android:layout_marginRight="@dimen/x20dp"
                     android:ellipsize="end"
+                    android:maxLines="2"
                     android:padding="@dimen/x2dp"
-                    android:singleLine="true"
-                    android:text="3:00 am"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/s14"
+                    android:text="duration: 1 hour"
+                    android:textColor="@color/txtDarkGrey"
+                    android:textSize="@dimen/s12"
                     app:fontFamily="@string/font_regular" />
 
 
             </LinearLayout>
 
 
-            <com.tekrevol.papp.widget.AnyTextView
-                android:id="@+id/txtDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:padding="@dimen/x2dp"
-                android:text="With Terry Jeo"
-                android:textColor="@color/txtDarkGrey"
-                android:textSize="@dimen/s12"
-                app:fontFamily="@string/font_regular" />
-
-
         </LinearLayout>
-
-
-        <ImageView
-            android:id="@+id/imgDone"
-            android:layout_width="@dimen/x25dp"
-            android:layout_height="@dimen/x25dp"
-            android:layout_marginRight="@dimen/x5dp"
-            android:padding="@dimen/x5dp"
-            android:src="@drawable/img_tick"
-            android:tint="@color/base_dark_gray"
-            android:visibility="visible" />
-
-
-        <ImageView
-            android:id="@+id/imgCancel"
-            android:layout_width="@dimen/x25dp"
-            android:layout_height="@dimen/x25dp"
-            android:padding="@dimen/x5dp"
-            android:src="@drawable/img_cancel"
-            android:tint="@color/base_dark_gray"
-            android:visibility="visible" />
 
 
     </LinearLayout>

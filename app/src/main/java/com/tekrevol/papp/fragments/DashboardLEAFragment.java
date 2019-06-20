@@ -23,6 +23,8 @@ import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.kotlinhelper.KotlinDataScripts;
+import com.tekrevol.papp.helperclasses.kotlinhelper.KotlinScriptsForProject;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.managers.retrofit.WebServices;
@@ -119,13 +121,11 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
 
 
         arrNewRequest = new ArrayList<>();
-        adapterNewRequest = new SessionsAdapter(getContext(), arrNewRequest, this, false);
+        adapterNewRequest = new SessionsAdapter(getContext(), arrNewRequest, this, isMentor());
 
 
         arrUpcomingSession = new ArrayList<>();
-        adapterUpcomingSession = new SessionsAdapter(getContext(), arrUpcomingSession, this, true);
-
-
+        adapterUpcomingSession = new SessionsAdapter(getContext(), arrUpcomingSession, this, isMentor());
     }
 
     @Override
@@ -153,18 +153,21 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
 
         bindRecyclerView();
 
-        arrSessionTypes.clear();
-        arrSessionTypes.addAll(Constants.getSessionTypes());
-        arrSessionTypes.get(0).setSelected(true);
-        sessionTypesAdapter.notifyDataSetChanged();
+        if (arrSessionTypes.isEmpty()) {
+            arrSessionTypes.clear();
+            arrSessionTypes.addAll(Constants.getSessionTypes());
+            arrSessionTypes.get(0).setSelected(true);
+            sessionTypesAdapter.notifyDataSetChanged();
+        }
 
         getSessions(4, false);
         getSessions(4, true);
 
-
-        if (onCreated) {
+        if (onCreated && !getBaseActivity().isReloadFragmentOnBack) {
             return;
         }
+        getBaseActivity().isReloadFragmentOnBack = false;
+
         getCategoriesList();
 
 
@@ -302,19 +305,12 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
                         break;
 
                     case R.id.imgDone:
-                        arrUpcomingSession.add((SessionRecievingModel) object);
-                        arrNewRequest.remove(position);
-                        UIHelper.showToast(getContext(), "Session request has been accepted");
-                        adapterNewRequest.notifyDataSetChanged();
-                        adapterUpcomingSession.notifyDataSetChanged();
+                        acceptSessionAPI(((SessionRecievingModel) object).getId());
                         break;
 
 
                     case R.id.imgCancel:
-                        arrNewRequest.remove(position);
-                        UIHelper.showToast(getContext(), "Session has been cancelled");
-
-                        adapterNewRequest.notifyDataSetChanged();
+                        declineSessionAPI(((SessionRecievingModel) object).getId());
                         break;
                 }
             }
@@ -355,6 +351,7 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
                     getHomeActivity().sparseArrayDepartments.put(model.getId(), model.getText());
                 }
 
+
             }
 
             @Override
@@ -369,7 +366,7 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
 
         Map<String, Object> queryMap = new HashMap<>();
         queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, limit);
-        queryMap.put(WebServiceConstants.Q_PARAM_CURRENT_MENTOR, "yes");
+
 
         if (selectedSessionType != 0) {
             queryMap.put(WebServiceConstants.Q_PARAM_TYPE_FILTER, selectedSessionType);
@@ -377,6 +374,8 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
 
         if (isAcceptedUpcomingSessions) {
             queryMap.put(WebServiceConstants.Q_PARAM_UPCOMING_SESSION_REQUEST, "yes");
+        } else {
+            queryMap.put(WebServiceConstants.Q_PARAM_CURRENT_MENTOR, "yes");
         }
 
 
@@ -394,22 +393,25 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
                     arrUpcomingSession.clear();
                     arrUpcomingSession.addAll(arrayList);
                     if (arrUpcomingSession.isEmpty()) {
-                        txtUpcomingSession.setVisibility(View.GONE);
-                        txtViewAllNewRequest.setVisibility(View.GONE);
-                    } else {
                         txtUpcomingSession.setVisibility(View.VISIBLE);
                         txtViewAllNewRequest.setVisibility(View.VISIBLE);
+                    } else {
+                        txtUpcomingSession.setVisibility(View.GONE);
+                        txtViewAllNewRequest.setVisibility(View.GONE);
+
                     }
 
                 } else {
                     arrNewRequest.clear();
                     arrNewRequest.addAll(arrayList);
                     if (arrNewRequest.isEmpty()) {
-                        txtNewRequest.setVisibility(View.GONE);
-                        txtViewAllUpcomingSessions.setVisibility(View.GONE);
-                    } else {
                         txtNewRequest.setVisibility(View.VISIBLE);
                         txtViewAllUpcomingSessions.setVisibility(View.VISIBLE);
+                    } else {
+                        txtNewRequest.setVisibility(View.GONE);
+                        txtViewAllUpcomingSessions.setVisibility(View.GONE);
+
+
                     }
                 }
 
@@ -425,5 +427,41 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
             }
         });
     }
+
+
+    private void acceptSessionAPI(int id) {
+        getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_ACCEPT_SESSION + id, "", new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                UIHelper.showShortToastInCenter(getContext(), webResponse.message);
+                getSessions(4, false);
+                getSessions(4, true);
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
+    private void declineSessionAPI(int id) {
+        getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_DECLINE_SESSION + id, "", new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                UIHelper.showShortToastInCenter(getContext(), webResponse.message);
+                getSessions(4, false);
+                getSessions(4, true);
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
 
 }

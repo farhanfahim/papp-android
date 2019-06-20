@@ -73,6 +73,18 @@ public  class SessionRecievingModel {
     @Expose
     @SerializedName("id")
     private int id;
+    @Expose
+    @SerializedName("duration")
+    private int duration;
+
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 
     public UserModel getMentor() {
         return mentor;

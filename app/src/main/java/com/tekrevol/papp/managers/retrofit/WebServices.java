@@ -597,7 +597,7 @@ public class WebServices {
         if (responseMessage.isEmpty()) {
             UIHelper.showShortToastInCenter(activity, "API Response Error");
         } else {
-            if (showDialogIfTrueToastIfFalse && activity instanceof BaseActivity) {
+            if (showDialogIfTrueToastIfFalse && activity instanceof BaseActivity && response.errorList != null && !response.errorList.isEmpty()) {
                 ErrorDialogFragment.newInstance(response.errorList, null).show(((BaseActivity) activity).getSupportFragmentManager(), "ErrorDialogFragment");
             } else {
                 UIHelper.showShortToastInCenter(activity, responseMessage);

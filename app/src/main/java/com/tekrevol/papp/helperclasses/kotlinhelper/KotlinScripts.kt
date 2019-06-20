@@ -1,6 +1,8 @@
 package com.tekrevol.papp.helperclasses.kotlinhelper
 
 import android.view.View
+import android.widget.Spinner
+import com.tekrevol.papp.models.general.SpinnerModel
 
 /**
  * KOTLIN Scripts class, use this class to write KOTLIN scripts only to perform data or UI operation.
@@ -43,9 +45,9 @@ import android.view.View
 
 object KotlinScriptsForProject {
 
-//    fun sortDeptArray(arrDept: List<DEPT>): List<DEPT> {
-//        return arrDept.sortedWith(compareBy { it.descr })
-//    }
+    fun sortDeptArray(arrDept: List<SpinnerModel>): List<SpinnerModel> {
+        return arrDept.sortedWith(compareBy { it.text })
+    }
 }
 
 

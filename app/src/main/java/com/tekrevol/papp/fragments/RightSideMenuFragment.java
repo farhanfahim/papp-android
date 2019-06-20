@@ -93,9 +93,11 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
         if (sharedPreferenceManager.isMentor()) {
             contEditProfile.setVisibility(View.GONE);
             contMyProfile.setVisibility(View.VISIBLE);
+            contSessionPayoutHistory.setVisibility(View.VISIBLE);
         } else {
             contEditProfile.setVisibility(View.VISIBLE);
             contMyProfile.setVisibility(View.GONE);
+            contSessionPayoutHistory.setVisibility(View.GONE);
         }
         ////        scrollToTop();
 

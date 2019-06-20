@@ -8,6 +8,14 @@ import java.util.ArrayList;
 public class Constants {
 
 
+    public static ArrayList<SpinnerModel> getDuration() {
+        ArrayList<SpinnerModel> arrayList = new ArrayList<>();
+        arrayList.add(new SpinnerModel("1 hour", 1));
+        arrayList.add(new SpinnerModel("2 hours", 2));
+        arrayList.add(new SpinnerModel("3 hours", 3));
+        return arrayList;
+    }
+
     public static ArrayList<SpinnerModel> getAddDependentsArray() {
         ArrayList<SpinnerModel> arrayList = new ArrayList<>();
         arrayList.add(new SpinnerModel("Jason Brody"));

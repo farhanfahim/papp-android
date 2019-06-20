@@ -1,6 +1,5 @@
 package com.tekrevol.papp.fragments;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -22,12 +20,15 @@ import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.DependentsAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
+import com.tekrevol.papp.enums.FileType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.GooglePlaceHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.DateManager;
 import com.tekrevol.papp.managers.retrofit.WebServices;
+import com.tekrevol.papp.models.general.IntWrapper;
 import com.tekrevol.papp.models.general.LocationModel;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.models.sending_model.SessionSendingModel;
@@ -77,10 +78,15 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
     RadioButton rbVideoCall;
     @BindView(R.id.rgCallType)
     RadioGroup rgCallType;
+    @BindView(R.id.txtDuration)
+    AnyTextView txtDuration;
+    @BindView(R.id.contDuration)
+    RoundKornerLinearLayout contDuration;
     private UserModel mentorModel;
 
     UserModel selectedDependent;
     LocationModel locationModel;
+    IntWrapper durationPosition = new IntWrapper(0);
 
 
     public static ScheduleAMeetingFragment newInstance(UserModel mentorModel) {
@@ -196,6 +202,7 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
         dependentsAdapter.notifyDataSetChanged();
 
 
+
     }
 
 
@@ -210,7 +217,7 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
 
     }
 
-    @OnClick({R.id.contDTTM, R.id.contLocation, R.id.contSendRequest})
+    @OnClick({R.id.contDTTM, R.id.contLocation, R.id.contSendRequest, R.id.contDuration})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.contDTTM:
@@ -237,8 +244,19 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
             case R.id.contSendRequest:
                 createSession();
                 break;
+            case R.id.contDuration:
+                showDurationSpinner();
+                break;
         }
     }
+
+
+    private void showDurationSpinner() {
+        UIHelper.showSpinnerDialog(this, Constants.getDuration(), "Select Duration", txtDuration, null,
+                data -> {
+                }, durationPosition);
+    }
+
 
     public void createSession() {
 
@@ -261,6 +279,11 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
             }
         }
 
+
+        if (txtDuration.getStringTrimmed().isEmpty()) {
+            UIHelper.showAlertDialog(getContext(), "Please select duration");
+            return;
+        }
 
         if (selectedDependent == null) {
             UIHelper.showAlertDialog(getContext(), "Please select a dependent");
@@ -297,6 +320,7 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
             sessionSendingModel.setSessionType(AppConstants.SESSION_TYPE_ONE_ON_ONE);
         }
 
+        sessionSendingModel.setDuration(Constants.getDuration().get(durationPosition.value).getId());
         sessionSendingModel.setMentorId(mentorModel.getId());
 
         getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_SESSIONS, sessionSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
