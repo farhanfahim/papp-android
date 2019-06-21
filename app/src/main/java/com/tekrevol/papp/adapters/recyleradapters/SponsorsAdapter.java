@@ -10,8 +10,10 @@ import android.widget.LinearLayout;
 
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.models.general.SpinnerModel;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tekrevol.papp.models.receiving_model.UserModel;
 
 import java.util.List;
 
@@ -27,9 +29,9 @@ public class SponsorsAdapter extends RecyclerView.Adapter<SponsorsAdapter.ViewHo
 
 
     private Context activity;
-    private List<SpinnerModel> arrData;
+    private List<UserModel> arrData;
 
-    public SponsorsAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
+    public SponsorsAdapter(Context activity, List<UserModel> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
@@ -46,11 +48,10 @@ public class SponsorsAdapter extends RecyclerView.Adapter<SponsorsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        SpinnerModel model = arrData.get(i);
+        UserModel model = arrData.get(i);
 
-        ImageLoader.getInstance().displayImage(model.getText(), holder.imgSponsor);
+        ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgSponsor, model.getUserDetails().getImage(), false);
 
-        setListener(holder, model);
     }
 
     private void setListener(final ViewHolder holder, final SpinnerModel model) {

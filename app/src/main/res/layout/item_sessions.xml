@@ -33,51 +33,23 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
 
 
-                <LinearLayout
+                <com.tekrevol.papp.widget.AnyTextView
+                    android:id="@+id/txtDesc"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:padding="@dimen/x2dp"
+                    android:text="With dependent of Wikki"
+                    android:textColor="@color/txtDarkGrey"
+                    android:textSize="@dimen/s12"
+                    app:fontFamily="@string/font_regular" />
 
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.tekrevol.papp.widget.AnyTextView
-                            android:id="@+id/txtDate"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ellipsize="end"
-                            android:padding="@dimen/x2dp"
-                            android:singleLine="true"
-                            android:text="Tuesday 26 Feb"
-                            android:textColor="@color/txtBlack"
-                            android:textSize="@dimen/s14"
-                            app:fontFamily="@string/font_regular" />
-
-                        <com.tekrevol.papp.widget.AnyTextView
-                            android:id="@+id/txtTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/x10dp"
-                            android:layout_marginRight="@dimen/x10dp"
-                            android:ellipsize="end"
-                            android:padding="@dimen/x2dp"
-                            android:singleLine="true"
-                            android:text="3:00 am"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textSize="@dimen/s12"
-                            app:fontFamily="@string/font_regular" />
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/imgDone"
@@ -98,6 +70,58 @@
                     android:tint="@color/base_dark_gray"
                     android:visibility="visible" />
 
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <com.tekrevol.papp.widget.AnyTextView
+                            android:id="@+id/txtDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:padding="@dimen/x2dp"
+                            android:singleLine="true"
+                            android:text="Tuesday 26 Feb"
+                            android:textColor="@color/txtBlack"
+                            android:textSize="@dimen/s14"
+                            app:fontFamily="@string/font_regular" />
+
+                        <com.tekrevol.papp.widget.AnyTextView
+                            android:id="@+id/txtTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/x10dp"
+                            android:ellipsize="end"
+                            android:padding="@dimen/x2dp"
+                            android:singleLine="true"
+                            android:text="3:00 am"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/s12"
+                            app:fontFamily="@string/font_regular" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
             </LinearLayout>
 
 
@@ -107,31 +131,31 @@
 
 
                 <com.tekrevol.papp.widget.AnyTextView
-                    android:id="@+id/txtDesc"
+                    android:id="@+id/txtDuration"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:padding="@dimen/x2dp"
-                    android:text="With dependent of Wikki"
+                    android:text="Duration: 1 hour"
                     android:textColor="@color/txtDarkGrey"
                     android:textSize="@dimen/s12"
                     app:fontFamily="@string/font_regular" />
 
 
                 <com.tekrevol.papp.widget.AnyTextView
-                    android:id="@+id/txtDuration"
+                    android:id="@+id/txtStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:padding="@dimen/x2dp"
-                    android:text="duration: 1 hour"
-                    android:textColor="@color/txtDarkGrey"
-                    android:textSize="@dimen/s12"
-                    app:fontFamily="@string/font_regular" />
-
+                    android:layout_marginTop="@dimen/x2dp"
+                    android:background="@drawable/rounded_stroke_blue"
+                    android:paddingLeft="@dimen/x5dp"
+                    android:paddingTop="@dimen/x2dp"
+                    android:paddingRight="@dimen/x5dp"
+                    android:paddingBottom="@dimen/x3dp"
+                    android:text="Status"
+                    android:textSize="@dimen/s12" />
 
             </LinearLayout>
 

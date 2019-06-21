@@ -15,19 +15,29 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.SponsorsAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.constatnts.Constants;
+import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
+import com.tekrevol.papp.enums.MentorType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+import com.tekrevol.papp.managers.retrofit.GsonFactory;
+import com.tekrevol.papp.managers.retrofit.WebServices;
+import com.tekrevol.papp.models.receiving_model.UserModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.github.clans.fab.FloatingActionButton;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,7 +72,7 @@ public class SponsorFragment extends BaseFragment implements OnItemClickListener
 
 
     SponsorsAdapter adapter;
-    ArrayList<SpinnerModel> arrData;
+    ArrayList<UserModel> arrData;
 
 
     public static SponsorFragment newInstance() {
@@ -120,15 +130,8 @@ public class SponsorFragment extends BaseFragment implements OnItemClickListener
         bindRecyclerView();
 
 
-        if (onCreated) {
-            adapter.notifyDataSetChanged();
-            return;
-        }
+        getAllSponsors();
 
-
-        arrData.clear();
-        arrData.addAll(Constants.getSponsorLogo());
-        adapter.notifyDataSetChanged();
     }
 
 
@@ -182,5 +185,43 @@ public class SponsorFragment extends BaseFragment implements OnItemClickListener
 //        arrCategories.add(new SpinnerModel("John Doe"));
 //        adapter.notifyDataSetChanged();
     }
+
+
+    public void getAllSponsors() {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.SPONSOR_ROLE);
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap,
+                new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                    @Override
+                    public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                        Type type = new TypeToken<ArrayList<UserModel>>() {
+                        }.getType();
+                        ArrayList<UserModel> arrayList = GsonFactory.getSimpleGson()
+                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                        , type);
+
+                        arrData.clear();
+                        arrData.addAll(arrayList);
+
+                        if (arrayList.isEmpty()) {
+                            emptyviewContainer.setVisibility(View.VISIBLE);
+                        } else {
+                            emptyviewContainer.setVisibility(View.GONE);
+                        }
+
+                        adapter.notifyDataSetChanged();
+
+
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
+    }
+
 
 }

@@ -19,6 +19,7 @@ import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapterDummy;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
@@ -135,6 +136,12 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
         imgSession.setImageResource(R.drawable.img_sessions_selected);
         txtSession.setTextColor(getContext().getResources().getColor(R.color.colorPrimaryDark));
         bindRecyclerView();
+
+
+        if (onCreated) {
+            txtDate.setText(DateManager.getDate(startDate, AppConstants.DISPLAY_DATE_ONLY_FORMAT) + " - " + DateManager.getDate(endDate, AppConstants.DISPLAY_DATE_ONLY_FORMAT));
+            getSessions();
+        }
 
 
     }
@@ -258,14 +265,12 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
         startDate = DateManager.getFormattedDate(DateManager.sdfDateInput, firstDate.getTimeInMillis());
         endDate = DateManager.getFormattedDate(DateManager.sdfDateInput, secondDate.getTimeInMillis());
 
-        txtDate.setText(startDate + " - " + endDate);
+        txtDate.setText(DateManager.getDate(startDate, AppConstants.DISPLAY_DATE_ONLY_FORMAT) + " - " + DateManager.getDate(endDate, AppConstants.DISPLAY_DATE_ONLY_FORMAT));
+
 
         getSessions();
 
     }
-
-
-
 
 
     public void getSessions() {
@@ -275,7 +280,6 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
 
         queryMap.put(WebServiceConstants.Q_PARAM_SESSION_FROM, startDate);
         queryMap.put(WebServiceConstants.Q_PARAM_SESSION_TO, endDate);
-
 
 
         getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_SESSIONS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
@@ -305,9 +309,6 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
             }
         });
     }
-
-
-
 
 
     private void acceptSessionAPI(int id) {

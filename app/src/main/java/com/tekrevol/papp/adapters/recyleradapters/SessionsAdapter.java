@@ -70,7 +70,7 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ViewHo
         holder.txtTime.setText(DateManager.getDate(model.getScheduleDate(), AppConstants.DISPLAY_TIME_ONLY_FORMAT));
         holder.txtDesc.setText("With dependent of " + model.getUser().getUserDetails().getFirstName());
         holder.txtDuration.setText("Duration: " + model.getDuration() + " hour");
-
+        holder.txtStatus.setText(model.getStatusText());
         setListener(holder, model);
     }
 
@@ -107,6 +107,8 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ViewHo
         ImageView imgCancel;
         @BindView(R.id.txtDesc)
         AnyTextView txtDesc;
+        @BindView(R.id.txtStatus)
+        AnyTextView txtStatus;
         @BindView(R.id.txtDuration)
         AnyTextView txtDuration;
         @BindView(R.id.contParentLayout)

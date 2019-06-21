@@ -23,8 +23,6 @@ import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.helperclasses.kotlinhelper.KotlinDataScripts;
-import com.tekrevol.papp.helperclasses.kotlinhelper.KotlinScriptsForProject;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.managers.retrofit.WebServices;
@@ -229,10 +227,10 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txtViewAllUpcomingSessions:
-                getBaseActivity().addDockableFragment(UpcomingSessionFragment.newInstance(), true);
+                getSessions(0, true);
                 break;
             case R.id.txtViewAllNewRequest:
-                getBaseActivity().addDockableFragment(NewSessionRequestsFragment.newInstance(), true);
+                getSessions(0, false);
                 break;
             case R.id.contChat:
                 getBaseActivity().popBackStack();
@@ -283,23 +281,6 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
             } else if (((String) type).equalsIgnoreCase(SessionsAdapter.class.getSimpleName())) {
 
                 switch (view.getId()) {
-                    case R.id.contParentLayout:
-                        getBaseActivity().addDockableFragment(MentorSessionDetailsFragment.newInstance((SessionRecievingModel) object), true);
-                        break;
-
-                    case R.id.imgDone:
-                        break;
-
-                    case R.id.imgCancel:
-                        arrUpcomingSession.remove(position);
-                        adapterUpcomingSession.notifyDataSetChanged();
-
-                        break;
-                }
-            } else if (((String) type).equalsIgnoreCase(SessionsAdapter.class.getSimpleName() + "request")) {
-
-                switch (view.getId()) {
-
                     case R.id.contParentLayout:
                         getBaseActivity().addDockableFragment(MentorSessionDetailsFragment.newInstance((SessionRecievingModel) object), true);
                         break;
@@ -389,16 +370,28 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
                                 , type);
 
 
+                // View all pressed if limit is 0
+
+                if (limit == 0) {
+                    if (isAcceptedUpcomingSessions) {
+                        getBaseActivity().addDockableFragment(UpcomingSessionFragment.newInstance(arrayList), true);
+                    } else {
+                        getBaseActivity().addDockableFragment(NewSessionRequestsFragment.newInstance(arrayList), true);
+                    }
+                    return;
+                }
+
+
                 if (isAcceptedUpcomingSessions) {
                     arrUpcomingSession.clear();
                     arrUpcomingSession.addAll(arrayList);
                     if (arrUpcomingSession.isEmpty()) {
                         txtUpcomingSession.setVisibility(View.VISIBLE);
-                        txtViewAllNewRequest.setVisibility(View.VISIBLE);
+                        txtViewAllUpcomingSessions.setVisibility(View.GONE);
                     } else {
                         txtUpcomingSession.setVisibility(View.GONE);
-                        txtViewAllNewRequest.setVisibility(View.GONE);
-
+                        txtViewAllNewRequest.setVisibility(View.VISIBLE);
+                        txtViewAllUpcomingSessions.setVisibility(View.VISIBLE);
                     }
 
                 } else {
@@ -406,12 +399,10 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
                     arrNewRequest.addAll(arrayList);
                     if (arrNewRequest.isEmpty()) {
                         txtNewRequest.setVisibility(View.VISIBLE);
-                        txtViewAllUpcomingSessions.setVisibility(View.VISIBLE);
+                        txtViewAllNewRequest.setVisibility(View.GONE);
                     } else {
                         txtNewRequest.setVisibility(View.GONE);
-                        txtViewAllUpcomingSessions.setVisibility(View.GONE);
-
-
+                        txtViewAllUpcomingSessions.setVisibility(View.VISIBLE);
                     }
                 }
 

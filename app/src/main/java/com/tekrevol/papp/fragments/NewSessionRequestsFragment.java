@@ -19,9 +19,13 @@ import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapterDummy;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.Constants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.models.receiving_model.SessionRecievingModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
@@ -38,8 +42,8 @@ public class NewSessionRequestsFragment extends BaseFragment implements OnItemCl
 
     Unbinder unbinder;
 
-    SessionsAdapterDummy adapter;
-    ArrayList<SpinnerModel> arrData;
+    SessionsAdapter adapter;
+    ArrayList<SessionRecievingModel> arrData = new ArrayList<>();
     @BindView(R.id.edtSearchBar)
     AnyEditTextView edtSearchBar;
     @BindView(R.id.imgSearch)
@@ -60,11 +64,13 @@ public class NewSessionRequestsFragment extends BaseFragment implements OnItemCl
     RelativeLayout contParent;
 
 
-    public static NewSessionRequestsFragment newInstance() {
+    public static NewSessionRequestsFragment newInstance(ArrayList<SessionRecievingModel> arrData) {
 
         Bundle args = new Bundle();
 
         NewSessionRequestsFragment fragment = new NewSessionRequestsFragment();
+        fragment.arrData.clear();
+        fragment.arrData.addAll(arrData);
         fragment.setArguments(args);
         return fragment;
     }
@@ -75,8 +81,7 @@ public class NewSessionRequestsFragment extends BaseFragment implements OnItemCl
         super.onCreate(savedInstanceState);
 
 
-        arrData = new ArrayList<>();
-        adapter = new SessionsAdapterDummy(getContext(), arrData, this, true);
+        adapter = new SessionsAdapter(getContext(), arrData, this, true);
 
 
     }
@@ -106,10 +111,7 @@ public class NewSessionRequestsFragment extends BaseFragment implements OnItemCl
 
 
         bindRecyclerView();
-
-
-        arrData.clear();
-        arrData.addAll(Constants.getAddDependentsArray2());
+        adapter.notifyDataSetChanged();
 
     }
 
@@ -156,26 +158,55 @@ public class NewSessionRequestsFragment extends BaseFragment implements OnItemCl
 
         switch (view.getId()) {
             case R.id.contParentLayout:
-
-
+                getBaseActivity().addDockableFragment(MentorSessionDetailsFragment.newInstance((SessionRecievingModel) object), true);
                 break;
 
 
             case R.id.imgDone:
-                arrData.remove(position);
-                UIHelper.showToast(getContext(), "Session request has been accepted");
-                adapter.notifyDataSetChanged();
+                acceptSessionAPI(((SessionRecievingModel) object).getId());
                 break;
 
 
             case R.id.imgCancel:
-                arrData.remove(position);
-                UIHelper.showToast(getContext(), "Session has been cancelled");
-                adapter.notifyDataSetChanged();
-
+                declineSessionAPI(((SessionRecievingModel) object).getId());
                 break;
         }
 
+    }
+
+
+    private void acceptSessionAPI(int id) {
+        getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_ACCEPT_SESSION + id, "", new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                UIHelper.showShortToastInCenter(getContext(), webResponse.message);
+                getBaseActivity().isReloadFragmentOnBack = true;
+                getBaseActivity().popStackTill(1);
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
+    private void declineSessionAPI(int id) {
+        getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_DECLINE_SESSION + id, "", new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                UIHelper.showShortToastInCenter(getContext(), webResponse.message);
+                getBaseActivity().isReloadFragmentOnBack = true;
+                getBaseActivity().popStackTill(1);
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
     }
 
 }
