@@ -1,236 +1,389 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5"
-    android:orientation="vertical"
-    android:padding="@dimen/x20dp">
-
-
-    <com.tekrevol.papp.widget.AnyTextView
-        android:id="@+id/txtDesc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginBottom="@dimen/x10dp"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:lines="2"
-        android:text="Session with two kids and wife of Mr. Jason"
-        android:textColor="@color/txtBlack"
-        android:textSize="@dimen/s14"
-        app:typeface="@string/font_regular" />
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvDependents"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/x20dp"
-        android:clipToPadding="false"
-        android:orientation="horizontal"
-        app:layoutManager="android.support.v7.widget.GridLayoutManager">
-
-    </android.support.v7.widget.RecyclerView>
-
-
-    <com.tekrevol.papp.widget.AnyTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginBottom="@dimen/x5dp"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:text="Place"
-        android:textColor="@color/txtDarkGrey"
-        android:textSize="@dimen/s12"
-        app:typeface="@string/font_regular" />
+    android:fillViewport="true"
+    android:orientation="vertical">
 
 
     <LinearLayout
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/x20dp"
-        android:gravity="center_vertical">
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/x10dp"
-            android:src="@drawable/img_location_black" />
+        android:orientation="vertical"
+        android:padding="@dimen/x20dp">
 
 
         <com.tekrevol.papp.widget.AnyTextView
-            android:id="@+id/txtLocation"
-            android:layout_width="0dp"
+            android:id="@+id/txtDesc"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/x10dp"
             android:ellipsize="end"
             android:gravity="center_vertical"
-            android:text="52 Park Street Ceazer Tower, New York City."
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/s14"
-            app:typeface="@string/font_regular" />
-    </LinearLayout>
-
-
-    <com.tekrevol.papp.widget.AnyTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginBottom="@dimen/x5dp"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:text="Date and Time"
-        android:textColor="@color/txtDarkGrey"
-        android:textSize="@dimen/s12"
-        app:typeface="@string/font_regular" />
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/x20dp"
-        android:gravity="center_vertical">
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/x10dp"
-            android:src="@drawable/img_clock" />
-
-
-        <com.tekrevol.papp.widget.AnyTextView
-            android:id="@+id/txtDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:text="11/8/2019 - "
+            android:lines="2"
+            android:text="Session with Dependent of ...."
             android:textColor="@color/txtBlack"
             android:textSize="@dimen/s14"
             app:typeface="@string/font_regular" />
 
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvDependents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x20dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+        <LinearLayout
+            android:id="@+id/contPlace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.tekrevol.papp.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/x5dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:text="Place"
+                android:textColor="@color/txtDarkGrey"
+                android:textSize="@dimen/s12"
+                app:typeface="@string/font_regular" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x20dp"
+                android:gravity="center_vertical">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x10dp"
+                    android:src="@drawable/img_location_black" />
+
+
+                <com.tekrevol.papp.widget.AnyTextView
+                    android:id="@+id/txtLocation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:text="52 Park Street Ceazer Tower, New York City."
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_regular" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/contSessionType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.tekrevol.papp.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/x5dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:text="Session Type"
+                android:textColor="@color/txtDarkGrey"
+                android:textSize="@dimen/s12"
+                app:typeface="@string/font_regular" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x20dp"
+                android:gravity="center_vertical">
+
+
+                <ImageView
+                    android:layout_width="@dimen/x12dp"
+                    android:layout_height="@dimen/x12dp"
+                    android:layout_marginRight="@dimen/x10dp"
+                    android:tint="@color/txtBlack"
+                    android:src="@drawable/img_session" />
+
+
+                <com.tekrevol.papp.widget.AnyTextView
+                    android:id="@+id/txtSessionTypeDesc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:text="-"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_regular" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
         <com.tekrevol.papp.widget.AnyTextView
-            android:id="@+id/txtTime"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/x5dp"
             android:ellipsize="end"
             android:gravity="center_vertical"
-            android:text="05:00 pm"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/s14"
+            android:text="Date and Time"
+            android:textColor="@color/txtDarkGrey"
+            android:textSize="@dimen/s12"
             app:typeface="@string/font_regular" />
-    </LinearLayout>
 
 
-    <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/x2dp"
-        android:layout_weight="1"
-        android:background="#fff"
-        android:elevation="@dimen/x10dp"
-        android:orientation="vertical"
-        android:padding="@dimen/x10dp"
-        app:corner_radius="@dimen/x5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x20dp"
+            android:gravity="center_vertical">
 
 
-        <com.tekrevol.papp.widget.AnyEditTextView
-            android:id="@+id/edtMessage"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/x10dp"
+                android:src="@drawable/img_clock" />
+
+
+            <com.tekrevol.papp.widget.AnyTextView
+                android:id="@+id/txtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:text="11/8/2019 - "
+                android:textColor="@color/txtBlack"
+                android:textSize="@dimen/s14"
+                app:typeface="@string/font_regular" />
+
+
+            <com.tekrevol.papp.widget.AnyTextView
+                android:id="@+id/txtTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:text="05:00 pm"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/s14"
+                app:typeface="@string/font_regular" />
+        </LinearLayout>
+
+
+        <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="@dimen/x2dp"
             android:layout_weight="1"
-            android:background="@color/c_white"
-            android:gravity="start"
-            android:hint="Write a Message"
-            android:lines="5"
-            android:maxLength="1000"
-            android:textColor="@color/txtDarkGrey"
-            android:textSize="@dimen/s14"
+            android:background="#fff"
+            android:elevation="@dimen/x10dp"
+            android:orientation="vertical"
+            android:padding="@dimen/x10dp"
+            app:corner_radius="@dimen/x5dp">
+
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.tekrevol.papp.widget.AnyTextView
+                    android:id="@+id/txtMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/c_white"
+                    android:gravity="start"
+                    android:hint="@string/lorem_ipsum"
+                    android:textColor="@color/txtDarkGrey"
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_regular" />
+
+
+            </android.support.v4.widget.NestedScrollView>
+
+
+        </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/contRequest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+
+            <LinearLayout
+                android:id="@+id/contAccept"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x20dp"
+                android:layout_marginRight="@dimen/x20dp"
+                android:layout_marginBottom="@dimen/x20dp"
+                android:layout_weight="1"
+                android:background="@drawable/img_button_blue_small"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.tekrevol.papp.widget.AnyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/x3dp"
+                    android:text="Accept"
+                    android:textColor="@color/c_white"
+                    android:textSize="@dimen/s14"
+                    app:fontFamily="@string/font_regular" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/contReject"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x20dp"
+                android:layout_marginTop="@dimen/x20dp"
+                android:layout_marginBottom="@dimen/x20dp"
+                android:layout_weight="1"
+                android:background="@drawable/img_button_backgroun_amber"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.tekrevol.papp.widget.AnyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/x3dp"
+                    android:text="Reject"
+                    android:textColor="@color/c_white"
+                    android:textSize="@dimen/s14"
+                    app:fontFamily="@string/font_regular" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+            android:id="@+id/contSessionStartOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x2dp"
+            android:layout_marginTop="@dimen/x20dp"
+            android:layout_marginRight="@dimen/x2dp"
+            android:layout_marginBottom="@dimen/x20dp"
+            android:background="#fff"
+            android:elevation="@dimen/x10dp"
+            android:gravity="center_vertical"
+            android:padding="@dimen/x10dp"
+            app:corner_radius="@dimen/x5dp">
+
+
+            <com.tekrevol.papp.widget.AnyTextView
+                android:id="@+id/txtSessionType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:text="Start Session"
+                android:textColor="@color/txtBlack"
+                android:textSize="@dimen/s16"
+                app:typeface="@string/font_regular" />
+
+
+            <ImageView
+                android:id="@+id/imgOneOnOne"
+                android:layout_width="@dimen/x30dp"
+                android:layout_height="@dimen/x30dp"
+                android:background="@drawable/shape_circle_eee"
+                android:padding="@dimen/x3dp"
+                android:src="@drawable/img_one_on_one"
+                android:tint="@color/colorPrimary" />
+
+
+            <ImageView
+                android:id="@+id/imgCall"
+                android:layout_width="@dimen/x30dp"
+                android:layout_height="@dimen/x30dp"
+                android:layout_marginLeft="@dimen/x5dp"
+                android:background="@drawable/shape_circle_eee"
+                android:padding="@dimen/x3dp"
+                android:src="@drawable/img_call"
+                android:tint="@color/colorPrimary" />
+
+
+            <ImageView
+                android:id="@+id/imgVdoCall"
+                android:layout_width="@dimen/x30dp"
+                android:layout_height="@dimen/x30dp"
+                android:layout_marginLeft="@dimen/x5dp"
+                android:background="@drawable/shape_circle_eee"
+                android:padding="@dimen/x3dp"
+                android:src="@drawable/img_video_call"
+                android:tint="@color/colorPrimary" />
+
+
+            <ImageView
+                android:id="@+id/imgStop"
+                android:layout_width="@dimen/x30dp"
+                android:layout_height="@dimen/x30dp"
+                android:layout_marginLeft="@dimen/x5dp"
+                android:background="@drawable/shape_circle_eee"
+                android:padding="@dimen/x3dp"
+                android:src="@drawable/img_stop"
+                android:tint="@color/colorPrimary"
+                android:visibility="gone" />
+
+
+        </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+        <com.tekrevol.papp.widget.AnyTextView
+            android:id="@+id/txtTimer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="05:23:59"
+            android:textColor="@color/txtGrey"
+            android:textSize="@dimen/s18"
+            android:visibility="gone"
             app:typeface="@string/font_regular" />
-
-
-    </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
-
-
-        <LinearLayout
-            android:id="@+id/conStart"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/x20dp"
-            android:layout_marginRight="@dimen/x20dp"
-            android:layout_marginBottom="@dimen/x20dp"
-            android:layout_weight="1"
-            android:background="@drawable/img_button_blue_small"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <com.tekrevol.papp.widget.AnyTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/x3dp"
-                android:text="Start"
-                android:textColor="@color/c_white"
-                android:textSize="@dimen/s14"
-                app:fontFamily="@string/font_regular" />
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/contStop"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x20dp"
-            android:layout_marginTop="@dimen/x20dp"
-            android:layout_marginBottom="@dimen/x20dp"
-            android:layout_weight="1"
-            android:background="@drawable/img_button_backgroun_amber"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <com.tekrevol.papp.widget.AnyTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/x3dp"
-                android:text="Stop"
-                android:textColor="@color/c_white"
-                android:textSize="@dimen/s14"
-                app:fontFamily="@string/font_regular" />
-
-
-        </LinearLayout>
 
     </LinearLayout>
 
-
-    <com.tekrevol.papp.widget.AnyTextView
-        android:id="@+id/txtTimer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:singleLine="true"
-        android:text="05:23:59"
-        android:textColor="@color/txtDarkGrey"
-        android:textSize="@dimen/s18"
-        app:typeface="@string/font_regular" />
-
-</LinearLayout>
+</ScrollView>

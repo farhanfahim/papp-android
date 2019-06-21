@@ -11,14 +11,25 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.DependentsAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.GooglePlaceHelper;
+import com.tekrevol.papp.helperclasses.StringHelper;
+import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+import com.tekrevol.papp.managers.DateManager;
+import com.tekrevol.papp.managers.retrofit.WebServices;
+import com.tekrevol.papp.models.receiving_model.SessionRecievingModel;
+import com.tekrevol.papp.models.receiving_model.SessionUsers;
 import com.tekrevol.papp.models.receiving_model.UserModel;
-import com.tekrevol.papp.widget.AnyEditTextView;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 
@@ -41,6 +52,7 @@ public class SessionDetailsFragment extends BaseFragment implements OnItemClickL
 
     DependentsAdapter adapter;
     ArrayList<UserModel> arrData;
+
     @BindView(R.id.txtDesc)
     AnyTextView txtDesc;
     @BindView(R.id.rvDependents)
@@ -51,21 +63,45 @@ public class SessionDetailsFragment extends BaseFragment implements OnItemClickL
     AnyTextView txtDate;
     @BindView(R.id.txtTime)
     AnyTextView txtTime;
-    @BindView(R.id.edtMessage)
-    AnyEditTextView edtMessage;
-    @BindView(R.id.conStart)
-    LinearLayout conStart;
-    @BindView(R.id.contStop)
-    LinearLayout contStop;
+    @BindView(R.id.txtMessage)
+    AnyTextView txtMessage;
+    @BindView(R.id.txtSessionType)
+    AnyTextView txtSessionType;
+    @BindView(R.id.imgOneOnOne)
+    ImageView imgOneOnOne;
+    @BindView(R.id.imgCall)
+    ImageView imgCall;
+    @BindView(R.id.imgVdoCall)
+    ImageView imgVdoCall;
+    @BindView(R.id.imgStop)
+    ImageView imgStop;
     @BindView(R.id.txtTimer)
     AnyTextView txtTimer;
+    @BindView(R.id.contAccept)
+    LinearLayout contAccept;
+    @BindView(R.id.contReject)
+    LinearLayout contReject;
+    @BindView(R.id.contRequest)
+    LinearLayout contRequest;
+    @BindView(R.id.contSessionStartOptions)
+    RoundKornerLinearLayout contSessionStartOptions;
+    @BindView(R.id.contPlace)
+    LinearLayout contPlace;
+    @BindView(R.id.txtSessionTypeDesc)
+    AnyTextView txtSessionTypeDesc;
+    @BindView(R.id.contSessionType)
+    LinearLayout contSessionType;
+    private SessionRecievingModel sessionRecievingModel;
+
+    boolean isOneOnOneSessionInProgress = false;
 
 
-    public static SessionDetailsFragment newInstance() {
+    public static SessionDetailsFragment newInstance(SessionRecievingModel sessionRecievingModel) {
 
         Bundle args = new Bundle();
 
         SessionDetailsFragment fragment = new SessionDetailsFragment();
+        fragment.sessionRecievingModel = sessionRecievingModel;
         fragment.setArguments(args);
         return fragment;
     }
@@ -86,8 +122,8 @@ public class SessionDetailsFragment extends BaseFragment implements OnItemClickL
 
         titleBar.resetViews();
         titleBar.setVisibility(View.VISIBLE);
-        titleBar.setTitle("Session UserDetails");
-        titleBar.showResideMenu(getHomeActivity());
+        titleBar.setTitle("Session Details");
+//        titleBar.showResideMenu(getHomeActivity());
         titleBar.showBackButton(getBaseActivity());
     }
 
@@ -117,15 +153,80 @@ public class SessionDetailsFragment extends BaseFragment implements OnItemClickL
         bindRecyclerView();
 
 
-        if (onCreated) {
-            adapter.notifyDataSetChanged();
-            return;
+        bindData();
+
+
+        isOneOnOneSessionInProgress = ((sessionRecievingModel.getStatus() == AppConstants.SESSION_STATUS_ACCEPTED_BY_MENTOR) && sessionRecievingModel.getSessionType() == AppConstants.SESSION_TYPE_ONE_ON_ONE && !StringHelper.isNullOrEmpty(sessionRecievingModel.getStartDate()));
+
+        if (isOneOnOneSessionInProgress) {
+            txtSessionType.setText("Stop Session");
+            imgOneOnOne.setVisibility(View.GONE);
+            imgStop.setVisibility(View.VISIBLE);
+        }
+
+        if (!isMentor()) {
+            contRequest.setVisibility(View.GONE);
+            contSessionStartOptions.setVisibility(View.GONE);
+            txtDesc.setText(sessionRecievingModel.getDuration() + " hour session with Mentor: " + sessionRecievingModel.getMentor().getUserDetails().getFullName());
+        }
+
+    }
+
+    public void bindData() {
+
+        if (sessionRecievingModel.getStatus() == AppConstants.SESSION_STATUS_PENDING) {
+            contRequest.setVisibility(View.VISIBLE);
+            contSessionStartOptions.setVisibility(View.GONE);
+        } else if (sessionRecievingModel.getStatus() == AppConstants.SESSION_STATUS_ACCEPTED_BY_MENTOR) {
+            contRequest.setVisibility(View.GONE);
+            contSessionStartOptions.setVisibility(View.VISIBLE);
+
+            imgOneOnOne.setVisibility(View.GONE);
+            imgCall.setVisibility(View.GONE);
+            imgVdoCall.setVisibility(View.GONE);
+
+            if (sessionRecievingModel.getSessionType() == AppConstants.SESSION_TYPE_AUDIO) {
+                imgCall.setVisibility(View.VISIBLE);
+            } else if (sessionRecievingModel.getSessionType() == AppConstants.SESSION_TYPE_VIDEO) {
+                imgVdoCall.setVisibility(View.VISIBLE);
+            } else if (sessionRecievingModel.getSessionType() == AppConstants.SESSION_TYPE_ONE_ON_ONE) {
+                imgOneOnOne.setVisibility(View.VISIBLE);
+            }
+
+        } else {
+            contRequest.setVisibility(View.GONE);
+            contSessionStartOptions.setVisibility(View.GONE);
+        }
+
+        if (sessionRecievingModel.getSessionType() == AppConstants.SESSION_TYPE_ONE_ON_ONE) {
+            contPlace.setVisibility(View.VISIBLE);
+        } else {
+            contPlace.setVisibility(View.GONE);
         }
 
 
+        txtDesc.setText(sessionRecievingModel.getDuration() + " hour session with Dependent of " + sessionRecievingModel.getUser().getUserDetails().getFullName());
+        txtLocation.setText(sessionRecievingModel.getAddress());
+        txtDate.setText(DateManager.getDate(sessionRecievingModel.getScheduleDate(), AppConstants.DISPLAY_DATE_ONLY_FORMAT) + " - ");
+        txtTime.setText(DateManager.getDate(sessionRecievingModel.getScheduleDate(), AppConstants.DISPLAY_TIME_ONLY_FORMAT));
+        txtMessage.setText(sessionRecievingModel.getMessage());
+        txtSessionTypeDesc.setText(sessionRecievingModel.getTypeText());
+
+
         arrData.clear();
-        arrData.addAll(getCurrentUser().getDependants());
+
+        for (SessionUsers sessionUser : sessionRecievingModel.getSessionUsers()) {
+            for (UserModel dependant : sessionRecievingModel.getUser().getDependants()) {
+                if (dependant.getId() == sessionUser.getDependantId()) {
+                    arrData.add(dependant);
+                }
+            }
+
+        }
+
         adapter.notifyDataSetChanged();
+
+
     }
 
 
@@ -174,13 +275,112 @@ public class SessionDetailsFragment extends BaseFragment implements OnItemClickL
     }
 
 
-    @OnClick({R.id.conStart, R.id.contStop})
+    @OnClick({R.id.imgOneOnOne, R.id.imgCall, R.id.imgVdoCall, R.id.txtLocation, R.id.imgStop, R.id.contAccept, R.id.contReject})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.conStart:
+            case R.id.imgOneOnOne:
+                startSessionAPI(sessionRecievingModel.getId(), sessionRecievingModel.getSessionType());
                 break;
-            case R.id.contStop:
+            case R.id.imgCall:
+                startSessionAPI(sessionRecievingModel.getId(), sessionRecievingModel.getSessionType());
+                break;
+            case R.id.imgVdoCall:
+                startSessionAPI(sessionRecievingModel.getId(), sessionRecievingModel.getSessionType());
+                break;
+            case R.id.imgStop:
+                completeSessionAPI(sessionRecievingModel.getId());
+                break;
+
+            case R.id.txtLocation:
+                GooglePlaceHelper.intentOpenMap(getBaseActivity(), Double.valueOf(sessionRecievingModel.getLat()), Double.valueOf(sessionRecievingModel.getLng()), sessionRecievingModel.getAddress());
+                break;
+
+            case R.id.contAccept:
+                acceptSessionAPI(sessionRecievingModel.getId());
+                break;
+
+            case R.id.contReject:
+                declineSessionAPI(sessionRecievingModel.getId());
                 break;
         }
     }
+
+
+    private void completeSessionAPI(int id) {
+
+        UIHelper.showAlertDialog("Are you sure you want to complete this session?", "Complete Session", (dialog, which) -> {
+            getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_COMPLETE_SESSION + id, "", new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                @Override
+                public void requestDataResponse(WebResponse<Object> webResponse) {
+                    UIHelper.showShortToastInCenter(getContext(), webResponse.message);
+                    getBaseActivity().isReloadFragmentOnBack = true;
+                    getBaseActivity().popStackTill(1);
+                }
+
+                @Override
+                public void onError(Object object) {
+
+                }
+            });
+        }, getContext());
+    }
+
+
+    private void acceptSessionAPI(int id) {
+        getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_ACCEPT_SESSION + id, "", new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                UIHelper.showShortToastInCenter(getContext(), webResponse.message);
+                getBaseActivity().isReloadFragmentOnBack = true;
+                getBaseActivity().popStackTill(1);
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
+    private void declineSessionAPI(int id) {
+        getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_DECLINE_SESSION + id, "", new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                UIHelper.showShortToastInCenter(getContext(), webResponse.message);
+                getBaseActivity().isReloadFragmentOnBack = true;
+                getBaseActivity().popStackTill(1);
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
+
+    private void startSessionAPI(int id, int sessionType) {
+        getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_START_SESSION + id, "", new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                if (sessionType == AppConstants.SESSION_TYPE_ONE_ON_ONE) {
+                    txtSessionType.setText("Stop Session");
+                    imgOneOnOne.setVisibility(View.GONE);
+                    imgStop.setVisibility(View.VISIBLE);
+                } else if (sessionType == AppConstants.SESSION_TYPE_VIDEO) {
+                    completeSessionAPI(id);
+                } else if (sessionType == AppConstants.SESSION_TYPE_AUDIO) {
+                    completeSessionAPI(id);
+                }
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
 }

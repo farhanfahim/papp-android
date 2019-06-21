@@ -211,5 +211,4 @@ public class HomeActivity extends BaseActivity {
 //        getBlurImage().setVisibility(View.GONE);
 //    }
 
-
 }

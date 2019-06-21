@@ -63,12 +63,19 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ViewHo
             holder.imgCancel.setVisibility(View.GONE);
         }
 
-        ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgProfile, model.getUser().getUserDetails().getImage(), true);
+
+        if (isMentor) {
+            ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgProfile, model.getUser().getUserDetails().getImage(), true);
+            holder.txtDesc.setText("With dependent of " + model.getUser().getUserDetails().getFirstName());
+        } else {
+            ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgProfile, model.getMentor().getUserDetails().getImage(), true);
+            holder.txtDesc.setText("With mentor: " + model.getMentor().getUserDetails().getFirstName());
+        }
+
 
 //        String date = DateManager.convertToUserTimeZone(model.getCreatedAt());
         holder.txtDate.setText(DateManager.getDate(model.getScheduleDate(), AppConstants.DISPLAY_DATE_ONLY_FORMAT));
         holder.txtTime.setText(DateManager.getDate(model.getScheduleDate(), AppConstants.DISPLAY_TIME_ONLY_FORMAT));
-        holder.txtDesc.setText("With dependent of " + model.getUser().getUserDetails().getFirstName());
         holder.txtDuration.setText("Duration: " + model.getDuration() + " hour");
         holder.txtStatus.setText(model.getStatusText());
         setListener(holder, model);

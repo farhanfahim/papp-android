@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.tekrevol.papp.callbacks.OnSpinnerOKPressedListener;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.helperclasses.ui.helper.KeyboardHelper;
 import com.tekrevol.papp.managers.SharedPreferenceManager;
@@ -53,13 +54,13 @@ public class EnterNewPinDialogFragment extends DialogFragment {
     private String Title;
     private View.OnClickListener onCanceButtonClick;
     private SharedPreferenceManager sharedPreferenceManager;
-    private View.OnClickListener onSaveClick;
+    private OnSpinnerOKPressedListener onSaveClick;
 
 
     public EnterNewPinDialogFragment() {
     }
 
-    public static EnterNewPinDialogFragment newInstance(View.OnClickListener onCanceButtonClick, View.OnClickListener onSaveClick) {
+    public static EnterNewPinDialogFragment newInstance(View.OnClickListener onCanceButtonClick,  OnSpinnerOKPressedListener onSaveClick) {
         EnterNewPinDialogFragment frag = new EnterNewPinDialogFragment();
 
         frag.onCanceButtonClick = onCanceButtonClick;
@@ -137,14 +138,10 @@ public class EnterNewPinDialogFragment extends DialogFragment {
         switch (view.getId()) {
             case R.id.txtSave:
                 if (txtPinCode.getText().toString().length() == 4) {
-                    sharedPreferenceManager.putValue(AppConstants.KEY_IS_PIN_ENABLE, true);
-                    sharedPreferenceManager.putValue(AppConstants.KEY_PIN_CODE, txtPinCode.getText().toString().trim());
-                    onSaveClick.onClick(view);
+                    onSaveClick.onItemSelect(txtPinCode.getText().toString());
                     KeyboardHelper.hideSoftKeyboard(getContext(), view);
                     dismiss();
                 } else {
-
-//                    txtWrongPinNumber.setText("Incorrect PIN");
                     txtWrongPinNumber.setVisibility(View.VISIBLE);
                 }
 

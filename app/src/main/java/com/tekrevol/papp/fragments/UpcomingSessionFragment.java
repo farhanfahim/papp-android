@@ -16,14 +16,11 @@ import android.widget.RelativeLayout;
 
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapter;
-import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapterDummy;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.retrofit.WebServices;
-import com.tekrevol.papp.models.general.SpinnerModel;
 import com.tekrevol.papp.models.receiving_model.SessionRecievingModel;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
@@ -157,7 +154,7 @@ public class UpcomingSessionFragment extends BaseFragment implements OnItemClick
     public void onItemClick(int position, Object object, View view, Object type) {
         switch (view.getId()) {
             case R.id.contParentLayout:
-                getBaseActivity().addDockableFragment(MentorSessionDetailsFragment.newInstance((SessionRecievingModel) object), true);
+                getBaseActivity().addDockableFragment(SessionDetailsFragment.newInstance((SessionRecievingModel) object), true);
                 break;
 
 

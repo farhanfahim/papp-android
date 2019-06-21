@@ -48,5 +48,6 @@
 
 
     <string name="action_settings">Settings</string>
+    <string name="already_have_verification_code"><u>Already Have Verification Code</u></string>
 
 </resources>

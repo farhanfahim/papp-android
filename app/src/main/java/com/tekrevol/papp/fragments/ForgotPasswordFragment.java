@@ -1,6 +1,5 @@
 package com.tekrevol.papp.fragments;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,20 +9,28 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.tekrevol.papp.R;
-import com.tekrevol.papp.activities.HomeActivity;
+import com.tekrevol.papp.callbacks.OnSpinnerOKPressedListener;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.fragments.dialogs.EnterNewPinDialogFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+import com.tekrevol.papp.managers.retrofit.WebServices;
+import com.tekrevol.papp.models.sending_model.ResetPasswordSendingModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
+import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
-import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
-import com.tekrevol.papp.widget.AnyEditTextView;
-import com.tekrevol.papp.widget.TitleBar;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static com.tekrevol.papp.constatnts.WebServiceConstants.PATH_FORGET_PASSWORD;
+import static com.tekrevol.papp.constatnts.WebServiceConstants.PATH_VERIFY_RESET_CODE;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
@@ -37,6 +44,8 @@ public class ForgotPasswordFragment extends BaseFragment {
     AnyEditTextView edtEmailAddress;
     @BindView(R.id.contSendPassword)
     LinearLayout contSendPassword;
+    @BindView(R.id.txtAlreadyHaveCode)
+    AnyTextView txtAlreadyHaveCode;
 
     public static ForgotPasswordFragment newInstance() {
 
@@ -71,6 +80,7 @@ public class ForgotPasswordFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
     }
 
@@ -112,11 +122,81 @@ public class ForgotPasswordFragment extends BaseFragment {
     }
 
 
-    @OnClick(R.id.contSendPassword)
-    public void onViewClicked() {
-        UIHelper.showAlertDialogWithCallback("Your password has been sent to you on " + edtEmailAddress.getStringTrimmed(), "Forgot Password",
-                (dialogInterface, i) -> {
-                    getBaseActivity().onBackPressed();
-                }, getContext());
+    @OnClick({R.id.contSendPassword, R.id.txtAlreadyHaveCode})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.contSendPassword:
+                forgetPasswordAPI();
+                break;
+            case R.id.txtAlreadyHaveCode:
+
+                if (!edtEmailAddress.testValidity()) {
+                    UIHelper.showAlertDialog(getContext(), "Please enter valid email address");
+                    return;
+                }
+
+                showVerificationCode();
+                break;
+        }
     }
+
+
+    public void forgetPasswordAPI() {
+        if (!edtEmailAddress.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Please enter valid email address");
+            return;
+        }
+
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_EMAIL, edtEmailAddress.getStringTrimmed());
+
+        getBaseWebService().getAPIAnyObject(PATH_FORGET_PASSWORD, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                UIHelper.showAlertDialogWithCallback(webResponse.message, "Forget Password", (dialog, which) -> {
+                    showVerificationCode();
+                }, getContext());
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
+    public void showVerificationCode() {
+        EnterNewPinDialogFragment enterNewPinDialogFragment = EnterNewPinDialogFragment.newInstance(v -> {
+
+        }, data -> {
+            String code = (String) data;
+            verifyCode(code);
+        });
+
+        enterNewPinDialogFragment.setTitle("Enter Verification Code");
+        enterNewPinDialogFragment.show(getBaseActivity().getSupportFragmentManager(), EnterNewPinDialogFragment.class.getSimpleName());
+    }
+
+    public void verifyCode(String code) {
+
+        ResetPasswordSendingModel resetPasswordSendingModel = new ResetPasswordSendingModel();
+
+        resetPasswordSendingModel.setVerificationCode(code);
+
+
+        getBaseWebService().postAPIAnyObject(PATH_VERIFY_RESET_CODE, resetPasswordSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                resetPasswordSendingModel.setEmail(edtEmailAddress.getStringTrimmed());
+                getBaseActivity().addDockableFragment(ResetPasswordFragment.newInstance(resetPasswordSendingModel), true);
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
+
 }

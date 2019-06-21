@@ -11,20 +11,37 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnNewPacketReceivedListener;
 import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.fragments.abstracts.GenericContentFragment;
+import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.managers.retrofit.GsonFactory;
+import com.tekrevol.papp.managers.retrofit.WebServices;
+import com.tekrevol.papp.models.receiving_model.PagesModel;
+import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.tekrevol.papp.constatnts.AppConstants.PAGE_SLUG_ABOUT;
+import static com.tekrevol.papp.constatnts.AppConstants.PAGE_SLUG_TERMS_AND_CONDITION;
+import static com.tekrevol.papp.constatnts.WebServiceConstants.Q_PARAM_SLUG;
 
 /**
  * Created by khanhamza on 09-May-17.
@@ -72,6 +89,11 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
     @BindView(R.id.contSponsors)
     LinearLayout contSponsors;
 
+
+    PagesModel about;
+    PagesModel termsAndCondition;
+
+
     public static RightSideMenuFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -107,6 +129,8 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
             txtUserName.setText(getCurrentUser().getUserDetails().getFullName());
             txtEmail.setText(getCurrentUser().getEmail());
         }
+
+
     }
 
     @Override
@@ -200,13 +224,55 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
                 getBaseActivity().addDockableFragment(SponsorFragment.newInstance(), false);
                 break;
             case R.id.contAboutApp:
-                getBaseActivity().addDockableFragment(GenericContentFragment.newInstance("About", AppConstants.AboutUs), false);
+                getPagesInfo(PAGE_SLUG_ABOUT);
                 break;
             case R.id.contTermsAndConditions:
+                getPagesInfo(PAGE_SLUG_TERMS_AND_CONDITION);
                 break;
             case R.id.contLogout:
                 logoutClick(this);
                 break;
         }
+    }
+
+
+    private void getPagesInfo(String slug) {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(Q_PARAM_SLUG, slug);
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_PAGES, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+
+
+                Type type = new TypeToken<ArrayList<PagesModel>>() {
+                }.getType();
+                ArrayList<PagesModel> arrayList = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type);
+
+
+                if (arrayList.isEmpty()) {
+                    UIHelper.showShortToastInCenter(getContext(), "No Data");
+                    return;
+                }
+
+                if (slug.equalsIgnoreCase(PAGE_SLUG_TERMS_AND_CONDITION)) {
+                    termsAndCondition = arrayList.get(0);
+                    getBaseActivity().addDockableFragment(GenericContentFragment.newInstance(termsAndCondition.getTitle(), termsAndCondition.getContent(), true), false);
+
+                } else if (slug.equalsIgnoreCase(PAGE_SLUG_ABOUT)) {
+                    about = arrayList.get(0);
+                    getBaseActivity().addDockableFragment(GenericContentFragment.newInstance(about.getTitle(), about.getContent(), true), false);
+                }
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
     }
 }

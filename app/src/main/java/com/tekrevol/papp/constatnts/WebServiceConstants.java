@@ -69,6 +69,11 @@ public class WebServiceConstants {
     public static final String PATH_DECLINE_SESSION = "decline-session-request/";
     public static final String PATH_COMPLETE_SESSION = "complete-session/";
     public static final String PATH_START_SESSION = "start-session/";
+    public static final String PATH_FORGET_PASSWORD= "forget-password";
+    public static final String PATH_VERIFY_RESET_CODE= "verify-reset-code";
+    public static final String PATH_RESET_PASSWORD= "reset-password";
+    public static final String PATH_CHANGE_PASSWORD= "change-password";
+    public static final String PATH_PAGES= "pages";
 
 
     /**
@@ -92,6 +97,8 @@ public class WebServiceConstants {
     public static final String Q_PARAM_SESSION_TO = "session_to";
     public static final String Q_PARAM_TYPE_FILTER = "type_filter";
     public static final String Q_PARAM_UPCOMING_SESSION_REQUEST = "upcoming_session_request";
+    public static final String Q_PARAM_EMAIL = "email";
+    public static final String Q_PARAM_SLUG = "slug";
 
 
     /**

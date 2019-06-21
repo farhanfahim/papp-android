@@ -4,15 +4,20 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
-import com.tekrevol.papp.widget.AnyTextView;
-
 import com.tekrevol.papp.R;
+import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
-import com.tekrevol.papp.widget.TitleBar;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 /**
@@ -21,15 +26,22 @@ import com.tekrevol.papp.widget.TitleBar;
 
 public class GenericContentFragment extends BaseFragment {
 
+    @BindView(R.id.txtViewContent_generic_content)
+    AnyTextView txtViewContentGenericContent;
+    @BindView(R.id.webView)
+    WebView webView;
+    Unbinder unbinder;
     private String content = "";
     private String title = "";
+    private boolean isShowWebView;
 
 
-    public static GenericContentFragment newInstance(String title, String content) {
+    public static GenericContentFragment newInstance(String title, String content, boolean isShowWebView) {
         Bundle args = new Bundle();
         GenericContentFragment fragment = new GenericContentFragment();
         fragment.title = title;
         fragment.content = content;
+        fragment.isShowWebView = isShowWebView;
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,16 +63,19 @@ public class GenericContentFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        bindViews(view);
+        if (isShowWebView) {
+            txtViewContentGenericContent.setVisibility(View.GONE);
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.loadDataWithBaseURL("", content, "text/html", "UTF-8", "");
+        } else {
+            webView.setVisibility(View.GONE);
+            txtViewContentGenericContent.setText(Html.fromHtml(content), TextView.BufferType.SPANNABLE);
+        }
+
+
     }
 
-    private void bindViews(View view) {
-        AnyTextView txtViewContent = (AnyTextView) view.findViewById(R.id.txtViewContent_generic_content);
 
-        txtViewContent.setText(Html.fromHtml(content), TextView.BufferType.SPANNABLE);
-
-//        txtViewContent.setText(content);
-    }
 
     @Override
     public void setTitlebar(TitleBar titleBar) {
@@ -118,5 +133,19 @@ public class GenericContentFragment extends BaseFragment {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

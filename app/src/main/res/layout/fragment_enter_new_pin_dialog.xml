@@ -127,7 +127,7 @@
                 android:background="@drawable/rounded_box_filled_btn_blue"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="Save"
+                android:text="Done"
                 android:textColor="@color/c_white"
                 android:textSize="14sp" />
 
