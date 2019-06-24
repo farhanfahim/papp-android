@@ -1,5 +1,6 @@
 package com.tekrevol.papp.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -15,14 +16,12 @@ import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.helperclasses.validator.PasswordValidation;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.UserModel;
-import com.tekrevol.papp.models.sending_model.DependantSendingModel;
+import com.tekrevol.papp.models.sending_model.ChangeUserPasswordSendingModel;
 import com.tekrevol.papp.models.sending_model.DependentChangePasswordSendingModel;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
-
-import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +29,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.tekrevol.papp.constatnts.WebServiceConstants.PATH_CHANGE_DEPENDENT_PASSWORD;
+import static com.tekrevol.papp.constatnts.WebServiceConstants.PATH_CHANGE_PASSWORD;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
@@ -55,6 +55,10 @@ public class ChangePasswordFragment extends BaseFragment {
     LinearLayout contNewPassword;
     @BindView(R.id.contBtnSave)
     LinearLayout contBtnSave;
+    @BindView(R.id.edtConfirmPassword)
+    AnyEditTextView edtConfirmPassword;
+    @BindView(R.id.contConfirmNewPassword)
+    LinearLayout contConfirmNewPassword;
 
     private UserModel userModel;
     private int role;
@@ -117,10 +121,12 @@ public class ChangePasswordFragment extends BaseFragment {
 
         if (role == AppConstants.DEPENDENT_ROLE) {
             contCurrentPassword.setVisibility(View.GONE);
+            contConfirmNewPassword.setVisibility(View.GONE);
         }
 
         edtCurrentPassword.addValidator(new PasswordValidation());
         edtNewPassword.addValidator(new PasswordValidation());
+        edtConfirmPassword.addValidator(new PasswordValidation(edtNewPassword));
 
     }
 
@@ -159,20 +165,51 @@ public class ChangePasswordFragment extends BaseFragment {
         switch (view.getId()) {
 
             case R.id.contBtnSave:
-                changePassword();
+
+                if (role == AppConstants.DEPENDENT_ROLE) {
+                    changeDependentPassword();
+                } else {
+                    changeUserPassword();
+                }
 
                 break;
         }
     }
 
-    public void changePassword() {
+    public void changeDependentPassword() {
         // Validations
 
-        if (role != AppConstants.DEPENDENT_ROLE) {
-            if (!edtCurrentPassword.testValidity()) {
-                UIHelper.showAlertDialog(getContext(), "Please enter valid Current Password");
-                return;
+
+        if (!edtNewPassword.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Please enter valid New Password");
+            return;
+        }
+
+        DependentChangePasswordSendingModel dependentChangePasswordSendingModel = new DependentChangePasswordSendingModel();
+        dependentChangePasswordSendingModel.setEmail(txtEmailAddress.getStringTrimmed());
+        dependentChangePasswordSendingModel.setPassword(edtNewPassword.getStringTrimmed());
+
+        getBaseWebService().postAPIAnyObject(PATH_CHANGE_DEPENDENT_PASSWORD, dependentChangePasswordSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                UIHelper.showToast(getContext(), webResponse.message);
+                getBaseActivity().popBackStack();
             }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
+
+    public void changeUserPassword() {
+        // Validations
+
+        if (!edtCurrentPassword.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Please enter valid Current Password");
+            return;
         }
 
 
@@ -181,24 +218,27 @@ public class ChangePasswordFragment extends BaseFragment {
             return;
         }
 
-        if (role == AppConstants.DEPENDENT_ROLE) {
 
-            DependentChangePasswordSendingModel dependentChangePasswordSendingModel = new DependentChangePasswordSendingModel();
-            dependentChangePasswordSendingModel.setEmail(txtEmailAddress.getStringTrimmed());
-            dependentChangePasswordSendingModel.setPassword(edtNewPassword.getStringTrimmed());
-
-            getBaseWebService().postAPIAnyObject(PATH_CHANGE_DEPENDENT_PASSWORD, dependentChangePasswordSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
-                @Override
-                public void requestDataResponse(WebResponse<Object> webResponse) {
-                    UIHelper.showToast(getContext(), webResponse.message);
-                    getBaseActivity().popBackStack();
-                }
-
-                @Override
-                public void onError(Object object) {
-
-                }
-            });
+        if (!edtConfirmPassword.testValidity()) {
+            UIHelper.showAlertDialog(getContext(), "Please enter valid Confirm Password");
+            return;
         }
+
+        ChangeUserPasswordSendingModel changeUserPasswordSendingModel = new ChangeUserPasswordSendingModel();
+        changeUserPasswordSendingModel.setCurrentPassword(edtCurrentPassword.getStringTrimmed());
+        changeUserPasswordSendingModel.setPassword(edtNewPassword.getStringTrimmed());
+        changeUserPasswordSendingModel.setPasswordConfirmation(edtConfirmPassword.getStringTrimmed());
+
+        getBaseWebService().postAPIAnyObject(PATH_CHANGE_PASSWORD, changeUserPasswordSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                UIHelper.showAlertDialogWithCallback(webResponse.message, "Change Password", (dialog, which) -> getBaseActivity().popStackTill(1), getContext());
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
     }
 }

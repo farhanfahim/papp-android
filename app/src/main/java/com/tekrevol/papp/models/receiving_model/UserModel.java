@@ -33,10 +33,10 @@ public class UserModel {
     private String email;
     @Expose
     @SerializedName("chat_enabled")
-    private String chatEnabled;
+    private boolean chatEnabled;
     @Expose
     @SerializedName("review_enabled")
-    private String reviewEnabled;
+    private boolean reviewEnabled;
     @Expose
     @SerializedName("roles_csv")
     private String roles_csv;
@@ -65,19 +65,19 @@ public class UserModel {
         this.roles_csv = roles_csv;
     }
 
-    public String getChatEnabled() {
+    public boolean getChatEnabled() {
         return chatEnabled;
     }
 
-    public void setChatEnabled(String chatEnabled) {
+    public void setChatEnabled(boolean chatEnabled) {
         this.chatEnabled = chatEnabled;
     }
 
-    public String getReviewEnabled() {
+    public boolean getReviewEnabled() {
         return reviewEnabled;
     }
 
-    public void setReviewEnabled(String reviewEnabled) {
+    public void setReviewEnabled(boolean reviewEnabled) {
         this.reviewEnabled = reviewEnabled;
     }
 

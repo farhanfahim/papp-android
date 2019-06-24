@@ -160,6 +160,8 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
 
         getSessions(4, false);
         getSessions(4, true);
+        updateUser(null);
+
 
         if (onCreated && !getBaseActivity().isReloadFragmentOnBack) {
             return;

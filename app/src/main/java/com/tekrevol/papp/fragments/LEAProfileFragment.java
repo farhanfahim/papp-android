@@ -152,7 +152,6 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
         if (mentorModel == null) {
             mentorModel = getCurrentUser();
         }
-
         bindRecyclerView();
 
         bindData();
@@ -177,6 +176,12 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
             imgEdit.setVisibility(View.GONE);
             txtTitle.setText("Mentor Profile");
             contPointsEarned.setVisibility(View.GONE);
+
+            if (mentorModel.getChatEnabled()) {
+                contChat.setVisibility(View.VISIBLE);
+            } else {
+                contChat.setVisibility(View.GONE);
+            }
         }
 
 

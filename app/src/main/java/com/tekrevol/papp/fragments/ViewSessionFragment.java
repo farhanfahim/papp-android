@@ -186,17 +186,12 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
 
         switch (view.getId()) {
             case R.id.contParentLayout:
-
                     getBaseActivity().addDockableFragment(SessionDetailsFragment.newInstance((SessionRecievingModel) object), true);
-
-
                 break;
-
 
             case R.id.imgDone:
                 acceptSessionAPI(((SessionRecievingModel) object).getId());
                 break;
-
 
             case R.id.imgCancel:
                 declineSessionAPI(((SessionRecievingModel) object).getId());

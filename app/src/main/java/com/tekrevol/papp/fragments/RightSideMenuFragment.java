@@ -23,7 +23,6 @@ import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.PagesModel;
-import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
@@ -92,6 +91,8 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
 
     PagesModel about;
     PagesModel termsAndCondition;
+    @BindView(R.id.contChangePassword)
+    LinearLayout contChangePassword;
 
 
     public static RightSideMenuFragment newInstance() {
@@ -115,12 +116,18 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
         if (sharedPreferenceManager.isMentor()) {
             contEditProfile.setVisibility(View.GONE);
             contMyProfile.setVisibility(View.VISIBLE);
-            contSessionPayoutHistory.setVisibility(View.VISIBLE);
         } else {
             contEditProfile.setVisibility(View.VISIBLE);
             contMyProfile.setVisibility(View.GONE);
-            contSessionPayoutHistory.setVisibility(View.GONE);
         }
+
+        if (isDependent()) {
+            contChangePassword.setVisibility(View.GONE);
+            contEditProfile.setVisibility(View.GONE);
+            contMyProfile.setVisibility(View.GONE);
+            contNofitications.setVisibility(View.GONE);
+        }
+
         ////        scrollToTop();
 
 
@@ -129,6 +136,8 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
             txtUserName.setText(getCurrentUser().getUserDetails().getFullName());
             txtEmail.setText(getCurrentUser().getEmail());
         }
+
+        contSessionPayoutHistory.setVisibility(View.GONE);
 
 
     }
@@ -184,7 +193,7 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
 //    }
 
 
-    @OnClick({R.id.imgBack, R.id.contNofitications, R.id.contEditProfile, R.id.contMyProfile, R.id.conSessionHistory, R.id.contSessionPayoutHistory, R.id.contMyGifts, R.id.contGiftsAndRewards, R.id.contMilestones, R.id.contTasks, R.id.contSponsors, R.id.contAboutApp, R.id.contTermsAndConditions, R.id.contLogout})
+    @OnClick({R.id.imgBack, R.id.contNofitications, R.id.contEditProfile, R.id.contMyProfile, R.id.contChangePassword, R.id.conSessionHistory, R.id.contSessionPayoutHistory, R.id.contMyGifts, R.id.contGiftsAndRewards, R.id.contMilestones, R.id.contTasks, R.id.contSponsors, R.id.contAboutApp, R.id.contTermsAndConditions, R.id.contLogout})
     public void onViewClicked(View view) {
 
         closeMenu();
@@ -201,6 +210,16 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
             case R.id.contMyProfile:
                 getBaseActivity().addDockableFragment(LEAProfileFragment.newInstance(null), false);
                 break;
+
+            case R.id.contChangePassword:
+                if (isMentor()) {
+                    getBaseActivity().addDockableFragment(ChangePasswordFragment.newInstance(getCurrentUser(), AppConstants.MENTOR_ROLE), false);
+                } else if (isParent()) {
+                    getBaseActivity().addDockableFragment(ChangePasswordFragment.newInstance(getCurrentUser(), AppConstants.PARENT_ROLE), false);
+                }
+
+                break;
+
             case R.id.conSessionHistory:
                 getBaseActivity().addDockableFragment(SessionHistoryFragment.newInstance(), false);
                 break;

@@ -235,6 +235,48 @@
 
 
 
+                    <LinearLayout
+                        android:id="@+id/contChangePassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/x10dp"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/x10dp"
+                        android:paddingBottom="@dimen/x10dp">
+
+
+                        <ImageView
+                            android:layout_width="@dimen/x20dp"
+                            android:layout_height="@dimen/x20dp"
+                            android:layout_marginRight="@dimen/x10dp"
+                            android:src="@drawable/password_icon" />
+
+
+                        <com.tekrevol.papp.widget.AnyTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:singleLine="true"
+                            android:text="Change Password"
+                            android:textColor="@color/c_white"
+                            android:textSize="@dimen/s16"
+                            app:typeface="@string/font_regular" />
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/x10dp"
+                            android:rotation="-90"
+                            android:src="@drawable/img_drop_down"
+                            android:tint="@color/c_white" />
+
+
+                    </LinearLayout>
+
 
 
                     <LinearLayout
