@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
+import com.modules.facebooklogin.FacebookResponse;
+import com.modules.facebooklogin.FacebookUser;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.activities.HomeActivity;
@@ -34,10 +36,12 @@ import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.helperclasses.validator.PasswordValidation;
 import com.tekrevol.papp.libraries.PasswordStrength;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.managers.retrofit.entities.MultiFileModel;
 import com.tekrevol.papp.models.sending_model.DependantSendingModel;
 import com.tekrevol.papp.models.sending_model.ParentSendingModel;
+import com.tekrevol.papp.models.sending_model.SocialParentSendingModel;
 import com.tekrevol.papp.models.wrappers.UserModelWrapper;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
@@ -101,16 +105,15 @@ public class SocialSignUpCivilianFragment extends BaseFragment implements OnItem
     @BindView(R.id.imgPasswordStrength)
     ImageView imgPasswordStrength;
     private File fileTemporaryProfilePicture;
+    FacebookUser facebookUser;
 
 
-
-
-
-    public static SocialSignUpCivilianFragment newInstance() {
+    public static SocialSignUpCivilianFragment newInstance(FacebookUser facebookUser) {
 
         Bundle args = new Bundle();
 
         SocialSignUpCivilianFragment fragment = new SocialSignUpCivilianFragment();
+        fragment.facebookUser = facebookUser;
         fragment.setArguments(args);
         return fragment;
     }
@@ -129,6 +132,10 @@ public class SocialSignUpCivilianFragment extends BaseFragment implements OnItem
     @Override
     public void setTitlebar(TitleBar titleBar) {
 
+        titleBar.resetViews();
+        titleBar.setVisibility(View.VISIBLE);
+        titleBar.setTitle("Civilian Sign up");
+        titleBar.showBackButton(getBaseActivity());
     }
 
 
@@ -155,17 +162,31 @@ public class SocialSignUpCivilianFragment extends BaseFragment implements OnItem
         super.onViewCreated(view, savedInstanceState);
 
 
-
         bindRecyclerView();
         edtPassword.addValidator(new PasswordValidation());
 
         if (fileTemporaryProfilePicture != null) {
             setImageAfterResult(Uri.fromFile(fileTemporaryProfilePicture).toString());
+        } else {
+            ImageLoaderHelper.loadImageWithAnimations(imgProfile, facebookUser.profilePic, true);
         }
+
 
         if (onCreated) {
             adapter.notifyDataSetChanged();
             return;
+        }
+
+
+        edtEmailAddress.setText(facebookUser.email);
+
+        String[] s = facebookUser.name.split(" ");
+
+        if (s.length > 1) {
+            edtFirstName.setText(s[0]);
+            edtLastName.setText(s[1]);
+        } else {
+            edtFirstName.setText(facebookUser.name);
         }
 
 
@@ -299,13 +320,16 @@ public class SocialSignUpCivilianFragment extends BaseFragment implements OnItem
 
         // Initialize Models
 
-        ParentSendingModel parentSendingModel = new ParentSendingModel();
+        SocialParentSendingModel parentSendingModel = new SocialParentSendingModel();
         ArrayList<MultiFileModel> arrMultiFileModel = new ArrayList<>();
 
 
         // Adding Images
         if (fileTemporaryProfilePicture != null) {
             arrMultiFileModel.add(new MultiFileModel(fileTemporaryProfilePicture, FileType.IMAGE, "image"));
+            parentSendingModel.setImage(null);
+        } else {
+            parentSendingModel.setImage(facebookUser.profilePic);
         }
 
 
@@ -319,6 +343,8 @@ public class SocialSignUpCivilianFragment extends BaseFragment implements OnItem
         parentSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID);
         parentSendingModel.setRole(AppConstants.PARENT_ROLE);
         parentSendingModel.setDependant(arrDependents);
+        parentSendingModel.setClientId(facebookUser.facebookID);
+        parentSendingModel.setPlatform(AppConstants.SOCIAL_MEDIA_PLATFORM_FACEBOOK);
 
         new WebServices(getBaseActivity(), "", BaseURLTypes.BASE_URL, true)
                 .postMultipartAPI(WebServiceConstants.PATH_REGISTER, arrMultiFileModel, parentSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
@@ -387,7 +413,6 @@ public class SocialSignUpCivilianFragment extends BaseFragment implements OnItem
             }
         });
     }
-
 
 
 }

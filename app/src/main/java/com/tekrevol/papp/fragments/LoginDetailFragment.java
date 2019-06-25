@@ -28,6 +28,7 @@ import com.tekrevol.papp.helperclasses.validator.PasswordValidation;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.sending_model.LoginSendingModel;
 import com.tekrevol.papp.models.sending_model.SocialLoginSendingModel;
+import com.tekrevol.papp.models.sending_model.SocialMentorSendingModel;
 import com.tekrevol.papp.models.wrappers.UserModelWrapper;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
@@ -251,9 +252,11 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
                         GenericDialogFragment genericDialogFragment = GenericDialogFragment.newInstance();
                         UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Select Role", "Kindly select the role you want to register as:",
                                 "Civilian", "Mentor", () -> {
-
+                                    genericDialogFragment.dismiss();
+                                    getBaseActivity().addDockableFragment(SocialSignUpCivilianFragment.newInstance(facebookUser), true);
                                 }, () -> {
-
+                                    genericDialogFragment.dismiss();
+                                    getBaseActivity().addDockableFragment(SocialSignUpMentorFragment.newInstance(facebookUser), true);
                                 }, true, true);
                     }
                 }

@@ -7,6 +7,7 @@ import android.util.Base64;
 import android.widget.ImageView;
 
 import com.tekrevol.papp.constatnts.WebServiceConstants;
+import com.tekrevol.papp.helperclasses.StringHelper;
 import com.tekrevol.papp.managers.SharedPreferenceManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -91,6 +92,10 @@ public class ImageLoaderHelper {
      */
 
     public static void loadImageWithouAnimationByPath(ImageView imageView, String path, boolean isUser) {
+        if (!StringHelper.isNullOrEmpty(path) && path.startsWith("https")) {
+            loadImageWithAnimations(imageView, path, isUser);
+            return;
+        }
         ImageLoader.getInstance().displayImage(getImageURLFromPath(path),
                 imageView,
                 ImageLoaderHelper.getOptionsSimple(isUser));
@@ -106,6 +111,11 @@ public class ImageLoaderHelper {
      */
 
     public static void loadImageWithAnimationsByPath(ImageView imageView, String path, boolean isUser) {
+        if (!StringHelper.isNullOrEmpty(path) && path.startsWith("https")) {
+            loadImageWithAnimations(imageView, path, isUser);
+            return;
+        }
+
         ImageLoader.getInstance().displayImage(getImageURLFromPath(path),
                 imageView,
                 ImageLoaderHelper.getOptionsWithAnimation(isUser));
