@@ -110,7 +110,7 @@ public class KMPAutoComplTextView extends android.support.v7.widget.AppCompatAut
     }
 
     /**
-     * 设置数据集
+     *
      *
      * @param spinnerModels
      */

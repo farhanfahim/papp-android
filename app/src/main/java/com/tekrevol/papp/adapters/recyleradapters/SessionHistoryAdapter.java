@@ -12,6 +12,7 @@ import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.helperclasses.StringHelper;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.managers.DateManager;
 import com.tekrevol.papp.models.receiving_model.SessionRecievingModel;
 import com.tekrevol.papp.models.receiving_model.SessionUsers;
 import com.tekrevol.papp.models.receiving_model.UserModel;
@@ -70,9 +71,8 @@ public class SessionHistoryAdapter extends RecyclerView.Adapter<SessionHistoryAd
             holder.txtLocation.setText(model.getAddress());
         }
 
-        holder.txtSessionOn.setText(model.getStartDate());
+        holder.txtSessionOn.setText(DateManager.convertToUserTimeZone(model.getStartDate()));
 
-        // FIXME: 2019-06-20 Remove query and ask waqar to give dependent name
 
         for (SessionUsers sessionUser : model.getSessionUsers()) {
             for (UserModel dependant : model.getUser().getDependants()) {

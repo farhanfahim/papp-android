@@ -120,6 +120,7 @@ public class AppConstants {
 
     public static final String NO_RECORD_FOUND = "No Record Found";
     public static String DEVICE_OS_ANDROID = "android";
+    public static String SOCIAL_MEDIA_PLATFORM_FACEBOOK = "facebook";
     public static int PARENT_ROLE = 3;
     public static int MENTOR_ROLE = 5;
     public static int SPONSOR_ROLE = 6;

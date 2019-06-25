@@ -348,7 +348,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"
-                                android:hint="Please Enter Agency"
+                                android:hint="Please Enter Agency Name"
                                 android:inputType="text"
                                 android:maxLength="30"
                                 android:padding="@dimen/x3dp"

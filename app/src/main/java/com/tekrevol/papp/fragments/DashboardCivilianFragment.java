@@ -146,6 +146,8 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
 
         bindRecyclerView();
 
+        updateUser(null);
+
         if (onCreated && !getBaseActivity().isReloadFragmentOnBack) {
             return;
         }

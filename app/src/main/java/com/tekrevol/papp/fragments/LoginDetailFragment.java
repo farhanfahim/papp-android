@@ -1,22 +1,33 @@
 package com.tekrevol.papp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.gson.JsonElement;
+import com.modules.facebooklogin.FacebookHelper;
+import com.modules.facebooklogin.FacebookResponse;
+import com.modules.facebooklogin.FacebookUser;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.activities.HomeActivity;
+import com.tekrevol.papp.callbacks.GenericClickableInterface;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.enums.BaseURLTypes;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.fragments.abstracts.GenericDialogFragment;
+import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.helperclasses.validator.PasswordValidation;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.sending_model.LoginSendingModel;
+import com.tekrevol.papp.models.sending_model.SocialLoginSendingModel;
 import com.tekrevol.papp.models.wrappers.UserModelWrapper;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
@@ -28,11 +39,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static com.tekrevol.papp.constatnts.AppConstants.SOCIAL_MEDIA_PLATFORM_FACEBOOK;
+import static com.tekrevol.papp.constatnts.WebServiceConstants.PATH_SOCIAL_LOGIN;
+
 /**
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class LoginDetailFragment extends BaseFragment {
+public class LoginDetailFragment extends BaseFragment implements FacebookResponse {
 
 
     Unbinder unbinder;
@@ -52,6 +66,8 @@ public class LoginDetailFragment extends BaseFragment {
     AnyTextView txtOrLoginWith;
     @BindView(R.id.contSocialLogin)
     LinearLayout contSocialLogin;
+
+    private FacebookHelper mFbHelper;
 
     public static LoginDetailFragment newInstance() {
 
@@ -82,7 +98,10 @@ public class LoginDetailFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        //fb api initialization
+        mFbHelper = new FacebookHelper(this,
+                "id,name,email,gender,birthday,picture",
+                getBaseActivity());
 
         contSocialLogin.setVisibility(View.VISIBLE);
         txtOrLoginWith.setVisibility(View.VISIBLE);
@@ -128,6 +147,13 @@ public class LoginDetailFragment extends BaseFragment {
         unbinder.unbind();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        mFbHelper.onActivityResult(requestCode, resultCode, data);
+
+    }
 
     @OnClick({R.id.contBtnLogin, R.id.contFacebookLogin, R.id.contTwitterLogin, R.id.contSignup})
     public void onViewClicked(View view) {
@@ -146,7 +172,7 @@ public class LoginDetailFragment extends BaseFragment {
 
                 break;
             case R.id.contFacebookLogin:
-                showNextBuildToast();
+                mFbHelper.performSignIn(LoginDetailFragment.this);
                 break;
             case R.id.contTwitterLogin:
                 showNextBuildToast();
@@ -180,4 +206,73 @@ public class LoginDetailFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onFbSignInFail() {
+        Toast.makeText(getContext(), "Unable to sign in with Facebook", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFbSignInSuccess() {
+//        Toast.makeText(getBaseActivity(), "Facebook sign in success", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFbProfileReceived(FacebookUser facebookUser) {
+//        Toast.makeText(getContext(), "Facebook user data: name= " + facebookUser.name + " email= " + facebookUser.email, Toast.LENGTH_SHORT).show();
+
+        SocialLoginSendingModel socialLoginSendingModel = new SocialLoginSendingModel();
+        socialLoginSendingModel.setClientId(facebookUser.facebookID);
+        socialLoginSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID);
+        socialLoginSendingModel.setEmail(facebookUser.email);
+        socialLoginSendingModel.setImage(facebookUser.profilePic);
+        socialLoginSendingModel.setPlatform(SOCIAL_MEDIA_PLATFORM_FACEBOOK);
+        socialLoginSendingModel.setUsername(facebookUser.name);
+        socialLoginSendingModel.setToken("abc123");
+
+
+        getBaseWebService().postAPIAnyObject(PATH_SOCIAL_LOGIN, socialLoginSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                JsonElement is_exists = getGson().toJsonTree(webResponse.result).getAsJsonObject().get("is_exists");
+                if (is_exists == null) {
+                    // User exists, do login
+
+                    UserModelWrapper userModelWrapper = getGson().fromJson(getGson().toJson(webResponse.result), UserModelWrapper.class);
+                    sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
+                    sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
+                    getBaseActivity().finish();
+                    getBaseActivity().openActivity(HomeActivity.class);
+
+                } else {
+                    if (!is_exists.getAsBoolean()) {
+                        // User doesn't exist, go to register screen
+
+                        GenericDialogFragment genericDialogFragment = GenericDialogFragment.newInstance();
+                        UIHelper.genericPopUp(getBaseActivity(), genericDialogFragment, "Select Role", "Kindly select the role you want to register as:",
+                                "Civilian", "Mentor", () -> {
+
+                                }, () -> {
+
+                                }, true, true);
+                    }
+                }
+
+
+                mFbHelper.performSignOut();
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onFBSignOut() {
+
+    }
 }

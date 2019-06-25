@@ -74,6 +74,7 @@ public class WebServiceConstants {
     public static final String PATH_RESET_PASSWORD= "reset-password";
     public static final String PATH_CHANGE_PASSWORD= "change-password";
     public static final String PATH_PAGES= "pages";
+    public static final String PATH_SOCIAL_LOGIN= "social_login";
 
 
     /**

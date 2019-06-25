@@ -16,6 +16,8 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
@@ -32,6 +34,7 @@ public class FacebookHelper {
     private FacebookResponse mListener;
     private String mFieldString;
     private CallbackManager mCallBackManager;
+    FacebookUser facebookUser;
 
     /**
      * Public constructor.
@@ -87,6 +90,7 @@ public class FacebookHelper {
      * @param loginResult login result with user credentials.
      */
     private void getUserProfile(LoginResult loginResult) {
+
         // App code
         GraphRequest request = GraphRequest.newMeRequest(
                 loginResult.getAccessToken(),
@@ -96,7 +100,10 @@ public class FacebookHelper {
 
                         Log.e("response: ", response + "");
                         try {
-                            mListener.onFbProfileReceived(parseResponse(object));
+                            facebookUser = parseResponse(object);
+                            facebookUser.profilePic = "https://graph.facebook.com/" + facebookUser.facebookID + "/picture?width=200&height=200";
+                            mListener.onFbProfileReceived(facebookUser);
+
                         } catch (Exception e) {
                             e.printStackTrace();
 
