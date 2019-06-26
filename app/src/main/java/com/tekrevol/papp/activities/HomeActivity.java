@@ -140,6 +140,9 @@ public class HomeActivity extends BaseActivity {
             addDockableFragment(DashboardCivilianFragment.newInstance(), false);
 
         }
+
+
+        openActivity(CallActivity.class);
     }
 
     public FrameLayout getContMain() {

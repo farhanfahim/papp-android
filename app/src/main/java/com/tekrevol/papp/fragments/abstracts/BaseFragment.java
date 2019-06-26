@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.tekrevol.papp.BaseApplication;
+import com.tekrevol.papp.activities.CallActivity;
 import com.tekrevol.papp.activities.HomeActivity;
 import com.tekrevol.papp.activities.MainActivity;
 import com.tekrevol.papp.callbacks.GenericClickableInterface;
@@ -181,6 +182,10 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     public HomeActivity getHomeActivity() {
         return (HomeActivity) getActivity();
+    }
+
+    public CallActivity getCallActivity() {
+        return (CallActivity) getActivity();
     }
 
     public abstract void setTitlebar(TitleBar titleBar);
