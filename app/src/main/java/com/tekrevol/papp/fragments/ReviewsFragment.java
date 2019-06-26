@@ -76,14 +76,16 @@ public class ReviewsFragment extends BaseFragment implements OnItemClickListener
     @BindView(R.id.edtReview)
     AnyEditTextView edtReview;
     private UserModel mentorModel;
+    private boolean canGiveReview;
 
 
-    public static ReviewsFragment newInstance(UserModel mentorModel) {
+    public static ReviewsFragment newInstance(UserModel mentorModel, boolean canGiveReview) {
 
         Bundle args = new Bundle();
 
         ReviewsFragment fragment = new ReviewsFragment();
         fragment.mentorModel = mentorModel;
+        fragment.canGiveReview = canGiveReview;
         fragment.setArguments(args);
         return fragment;
     }
@@ -133,10 +135,10 @@ public class ReviewsFragment extends BaseFragment implements OnItemClickListener
 
         bindRecyclerView();
 
-        if (isMentor()) {
-            contMessage.setVisibility(View.GONE);
-        } else {
+        if (canGiveReview) {
             contMessage.setVisibility(View.VISIBLE);
+        } else {
+            contMessage.setVisibility(View.GONE);
         }
 
         getReviews();

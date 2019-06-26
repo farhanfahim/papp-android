@@ -113,20 +113,27 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (sharedPreferenceManager.isMentor()) {
+        if (isMentor()) {
             contEditProfile.setVisibility(View.GONE);
             contMyProfile.setVisibility(View.VISIBLE);
-        } else {
+            contTasks.setVisibility(View.VISIBLE);
+            contMilestones.setVisibility(View.VISIBLE);
+        } else if (isParent()) {
             contEditProfile.setVisibility(View.VISIBLE);
             contMyProfile.setVisibility(View.GONE);
-        }
-
-        if (isDependent()) {
+            contTasks.setVisibility(View.GONE);
+            contGiftsAndRewards.setVisibility(View.GONE);
+            contMyGifts.setVisibility(View.GONE);
+            contMilestones.setVisibility(View.GONE);
+        } else {
             contChangePassword.setVisibility(View.GONE);
             contEditProfile.setVisibility(View.GONE);
             contMyProfile.setVisibility(View.GONE);
-            contNofitications.setVisibility(View.GONE);
+            contTasks.setVisibility(View.VISIBLE);
+            contMilestones.setVisibility(View.GONE);
+
         }
+
 
         ////        scrollToTop();
 

@@ -168,6 +168,21 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
             contChat.setVisibility(View.GONE);
             txtTitle.setText("My Profile");
             contPointsEarned.setVisibility(View.VISIBLE);
+        } else if (isDependent()) {
+            txtScheduleMeeting.setVisibility(View.GONE);
+            btnRight1.setVisibility(View.VISIBLE);
+            contChat.setVisibility(View.VISIBLE);
+            txtEdit.setVisibility(View.GONE);
+            imgEdit.setVisibility(View.GONE);
+            txtTitle.setText("Mentor Profile");
+            contPointsEarned.setVisibility(View.GONE);
+
+            if (mentorModel.getChatEnabled()) {
+                contChat.setVisibility(View.VISIBLE);
+            } else {
+                contChat.setVisibility(View.GONE);
+            }
+
         } else {
             txtScheduleMeeting.setVisibility(View.VISIBLE);
             btnRight1.setVisibility(View.VISIBLE);
@@ -278,7 +293,14 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
                 getBaseActivity().openActivity(ChatActivity.class);
                 break;
             case R.id.contReviews:
-                getBaseActivity().addDockableFragment(ReviewsFragment.newInstance(mentorModel), true);
+//                if (isMentor() || isDependent()) {
+//                    getBaseActivity().addDockableFragment(ReviewsFragment.newInstance(mentorModel, false), true);
+//                } else {
+//                    getBaseActivity().addDockableFragment(ReviewsFragment.newInstance(mentorModel, mentorModel.getReviewEnabled()), true);
+//                }
+
+                getBaseActivity().addDockableFragment(ReviewsFragment.newInstance(mentorModel, false), true);
+
                 break;
             case R.id.txtEdit:
                 getBaseActivity().addDockableFragment(EditLeaProfileFragment.newInstance(), false);

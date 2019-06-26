@@ -42,6 +42,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static com.tekrevol.papp.constatnts.WebServiceConstants.PATH_VERIFY_COMPLETED_SESSION;
+
 /**
  * Created by hamza.ahmed on 7/19/2018.
  */
@@ -109,7 +111,7 @@ public class SessionHistoryFragment extends BaseFragment implements OnItemClickL
         super.onCreate(savedInstanceState);
 
         arrData = new ArrayList<>();
-        adapter = new SessionHistoryAdapter(getContext(), arrData, this, isMentor());
+        adapter = new SessionHistoryAdapter(getContext(), arrData, this, getCurrentUser().getRoles_csv());
     }
 
 
@@ -181,6 +183,21 @@ public class SessionHistoryFragment extends BaseFragment implements OnItemClickL
 
     @Override
     public void onItemClick(int position, Object object, View view, Object type) {
+        SessionRecievingModel model = (SessionRecievingModel) object;
+
+
+        getBaseWebService().postAPIAnyObject(PATH_VERIFY_COMPLETED_SESSION + model.getId(), "", new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                getBaseActivity().addDockableFragment(ReviewsFragment.newInstance(model.getMentor(), true), true);
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+
 
 
     }

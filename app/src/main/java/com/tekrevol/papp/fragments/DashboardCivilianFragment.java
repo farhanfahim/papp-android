@@ -1,6 +1,9 @@
 package com.tekrevol.papp.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,8 +17,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.tekrevol.papp.R;
 import com.google.gson.reflect.TypeToken;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.CategoriesAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.DependentsAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.MyMentorAdapter;
@@ -34,6 +37,8 @@ import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
+
+import org.apache.commons.codec.binary.Hex;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -91,6 +96,18 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
     ArrayList<UserModel> arrTopMentor;
 
     SpinnerModel selectedCategory;
+    @BindView(R.id.contDependents)
+    LinearLayout contDependents;
+    @BindView(R.id.imgChat)
+    ImageView imgChat;
+    @BindView(R.id.txtChat)
+    AnyTextView txtChat;
+    @BindView(R.id.imgSession)
+    ImageView imgSession;
+    @BindView(R.id.txtSession)
+    AnyTextView txtSession;
+    @BindView(R.id.contParentLayout)
+    LinearLayout contParentLayout;
 
 
     public static DashboardCivilianFragment newInstance() {
@@ -137,16 +154,20 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
         titleBar.showBackButtonInvisible();
     }
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        dependentsAdapter = new DependentsAdapter(getContext(), getCurrentUser().getDependants(), this);
 
+        dependentsAdapter = new DependentsAdapter(getContext(), getCurrentUser().getDependants(), this);
         bindRecyclerView();
 
         updateUser(null);
+
+        if (isDependent()) {
+            contDependents.setVisibility(View.GONE);
+            contParentLayout.setBackgroundColor(Color.parseColor("#EEEEEE"));
+        }
 
         if (onCreated && !getBaseActivity().isReloadFragmentOnBack) {
             return;
@@ -154,6 +175,7 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
 
         bindData();
         getBaseActivity().isReloadFragmentOnBack = false;
+
 
     }
 

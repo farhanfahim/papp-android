@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.helperclasses.StringHelper;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.managers.DateManager;
@@ -33,13 +34,13 @@ public class SessionHistoryAdapter extends RecyclerView.Adapter<SessionHistoryAd
 
     private Context activity;
     private List<SessionRecievingModel> arrData;
-    private boolean isMentor;
+    private int userRole;
 
-    public SessionHistoryAdapter(Context activity, List<SessionRecievingModel> arrData, OnItemClickListener onItemClickListener, boolean isMentor) {
+    public SessionHistoryAdapter(Context activity, List<SessionRecievingModel> arrData, OnItemClickListener onItemClickListener, int userRole) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
-        this.isMentor = isMentor;
+        this.userRole = userRole;
     }
 
     @Override
@@ -55,14 +56,24 @@ public class SessionHistoryAdapter extends RecyclerView.Adapter<SessionHistoryAd
     public void onBindViewHolder(final ViewHolder holder, int i) {
         SessionRecievingModel model = arrData.get(i);
 
-        if (isMentor) {
+        if (userRole == AppConstants.MENTOR_ROLE) {
             holder.txtSessionByTitle.setText("Session Conducted with:");
             holder.txtSessionByDesc.setText(model.getUser().getUserDetails().getFullName());
             ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgProfile, model.getUser().getUserDetails().getImage(), true);
+            holder.txtReview.setVisibility(View.GONE);
+        } else if (userRole == AppConstants.PARENT_ROLE) {
+            holder.txtSessionByTitle.setText("Session Conducted by:");
+            holder.txtSessionByDesc.setText(model.getMentor().getUserDetails().getFullName());
+            ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgProfile, model.getMentor().getUserDetails().getImage(), true);
+
+            if (model.getStatus() == AppConstants.SESSION_STATUS_COMPLETED) {
+                holder.txtReview.setVisibility(View.VISIBLE);
+            }
         } else {
             holder.txtSessionByTitle.setText("Session Conducted by:");
             holder.txtSessionByDesc.setText(model.getMentor().getUserDetails().getFullName());
             ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgProfile, model.getMentor().getUserDetails().getImage(), true);
+            holder.txtReview.setVisibility(View.GONE);
         }
 
         if (StringHelper.isNullOrEmpty(model.getAddress())) {
@@ -72,6 +83,7 @@ public class SessionHistoryAdapter extends RecyclerView.Adapter<SessionHistoryAd
         }
 
         holder.txtSessionOn.setText(DateManager.convertToUserTimeZone(model.getStartDate()));
+        holder.txtStatus.setText(model.getStatusText());
 
 
         for (SessionUsers sessionUser : model.getSessionUsers()) {
@@ -81,16 +93,14 @@ public class SessionHistoryAdapter extends RecyclerView.Adapter<SessionHistoryAd
                     break;
                 }
             }
-
         }
-
 
 
         setListener(holder, model);
     }
 
     private void setListener(final ViewHolder holder, final SessionRecievingModel model) {
-        holder.contParentLayout.
+        holder.txtReview.
                 setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null));
     }
 
@@ -112,8 +122,12 @@ public class SessionHistoryAdapter extends RecyclerView.Adapter<SessionHistoryAd
         AnyTextView txtLocation;
         @BindView(R.id.txtDependentName)
         AnyTextView txtDependentName;
+        @BindView(R.id.txtStatus)
+        AnyTextView txtStatus;
         @BindView(R.id.imgProfile)
         ImageView imgProfile;
+        @BindView(R.id.txtReview)
+        AnyTextView txtReview;
         @BindView(R.id.contParentLayout)
         LinearLayout contParentLayout;
 
