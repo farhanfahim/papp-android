@@ -2,43 +2,46 @@ package com.tekrevol.papp.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
 
+import com.opentok.android.OpentokError;
+import com.opentok.android.Publisher;
+import com.opentok.android.PublisherKit;
+import com.opentok.android.Session;
+import com.opentok.android.Stream;
+import com.opentok.android.Subscriber;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.widget.AnyTextView;
-import com.tekrevol.papp.widget.TitleBar;
-import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.RunTimePermissions;
 import com.tekrevol.papp.widget.TitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class AudioCallFragment extends BaseFragment {
+public class AudioCallFragment extends BaseFragment implements Session.SessionListener, PublisherKit.PublisherListener {
 
 
+    private static final String LOG_TAG = "Audio Call";
     Unbinder unbinder;
-    @BindView(R.id.imgProfile)
-    CircleImageView imgProfile;
-    @BindView(R.id.txtCallerName)
-    AnyTextView txtCallerName;
-    @BindView(R.id.imgMute)
-    ImageView imgMute;
-    @BindView(R.id.imgCancelCall)
-    ImageView imgCancelCall;
-    @BindView(R.id.txtTime)
-    AnyTextView txtTime;
+    @BindView(R.id.subscriber_container)
+    FrameLayout subscriberContainer;
+    @BindView(R.id.publisher_container)
+    FrameLayout publisherContainer;
+
+    private Session mSession;
+    private Publisher mPublisher;
+    private Subscriber mSubscriber;
 
 
     public static AudioCallFragment newInstance() {
@@ -58,7 +61,7 @@ public class AudioCallFragment extends BaseFragment {
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_audio_call;
+        return R.layout.fragment_audio_call_test;
     }
 
     @Override
@@ -89,6 +92,11 @@ public class AudioCallFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (RunTimePermissions.isCallPermissionGiven(getContext(), getBaseActivity(), true)) {
+            mSession = new Session.Builder(getContext(), getCallActivity().API_KEY, getCallActivity().SESSION_ID).build();
+            mSession.setSessionListener(this);
+            mSession.connect(getCallActivity().TOKEN);
+        }
     }
 
 
@@ -120,9 +128,68 @@ public class AudioCallFragment extends BaseFragment {
         unbinder.unbind();
     }
 
+//
+//    @OnClick(R.id.imgCancelCall)
+//    public void onViewClicked() {
+//        getBaseActivity().onBackPressed();
+//    }
 
-    @OnClick(R.id.imgCancelCall)
-    public void onViewClicked() {
-        getBaseActivity().onBackPressed();
-     }
+    // SessionListener methods
+
+    @Override
+    public void onConnected(Session session) {
+        Log.i(LOG_TAG, "Session Connected");
+
+        mPublisher = new Publisher.Builder(getContext()).build();
+        mPublisher.setPublisherListener(this);
+        publisherContainer.addView(mPublisher.getView());
+        mSession.publish(mPublisher);
+
+    }
+
+    @Override
+    public void onDisconnected(Session session) {
+        Log.i(LOG_TAG, "Session Disconnected");
+    }
+
+    @Override
+    public void onStreamReceived(Session session, Stream stream) {
+        Log.i(LOG_TAG, "Stream Received");
+
+        if (mSubscriber == null) {
+            mSubscriber = new Subscriber.Builder(getContext(), stream).build();
+            mSession.subscribe(mSubscriber);
+            subscriberContainer.addView(mSubscriber.getView());
+        }
+    }
+
+    @Override
+    public void onStreamDropped(Session session, Stream stream) {
+        Log.i(LOG_TAG, "Stream Dropped");
+
+        if (mSubscriber != null) {
+            mSubscriber = null;
+            subscriberContainer.removeAllViews();
+        }
+    }
+
+    @Override
+    public void onError(Session session, OpentokError opentokError) {
+        Log.e(LOG_TAG, "Session error: " + opentokError.getMessage());
+    }
+
+    @Override
+    public void onStreamCreated(PublisherKit publisherKit, Stream stream) {
+
+    }
+
+    @Override
+    public void onStreamDestroyed(PublisherKit publisherKit, Stream stream) {
+
+    }
+
+    @Override
+    public void onError(PublisherKit publisherKit, OpentokError opentokError) {
+
+    }
 }
