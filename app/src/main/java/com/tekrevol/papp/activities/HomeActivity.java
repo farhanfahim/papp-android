@@ -142,7 +142,7 @@ public class HomeActivity extends BaseActivity {
         }
 
 
-        openActivity(CallActivity.class);
+//        openActivity(CallActivity.class);
     }
 
     public FrameLayout getContMain() {
