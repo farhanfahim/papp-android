@@ -2,6 +2,7 @@ package com.tekrevol.papp.managers.retrofit;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import com.tekrevol.papp.activities.BaseActivity;
@@ -429,6 +430,7 @@ public class WebServices {
     public Call<WebResponse<Object>> getAPIAnyObject(String path, Map<String, Object> queryMap, final IRequestWebResponseAnyObjectCallBack callBack) {
 
         Call<WebResponse<Object>> webResponseCall = apiService.getAPIForWebresponseAnyObject(path, queryMap);
+
 
         try {
             if (Helper.isNetworkConnected(activity, true)) {

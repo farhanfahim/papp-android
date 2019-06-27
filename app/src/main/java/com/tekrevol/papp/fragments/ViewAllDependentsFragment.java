@@ -182,7 +182,7 @@ public class ViewAllDependentsFragment extends BaseFragment implements OnItemCli
                 UIHelper.showAlertDialog("Are you sure you want to remove " + model.getUserDetails().getFullName() + "?",
                         "Alert", (dialogInterface, i) -> {
 
-                            getBaseWebService().deleteAPIAnyObject(WebServiceConstants.PATH_GET_USERS + "/" + model.getId(), "",
+                            getBaseWebService().deleteAPIAnyObject(WebServiceConstants.PATH_GET_USERS_SLASH + model.getId(), "",
                                     new WebServices.IRequestWebResponseAnyObjectCallBack() {
                                         @Override
                                         public void requestDataResponse(WebResponse<Object> webResponse) {

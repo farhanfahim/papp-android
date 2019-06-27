@@ -34,19 +34,19 @@ public interface WebServiceProxy {
 
     @POST("api/v1/{path}")
     Call<Object> webServiceRequestAPIForJustObject(
-            @Path("path") String postfix,
+            @Path(value = "path", encoded = true) String postfix,
             @Body RequestBody requestData
     );
 
 
     @DELETE("api/v1/{path}")
     Call<WebResponse<Object>> deleteAPIWebResponseAnyObject(
-            @Path("path") String postfix
+            @Path(value = "path", encoded = true) String postfix
     );
 
     @POST("api/v1/{path}")
     Call<WebResponse<Object>> postAPIWebResponseAnyObject(
-            @Path("path") String postfix,
+            @Path(value = "path", encoded = true) String postfix,
             @Body RequestBody requestData
     );
 
@@ -54,7 +54,7 @@ public interface WebServiceProxy {
     @Multipart
     @POST("api/v1/{path}")
     Call<WebResponse<Object>> postMultipartAPI(
-            @Path("path") String postfix,
+            @Path(value = "path", encoded = true) String postfix,
             @Part ArrayList<MultipartBody.Part> body
 
     );
@@ -63,12 +63,10 @@ public interface WebServiceProxy {
     @Multipart
     @POST("api/v1/{path}")
     Call<WebResponse<Object>> postMultipartWithSameKeyAPI(
-            @Path("path") String postfix,
+            @Path(value = "path", encoded = true) String postfix,
             @Part ArrayList<MultipartBody.Part> body,
             @Part MultipartBody.Part[] attachment
-
     );
-
 
 
 
@@ -81,7 +79,7 @@ public interface WebServiceProxy {
 
     @GET("api/v1/{path}")
     Call<WebResponse<Object>> getAPIForWebresponseAnyObject(
-            @Path("path") String postfix,
+            @Path(value = "path", encoded = true) String postfix,
             @QueryMap Map<String, Object> queryMap
     );
 

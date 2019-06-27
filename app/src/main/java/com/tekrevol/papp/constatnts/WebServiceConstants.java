@@ -34,14 +34,18 @@ public class WebServiceConstants {
      * BaseApplication Fabric enable
      */
 
-    // LOCAL
-    public static final String BASE_URL = "http://papp.apps.fomarkmedia.com/";
-    public static final String IMAGE_BASE_URL = "http://papp.apps.fomarkmedia.com/api/resize/";
+    // STAGING
+    public static final String BASE_URL = "http://papp.servstaging.com/";
+    public static final String IMAGE_BASE_URL = "http://papp.servstaging.com/api/resize/";
+
+    // DEV
+//    public static final String BASE_URL = "http://papp.apps.fomarkmedia.com/";
+//    public static final String IMAGE_BASE_URL = "http://papp.apps.fomarkmedia.com/api/resize/";
+
+    // LOCAL MACHINE
 //    public static final String BASE_URL = "http://192.168.29.49/papp/";
 //    public static final String IMAGE_BASE_URL = "http://192.168.29.49/papp/api/resize/";
 
-    // LIVE
-//    public static final String BASE_URL = "http://papp.apps.fomarkmedia.com/api/v1/;
 
 
     /**
@@ -53,6 +57,7 @@ public class WebServiceConstants {
     public static final String PATH_GET_DEPARTMENTS = "departments";
     public static final String PATH_GET_SPECIALIZATIONS = "specializations";
     public static final String PATH_GET_USERS = "users";
+    public static final String PATH_GET_USERS_SLASH = "users/";
     public static final String PATH_GET_REFRESH = "refresh";
     public static final String PATH_PROFILE = "profile";
     public static final String PATH_GIFTS = "gifts";

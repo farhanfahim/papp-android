@@ -347,7 +347,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         Map<String, Object> queryMap = new HashMap<>();
 
 
-        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS + "/" + getCurrentUser().getId(), queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS_SLASH + getCurrentUser().getId(), queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
             @Override
             public void requestDataResponse(WebResponse<Object> webResponse) {
 

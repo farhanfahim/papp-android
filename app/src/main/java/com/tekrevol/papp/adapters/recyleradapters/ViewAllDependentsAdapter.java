@@ -50,6 +50,8 @@ public class ViewAllDependentsAdapter extends RecyclerView.Adapter<ViewAllDepend
     public void onBindViewHolder(final ViewHolder holder, int i) {
         UserModel model = arrData.get(i);
 
+        holder.imgRemove.setVisibility(View.GONE);
+
         holder.txtEmail.setVisibility(View.VISIBLE);
 
         holder.txtName.setText(model.getUserDetails().getFullName());

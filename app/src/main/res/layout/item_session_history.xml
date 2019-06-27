@@ -186,7 +186,7 @@
                 android:background="@drawable/rounded_stroke_blue"
                 android:gravity="center"
                 android:padding="@dimen/x3dp"
-                android:text="Give Review"
+                android:text="Review Session"
                 android:textColor="@color/txtBlue"
                 android:textSize="@dimen/s14" />
 
