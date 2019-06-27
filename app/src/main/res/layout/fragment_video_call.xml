@@ -63,8 +63,8 @@
 
             <ImageView
                 android:id="@+id/imgMute"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/x60dp"
+                android:layout_height="@dimen/x60dp"
                 android:background="@drawable/img_background_call_button_grey"
                 android:padding="@dimen/x10dp"
                 android:src="@drawable/img_mute"
@@ -81,8 +81,8 @@
 
                 <ImageView
                     android:id="@+id/imgCancelCall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/x60dp"
+                    android:layout_height="@dimen/x60dp"
                     android:background="@drawable/img_background_call_button_red"
                     android:padding="@dimen/x10dp"
                     android:src="@drawable/img_call_cancel"
@@ -93,10 +93,12 @@
 
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/imgCameraSwitch"
+                android:layout_width="@dimen/x60dp"
+                android:layout_height="@dimen/x60dp"
                 android:background="@drawable/img_background_call_button_grey"
                 android:padding="@dimen/x10dp"
+                android:src="@drawable/img_camera_switch"
 
                 />
 

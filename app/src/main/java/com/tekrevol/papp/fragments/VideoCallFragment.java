@@ -52,6 +52,8 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     FrameLayout subscriberContainer;
 
     private static final String LOG_TAG = "Audio Call";
+    @BindView(R.id.imgCameraSwitch)
+    ImageView imgCameraSwitch;
     private Session mSession;
     private Publisher mPublisher;
     private Subscriber mSubscriber;
@@ -124,7 +126,6 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
         super.onPause();
 
 
-
     }
 
     @Override
@@ -176,10 +177,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
 
     @OnClick(R.id.imgCancelCall)
     public void onViewClicked() {
-        if (mPublisher != null) {
-            mPublisher.destroy();
-        }
-//        getBaseActivity().onBackPressed();
+
     }
 
     private void initializeSession(String apiKey, String sessionId, String token) {
@@ -192,21 +190,21 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
 
     @Override
     public void onStreamCreated(PublisherKit publisherKit, Stream stream) {
-        Log.d(LOG_TAG, "onStreamCreated: Publisher Stream Created. Own stream "+stream.getStreamId());
+        Log.d(LOG_TAG, "onStreamCreated: Publisher Stream Created. Own stream " + stream.getStreamId());
 
     }
 
     @Override
     public void onStreamDestroyed(PublisherKit publisherKit, Stream stream) {
 
-        Log.d(LOG_TAG, "onStreamDestroyed: Publisher Stream Destroyed. Own stream "+stream.getStreamId());
+        Log.d(LOG_TAG, "onStreamDestroyed: Publisher Stream Destroyed. Own stream " + stream.getStreamId());
     }
 
     @Override
     public void onError(PublisherKit publisherKit, OpentokError opentokError) {
 
-        Log.e(LOG_TAG, "onError: "+opentokError.getErrorDomain() + " : " +
-                opentokError.getErrorCode() +  " - "+opentokError.getMessage());
+        Log.e(LOG_TAG, "onError: " + opentokError.getErrorDomain() + " : " +
+                opentokError.getErrorCode() + " - " + opentokError.getMessage());
         showOpenTokError(opentokError);
     }
 
@@ -254,7 +252,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     @Override
     public void onStreamDropped(Session session, Stream stream) {
 
-        Log.d(LOG_TAG, "onStreamDropped: Stream Dropped: "+stream.getStreamId() +" in session: "+session.getSessionId());
+        Log.d(LOG_TAG, "onStreamDropped: Stream Dropped: " + stream.getStreamId() + " in session: " + session.getSessionId());
 
         if (mSubscriber != null) {
             mSubscriber = null;
@@ -264,8 +262,8 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
 
     @Override
     public void onError(Session session, OpentokError opentokError) {
-        Log.e(LOG_TAG, "onError: "+ opentokError.getErrorDomain() + " : " +
-                opentokError.getErrorCode() + " - "+opentokError.getMessage() + " in session: "+ session.getSessionId());
+        Log.e(LOG_TAG, "onError: " + opentokError.getErrorDomain() + " : " +
+                opentokError.getErrorCode() + " - " + opentokError.getMessage() + " in session: " + session.getSessionId());
 
         showOpenTokError(opentokError);
     }
@@ -274,20 +272,20 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     @Override
     public void onConnected(SubscriberKit subscriberKit) {
 
-        Log.d(LOG_TAG, "onConnected: Subscriber connected. Stream: "+subscriberKit.getStream().getStreamId());
+        Log.d(LOG_TAG, "onConnected: Subscriber connected. Stream: " + subscriberKit.getStream().getStreamId());
     }
 
     @Override
     public void onDisconnected(SubscriberKit subscriberKit) {
 
-        Log.d(LOG_TAG, "onDisconnected: Subscriber disconnected. Stream: "+subscriberKit.getStream().getStreamId());
+        Log.d(LOG_TAG, "onDisconnected: Subscriber disconnected. Stream: " + subscriberKit.getStream().getStreamId());
     }
 
     @Override
     public void onError(SubscriberKit subscriberKit, OpentokError opentokError) {
 
-        Log.e(LOG_TAG, "onError: "+opentokError.getErrorDomain() + " : " +
-                opentokError.getErrorCode() +  " - "+opentokError.getMessage());
+        Log.e(LOG_TAG, "onError: " + opentokError.getErrorDomain() + " : " +
+                opentokError.getErrorCode() + " - " + opentokError.getMessage());
 
         showOpenTokError(opentokError);
     }
@@ -295,7 +293,27 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
 
     private void showOpenTokError(OpentokError opentokError) {
 
-        Toast.makeText(getContext(), opentokError.getErrorDomain().name() +": " +opentokError.getMessage() + " Please, see the logcat.", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), opentokError.getErrorDomain().name() + ": " + opentokError.getMessage() + " Please, see the logcat.", Toast.LENGTH_LONG).show();
         getCallActivity().finish();
+    }
+
+    @OnClick({R.id.imgMute, R.id.imgCancelCall, R.id.imgCameraSwitch})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.imgMute:
+                break;
+            case R.id.imgCancelCall:
+                if (mPublisher != null) {
+                    mPublisher.destroy();
+                }
+                getCallActivity().finish();
+                break;
+            case R.id.imgCameraSwitch:
+                if (mPublisher != null) {
+                    mPublisher.cycleCamera();
+                    mPublisher.startPreview();
+                }
+                break;
+        }
     }
 }
