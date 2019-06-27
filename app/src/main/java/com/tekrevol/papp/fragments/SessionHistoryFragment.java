@@ -216,8 +216,10 @@ public class SessionHistoryFragment extends BaseFragment implements OnItemClickL
 
         if (isMentor()) {
             queryMap.put(WebServiceConstants.Q_PARAM_SESSION_HISTORY, 2);
-        } else {
+        } else if (isParent()){
             queryMap.put(WebServiceConstants.Q_PARAM_SESSION_HISTORY, 1);
+        } else {
+            queryMap.put(WebServiceConstants.Q_PARAM_SESSION_HISTORY, 3);
         }
 
 

@@ -68,6 +68,8 @@ public class SessionHistoryAdapter extends RecyclerView.Adapter<SessionHistoryAd
 
             if (model.getStatus() == AppConstants.SESSION_STATUS_COMPLETED) {
                 holder.txtReview.setVisibility(View.VISIBLE);
+            } else {
+                holder.txtReview.setVisibility(View.GONE);
             }
         } else {
             holder.txtSessionByTitle.setText("Session Conducted by:");
@@ -82,7 +84,11 @@ public class SessionHistoryAdapter extends RecyclerView.Adapter<SessionHistoryAd
             holder.txtLocation.setText(model.getAddress());
         }
 
-        holder.txtSessionOn.setText(DateManager.convertToUserTimeZone(model.getStartDate()));
+        if (StringHelper.isNullOrEmpty(model.getStartDate())) {
+            holder.txtSessionOn.setText("-");
+        } else {
+            holder.txtSessionOn.setText(DateManager.convertToUserTimeZone(model.getStartDate()));
+        }
         holder.txtStatus.setText(model.getStatusText());
 
 
