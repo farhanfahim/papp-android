@@ -21,6 +21,7 @@ import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.StringHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.DateManager;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
@@ -136,6 +137,10 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
 
 
         if (onCreated) {
+            if (StringHelper.isNullOrEmpty(startDate) || StringHelper.isNullOrEmpty(endDate)) {
+                return;
+            }
+
             txtDate.setText(DateManager.getDate(startDate, AppConstants.DISPLAY_DATE_ONLY_FORMAT) + " - " + DateManager.getDate(endDate, AppConstants.DISPLAY_DATE_ONLY_FORMAT));
             getSessions();
         }
