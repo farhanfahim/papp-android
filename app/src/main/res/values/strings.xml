@@ -46,8 +46,8 @@
     <string name="personal_info">During my 3 years as a police officer, I performed area patrols on  foot, bicycle and in patrol cars, responding to traffic incidents, domestic disputes and reports of criminal activity.</string>
 
 
-
     <string name="action_settings">Settings</string>
     <string name="already_have_verification_code"><u>Already Have Verification Code</u></string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

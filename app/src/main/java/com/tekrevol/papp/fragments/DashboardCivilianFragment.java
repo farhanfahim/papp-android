@@ -2,8 +2,6 @@ package com.tekrevol.papp.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.CalendarContract;
-import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -19,6 +17,7 @@ import android.widget.RelativeLayout;
 
 import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.R;
+import com.tekrevol.papp.activities.MapsActivity;
 import com.tekrevol.papp.adapters.recyleradapters.CategoriesAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.DependentsAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.MyMentorAdapter;
@@ -37,8 +36,6 @@ import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
-
-import org.apache.commons.codec.binary.Hex;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -267,8 +264,10 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
                 getBaseActivity().addDockableFragment(ViewAllDependentsFragment.newInstance(), false);
                 break;
             case R.id.contChat:
-                getBaseActivity().popBackStack();
-                getBaseActivity().addDockableFragment(ChatListsFragment.newInstance(), false);
+//                getBaseActivity().popBackStack();
+//                getBaseActivity().addDockableFragment(ChatListsFragment.newInstance(), false);
+                getBaseActivity().openActivity(MapsActivity.class);
+
                 break;
             case R.id.contSessions:
                 getBaseActivity().popBackStack();
