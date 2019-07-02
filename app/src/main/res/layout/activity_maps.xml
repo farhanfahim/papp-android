@@ -34,6 +34,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/x10dp"
+        map:fab_colorNormal="@color/colorPrimary"
+        map:fab_colorPressed="@color/colorAccent"
+        map:fab_colorRipple="@color/base_amber"
         android:src="@drawable/img_selected_tick"
         />
 

@@ -152,6 +152,17 @@ public abstract class BaseActivity extends AppCompatActivity {
         return titleBar;
     }
 
+
+    public void openMapsActivityForResult(Class<?> tClass, int requestCode) {
+        Intent i = new Intent(this, tClass);
+        startActivityForResult(i, requestCode);
+    }
+
+    public void openMapsActivityForResult(Class<?> tClass, Fragment fragment, int requestCode) {
+        Intent i = new Intent(this, tClass);
+        fragment.startActivityForResult(i, requestCode);
+    }
+
     public void openActivity(Class<?> tClass) {
         Intent i = new Intent(this, tClass);
         startActivity(i);

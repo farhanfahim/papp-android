@@ -402,7 +402,7 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
                     public void onError(String error) {
 
                     }
-                }, SignUpMentorFragment.this);
+                }, SignUpMentorFragment.this, onCreated);
 
                 googlePlaceHelper.openAutocompleteActivity();
 

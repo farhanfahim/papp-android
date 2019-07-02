@@ -17,12 +17,12 @@ import android.widget.RadioGroup;
 
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 import com.tekrevol.papp.R;
+import com.tekrevol.papp.activities.MapsActivity;
 import com.tekrevol.papp.adapters.recyleradapters.DependentsAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
-import com.tekrevol.papp.enums.FileType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.GooglePlaceHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
@@ -202,15 +202,12 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
         dependentsAdapter.notifyDataSetChanged();
 
 
-
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-
         if (googlePlaceHelper != null) {
             googlePlaceHelper.onActivityResult(requestCode, resultCode, data);
         }
@@ -227,7 +224,6 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
                 googlePlaceHelper = new GooglePlaceHelper(getBaseActivity(), GooglePlaceHelper.PLACE_PICKER, new GooglePlaceHelper.GooglePlaceDataInterface() {
                     @Override
                     public void onPlaceActivityResult(double longitude, double latitude, String locationName) {
-
                         locationModel = new LocationModel(latitude, longitude, locationName);
                         txtLocation.setText(locationName);
                     }
@@ -236,9 +232,12 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
                     public void onError(String error) {
 
                     }
-                }, ScheduleAMeetingFragment.this);
+                }, ScheduleAMeetingFragment.this, onCreated);
 
-                googlePlaceHelper.openAutocompleteActivity();
+
+                googlePlaceHelper.openMapsActivity();
+
+
 
                 break;
             case R.id.contSendRequest:

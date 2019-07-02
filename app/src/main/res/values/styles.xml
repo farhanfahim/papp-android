@@ -48,38 +48,12 @@
     </style>
 
 
-    <style name="Item.padding_form_field" parent="Theme.AppCompat">
-        <item name="android:paddingRight">@dimen/x5dp</item>
-        <item name="android:paddingLeft">@dimen/x5dp</item>
-        <item name="android:paddingBottom">@dimen/x8dp</item>
-        <item name="android:paddingTop">@dimen/x8dp</item>
-    </style>
-
     <!--Rating Bar-->
 
     <!--<style name="RatingBar" parent="Theme.AppCompat">-->
     <!--<item name="android:progressDrawable">@drawable/imgstar_rated</item>-->
     <!--<item name="android:indeterminate">@drawable/imgstar_unrated</item>-->
     <!--</style>-->
-
-
-    <style name="CheckboxStyle" parent="AppTheme">
-        <item name="android:textColorSecondary">@color/colorPrimary</item>
-        // text
-        <item name="colorControlNormal">@color/txtBlue</item>
-        // Unchecked
-        <item name="colorControlActivated">@color/colorPrimaryDark</item>
-        // Checked
-    </style>
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

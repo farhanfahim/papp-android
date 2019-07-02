@@ -24,7 +24,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.activities.HomeActivity;
 import com.tekrevol.papp.adapters.recyleradapters.SpecialityAdapter;
-import com.tekrevol.papp.callbacks.OnItemAdd;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.callbacks.OnSpinnerOKPressedListener;
 import com.tekrevol.papp.constatnts.AppConstants;
@@ -46,7 +45,6 @@ import com.tekrevol.papp.models.general.SpinnerModel;
 import com.tekrevol.papp.models.receiving_model.UserDetails;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.models.sending_model.MentorEditProfileModel;
-import com.tekrevol.papp.models.wrappers.UserModelWrapper;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
@@ -276,7 +274,7 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
                     public void onError(String error) {
 
                     }
-                }, EditLeaProfileFragment.this);
+                }, EditLeaProfileFragment.this, onCreated);
 
                 googlePlaceHelper.openAutocompleteActivity();
 

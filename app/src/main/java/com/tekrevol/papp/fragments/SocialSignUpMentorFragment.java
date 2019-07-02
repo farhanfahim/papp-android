@@ -46,7 +46,6 @@ import com.tekrevol.papp.managers.retrofit.entities.MultiFileModel;
 import com.tekrevol.papp.models.general.IntWrapper;
 import com.tekrevol.papp.models.general.LocationModel;
 import com.tekrevol.papp.models.general.SpinnerModel;
-import com.tekrevol.papp.models.sending_model.MentorSendingModel;
 import com.tekrevol.papp.models.sending_model.SocialMentorSendingModel;
 import com.tekrevol.papp.models.wrappers.UserModelWrapper;
 import com.tekrevol.papp.models.wrappers.WebResponse;
@@ -422,7 +421,7 @@ public class SocialSignUpMentorFragment extends BaseFragment implements OnItemCl
                     public void onError(String error) {
 
                     }
-                }, SocialSignUpMentorFragment.this);
+                }, SocialSignUpMentorFragment.this, onCreated);
 
                 googlePlaceHelper.openAutocompleteActivity();
 
