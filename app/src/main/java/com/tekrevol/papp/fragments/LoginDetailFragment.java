@@ -2,8 +2,8 @@ package com.tekrevol.papp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.Log;
+import androidx.annotation.Nullable;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +17,6 @@ import com.modules.facebooklogin.FacebookResponse;
 import com.modules.facebooklogin.FacebookUser;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.activities.HomeActivity;
-import com.tekrevol.papp.callbacks.GenericClickableInterface;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.enums.BaseURLTypes;
@@ -28,7 +27,6 @@ import com.tekrevol.papp.helperclasses.validator.PasswordValidation;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.sending_model.LoginSendingModel;
 import com.tekrevol.papp.models.sending_model.SocialLoginSendingModel;
-import com.tekrevol.papp.models.sending_model.SocialMentorSendingModel;
 import com.tekrevol.papp.models.wrappers.UserModelWrapper;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;

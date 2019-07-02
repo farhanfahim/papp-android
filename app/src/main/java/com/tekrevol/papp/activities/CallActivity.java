@@ -3,15 +3,13 @@ package com.tekrevol.papp.activities;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
+import com.google.android.material.navigation.NavigationView;
+import androidx.fragment.app.Fragment;
 import android.view.Gravity;
 
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
-import com.tekrevol.papp.fragments.AudioCallFragment;
-import com.tekrevol.papp.fragments.ChatsFragment;
 import com.tekrevol.papp.fragments.VideoCallFragment;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.RunTimePermissions;

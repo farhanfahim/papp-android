@@ -1,11 +1,10 @@
 package com.tekrevol.papp.widget;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatTextView;
+import androidx.appcompat.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
 
-import com.tekrevol.papp.utils.utility.Utils;
 import com.tekrevol.papp.utils.utility.Utils;
 
 public class AnyTextView extends AppCompatTextView {

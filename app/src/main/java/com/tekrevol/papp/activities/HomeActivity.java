@@ -4,24 +4,21 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
+import com.google.android.material.navigation.NavigationView;
+import androidx.fragment.app.Fragment;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.tekrevol.papp.R;
-import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.fragments.DashboardCivilianFragment;
 import com.tekrevol.papp.fragments.DashboardLEAFragment;
 import com.tekrevol.papp.fragments.RightSideMenuFragment;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.libraries.residemenu.ResideMenu;
 import com.tekrevol.papp.managers.SharedPreferenceManager;
-import com.tekrevol.papp.utils.utility.Blur;
-import com.tekrevol.papp.utils.utility.Utils;
 import com.tekrevol.papp.utils.utility.Blur;
 import com.tekrevol.papp.utils.utility.Utils;
 

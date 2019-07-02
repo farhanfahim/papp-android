@@ -5,7 +5,7 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,10 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.tekrevol.papp.R;
-import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.helperclasses.ui.helper.AnimationHelper;
 import com.tekrevol.papp.managers.SharedPreferenceManager;
-import com.tekrevol.papp.helperclasses.ui.helper.AnimationHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

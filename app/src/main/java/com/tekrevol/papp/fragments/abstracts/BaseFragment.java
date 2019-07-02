@@ -3,9 +3,10 @@ package com.tekrevol.papp.fragments.abstracts;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
+import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.drawerlayout.widget.DrawerLayout;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
@@ -33,7 +34,6 @@ import com.tekrevol.papp.managers.FileManager;
 import com.tekrevol.papp.managers.SharedPreferenceManager;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.UserModel;
-import com.tekrevol.papp.models.wrappers.UserModelWrapper;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 
 import java.io.File;
@@ -45,18 +45,6 @@ import com.tekrevol.papp.activities.BaseActivity;
 import com.tekrevol.papp.callbacks.OnNewPacketReceivedListener;
 import com.tekrevol.papp.widget.TitleBar;
 import com.google.gson.Gson;
-import com.tekrevol.papp.BaseApplication;
-import com.tekrevol.papp.activities.BaseActivity;
-import com.tekrevol.papp.activities.HomeActivity;
-import com.tekrevol.papp.activities.MainActivity;
-import com.tekrevol.papp.constatnts.AppConstants;
-import com.tekrevol.papp.enums.BaseURLTypes;
-import com.tekrevol.papp.helperclasses.ui.helper.KeyboardHelper;
-import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
-import com.tekrevol.papp.libraries.residemenu.ResideMenu;
-import com.tekrevol.papp.models.receiving_model.UserModel;
-import com.tekrevol.papp.models.wrappers.WebResponse;
-import com.tekrevol.papp.widget.TitleBar;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -103,7 +91,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         super.onViewCreated(view, savedInstanceState);
         getBaseActivity().getTitleBar().resetViews();
         getBaseActivity().getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);   // Default Locked in this project
-        getBaseActivity().getDrawerLayout().closeDrawer(Gravity.START);
+        getBaseActivity().getDrawerLayout().closeDrawer(GravityCompat.START);
 
         subscribeToNewPacket(this);
 
@@ -260,7 +248,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     }
 
 
-    @android.support.annotation.NonNull
+    @androidx.annotation.NonNull
     public WebServices getBaseWebService() {
         return new WebServices(getBaseActivity(), getToken(), BaseURLTypes.BASE_URL, true);
     }

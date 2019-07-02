@@ -2,7 +2,7 @@ package com.tekrevol.papp.fragments;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +10,10 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.tekrevol.papp.R;
-import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.helperclasses.validator.PasswordValidation;
 import com.tekrevol.papp.managers.retrofit.WebServices;
-import com.tekrevol.papp.models.receiving_model.UserModel;
-import com.tekrevol.papp.models.sending_model.DependentChangePasswordSendingModel;
 import com.tekrevol.papp.models.sending_model.ResetPasswordSendingModel;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
@@ -28,7 +25,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static com.tekrevol.papp.constatnts.WebServiceConstants.PATH_CHANGE_DEPENDENT_PASSWORD;
 import static com.tekrevol.papp.constatnts.WebServiceConstants.PATH_RESET_PASSWORD;
 
 /**

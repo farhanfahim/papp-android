@@ -1,7 +1,7 @@
 package com.tekrevol.papp.widget.recyclerview_layout;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 public class CustomLayoutManager extends LinearLayoutManager {
     private boolean isScrollEnabled = true;

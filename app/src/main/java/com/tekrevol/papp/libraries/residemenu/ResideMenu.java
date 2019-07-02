@@ -19,10 +19,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.activities.HomeActivity;
 import com.nineoldandroids.view.ViewHelper;
-import com.tekrevol.papp.activities.HomeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -241,10 +243,10 @@ public class ResideMenu extends FrameLayout {
      * @param menuItem
      */
 
-    public void addMenuItem(android.support.v4.app.Fragment sideMenuView, String tag, int direction) {
+    public void addMenuItem(Fragment sideMenuView, String tag, int direction) {
 
 
-        android.support.v4.app.FragmentTransaction transaction = activity.getSupportFragmentManager()
+        FragmentTransaction transaction = activity.getSupportFragmentManager()
                 .beginTransaction();
 
 

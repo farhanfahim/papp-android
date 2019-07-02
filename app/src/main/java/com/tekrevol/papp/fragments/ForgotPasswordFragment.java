@@ -1,7 +1,7 @@
 package com.tekrevol.papp.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.tekrevol.papp.R;
-import com.tekrevol.papp.callbacks.OnSpinnerOKPressedListener;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.fragments.dialogs.EnterNewPinDialogFragment;

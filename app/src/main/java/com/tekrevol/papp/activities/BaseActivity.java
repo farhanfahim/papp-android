@@ -4,10 +4,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Pair;
 import android.view.View;
 
@@ -20,16 +21,9 @@ import com.tekrevol.papp.fragments.abstracts.GenericDialogFragment;
 
 import com.tekrevol.papp.R;
 
-import com.tekrevol.papp.helperclasses.GooglePlaceHelper;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
-import com.tekrevol.papp.utils.DeviceUtils;
 import com.tekrevol.papp.widget.TitleBar;
 import com.google.gson.Gson;
-import com.tekrevol.papp.BaseApplication;
-import com.tekrevol.papp.constatnts.AppConstants;
-import com.tekrevol.papp.fragments.RightSideMenuFragment;
-import com.tekrevol.papp.helperclasses.GooglePlaceHelper;
-import com.tekrevol.papp.widget.TitleBar;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -207,7 +201,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     public void emptyBackStack() {
-        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         if (fm == null) return;
         for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
             fm.popBackStack();
@@ -223,7 +217,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void popStackTill(int stackNumber) {
-        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         if (fm == null) return;
         for (int i = stackNumber; i < fm.getBackStackEntryCount(); i++) {
             fm.popBackStack();
@@ -232,7 +226,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     public void popStackTill(String tag) {
-        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         if (fm == null) {
             return;
         }

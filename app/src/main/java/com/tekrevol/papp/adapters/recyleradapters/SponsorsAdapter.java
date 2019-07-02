@@ -1,7 +1,7 @@
 package com.tekrevol.papp.adapters.recyleradapters;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +12,6 @@ import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.models.general.SpinnerModel;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 
 import java.util.List;

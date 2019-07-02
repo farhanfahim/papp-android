@@ -51,7 +51,7 @@
                     app:fontFamily="@string/font_regular" />
 
 
-                <android.support.v7.widget.AppCompatRatingBar
+                <androidx.appcompat.widget.AppCompatRatingBar
                     android:id="@+id/ratingbar"
                     style="?android:attr/ratingBarStyleSmall"
                     android:layout_width="wrap_content"

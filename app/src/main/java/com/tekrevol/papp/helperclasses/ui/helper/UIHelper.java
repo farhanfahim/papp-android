@@ -19,9 +19,9 @@ import android.graphics.Rect;
 import android.media.ExifInterface;
 import android.os.Build;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.graphics.ColorUtils;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.core.graphics.ColorUtils;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -48,8 +48,6 @@ import com.tekrevol.papp.fragments.dialogs.SpinnerDialogFragment;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.models.general.IntWrapper;
 import com.tekrevol.papp.models.general.SpinnerModel;
-import com.gdacciaro.iOSDialog.iOSDialogBuilder;
-import com.gdacciaro.iOSDialog.iOSDialogClickListener;
 import com.google.common.base.Strings;
 import com.google.gson.reflect.TypeToken;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -728,27 +726,6 @@ public class UIHelper {
 
     }
 
-
-    public static void showIOSPopup(Context context, String title, String subTitle, String positiveLabel, String negativeLabel, iOSDialogClickListener positiveListener, iOSDialogClickListener negativeListener) {
-
-        new iOSDialogBuilder(context)
-                .setTitle(title)
-                .setSubtitle(subTitle)
-                .setBoldPositiveLabel(false)
-                .setCancelable(false)
-                .setPositiveListener(positiveLabel, dialog -> {
-                    positiveListener.onClick(dialog);
-                    dialog.dismiss();
-
-                })
-                .setNegativeListener(negativeLabel, dialog -> {
-                    negativeListener.onClick(dialog);
-                    dialog.dismiss();
-                })
-                .build().show();
-
-
-    }
 
     public static FilePickerDialog showFilePickerDialog(Context context, String title, boolean isMultiSelect, DialogSelectionListener dialogSelectionListener) {
         DialogProperties properties = new DialogProperties();

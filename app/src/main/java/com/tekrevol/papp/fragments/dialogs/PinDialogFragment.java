@@ -2,9 +2,9 @@ package com.tekrevol.papp.fragments.dialogs;
 
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -13,9 +13,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import com.tekrevol.papp.helperclasses.StringHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.KeyboardHelper;
-import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.SharedPreferenceManager;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.PinEntryEditText;
@@ -25,7 +23,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import com.tekrevol.papp.R;
-import com.tekrevol.papp.helperclasses.ui.helper.KeyboardHelper;
 
 /**
  * Created by khanhamza on 21-Feb-17.

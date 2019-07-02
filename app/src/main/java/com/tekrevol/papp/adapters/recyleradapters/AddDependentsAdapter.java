@@ -1,7 +1,7 @@
 package com.tekrevol.papp.adapters.recyleradapters;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +13,6 @@ import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.models.sending_model.DependantSendingModel;
 import com.tekrevol.papp.widget.AnyTextView;
-import com.tekrevol.papp.callbacks.OnItemClickListener;
-import com.tekrevol.papp.constatnts.AppConstants;
-import com.tekrevol.papp.models.sending_model.DependantSendingModel;
 
 import java.util.List;
 

@@ -6,8 +6,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.view.View;
+import androidx.core.app.ActivityCompat;
 
 import com.tekrevol.papp.activities.BaseActivity;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;

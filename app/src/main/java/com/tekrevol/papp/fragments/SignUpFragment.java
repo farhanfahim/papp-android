@@ -1,8 +1,8 @@
 package com.tekrevol.papp.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
+import androidx.annotation.Nullable;
+import com.google.android.material.tabs.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +10,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.tekrevol.papp.R;
-import com.tekrevol.papp.adapters.LoginPagerAdapter;
 import com.tekrevol.papp.adapters.SignupPagerAdapter;
-import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.widget.CustomViewPager;
-import com.tekrevol.papp.widget.TitleBar;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.widget.CustomViewPager;
 import com.tekrevol.papp.widget.TitleBar;

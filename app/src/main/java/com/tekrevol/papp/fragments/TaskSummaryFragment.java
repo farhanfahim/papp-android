@@ -1,7 +1,7 @@
 package com.tekrevol.papp.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +19,6 @@ import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
 import com.tekrevol.papp.models.sending_model.TaskAcceptSendingModel;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyTextView;
-import com.tekrevol.papp.widget.TitleBar;
-import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.widget.TitleBar;
 
 import butterknife.BindView;
