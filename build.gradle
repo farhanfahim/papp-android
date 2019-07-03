@@ -28,6 +28,49 @@ buildscript {
     }
 }
 
+
+
+ext {
+    bintrayVersion = "1.8.4"
+    mavenGradleVersion = "2.1"
+    androidxAppcompatVersion = "1.0.2"
+    androidxConstraintLayoutVersion = "2.0.0-alpha3"
+    androidxLifecycleExtensionsVersion = "2.0.0"
+    androidxRecyclerViewVersion = "1.0.0"
+    androidxMultidexVersion = "2.0.1"
+    materialVersion = "1.0.0"
+    playAuthVersion = "16.0.1"
+    playMapsVersion = "16.1.0"
+    playPlacesVersion = "16.0.0"
+    playLocationVersion = "16.0.0"
+    firebaseUiVersion = "4.3.1"
+    firebaseCoreVersion = "16.0.8"
+    firebaseDatabaseVersion = "17.0.0"
+    firebaseAuthVersion = "17.0.0"
+    firebaseStorageVersion = "17.0.0"
+    firebaseMessagingVersion = "18.0.0"
+    firebaseFunctionsVersion = "16.3.0"
+    firebaseIIDVersion = "17.1.1"
+    timberVersion = "4.7.1"
+    greenDaoVersion = "3.2.2"
+    frescoVersion = "1.13.0"
+    rxJavaVersion = "2.2.8"
+    rxAndroidVersion = "2.1.1"
+    gsonVersion = "2.8.5"
+    jodaTimeVersion = "2.10.1"
+    jodaConvertVersion = "2.2.0"
+    apacheCommonsVersion = "3.8.1"
+    compressorVersion = "2.1.0"
+    okHttpVersion = "3.11.0"
+    facebookLoginVersion = "4.38.1"
+    twitterVersion = "3.3.0"
+    prettyTimeVersion = "4.0.1.Final"
+    countryPickerVersion = "2.0.0"
+    imageCropperVersion = "2.8.0"
+    photoViewVersion = "2.3.0"
+    materialDrawerVersion = "6.1.2"
+}
+
 allprojects {
     repositories {
         jcenter()

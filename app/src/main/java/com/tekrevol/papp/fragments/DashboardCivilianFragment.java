@@ -2,11 +2,6 @@ package com.tekrevol.papp.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +9,12 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import androidx.annotation.Nullable;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.R;
@@ -45,6 +46,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import co.chatsdk.core.session.ChatSDK;
 
 public class DashboardCivilianFragment extends BaseFragment implements OnItemClickListener {
 
@@ -263,9 +265,11 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
                 getBaseActivity().addDockableFragment(ViewAllDependentsFragment.newInstance(), false);
                 break;
             case R.id.contChat:
-                getBaseActivity().popBackStack();
-                getBaseActivity().addDockableFragment(ChatListsFragment.newInstance(), false);
-                break;
+//                getBaseActivity().popBackStack();
+//                getBaseActivity().addDockableFragment(ChatListsFragment.newInstance(), false);
+//                ChatSDK.ui().startMainActivity(getContext());
+                ChatSDK.ui().startChatActivityForID(getContext(), "117");
+                 break;
             case R.id.contSessions:
                 getBaseActivity().popBackStack();
                 getBaseActivity().addDockableFragment(ViewSessionFragment.newInstance(), false);

@@ -42,4 +42,9 @@
 
     <string name="already_have_verification_code"><u>Already Have Verification Code</u></string>
 
+    <string name="notification_req_code">notification_req_code</string>
+    <string name="pushNotification">PUSH NOTIFICATION</string>
+    <string name="pushNotificationMsg">Transcribe created</string>
+
+
 </resources>

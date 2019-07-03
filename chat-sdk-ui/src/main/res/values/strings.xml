@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Chat SDK UI</string>
+    <string name="remove_participant_successfully">Remove participant successfully</string>
+    <string name="slide_to_cancel">"Slide to cancel"</string>
+    <string name="app_info">"A WhatsApp style audio recording view to send voice notes in chat.\nHold the Mic to record, then slide left to cancel or swipe up to Lock and record.\n\nCredit:\nVarun John\nhttps://github.com/varunjohn\nvarunjohn1990@gmail.com"</string>
+    <string name="new_group">New Group</string>
+    <string name="create">CREATE</string>
+    <string name="cancel">CANCEL</string>
+    <string name="type_group_name_here">Type group name here</string>
+    <string name="error_enter_group_name">Please enter Group Name</string>
+    <string name="edit_group_name">Edit Group Name</string>
+    <string name="update">Update</string>
+    <string name="select_participants">Select Participants</string>
+    <string name="add_participants">Add Participants</string>
+    <string name="add_to_contact">Add to contact</string>
+    <string name="chat">Chat</string>
+    <string name="private_chat">Private</string>
+    <string name="groups_chat">Groups</string>
+    <string name="audio_accesss_grant">Audio access granted successfully</string>
+    <string name="audio_accesss_revoked">Audio access revoked successfully</string>
+</resources>

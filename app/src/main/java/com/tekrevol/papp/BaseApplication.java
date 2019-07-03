@@ -9,12 +9,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
-import androidx.multidex.MultiDexApplication;
 import android.util.Log;
 import android.util.Pair;
 
-import com.tekrevol.papp.activities.MainActivity;
-import com.tekrevol.papp.libraries.imageloader.CustomImageDownaloder;
+import androidx.multidex.MultiDexApplication;
+
 import com.crashlytics.android.Crashlytics;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -22,7 +21,17 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.tekrevol.papp.activities.MainActivity;
+import com.tekrevol.papp.libraries.imageloader.CustomImageDownaloder;
 
+import co.chatsdk.core.error.ChatSDKException;
+import co.chatsdk.core.session.ChatSDK;
+import co.chatsdk.core.session.Configuration;
+import co.chatsdk.firebase.FirebaseNetworkAdapter;
+import co.chatsdk.firebase.file_storage.FirebaseFileStorageModule;
+import co.chatsdk.firebase.push.FirebasePushModule;
+import co.chatsdk.profile.pictures.ProfilePicturesModule;
+import co.chatsdk.ui.manager.BaseInterfaceAdapter;
 import io.reactivex.subjects.PublishSubject;
 import io.realm.Realm;
 
@@ -57,6 +66,45 @@ public class BaseApplication extends MultiDexApplication implements Application.
         // TODO: Enable Crash Lytics and Never Crash feature before releasing the app
 //        Fabric.with(this, new Crashlytics());
 //        neverCrash();
+
+
+        chatSDKInit();
+    }
+
+
+
+    public static void chatSDKInit(){
+
+        try {
+            Configuration.Builder config = new Configuration.Builder(mContext);
+
+            config.firebaseRootPath("19_04");
+            config.googleMaps(mContext.getString(R.string.google_maps_key));
+            config.publicRoomCreationEnabled(true);
+            config.pushNotificationSound("default");
+            config.pushNotificationsForPublicChatRoomsEnabled(true);
+
+//            config.twitterLogin("Kqprq5b6bVeEfcMAGoHzUmB3I", "hPd9HCt3PLnifQFrGHJWi6pSZ5jF7kcHKXuoqB8GJpSDAlVcLq");
+//            config.googleLogin("1088435112418-e3t77t8jl2ucs8efeqs72o696in8soui.apps.googleusercontent.com");
+
+            // For the demo version of the client exire rooms after 24 hours
+            config.publicChatRoomLifetimeMinutes(60 * 24);
+
+
+
+            ChatSDK.initialize(config.build(), new FirebaseNetworkAdapter(mContext), new BaseInterfaceAdapter(mContext));
+
+            FirebaseFileStorageModule.activate();
+            FirebasePushModule.activate();
+            ProfilePicturesModule.activate();
+
+            // Uncomment this to enable Firebase UI
+            // FirebaseUIModule.activate(EmailAuthProvider.PROVIDER_ID, PhoneAuthProvider.PROVIDER_ID);
+
+        }
+        catch (ChatSDKException e) {
+            e.printStackTrace();
+        }
     }
 
     public static Context getContext() {

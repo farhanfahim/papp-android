@@ -1,1 +1,1 @@
-include ':app', ':facebookloginsdk', ':chat-sdk-core'
+include ':app', ':facebookloginsdk', ':chat-sdk-core', ':chat-sdk-firebase-adapter', ':chat-sdk-firebase-file-storage', ':chat-sdk-firebase-push', ':chat-sdk-ui', ':chat-sdk-profile-pictures'

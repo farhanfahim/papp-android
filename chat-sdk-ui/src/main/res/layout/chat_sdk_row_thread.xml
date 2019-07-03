@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/chat_sdk_indicator"
+        android:layout_width="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_height="match_parent"
+        android:background="@color/primary"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            style="@style/ThreadListCircleIconStyle"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/img_thread_image"
+            android:layout_height="60dp"
+            android:layout_width="60dp"
+            fresco:placeholderImage="@drawable/icn_100_public_thread"
+            fresco:failureImage="@drawable/icn_100_public_thread"
+            fresco:roundAsCircle="true" />
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="@color/text_color"
+            android:layout_toEndOf="@+id/img_thread_image"
+            android:layout_alignTop="@+id/img_thread_image"
+            android:layout_toStartOf="@+id/txt_last_message_date"
+            android:maxLines="1"
+            android:textSize="16sp"
+            android:ellipsize="end"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:id="@+id/chat_sdk_txt"
+            android:padding="0dp"
+            fontPath="fonts/Roboto-Medium.ttf"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:padding="0dp"
+            android:id="@+id/txt_last_message"
+            android:textSize="16sp"
+            android:layout_toEndOf="@+id/img_thread_image"
+            android:layout_below="@+id/chat_sdk_txt"
+            android:layout_toStartOf="@+id/txt_unread_messages"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="22-May-2019"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/chat_sdk_txt"
+            style="@style/TextViewStyleSmall"
+            android:layout_marginEnd="5dp"
+            android:id="@+id/txt_last_message_date"/>
+
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:text="0"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:layout_below="@+id/txt_last_message_date"
+            android:layout_alignParentRight="true"
+            style="@style/TextViewStyleSmall"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="7dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/roundedbutton"
+            android:id="@+id/txt_unread_messages"
+            android:layout_gravity="right"/>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

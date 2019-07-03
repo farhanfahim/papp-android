@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:animateLayoutChanges="true"
+    android:layout_height="match_parent">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        app:titleTextColor="@color/text_primary"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/primary">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/chat_sdk_image_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_back"
+                android:tint="@android:color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="Name"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/btn_back"
+                app:layout_constraintTop_toTopOf="@+id/btn_back"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_back"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <include android:visibility="gone" layout="@layout/search_toolbar"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search_upper_case"
+        android:textSize="20sp"
+        android:layout_below="@+id/toolbar"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:id="@+id/textView" />
+
+    <!--<ImageView-->
+        <!--android:layout_width="32dp"-->
+        <!--android:layout_height="32dp"-->
+        <!--android:src="@drawable/ic_search"-->
+        <!--android:layout_below="@id/textView"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:id="@+id/chat_sdk_search_image"/>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/chat_sdk_et_search"-->
+        <!--android:text="@string/search"-->
+        <!--android:textSize="19sp"-->
+        <!--android:layout_marginLeft="12dp"-->
+        <!--android:layout_toRightOf="@id/chat_sdk_search_image"-->
+        <!--android:layout_below="@id/textView"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:layout_alignBottom="@id/chat_sdk_search_image"/>-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Invite More Friends"
+        android:visibility="gone"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:id="@+id/textView1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FB"
+            android:id="@+id/chat_sdk_btn_invite_from_fb"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Invite from facebook"
+            android:textSize="20sp"
+            android:padding="10dp"
+            android:id="@+id/textView2" />
+        </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:id="@+id/selected_participants"
+        android:layout_below="@id/toolbar"
+        android:scrollbars="none"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/chat_sdk_list_contacts"
+        android:layout_below="@id/selected_participants"
+        android:scrollbars="none"
+        android:layout_above="@+id/chat_sdk_btn_add_contacts"
+        android:visibility="visible"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:text="@string/start_chat"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/chat_sdk_btn_add_contacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        app:srcCompat="@drawable/forward_arrow"
+        android:tint="@android:color/white"/>
+
+
+</RelativeLayout>

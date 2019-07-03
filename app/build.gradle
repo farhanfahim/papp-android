@@ -141,10 +141,18 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
-    implementation project(path: ':facebookloginsdk')
     implementation 'com.github.TutorialsAndroid:FilePicker:v1.0.19'
     implementation 'com.github.barteksc:pdfium-android:1.4.0'
     implementation 'com.opentok.android:opentok-android-sdk:2.16.1'
+
+    implementation project(path: ':facebookloginsdk')
+
+    //    implementation project(':chat-sdk-core')
+    implementation project(path: ':chat-sdk-ui')
+    implementation project(path: ':chat-sdk-firebase-adapter')
+    implementation project(path: ':chat-sdk-firebase-push')
+    implementation project(path: ':chat-sdk-firebase-file-storage')
+    implementation project(path: ':chat-sdk-profile-pictures')
 }
 
 apply plugin: 'com.google.gms.google-services'

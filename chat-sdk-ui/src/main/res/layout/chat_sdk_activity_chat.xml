@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:id="@+id/chat_sdk_root_view"
+    android:layout_height="match_parent">
+
+
+    <androidx.appcompat.widget.Toolbar
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="@color/primary"
+        android:layout_height="50dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/chat_sdk_image_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_back"
+                android:tint="@android:color/white"
+                fresco:layout_constraintStart_toStartOf="parent"
+                fresco:layout_constraintTop_toTopOf="parent"
+                fresco:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvName"
+                android:padding="2dp"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="name"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@+id/ivAvatar"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/ivAvatar"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                fresco:layout_constraintStart_toEndOf="@+id/btn_back"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/icn_100_profile"
+                fresco:placeholderImage="@drawable/icn_100_public_thread"
+                fresco:failureImage="@drawable/icn_100_public_thread"
+                fresco:roundAsCircle="true" />
+
+            <TextView
+                android:id="@+id/tvSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@+id/tvName"
+                app:layout_constraintLeft_toRightOf="@+id/ivAvatar"
+                android:layout_marginLeft="12dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipChildren="false"
+        android:layout_weight="1">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chat_sdk_progressbar"
+            android:layout_gravity="center"
+            android:visibility="invisible"/>
+
+        <LinearLayout
+            android:id="@+id/card_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_blue_dark"
+            android:orientation="vertical" />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:id="@+id/ptr_layout"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/list_chat"
+                android:transcriptMode="normal"
+                android:layout_below="@id/card_container"
+                android:layout_above="@+id/linear"
+                android:scrollbars="none"
+                android:dividerHeight="0dp"
+                android:divider="@null"
+                android:padding="5dp"
+                android:listSelector="@android:color/transparent"
+                android:descendantFocusability="afterDescendants"/>
+            
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </FrameLayout>
+
+    <co.chatsdk.ui.chat.TextInputView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/chat_sdk_message_box">
+    </co.chatsdk.ui.chat.TextInputView>
+
+</LinearLayout>

@@ -2,14 +2,14 @@ package com.tekrevol.papp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.google.gson.JsonElement;
 import com.modules.facebooklogin.FacebookHelper;
@@ -20,6 +20,7 @@ import com.tekrevol.papp.activities.HomeActivity;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.enums.BaseURLTypes;
+import com.tekrevol.papp.firebase.chat.FirebaseIntegration;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.fragments.abstracts.GenericDialogFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
@@ -37,6 +38,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.CompletableObserver;
+import io.reactivex.disposables.Disposable;
 
 import static com.tekrevol.papp.constatnts.AppConstants.SOCIAL_MEDIA_PLATFORM_FACEBOOK;
 import static com.tekrevol.papp.constatnts.WebServiceConstants.PATH_SOCIAL_LOGIN;
@@ -106,6 +109,11 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
         txtOrLoginWith.setVisibility(View.VISIBLE);
 
         edtPassword.addValidator(new PasswordValidation());
+
+
+
+        edtEmailAddress.setText("a@a.a");
+        edtPassword.setText("123456");
 
     }
 
@@ -190,10 +198,31 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
                             public void requestDataResponse(WebResponse<Object> webResponse) {
 
                                 UserModelWrapper userModelWrapper = getGson().fromJson(getGson().toJson(webResponse.result), UserModelWrapper.class);
-                                sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
-                                sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
-                                getBaseActivity().finish();
-                                getBaseActivity().openActivity(HomeActivity.class);
+
+
+                                FirebaseIntegration.getInstance().saveUserDetail(getContext(), userModelWrapper.getUser()).subscribe(new CompletableObserver() {
+                                    @Override
+                                    public void onSubscribe(Disposable d) {
+
+                                    }
+
+                                    @Override
+                                    public void onComplete() {
+                                        sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
+                                        sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
+
+                                        getBaseActivity().finish();
+                                        getBaseActivity().openActivity(HomeActivity.class);
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        UIHelper.showAlertDialog(getContext(), e.getMessage());
+
+                                    }
+                                });
+
+
 
                             }
 
@@ -240,6 +269,9 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
                     UserModelWrapper userModelWrapper = getGson().fromJson(getGson().toJson(webResponse.result), UserModelWrapper.class);
                     sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
                     sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
+
+                    FirebaseIntegration.getInstance().saveUserDetail(getContext(), userModelWrapper.getUser());
+
                     getBaseActivity().finish();
                     getBaseActivity().openActivity(HomeActivity.class);
 

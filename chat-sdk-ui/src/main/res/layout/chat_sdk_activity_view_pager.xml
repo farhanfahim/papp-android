@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content"
+    android:animateLayoutChanges="true"
+    tools:context="co.chatsdk.ui.main.MainActivity">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        app:titleTextColor="@color/text_primary"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary">
+
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_navigation_arrow_back_inverted"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chat"
+            android:layout_marginStart="25dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+
+
+        <!--<com.miguelcatalan.materialsearchview.MaterialSearchView-->
+            <!--android:id="@+id/search_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:maxWidth="10000dp"-->
+            <!--android:layout_height="wrap_content" />-->
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <include android:visibility="gone" layout="@layout/search_toolbar"/>
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_height="wrap_content" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tab_layout"
+        tools:context=".MainActivity" />
+
+</RelativeLayout>
