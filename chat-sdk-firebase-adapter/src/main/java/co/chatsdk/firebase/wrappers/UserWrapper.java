@@ -28,10 +28,9 @@ import co.chatsdk.core.dao.Keys;
 import co.chatsdk.core.dao.User;
 import co.chatsdk.core.defines.Availability;
 import co.chatsdk.core.session.ChatSDK;
-import co.chatsdk.core.session.StorageManager;
 import co.chatsdk.core.utils.CrashReportingCompletableObserver;
-import co.chatsdk.core.utils.StringChecker;
 import co.chatsdk.core.utils.HashMapHelper;
+import co.chatsdk.core.utils.StringChecker;
 import co.chatsdk.firebase.FirebaseEntity;
 import co.chatsdk.firebase.FirebaseEventListener;
 import co.chatsdk.firebase.FirebasePaths;
@@ -285,11 +284,13 @@ public class UserWrapper {
         metaMap.remove(Keys.Availability);
         metaMap.put(Keys.AvatarURL, model.getAvatarURL() != null ? model.getAvatarURL() : "");
         metaMap.put(Keys.NameLowercase, model.getName() != null ? model.getName().toLowerCase() : "");
-        String[] fullName = metaMap.get(Keys.Email).toString().split("@");
-        if(fullName.length >= 2) {
-            metaMap.put(Keys.Name,fullName[0] );
+        metaMap.put(Keys.Name, model.getName() != null ? model.getName() : "");
 
-        }
+//        String[] fullName = metaMap.get(Keys.Email).toString().split("@");
+//        if(fullName.length >= 2) {
+//            metaMap.put(Keys.Name,fullName[0] );
+//
+//        }
 
         // Expand
         Map<String, Object> expandedMetaMap = HashMapHelper.expand(metaMap);

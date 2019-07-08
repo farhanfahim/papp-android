@@ -3,13 +3,8 @@ package com.tekrevol.papp.fragments.abstracts;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.Nullable;
-import androidx.core.view.GravityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.drawerlayout.widget.DrawerLayout;
 import android.util.Log;
 import android.util.Pair;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +13,20 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+
+import com.google.gson.Gson;
 import com.tekrevol.papp.BaseApplication;
+import com.tekrevol.papp.R;
+import com.tekrevol.papp.activities.BaseActivity;
 import com.tekrevol.papp.activities.CallActivity;
 import com.tekrevol.papp.activities.HomeActivity;
 import com.tekrevol.papp.activities.MainActivity;
 import com.tekrevol.papp.callbacks.GenericClickableInterface;
+import com.tekrevol.papp.callbacks.OnNewPacketReceivedListener;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.enums.BaseURLTypes;
@@ -35,16 +39,11 @@ import com.tekrevol.papp.managers.SharedPreferenceManager;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.models.wrappers.WebResponse;
+import com.tekrevol.papp.widget.TitleBar;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.tekrevol.papp.R;
-import com.tekrevol.papp.activities.BaseActivity;
-import com.tekrevol.papp.callbacks.OnNewPacketReceivedListener;
-import com.tekrevol.papp.widget.TitleBar;
-import com.google.gson.Gson;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -291,19 +290,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     public static void logoutClick(final BaseFragment baseFragment) {
         Context context = baseFragment.getContext();
-
-//        new iOSDialogBuilder(context)
-//                .setTitle(context.getString(R.string.logout))
-//                .setSubtitle(context.getString(R.string.areYouSureToLogout))
-//                .setBoldPositiveLabel(false)
-//                .setCancelable(false)
-//                .setPositiveListener(context.getString(R.string.yes), dialog -> {
-//                    dialog.dismiss();
-//                    baseFragment.sharedPreferenceManager.clearDB();
-//                    baseFragment.getBaseActivity().clearAllActivitiesExceptThis(MainActivity.class);
-//                })
-//                .setNegativeListener(context.getString(R.string.no), dialog -> dialog.dismiss())
-//                .build().show();
 
 
         final GenericDialogFragment genericDialogFragment = GenericDialogFragment.newInstance();
