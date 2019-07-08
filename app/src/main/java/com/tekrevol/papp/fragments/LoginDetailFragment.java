@@ -112,8 +112,8 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
 
 
 
-        edtEmailAddress.setText("c@c.c");
-        edtPassword.setText("1234567");
+        edtEmailAddress.setText("p@p.p");
+        edtPassword.setText("123456");
 
     }
 
