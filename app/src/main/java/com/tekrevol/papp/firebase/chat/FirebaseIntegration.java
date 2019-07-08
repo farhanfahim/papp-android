@@ -2,6 +2,7 @@ package com.tekrevol.papp.firebase.chat;
 
 import android.content.Context;
 
+import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.managers.SharedPreferenceManager;
 import com.tekrevol.papp.models.receiving_model.UserModel;
@@ -40,6 +41,7 @@ public class FirebaseIntegration {
                     user.setEmail(userModel.getEmail());
                     user.setName(userModel.getUserDetails().getFullName());
                     user.setAvatarURL(ImageLoaderHelper.getImageURLFromPath(userModel.getUserDetails().getImage()));
+                    user.setToken(SharedPreferenceManager.getInstance(context).getString(AppConstants.KEY_FIREBASE_TOKEN));
                     user.setIsOnline(true);
                     user.setId((long) userModel.getId());
 
@@ -48,6 +50,7 @@ public class FirebaseIntegration {
                     userWrapper.once().subscribe(()-> {
                         userWrapper.getModel().setAvatarURL(ImageLoaderHelper.getImageURLFromPath(userModel.getUserDetails().getImage()));
                         userWrapper.getModel().setName(userModel.getUserDetails().getFullName());
+                        userWrapper.getModel().setToken(SharedPreferenceManager.getInstance(context).getString(AppConstants.KEY_FIREBASE_TOKEN));
 
                         userWrapper.getModel().update();
                         ChatSDK.core().setUserOnline().subscribe(new CrashReportingCompletableObserver());

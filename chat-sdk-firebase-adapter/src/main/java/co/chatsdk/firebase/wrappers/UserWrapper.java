@@ -283,6 +283,7 @@ public class UserWrapper {
         HashMap<String, String> metaMap = new HashMap<>(model.metaMap());
         metaMap.remove(Keys.Availability);
         metaMap.put(Keys.AvatarURL, model.getAvatarURL() != null ? model.getAvatarURL() : "");
+        metaMap.put(Keys.Token, model.getToken() != null ? model.getToken() : "");
         metaMap.put(Keys.NameLowercase, model.getName() != null ? model.getName().toLowerCase() : "");
         metaMap.put(Keys.Name, model.getName() != null ? model.getName() : "");
 

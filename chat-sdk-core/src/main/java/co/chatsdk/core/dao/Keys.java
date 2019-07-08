@@ -10,6 +10,7 @@ package co.chatsdk.core.dao;
 public class Keys {
 
     /* Metadata */
+    public static final String Token = "token";
     public static final String Email = "email";
     public static final String Key = "key";
     public static final String Value = "value";

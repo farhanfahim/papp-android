@@ -5,15 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-
-import com.tekrevol.papp.constatnts.AppConstants;
-import com.tekrevol.papp.models.receiving_model.UserModel;
-import com.tekrevol.papp.models.sending_model.InsertRegisteredDeviceModel;
-import com.tekrevol.papp.models.sending_model.RegisteredDeviceModel;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 
-import static com.tekrevol.papp.constatnts.AppConstants.*;
+import static com.tekrevol.papp.constatnts.AppConstants.DEPENDENT_ROLE;
+import static com.tekrevol.papp.constatnts.AppConstants.PARENT_ROLE;
 
 /**
  * Class that can be extended to make available simple preference
@@ -38,7 +34,15 @@ public class SharedPreferenceManager {
 
     public void clearDB() {
         // Save Registered Device Data
+
+        String firebaseToken = getString(AppConstants.KEY_FIREBASE_TOKEN);
+
+
+
         pref.edit().clear().commit();
+
+        putValue(AppConstants.KEY_FIREBASE_TOKEN, firebaseToken);
+
     }
 
     public void clearKey(String key) {
