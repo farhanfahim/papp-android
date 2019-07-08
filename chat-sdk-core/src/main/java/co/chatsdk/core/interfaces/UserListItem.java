@@ -6,6 +6,7 @@ package co.chatsdk.core.interfaces;
 
 public interface UserListItem {
 
+    String getToken();
     String getName();
     String getStatus();
     String getAvailability();

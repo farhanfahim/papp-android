@@ -50,12 +50,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private final String TAG = "Fcm";
 
 
+
     @Override
     public void onNewToken(String s) {
         super.onNewToken(s);
 
         SharedPreferenceManager.getInstance(this).putValue(KEY_FIREBASE_TOKEN, s);
         SharedPreferenceManager.getInstance(this).putValue(KEY_FIREBASE_TOKEN_UPDATED, true);
+
+        Log.d(TAG, "onNewToken: "  + s);
     }
 
     @Override

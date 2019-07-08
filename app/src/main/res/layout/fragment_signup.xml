@@ -11,33 +11,29 @@
     <LinearLayout
         android:id="@+id/contBack"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:gravity="center_vertical"
-        android:padding="@dimen/x10dp"
-        android:layout_height="wrap_content">
-
+        android:padding="@dimen/x10dp">
 
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/x5dp"
-            android:src="@drawable/img_back_blue"/>
-
+            android:src="@drawable/img_back_blue" />
 
 
         <com.tekrevol.papp.widget.AnyTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Back to Login"
             android:gravity="center"
-            android:textSize="@dimen/s12"
+            android:text="Back to Login"
             android:textColor="@color/txtGrey"
-            app:fontFamily="@string/font_regular"/>
+            android:textSize="@dimen/s12"
+            app:fontFamily="@string/font_regular" />
 
     </LinearLayout>
-
-
 
 
     <ScrollView
@@ -47,7 +43,6 @@
         android:fillViewport="true">
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -55,54 +50,49 @@
             android:orientation="vertical">
 
 
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/img_logo_white"/>
-
+                android:src="@drawable/img_logo_white" />
 
 
             <com.tekrevol.papp.widget.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Create your account"
-                android:gravity="center"
-                android:textSize="@dimen/s22"
                 android:layout_marginLeft="@dimen/x10dp"
                 android:layout_marginRight="@dimen/x10dp"
                 android:layout_marginBottom="@dimen/x5dp"
+                android:gravity="center"
+                android:text="Create your account"
                 android:textColor="@color/c_black"
-                app:fontFamily="@string/font_bold"/>
-
+                android:textSize="@dimen/s22"
+                app:fontFamily="@string/font_bold" />
 
 
             <com.tekrevol.papp.widget.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Create your account to get access to the dashboard"
-                android:gravity="center"
-                android:textSize="@dimen/s14"
+                android:layout_marginLeft="@dimen/x10dp"
                 android:layout_marginRight="@dimen/x10dp"
                 android:layout_marginBottom="@dimen/x10dp"
-                android:layout_marginLeft="@dimen/x10dp"
+                android:gravity="center"
+                android:text="Create your account to get access to the dashboard"
                 android:textColor="@color/txtGrey"
-                app:fontFamily="@string/font_regular"/>
-
+                android:textSize="@dimen/s14"
+                app:fontFamily="@string/font_regular" />
 
 
             <LinearLayout
                 android:id="@+id/contLogin"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:orientation="vertical"
-                android:elevation="@dimen/x10dp"
                 android:layout_marginLeft="@dimen/x20dp"
                 android:layout_marginRight="@dimen/x20dp"
                 android:layout_marginBottom="@dimen/x20dp"
+                android:layout_weight="1"
                 android:background="@color/c_white"
-                android:layout_weight="1">
-
+                android:elevation="@dimen/x10dp"
+                android:orientation="vertical">
 
 
                 <com.google.android.material.tabs.TabLayout
@@ -122,9 +112,9 @@
 
                 <com.tekrevol.papp.widget.CustomViewPager
                     android:id="@+id/viewpager"
-                    android:background="@color/c_white"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="@color/c_white" />
 
 
             </LinearLayout>
@@ -134,12 +124,6 @@
 
 
     </ScrollView>
-
-
-
-
-
-
 
 </LinearLayout>
 

@@ -1,5 +1,7 @@
 package co.chatsdk.firebase.push;
 
+import android.util.Log;
+
 import com.google.firebase.messaging.FirebaseMessagingService;
 
 import timber.log.Timber;
@@ -19,5 +21,7 @@ public class InstanceIdService extends FirebaseMessagingService {
         super.onNewToken(s);
         Timber.v("Refreshed token: " + s);
         TokenChangeConnector.shared().updated(s);
+
+        Log.d("FCM", "onNewToken: "  + s);
     }
 }
