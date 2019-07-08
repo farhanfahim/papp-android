@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PAPP chat test.iml" filepath="$PROJECT_DIR$/PAPP chat test.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/chat-sdk-core/chat-sdk-core.iml" filepath="$PROJECT_DIR$/chat-sdk-core/chat-sdk-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/chat-sdk-firebase-adapter/chat-sdk-firebase-adapter.iml" filepath="$PROJECT_DIR$/chat-sdk-firebase-adapter/chat-sdk-firebase-adapter.iml" />
@@ -11,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/chat-sdk-profile-pictures/chat-sdk-profile-pictures.iml" filepath="$PROJECT_DIR$/chat-sdk-profile-pictures/chat-sdk-profile-pictures.iml" />
       <module fileurl="file://$PROJECT_DIR$/chat-sdk-ui/chat-sdk-ui.iml" filepath="$PROJECT_DIR$/chat-sdk-ui/chat-sdk-ui.iml" />
       <module fileurl="file://$PROJECT_DIR$/facebookloginsdk/facebookloginsdk.iml" filepath="$PROJECT_DIR$/facebookloginsdk/facebookloginsdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/papp-android.iml" filepath="$PROJECT_DIR$/.idea/papp-android.iml" />
     </modules>
   </component>
 </project>
