@@ -29,6 +29,9 @@ public class MentorSendingModel {
     @SerializedName("device_type")
     private String deviceType;
     @Expose
+    @SerializedName("device_token")
+    private String deviceToken;
+    @Expose
     @SerializedName("password_confirmation")
     private String passwordConfirmation;
     @Expose
@@ -62,6 +65,14 @@ public class MentorSendingModel {
 
     public void setSpecialization(List<SpinnerModel> specialization) {
         this.specialization = specialization;
+    }
+
+    public String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
     }
 
     public String getAbout() {

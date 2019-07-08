@@ -3,10 +3,6 @@ package com.tekrevol.papp.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -19,10 +15,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.tekrevol.papp.R;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.gson.reflect.TypeToken;
 import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.activities.HomeActivity;
 import com.tekrevol.papp.adapters.recyleradapters.SpecialityAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
@@ -560,6 +561,8 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
         mentorSendingModel.setAddress(locationModel.getAddress());
         mentorSendingModel.setLat(locationModel.getLat());
         mentorSendingModel.setLng(locationModel.getLng());
+        mentorSendingModel.setDeviceToken(sharedPreferenceManager.getString(AppConstants.KEY_FIREBASE_TOKEN));
+
 
         new WebServices(getBaseActivity(), "", BaseURLTypes.BASE_URL, true)
                 .postMultipartAPI(WebServiceConstants.PATH_REGISTER, arrMultiFileModel, mentorSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {

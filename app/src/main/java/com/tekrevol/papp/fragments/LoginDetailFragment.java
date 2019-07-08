@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.google.gson.JsonElement;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.modules.facebooklogin.FacebookHelper;
 import com.modules.facebooklogin.FacebookResponse;
 import com.modules.facebooklogin.FacebookUser;
@@ -71,6 +72,9 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
 
     private FacebookHelper mFbHelper;
 
+    KProgressHUD progressHUD;
+
+
     public static LoginDetailFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -100,6 +104,10 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        progressHUD = UIHelper.getProgressHUD(getContext());
+
+
         //fb api initialization
         mFbHelper = new FacebookHelper(this,
                 "id,name,email,gender,birthday,picture",
@@ -109,7 +117,6 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
         txtOrLoginWith.setVisibility(View.VISIBLE);
 
         edtPassword.addValidator(new PasswordValidation());
-
 
 
         edtEmailAddress.setText("c@c.c");
@@ -171,11 +178,11 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
                 loginSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID);
                 loginSendingModel.setEmail(edtEmailAddress.getStringTrimmed());
                 loginSendingModel.setPassword(edtPassword.getStringTrimmed());
+                loginSendingModel.setDeviceToken(sharedPreferenceManager.getString(AppConstants.KEY_FIREBASE_TOKEN));
 
                 if (edtEmailAddress.testValidity() && edtPassword.testValidity()) {
                     webCallLogin(loginSendingModel);
                 }
-
 
                 break;
             case R.id.contFacebookLogin:
@@ -190,12 +197,14 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
         }
     }
 
-    public void webCallLogin(LoginSendingModel loginSendingModel) {
+    private void webCallLogin(LoginSendingModel loginSendingModel) {
         new WebServices(getBaseActivity(), "", BaseURLTypes.BASE_URL, true)
                 .postAPIAnyObject(WebServiceConstants.PATH_LOGIN, loginSendingModel.toString(),
                         new WebServices.IRequestWebResponseAnyObjectCallBack() {
                             @Override
                             public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                                progressHUD.show();
 
                                 UserModelWrapper userModelWrapper = getGson().fromJson(getGson().toJson(webResponse.result), UserModelWrapper.class);
 
@@ -208,6 +217,7 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
 
                                     @Override
                                     public void onComplete() {
+                                        progressHUD.dismiss();
                                         sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
                                         sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
 
@@ -217,11 +227,11 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
 
                                     @Override
                                     public void onError(Throwable e) {
+                                        progressHUD.dismiss();
                                         UIHelper.showAlertDialog(getContext(), e.getMessage());
 
                                     }
                                 });
-
 
 
                             }
@@ -256,6 +266,7 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
         socialLoginSendingModel.setPlatform(SOCIAL_MEDIA_PLATFORM_FACEBOOK);
         socialLoginSendingModel.setUsername(facebookUser.name);
         socialLoginSendingModel.setToken("abc123");
+        socialLoginSendingModel.setDeviceToken(sharedPreferenceManager.getString(AppConstants.KEY_FIREBASE_TOKEN));
 
 
         getBaseWebService().postAPIAnyObject(PATH_SOCIAL_LOGIN, socialLoginSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
@@ -290,7 +301,6 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
 
                         }
                     });
-
 
 
                 } else {

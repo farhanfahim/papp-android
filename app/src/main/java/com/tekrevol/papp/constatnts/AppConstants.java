@@ -1,27 +1,10 @@
 package com.tekrevol.papp.constatnts;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Environment;
-import android.provider.Settings;
-import android.telephony.TelephonyManager;
-import android.util.DisplayMetrics;
-import android.util.Log;
-
-import com.tekrevol.papp.managers.SharedPreferenceManager;
-import com.tekrevol.papp.models.sending_model.InsertRegisteredDeviceModel;
-import com.tekrevol.papp.models.sending_model.RegisteredDeviceModel;
-
-import java.security.MessageDigest;
-import java.util.UUID;
 
 import com.tekrevol.papp.BaseApplication;
-import com.tekrevol.papp.models.sending_model.InsertRegisteredDeviceModel;
-import com.tekrevol.papp.models.sending_model.RegisteredDeviceModel;
-
-import static android.provider.Settings.Secure.getString;
+import com.tekrevol.papp.managers.SharedPreferenceManager;
 
 
 /**
@@ -97,8 +80,7 @@ public class AppConstants {
     public static final String USER_NOTIFICATION_DATA = "USER_NOTIFICATION_DATA";
     public static String FORCED_RESTART = "forced_restart";
     public static final String KEY_TOKEN = "getToken";
-    public static final String KEY_REGISTERED_DEVICE = "registered_device";
-    public static final String KEY_INSERT_REGISTERED_DEVICE = "registered_device";
+    public static final String KEY_FIREBASE_TOKEN = "firebase_token";
     public static final String KEY_FIREBASE_TOKEN_UPDATED = "FIREBASE_TOKEN_UPDATED";
     public static final String KEY_PIN_CODE = "pin_code";
     public static final String KEY_IS_PIN_ENABLE = "is_pin_enable";

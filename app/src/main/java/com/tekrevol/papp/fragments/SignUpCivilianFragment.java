@@ -3,10 +3,6 @@ package com.tekrevol.papp.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -19,6 +15,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.activities.HomeActivity;
 import com.tekrevol.papp.adapters.recyleradapters.AddDependentsAdapter;
@@ -41,8 +44,6 @@ import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
-import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
@@ -319,6 +320,7 @@ public class SignUpCivilianFragment extends BaseFragment implements OnItemClickL
         parentSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID);
         parentSendingModel.setRole(AppConstants.PARENT_ROLE);
         parentSendingModel.setDependant(arrDependents);
+        parentSendingModel.setDeviceToken(sharedPreferenceManager.getString(AppConstants.KEY_FIREBASE_TOKEN));
 
         new WebServices(getBaseActivity(), "", BaseURLTypes.BASE_URL, true)
                 .postMultipartAPI(WebServiceConstants.PATH_REGISTER, arrMultiFileModel, parentSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
