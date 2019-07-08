@@ -1,6 +1,5 @@
 package com.tekrevol.papp.models.sending_model;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
@@ -11,6 +10,9 @@ public class SocialLoginSendingModel {
     @Expose
     @SerializedName("device_type")
     private String deviceType;
+    @Expose
+    @SerializedName("device_token")
+    private String deviceToken;
     @Expose
     @SerializedName("image")
     private String image;
@@ -29,6 +31,14 @@ public class SocialLoginSendingModel {
     @Expose
     @SerializedName("platform")
     private String platform;
+
+    public String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
 
     public String getDeviceType() {
         return deviceType;

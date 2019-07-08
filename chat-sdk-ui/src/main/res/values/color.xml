@@ -5,11 +5,11 @@
     <color name="dark_text">#5F5F5F</color>
     <color name="text_color">#212122</color>
 
-    <color name="primary">#21C87A</color>
-    <color name="primary_dark">#21BD74</color>
+    <color name="primary">@color/colorPrimary</color>
+    <color name="primary_dark">@color/colorPrimaryDark</color>
     <color name="window_background">@android:color/background_light</color>
     <color name="text_primary">@android:color/white</color>
-    <color name="accent">#21C87A</color>
+    <color name="accent">@color/colorAccent</color>
 
     <color name="login_button_color">#1c93db</color>
     <color name="register_button_color">#78b737</color>
