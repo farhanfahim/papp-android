@@ -112,8 +112,8 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
 
 
 
-        edtEmailAddress.setText("a@a.a");
-        edtPassword.setText("123456");
+        edtEmailAddress.setText("c@c.c");
+        edtPassword.setText("1234567");
 
     }
 
@@ -267,13 +267,31 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
                     // User exists, do login
 
                     UserModelWrapper userModelWrapper = getGson().fromJson(getGson().toJson(webResponse.result), UserModelWrapper.class);
-                    sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
-                    sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
 
-                    FirebaseIntegration.getInstance().saveUserDetail(getContext(), userModelWrapper.getUser());
 
-                    getBaseActivity().finish();
-                    getBaseActivity().openActivity(HomeActivity.class);
+                    FirebaseIntegration.getInstance().saveUserDetail(getContext(), userModelWrapper.getUser()).subscribe(new CompletableObserver() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
+                            sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
+
+                            getBaseActivity().finish();
+                            getBaseActivity().openActivity(HomeActivity.class);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            UIHelper.showAlertDialog(getContext(), e.getMessage());
+
+                        }
+                    });
+
+
 
                 } else {
                     if (!is_exists.getAsBoolean()) {

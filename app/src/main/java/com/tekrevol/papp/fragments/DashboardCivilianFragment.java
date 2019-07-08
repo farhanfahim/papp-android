@@ -267,8 +267,93 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
             case R.id.contChat:
 //                getBaseActivity().popBackStack();
 //                getBaseActivity().addDockableFragment(ChatListsFragment.newInstance(), false);
-//                ChatSDK.ui().startMainActivity(getContext());
-                ChatSDK.ui().startChatActivityForID(getContext(), "117");
+                ChatSDK.ui().startMainActivity(getContext());
+
+//                ChatSDK.core().
+//                ChatSDK.contact().addContact()
+
+//                User user = ChatSDK.db().fetchUserWithEntityID("117");
+//                ChatSDK.db().fetchUserWithEntityID()
+
+
+
+
+
+//                ChatSDK.search().usersForIndex("s@s.s", Keys.Email).subscribe(new Observer<User>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(User user) {
+//                        Log.d(TAG, "onNext: " + user.toString());
+//                        List<User> userList = new ArrayList<>();
+//                        userList.add(user);
+//
+//                        ChatSDK.thread()
+//                                .createThread("test",userList,0,null)
+//                                .observeOn(AndroidSchedulers.mainThread())
+//                                .subscribe(new SingleObserver<Thread>() {
+//                                    @Override
+//                                    public void onSubscribe(Disposable d) {
+//                                        Log.e("abc","onSubscribe");
+//                                    }
+//
+//                                    @Override
+//                                    public void onSuccess(Thread thread) {
+//                                        Log.e("abc","onSuccess");
+//
+//                                        ChatSDK.thread().sendMessageWithText("1010", thread)
+//                                                .observeOn(AndroidSchedulers.mainThread())
+//                                                .subscribe(new Observer<MessageSendProgress>() {
+//                                                    @Override
+//                                                    public void onSubscribe(Disposable d) {
+//
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onNext(MessageSendProgress messageSendProgress) {
+//
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onError(Throwable e) {
+//
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onComplete() {
+//
+//                                                    }
+//                                                });
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onError(Throwable e) {
+//                                        Log.e("abc","onError");
+//
+//                                    }
+//                                });
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
+
+
+
+
+
+
                  break;
             case R.id.contSessions:
                 getBaseActivity().popBackStack();
