@@ -4,25 +4,35 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.fragment.app.Fragment;
+
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.tekrevol.papp.R;
+import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.firebase.chat.FirebaseIntegration;
 import com.tekrevol.papp.fragments.DashboardCivilianFragment;
 import com.tekrevol.papp.fragments.DashboardLEAFragment;
 import com.tekrevol.papp.fragments.RightSideMenuFragment;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.libraries.residemenu.ResideMenu;
 import com.tekrevol.papp.managers.SharedPreferenceManager;
 import com.tekrevol.papp.utils.utility.Blur;
 import com.tekrevol.papp.utils.utility.Utils;
 
 import java.util.List;
+
+import io.reactivex.CompletableObserver;
+import io.reactivex.disposables.Disposable;
 
 
 public class HomeActivity extends BaseActivity {
@@ -72,6 +82,29 @@ public class HomeActivity extends BaseActivity {
         initFragments();
 
 
+        firebaseUserSync();
+
+
+    }
+
+    private void firebaseUserSync() {
+        FirebaseIntegration.getInstance().saveUserDetail(this, sharedPreferenceManager.getCurrentUser()).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                UIHelper.showToast(HomeActivity.this, "User synced successfully");
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                UIHelper.showAlertDialog(HomeActivity.this, e.getMessage());
+            }
+        });
     }
 
 

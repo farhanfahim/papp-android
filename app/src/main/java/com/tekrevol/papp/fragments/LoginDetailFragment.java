@@ -119,7 +119,6 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
         edtPassword.addValidator(new PasswordValidation());
 
 
-
         edtEmailAddress.setText("p@p.p");
         edtPassword.setText("123456");
 
@@ -205,35 +204,13 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
                             @Override
                             public void requestDataResponse(WebResponse<Object> webResponse) {
 
-                                progressHUD.show();
-
                                 UserModelWrapper userModelWrapper = getGson().fromJson(getGson().toJson(webResponse.result), UserModelWrapper.class);
 
+                                sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
+                                sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
 
-                                FirebaseIntegration.getInstance().saveUserDetail(getContext(), userModelWrapper.getUser()).subscribe(new CompletableObserver() {
-                                    @Override
-                                    public void onSubscribe(Disposable d) {
-
-                                    }
-
-                                    @Override
-                                    public void onComplete() {
-                                        progressHUD.dismiss();
-                                        sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
-                                        sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
-
-                                        getBaseActivity().finish();
-                                        getBaseActivity().openActivity(HomeActivity.class);
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable e) {
-                                        progressHUD.dismiss();
-                                        UIHelper.showAlertDialog(getContext(), e.getMessage());
-
-                                    }
-                                });
-
+                                getBaseActivity().finish();
+                                getBaseActivity().openActivity(HomeActivity.class);
 
                             }
 
@@ -280,29 +257,11 @@ public class LoginDetailFragment extends BaseFragment implements FacebookRespons
 
                     UserModelWrapper userModelWrapper = getGson().fromJson(getGson().toJson(webResponse.result), UserModelWrapper.class);
 
+                    sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
+                    sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
 
-                    FirebaseIntegration.getInstance().saveUserDetail(getContext(), userModelWrapper.getUser()).subscribe(new CompletableObserver() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
-                            sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
-
-                            getBaseActivity().finish();
-                            getBaseActivity().openActivity(HomeActivity.class);
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            UIHelper.showAlertDialog(getContext(), e.getMessage());
-
-                        }
-                    });
-
+                    getBaseActivity().finish();
+                    getBaseActivity().openActivity(HomeActivity.class);
 
                 } else {
                     if (!is_exists.getAsBoolean()) {

@@ -4,11 +4,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.Pair;
 import android.view.View;
 
@@ -21,6 +23,7 @@ import com.tekrevol.papp.fragments.abstracts.GenericDialogFragment;
 
 import com.tekrevol.papp.R;
 
+import com.tekrevol.papp.managers.SharedPreferenceManager;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.widget.TitleBar;
 import com.google.gson.Gson;
@@ -35,6 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public GenericClickableInterface genericClickableInterface;
     private Gson gson;
     public boolean isReloadFragmentOnBack = false;
+    public SharedPreferenceManager sharedPreferenceManager;
 
 
     @Override
@@ -42,6 +46,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getViewId());
         setAndBindTitleBar();
+        sharedPreferenceManager = SharedPreferenceManager.getInstance(this);
         drawerLayout = (DrawerLayout) findViewById(getDrawerLayoutId());
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         gson = GsonFactory.getSimpleGson();
