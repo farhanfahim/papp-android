@@ -67,7 +67,6 @@ import timber.log.Timber;
 
 public class ChatSDK {
 
-    public static String Preferences = "chat_sdk_preferences";
 
     private static final ChatSDK instance = new ChatSDK();
     protected WeakReference<Context> context;
@@ -79,6 +78,8 @@ public class ChatSDK {
     protected BaseNetworkAdapter networkAdapter;
 
     protected LocationProvider locationProvider;
+
+    public final static String PREFS_NAME = "papp_pref";
 
     protected ChatSDK () {
     }
@@ -232,7 +233,7 @@ public class ChatSDK {
     }
 
     public SharedPreferences getPreferences () {
-        return context.get().getSharedPreferences(Preferences, Context.MODE_PRIVATE);
+        return context.get().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
     public Context context () {

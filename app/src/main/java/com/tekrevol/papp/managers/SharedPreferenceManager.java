@@ -20,11 +20,11 @@ import static com.tekrevol.papp.constatnts.AppConstants.PARENT_ROLE;
 public class SharedPreferenceManager {
     private static SharedPreferences pref;
     private static SharedPreferenceManager factory;
-
+    public final static String PREFS_NAME = "papp_pref";
 
     public static SharedPreferenceManager getInstance(Context context) {
         if (pref == null)
-            pref = context.getSharedPreferences("mypref", Context.MODE_PRIVATE);
+            pref = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
         if (factory == null)
             factory = new SharedPreferenceManager();
@@ -144,11 +144,11 @@ public class SharedPreferenceManager {
         putValue(AppConstants.FORCED_RESTART, isForcedRestart);
     }
 
-    public void removePreference(Context context, String prefsName,
+    public void removePreference(Context context,
                                  String key) {
 
         SharedPreferences preferences = context.getSharedPreferences(
-                prefsName, Activity.MODE_PRIVATE);
+                PREFS_NAME, Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
         editor.remove(key);

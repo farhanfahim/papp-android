@@ -27,6 +27,7 @@ public class PagerAdapterTabs extends FragmentPagerAdapter {
     public PagerAdapterTabs(FragmentManager fm) {
         super(fm);
         tabs = ChatSDK.ui().tabs();
+
     }
 
     public List<Tab> getTabs() {
@@ -40,7 +41,7 @@ public class PagerAdapterTabs extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return tabs.size();
+        return 1;
     }
 
     @Override

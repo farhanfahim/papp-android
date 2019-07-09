@@ -10,7 +10,7 @@ import java.util.List;
 public class TaskUser {
 
     @Expose
-    @SerializedName("attachment")
+    @SerializedName("attachments")
     private List<TaskAttachmentModel> attachment;
     @Expose
     @SerializedName("unlock")

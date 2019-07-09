@@ -96,7 +96,7 @@ public class HomeActivity extends BaseActivity {
 
             @Override
             public void onComplete() {
-                UIHelper.showToast(HomeActivity.this, "User synced successfully");
+//                UIHelper.showToast(HomeActivity.this, "User synced successfully");
 
             }
 
