@@ -151,7 +151,7 @@ public class Configuration {
     // is in the killed state. This is useful to help us debug that process.
     public boolean backgroundPushTestModeEnabled = false;
 
-    public int logoDrawableResourceID = R.drawable.ic_launcher_big;
+    public int logoDrawableResourceID = R.mipmap.ic_launcher_round;
 
     public long readReceiptMaxAge = TimeUnit.DAYS.toMillis(7);
 
@@ -564,7 +564,7 @@ public class Configuration {
         }
 
         public boolean logoIsSet () {
-            return config.logoDrawableResourceID != R.drawable.ic_launcher_big;
+            return config.logoDrawableResourceID != R.mipmap.ic_launcher;
         }
 
         public Builder contactDeveloperEmailAddress(String value) {

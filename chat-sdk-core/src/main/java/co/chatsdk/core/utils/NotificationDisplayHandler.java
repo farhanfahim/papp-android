@@ -51,7 +51,7 @@ public class NotificationDisplayHandler {
 
         int pushIcon = ChatSDK.config().pushNotificationImageDefaultResourceId;
         if(pushIcon <= 0) {
-            pushIcon = R.drawable.icn_72_push_mask;
+            pushIcon = R.drawable.notification_logo;
         }
         final int smallPushIcon = pushIcon;
 
