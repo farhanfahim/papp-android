@@ -53,6 +53,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     AnyTextView txtTime;
     @BindView(R.id.subscriber_container)
     FrameLayout subscriberContainer;
+    boolean isSignalSender = false;
 
     private static final String LOG_TAG = "Audio Call";
     @BindView(R.id.imgCameraSwitch)
@@ -163,8 +164,13 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
         mSession.setSignalListener(new Session.SignalListener() {
             @Override
             public void onSignalReceived(Session session, String s, String s1, Connection connection) {
+
+                if (isSignalSender) {
+                    return;
+                }
                 if (s.equals("101")) {
                     Log.d(TAG, "onSignalReceived: " + "End call");
+                    endCall(false);
                 }
             }
         });
@@ -324,7 +330,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
             case R.id.imgMute:
                 break;
             case R.id.imgCancelCall:
-                endCall();
+                endCall(true);
                 break;
             case R.id.imgCameraSwitch:
                 if (mPublisher != null) {
@@ -336,18 +342,20 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     }
 
 
+    public void endCall(boolean isSignalSender) {
 
-    public void endCall() {
+        this.isSignalSender = isSignalSender;
 
 
-        mSession.sendSignal("101", "disconnect");
+        if (isSignalSender) {
+            mSession.sendSignal("101", "disconnect");
+        }
+
         if (mPublisher != null) {
             mPublisher.destroy();
         }
 
-
-
-
+        getBaseActivity().popBackStack();
         getCallActivity().finish();
     }
 }
