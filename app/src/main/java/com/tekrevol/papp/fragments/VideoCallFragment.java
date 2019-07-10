@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.opentok.android.BaseVideoRenderer;
+import com.opentok.android.Connection;
 import com.opentok.android.OpentokError;
 import com.opentok.android.Publisher;
 import com.opentok.android.PublisherKit;
@@ -159,6 +160,14 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     @Override
     public void setListeners() {
 
+        mSession.setSignalListener(new Session.SignalListener() {
+            @Override
+            public void onSignalReceived(Session session, String s, String s1, Connection connection) {
+                if (s.equals("101")) {
+                    Log.d(TAG, "onSignalReceived: " + "End call");
+                }
+            }
+        });
     }
 
     @Override
@@ -326,12 +335,17 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
         }
     }
 
+
+
     public void endCall() {
 
 
+        mSession.sendSignal("101", "disconnect");
         if (mPublisher != null) {
             mPublisher.destroy();
         }
+
+
 
 
         getCallActivity().finish();
