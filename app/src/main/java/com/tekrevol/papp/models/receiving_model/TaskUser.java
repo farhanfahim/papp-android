@@ -1,6 +1,5 @@
 package com.tekrevol.papp.models.receiving_model;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
@@ -10,8 +9,11 @@ import java.util.List;
 public class TaskUser {
 
     @Expose
-    @SerializedName("attachments")
+    @SerializedName("attachment")
     private List<TaskAttachmentModel> attachment;
+    @Expose
+    @SerializedName("attachments")
+    private List<TaskAttachmentModel> attachments;
     @Expose
     @SerializedName("unlock")
     private int unlock;
@@ -32,7 +34,11 @@ public class TaskUser {
     private int id;
 
     public List<TaskAttachmentModel> getAttachment() {
-        return attachment;
+        if (attachment != null) {
+            return attachment;
+        } else {
+            return attachments;
+        }
     }
 
     public void setAttachment(List<TaskAttachmentModel> attachment) {
