@@ -22,6 +22,7 @@ import com.opentok.android.Subscriber;
 import com.opentok.android.SubscriberKit;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.models.receiving_model.OpenTokSessionRecModel;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 
@@ -57,12 +58,14 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     private Session mSession;
     private Publisher mPublisher;
     private Subscriber mSubscriber;
+    private OpenTokSessionRecModel openTokSessionRecModel;
 
-    public static VideoCallFragment newInstance() {
+    public static VideoCallFragment newInstance(OpenTokSessionRecModel openTokSessionRecModel) {
 
         Bundle args = new Bundle();
 
         VideoCallFragment fragment = new VideoCallFragment();
+        fragment.openTokSessionRecModel = openTokSessionRecModel;
         fragment.setArguments(args);
         return fragment;
     }
@@ -106,7 +109,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initializeSession(getCallActivity().API_KEY, getCallActivity().SESSION_ID, getCallActivity().TOKEN);
+        initializeSession(openTokSessionRecModel.getApiKey(), openTokSessionRecModel.getOtkSessionId(), openTokSessionRecModel.getToken());
 
     }
 

@@ -80,7 +80,8 @@ public class WebServiceConstants {
     public static final String PATH_CHANGE_PASSWORD= "change-password";
     public static final String PATH_PAGES= "pages";
     public static final String PATH_SOCIAL_LOGIN= "social_login";
-    public static final String PATH_VERIFY_COMPLETED_SESSION= "verify-completed-session/";
+    public static final String PATH_VERIFY_COMPLETED_SESSION = "verify-completed-session/";
+    public static final String PATH_CREATE_OPENTOK_SESSION = "create-opentok-session";
 
 
     /**
@@ -94,6 +95,9 @@ public class WebServiceConstants {
     public static final String Q_PARAM_MY_MENTOR = "my_mentor";
     public static final String Q_PARAM_SEARCH = "search";
     public static final String Q_PARAM_DEPT_ID = "department_id";
+    public static final String Q_PARAM_DEPENDANT_ID = "dependant_id";
+    public static final String Q_PARAM_SESSION_ID = "session_id";
+    public static final String Q_PARAM_SESSION_TYPE = "session_type";
     public static final String Q_PARAM_TYPE = "type";
     public static final String Q_PARAM_AVAILABLE = "available";
     public static final String Q_PARAM_STATUS = "status";

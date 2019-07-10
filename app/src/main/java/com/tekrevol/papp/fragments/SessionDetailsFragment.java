@@ -1,10 +1,12 @@
 package com.tekrevol.papp.fragments;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,24 +18,30 @@ import android.widget.LinearLayout;
 
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 import com.tekrevol.papp.R;
+import com.tekrevol.papp.activities.CallActivity;
 import com.tekrevol.papp.adapters.recyleradapters.DependentsAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.GooglePlaceHelper;
+import com.tekrevol.papp.helperclasses.Helper;
 import com.tekrevol.papp.helperclasses.StringHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.DateManager;
 import com.tekrevol.papp.managers.retrofit.WebServices;
+import com.tekrevol.papp.models.receiving_model.OpenTokSessionRecModel;
 import com.tekrevol.papp.models.receiving_model.SessionRecievingModel;
 import com.tekrevol.papp.models.receiving_model.SessionUsers;
 import com.tekrevol.papp.models.receiving_model.UserModel;
+import com.tekrevol.papp.models.wrappers.UserModelWrapper;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -361,8 +369,8 @@ public class SessionDetailsFragment extends BaseFragment implements OnItemClickL
     }
 
 
-    private void startSessionAPI(int id, int sessionType) {
-        getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_START_SESSION + id, "", new WebServices.IRequestWebResponseAnyObjectCallBack() {
+    private void startSessionAPI(int sessionId, int sessionType) {
+        getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_START_SESSION + sessionId, "", new WebServices.IRequestWebResponseAnyObjectCallBack() {
             @Override
             public void requestDataResponse(WebResponse<Object> webResponse) {
                 if (sessionType == AppConstants.SESSION_TYPE_ONE_ON_ONE) {
@@ -370,9 +378,37 @@ public class SessionDetailsFragment extends BaseFragment implements OnItemClickL
                     imgOneOnOne.setVisibility(View.GONE);
                     imgStop.setVisibility(View.VISIBLE);
                 } else if (sessionType == AppConstants.SESSION_TYPE_VIDEO) {
-                    completeSessionAPI(id);
+//                    completeSessionAPI(id);
+
+                    Map<String, Object> queryMap = new HashMap<>();
+                    queryMap.put(WebServiceConstants.Q_PARAM_SESSION_ID, sessionId);
+                    if (sessionRecievingModel.getSessionUsers() == null || sessionRecievingModel.getSessionUsers().isEmpty()) {
+                        UIHelper.showToast(getContext(), "No Session User Exist");
+                        return;
+                    }
+                    queryMap.put(WebServiceConstants.Q_PARAM_DEPENDANT_ID, sessionRecievingModel.getSessionUsers().get(0).getDependantId());
+                    queryMap.put(WebServiceConstants.Q_PARAM_SESSION_TYPE, sessionType);
+
+                    getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_CREATE_OPENTOK_SESSION, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                        @Override
+                        public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                            OpenTokSessionRecModel openTokSessionRecModel = getGson().fromJson(getGson().toJson(webResponse.result), OpenTokSessionRecModel.class);
+                            openTokSessionRecModel.setCaller(true);
+                            openTokSessionRecModel.setSessionType(AppConstants.SESSION_TYPE_VIDEO);
+
+
+                            getBaseActivity().openActivity(CallActivity.class, openTokSessionRecModel.toString());
+
+                         }
+
+                        @Override
+                        public void onError(Object object) {
+
+                        }
+                    });
                 } else if (sessionType == AppConstants.SESSION_TYPE_AUDIO) {
-                    completeSessionAPI(id);
+                    completeSessionAPI(sessionId);
                 }
             }
 
