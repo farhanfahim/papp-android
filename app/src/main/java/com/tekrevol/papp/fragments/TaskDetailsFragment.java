@@ -156,6 +156,7 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
 
             contButtons.setVisibility(View.GONE);
             imgAttachment.setVisibility(View.GONE);
+            txtStartedDuration.setVisibility(View.GONE);
 
             arrAttachments.clear();
             for (TaskAttachmentModel taskAttachmentModel : taskReceivingModel.getTaskUsers().getAttachment()) {
