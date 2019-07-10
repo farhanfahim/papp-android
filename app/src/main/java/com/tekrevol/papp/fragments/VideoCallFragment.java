@@ -153,8 +153,6 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
             mSession.disconnect();
         }
         super.onDestroy();
-
-
     }
 
     @Override
@@ -346,8 +344,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
         }
 
 
-
-
+        getBaseActivity().popBackStack();
         getCallActivity().finish();
     }
 }
