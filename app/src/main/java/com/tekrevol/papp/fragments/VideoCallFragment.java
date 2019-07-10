@@ -333,9 +333,6 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
             mPublisher.destroy();
         }
 
-        if (mSession != null) {
-            mSession.disconnect();
-        }
 
         getCallActivity().finish();
     }
