@@ -303,6 +303,8 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
 
 
     private void showOpenTokError(OpentokError opentokError) {
+        if (getContext() == null)
+            return;
 
         Toast.makeText(getContext(), opentokError.getErrorDomain().name() + ": " + opentokError.getMessage() + " Please, see the logcat.", Toast.LENGTH_LONG).show();
         getCallActivity().finish();
@@ -330,6 +332,10 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
 
         if (mPublisher != null) {
             mPublisher.destroy();
+        }
+
+        if (mSession != null) {
+            mSession.disconnect();
         }
 
         getCallActivity().finish();
