@@ -192,12 +192,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
         super.onDestroyView();
         unbinder.unbind();
     }
-
-
-    @OnClick(R.id.imgCancelCall)
-    public void onViewClicked() {
-
-    }
+ 
 
     private void initializeSession(String apiKey, String sessionId, String token) {
 
