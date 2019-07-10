@@ -261,6 +261,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
         if (mSubscriber != null) {
             mSubscriber = null;
             subscriberContainer.removeAllViews();
+            endCall();
         }
 
     }
@@ -330,6 +331,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
         if (mPublisher != null) {
             mPublisher.destroy();
         }
+
         getCallActivity().finish();
     }
 }
