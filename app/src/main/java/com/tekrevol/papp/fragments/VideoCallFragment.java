@@ -146,7 +146,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
 
     @Override
     public void onDestroy() {
-        Log.d(LOG_TAG, "onResume");
+        Log.d(LOG_TAG, "onDestroy");
 
         if (mSession != null) {
             mSession.disconnect();
@@ -261,7 +261,6 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
         if (mSubscriber != null) {
             mSubscriber = null;
             subscriberContainer.removeAllViews();
-            endCall();
         }
 
     }
