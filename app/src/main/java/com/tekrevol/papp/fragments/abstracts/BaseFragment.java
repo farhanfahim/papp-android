@@ -226,10 +226,10 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
-        Log.e("abc", "onDestroyView");
+        Log.e("BaseFragment", "onDestroyView");
         if (subscription != null)
             subscription.dispose();
+        super.onDestroyView();
     }
 
 
