@@ -1,12 +1,15 @@
 package com.tekrevol.papp.fragments;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +20,6 @@ import android.widget.TextView;
 
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 import com.tekrevol.papp.R;
-import com.tekrevol.papp.activities.ChatActivity;
 import com.tekrevol.papp.adapters.recyleradapters.MedalAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.SpecialityAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
@@ -25,6 +27,7 @@ import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.GooglePlaceHelper;
 import com.tekrevol.papp.helperclasses.StringHelper;
+import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.libraries.residemenu.ResideMenu;
 import com.tekrevol.papp.models.general.SpinnerModel;
@@ -33,12 +36,24 @@ import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import co.chatsdk.core.dao.Keys;
+import co.chatsdk.core.dao.Thread;
+import co.chatsdk.core.dao.User;
+import co.chatsdk.core.interfaces.ThreadType;
+import co.chatsdk.core.session.ChatSDK;
+import co.chatsdk.core.types.ConnectionType;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.CompletableObserver;
+import io.reactivex.Observer;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 public class LEAProfileFragment extends BaseFragment implements OnItemClickListener {
 
@@ -290,7 +305,20 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
             case R.id.contMilestones:
                 break;
             case R.id.contChat:
-                getBaseActivity().openActivity(ChatActivity.class);
+//                getBaseActivity().openActivity(ChatActivity.class);
+
+
+                final List<User> existingContacts = ChatSDK.contact().contacts();
+
+
+                for (User existingContact : existingContacts) {
+                    if (Integer.valueOf(existingContact.getEntityID()) == mentorModel.getId()) {
+                        createThread(existingContact);
+                        return;
+                    }
+                }
+
+                searchUser();
                 break;
             case R.id.contReviews:
 //                if (isMentor() || isDependent()) {
@@ -318,5 +346,111 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
 
                 break;
         }
+    }
+
+    private void searchUser() {
+        ChatSDK.search().usersForIndex(mentorModel.getEmail(), Keys.Email).subscribe(new Observer<User>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(User user) {
+
+                addContactAndCreateThread(user);
+
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                UIHelper.showToast(getContext(), e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    private void addContactAndCreateThread(User user) {
+        Log.d(TAG, "onNext: " + user.toString());
+
+        ChatSDK.contact().addContact(user, ConnectionType.Contact).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                createThread(user);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
+
+    }
+
+    private void createThread(User user) {
+        Log.d(TAG, "onNext: " + user.toString());
+        List<User> userList = new ArrayList<>();
+        userList.add(ChatSDK.currentUser());
+        userList.add(user);
+//                        getCurrentUser().getId() + ":" + mentorModel.getId()
+//        mentorModel.getUserDetails().getFullName()
+        ChatSDK.thread()
+                .createThread("", userList, ThreadType.Private1to1, null)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Thread>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.e("abc", "onSubscribe");
+                    }
+
+                    @Override
+                    public void onSuccess(Thread thread) {
+                        Log.e("abc", "onSuccess");
+
+
+                        ChatSDK.ui().startChatActivityForID(getContext(), thread.getEntityID());
+
+//                                        ChatSDK.thread().sendMessageWithText("1010", thread)
+//                                                .observeOn(AndroidSchedulers.mainThread())
+//                                                .subscribe(new Observer<MessageSendProgress>() {
+//                                                    @Override
+//                                                    public void onSubscribe(Disposable d) {
+//
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onNext(MessageSendProgress messageSendProgress) {
+//
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onError(Throwable e) {
+//
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onComplete() {
+//
+//                                                    }
+//                                                });
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("abc", "onError");
+
+                    }
+                });
     }
 }

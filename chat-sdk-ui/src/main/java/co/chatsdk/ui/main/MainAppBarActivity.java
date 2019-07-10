@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -55,6 +56,9 @@ public class MainAppBarActivity extends MainActivity {
         viewPager = findViewById(R.id.pager);
 
         tabLayout = findViewById(R.id.tab_layout);
+        // FIXME: 2019-07-09 PAPP CHANGE -> Tab visibility gone
+        tabLayout.setVisibility(View.GONE);
+
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 //        searchView = findViewById(R.id.search_view);
 
@@ -136,7 +140,9 @@ public class MainAppBarActivity extends MainActivity {
                     // Do something when collapsed
                     ((PrivateThreadsFragment) ChatSDK.ui().privateThreadsFragment()).onQueryUpdate("");
                     searchView.clearFocus();
-                    tabLayout.setVisibility(View.VISIBLE);
+                    // FIXME: 2019-07-09 PAPP
+                    tabLayout.setVisibility(View.GONE);
+//                    tabLayout.setVisibility(View.VISIBLE);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                        circleReveal(R.id.searchtoolbar,1,true,false);
                     }

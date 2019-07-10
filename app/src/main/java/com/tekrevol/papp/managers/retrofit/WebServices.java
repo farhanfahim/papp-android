@@ -519,7 +519,7 @@ public class WebServices {
                     public void onResponse(Call<WebResponse<Object>> call, Response<WebResponse<Object>> response) {
 
                         if (response.body() == null) {
-                            UIHelper.showAlertDialog(activity, "Token Authentication Failed, Kindly login again");
+                            UIHelper.showToast(activity, "Token Authentication Failed, Kindly login again");
                             SharedPreferenceManager.getInstance(activity).clearDB();
                             clearAllActivitiesExceptThis(MainActivity.class);
                             return;
@@ -532,14 +532,14 @@ public class WebServices {
                             sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
                             sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
 //
-                            UIHelper.showAlertDialog(activity, "Token refreshed successfully");
+                            UIHelper.showToast(activity, "Token refreshed successfully");
                             if (activity instanceof HomeActivity) {
                                 reload();
                             } else {
                                 clearAllActivitiesExceptThis(HomeActivity.class);
                             }
                         } else {
-                            UIHelper.showAlertDialog(activity, "Token Authentication Failed, Kindly login again");
+                            UIHelper.showToast(activity, "Token Authentication Failed, Kindly login again");
                             SharedPreferenceManager.getInstance(activity).clearDB();
                             clearAllActivitiesExceptThis(MainActivity.class);
                         }
@@ -549,7 +549,7 @@ public class WebServices {
                     @Override
                     public void onFailure(Call<WebResponse<Object>> call, Throwable t) {
                         dismissDialog();
-                        UIHelper.showAlertDialog(activity, "Token Authentication Failed, Kindly login again");
+                        UIHelper.showToast(activity, "Token Authentication Failed, Kindly login again");
                         SharedPreferenceManager.getInstance(activity).clearDB();
                         clearAllActivitiesExceptThis(MainActivity.class);
                     }
