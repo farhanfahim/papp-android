@@ -3,16 +3,24 @@ package com.tekrevol.papp.activities;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.fragment.app.Fragment;
+
 import android.view.Gravity;
 
 import com.tekrevol.papp.R;
+import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.VideoCallFragment;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.RunTimePermissions;
+import com.tekrevol.papp.helperclasses.StringHelper;
+import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+import com.tekrevol.papp.models.receiving_model.OpenTokSessionRecModel;
 
 import java.util.List;
 
@@ -20,9 +28,9 @@ import java.util.List;
 public class CallActivity extends BaseActivity {
 
     private NavigationView navigationView;
-    public String API_KEY = WebServiceConstants.API_KEY;
-    public String SESSION_ID = "2_MX40NjM1NDMxMn5-MTU2MTU0NTg2MjYxNn5WYlFjRkkydXNQSWwyM0wrUXVHSWJkUEp-fg";
-    public String TOKEN = "T1==cGFydG5lcl9pZD00NjM1NDMxMiZzaWc9NDMxMGIwOGI2YTRhMmQ1ZTUzZmMwYmU3MjNiOWZlODVlZTQxMzUwMDpzZXNzaW9uX2lkPTJfTVg0ME5qTTFORE14TW41LU1UVTJNVFUwTlRnMk1qWXhObjVXWWxGalJra3lkWE5RU1d3eU0wd3JVWFZIU1dKa1VFcC1mZyZjcmVhdGVfdGltZT0xNTYxNTQ1ODkxJm5vbmNlPTAuMDgwMTQ2MzMxNDA2NjgzOTImcm9sZT1wdWJsaXNoZXImZXhwaXJlX3RpbWU9MTU2MjE1MDY5MCZpbml0aWFsX2xheW91dF9jbGFzc19saXN0PQ==";
+//    public String API_KEY = WebServiceConstants.API_KEY;
+//    public String SESSION_ID = "2_MX40NjM1NDMxMn5-MTU2MTU0NTg2MjYxNn5WYlFjRkkydXNQSWwyM0wrUXVHSWJkUEp-fg";
+//    public String TOKEN = "T1==cGFydG5lcl9pZD00NjM1NDMxMiZzaWc9NDMxMGIwOGI2YTRhMmQ1ZTUzZmMwYmU3MjNiOWZlODVlZTQxMzUwMDpzZXNzaW9uX2lkPTJfTVg0ME5qTTFORE14TW41LU1UVTJNVFUwTlRnMk1qWXhObjVXWWxGalJra3lkWE5RU1d3eU0wd3JVWFZIU1dKa1VFcC1mZyZjcmVhdGVfdGltZT0xNTYxNTQ1ODkxJm5vbmNlPTAuMDgwMTQ2MzMxNDA2NjgzOTImcm9sZT1wdWJsaXNoZXImZXhwaXJlX3RpbWU9MTU2MjE1MDY5MCZpbml0aWFsX2xheW91dF9jbGFzc19saXN0PQ==";
     public final String LOG_TAG = MainActivity.class.getSimpleName();
     public final int RC_SETTINGS_SCREEN_PERM = 123;
     public final int RC_VIDEO_APP_PERM = 124;
@@ -45,7 +53,16 @@ public class CallActivity extends BaseActivity {
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         RunTimePermissions.verifyStoragePermissions(this);
-        initFragments();
+        String stringExtra = getIntent().getStringExtra(AppConstants.JSON_STRING_KEY);
+
+        if (StringHelper.isNullOrEmpty(stringExtra)) {
+            return;
+        }
+
+        OpenTokSessionRecModel openTokSessionRecModel = getGson().fromJson(stringExtra, OpenTokSessionRecModel.class);
+
+
+        initFragments(openTokSessionRecModel);
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.getBackground().setColorFilter(0x80000000, PorterDuff.Mode.MULTIPLY);
@@ -77,8 +94,12 @@ public class CallActivity extends BaseActivity {
         return R.id.contDrawer;
     }
 
-    private void initFragments() {
-        addDockableFragment(VideoCallFragment.newInstance(), false);
+    private void initFragments(OpenTokSessionRecModel openTokSessionRecModel) {
+        if (openTokSessionRecModel.getSessionType() == AppConstants.SESSION_TYPE_VIDEO) {
+            addDockableFragment(VideoCallFragment.newInstance(openTokSessionRecModel), false);
+        } else {
+            UIHelper.showToast(this, "This feature is in progress");
+        }
     }
 
     @Override

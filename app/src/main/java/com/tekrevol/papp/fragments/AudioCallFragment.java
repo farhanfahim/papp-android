@@ -18,6 +18,7 @@ import com.opentok.android.Subscriber;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.RunTimePermissions;
+import com.tekrevol.papp.models.receiving_model.OpenTokSessionRecModel;
 import com.tekrevol.papp.widget.TitleBar;
 
 import butterknife.BindView;
@@ -41,13 +42,14 @@ public class AudioCallFragment extends BaseFragment implements Session.SessionLi
     private Session mSession;
     private Publisher mPublisher;
     private Subscriber mSubscriber;
+    private OpenTokSessionRecModel openTokSessionRecModel;
 
-
-    public static AudioCallFragment newInstance() {
+    public static AudioCallFragment newInstance(OpenTokSessionRecModel openTokSessionRecModel) {
 
         Bundle args = new Bundle();
 
         AudioCallFragment fragment = new AudioCallFragment();
+        fragment.openTokSessionRecModel = openTokSessionRecModel;
         fragment.setArguments(args);
         return fragment;
     }
@@ -92,9 +94,9 @@ public class AudioCallFragment extends BaseFragment implements Session.SessionLi
         super.onViewCreated(view, savedInstanceState);
 
         if (RunTimePermissions.isCallPermissionGiven(getContext(), getBaseActivity(), true)) {
-            mSession = new Session.Builder(getContext(), getCallActivity().API_KEY, getCallActivity().SESSION_ID).build();
+            mSession = new Session.Builder(getContext(), openTokSessionRecModel.getApiKey(), openTokSessionRecModel.getOtkSessionId()).build();
             mSession.setSessionListener(this);
-            mSession.connect(getCallActivity().TOKEN);
+            mSession.connect(openTokSessionRecModel.getToken());
         }
     }
 
