@@ -90,7 +90,11 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.CALL" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
@@ -98,8 +102,6 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="3e20cd58531084d89edf0e73416cf3a58a4ab284" />
-
-
 
 
         <service android:name=".firebase.MyFirebaseMessagingService">

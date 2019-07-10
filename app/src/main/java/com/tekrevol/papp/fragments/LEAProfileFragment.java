@@ -1,14 +1,6 @@
 package com.tekrevol.papp.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.widget.AppCompatRatingBar;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +9,13 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatRatingBar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 import com.tekrevol.papp.R;
@@ -186,26 +185,28 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
         } else if (isDependent()) {
             txtScheduleMeeting.setVisibility(View.GONE);
             btnRight1.setVisibility(View.VISIBLE);
-            contChat.setVisibility(View.VISIBLE);
             txtEdit.setVisibility(View.GONE);
             imgEdit.setVisibility(View.GONE);
             txtTitle.setText("Mentor Profile");
             contPointsEarned.setVisibility(View.GONE);
 
-            if (mentorModel.getChatEnabled()) {
-                contChat.setVisibility(View.VISIBLE);
-            } else {
-                contChat.setVisibility(View.GONE);
-            }
+
+            contChat.setVisibility(View.VISIBLE);
+//            if (mentorModel.getChatEnabled()) {
+//                contChat.setVisibility(View.VISIBLE);
+//            } else {
+//                contChat.setVisibility(View.GONE);
+//            }
 
         } else {
             txtScheduleMeeting.setVisibility(View.VISIBLE);
             btnRight1.setVisibility(View.VISIBLE);
-            contChat.setVisibility(View.VISIBLE);
             txtEdit.setVisibility(View.GONE);
             imgEdit.setVisibility(View.GONE);
             txtTitle.setText("Mentor Profile");
             contPointsEarned.setVisibility(View.GONE);
+
+
 
             if (mentorModel.getChatEnabled()) {
                 contChat.setVisibility(View.VISIBLE);
