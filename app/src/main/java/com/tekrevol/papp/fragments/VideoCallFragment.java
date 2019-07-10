@@ -2,7 +2,6 @@ package com.tekrevol.papp.fragments;
 
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.opentok.android.BaseVideoRenderer;
 import com.opentok.android.OpentokError;
@@ -261,6 +262,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
             mSubscriber = null;
             subscriberContainer.removeAllViews();
         }
+
     }
 
     @Override
@@ -281,7 +283,12 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     @Override
     public void onDisconnected(SubscriberKit subscriberKit) {
 
-        Log.d(LOG_TAG, "onDisconnected: Subscriber disconnected. Stream: " + subscriberKit.getStream().getStreamId());
+        try {
+            Log.d(LOG_TAG, "onDisconnected: Subscriber disconnected. Stream: " + subscriberKit.getStream().getStreamId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -306,10 +313,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
             case R.id.imgMute:
                 break;
             case R.id.imgCancelCall:
-                if (mPublisher != null) {
-                    mPublisher.destroy();
-                }
-                getCallActivity().finish();
+                endCall();
                 break;
             case R.id.imgCameraSwitch:
                 if (mPublisher != null) {
@@ -318,5 +322,14 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
                 }
                 break;
         }
+    }
+
+    public void endCall() {
+
+
+        if (mPublisher != null) {
+            mPublisher.destroy();
+        }
+        getCallActivity().finish();
     }
 }

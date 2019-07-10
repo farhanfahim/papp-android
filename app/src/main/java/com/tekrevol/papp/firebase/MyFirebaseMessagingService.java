@@ -36,8 +36,12 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.tekrevol.papp.R;
+import com.tekrevol.papp.activities.CallActivity;
 import com.tekrevol.papp.activities.MainActivity;
+import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.managers.SharedPreferenceManager;
+import com.tekrevol.papp.managers.retrofit.GsonFactory;
+import com.tekrevol.papp.models.receiving_model.OpenTokSessionRecModel;
 
 import java.util.List;
 
@@ -71,8 +75,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
 
-//            GsonFactory.getSimpleGson().fromJson(remoteMessage.getNotification().getBody(), )
-            handleNotification(remoteMessage);
+            OpenTokSessionRecModel openTokSessionRecModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.getNotification().getBody(), OpenTokSessionRecModel.class);
+
+            if (openTokSessionRecModel == null) {
+                handleNotification(remoteMessage);
+            } else {
+                openTokSessionRecModel.setCaller(false);
+                openActivity(CallActivity.class, openTokSessionRecModel.toString());
+            }
         }
 
 
@@ -278,6 +288,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             sharedPreferenceManager.putValue(context.getString(R.string.notification_req_code), 0);
         }
         Log.d("showNotification", "showNotification: " + sharedPreferenceManager.getInt(context.getString(R.string.notification_req_code)));
+    }
+
+
+    public void openActivity(Class<?> tClass, String object) {
+        Intent i = new Intent(this, tClass);
+        i.putExtra(AppConstants.JSON_STRING_KEY, object);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
     }
 
 }
