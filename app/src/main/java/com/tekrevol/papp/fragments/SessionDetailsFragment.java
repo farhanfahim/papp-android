@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -398,6 +399,7 @@ public class SessionDetailsFragment extends BaseFragment implements OnItemClickL
                             openTokSessionRecModel.setSessionType(AppConstants.SESSION_TYPE_VIDEO);
 
 
+                            Log.d(TAG, "requestDataResponse: " + openTokSessionRecModel.toString());
                             getBaseActivity().openActivity(CallActivity.class, openTokSessionRecModel.toString());
 
                          }
