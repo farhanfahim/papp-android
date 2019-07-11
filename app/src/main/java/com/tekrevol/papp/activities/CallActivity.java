@@ -114,19 +114,19 @@ public class CallActivity extends BaseActivity {
          * Show Close app popup if no or single fragment is in stack. otherwise check if drawer is open. Close it..
          */
 
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-
-            if (drawerLayout.isDrawerOpen(Gravity.START)) {
-                drawerLayout.closeDrawer(Gravity.START);
-            } else {
-                super.onBackPressed();
-                List<Fragment> fragments = getSupportFragmentManager().getFragments();
-                BaseFragment fragment = (BaseFragment) fragments.get(fragments.size() - 1);
-                fragment.setTitlebar(titleBar);
-            }
-        } else {
-            finish();
-        }
+//        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+//
+//            if (drawerLayout.isDrawerOpen(Gravity.START)) {
+//                drawerLayout.closeDrawer(Gravity.START);
+//            } else {
+//                super.onBackPressed();
+//                List<Fragment> fragments = getSupportFragmentManager().getFragments();
+//                BaseFragment fragment = (BaseFragment) fragments.get(fragments.size() - 1);
+//                fragment.setTitlebar(titleBar);
+//            }
+//        } else {
+//            finish();
+//        }
     }
 
 

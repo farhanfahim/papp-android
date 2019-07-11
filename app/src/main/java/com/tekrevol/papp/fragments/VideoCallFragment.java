@@ -122,37 +122,40 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     @Override
     public void onPause() {
 
-        Log.d(LOG_TAG, "onPause");
-
-
-        if (mSession != null) {
-            mSession.onPause();
-        }
+        Log.d(TAG, "onPause");
 
         super.onPause();
 
+        if (mSession == null) {
+            return;
+        }
+        mSession.onPause();
+
+        if (getCallActivity().isFinishing()) {
+            disconnectSession();
+        }
 
     }
 
     @Override
     public void onResume() {
-        Log.d(LOG_TAG, "onResume");
+        Log.d(TAG, "onResume");
 
         super.onResume();
 
-        if (mSession != null) {
-            mSession.onResume();
+        if (mSession == null) {
+            return;
         }
+        mSession.onResume();
     }
 
 
     @Override
     public void onDestroy() {
-        Log.d(LOG_TAG, "onDestroy");
+        Log.d(TAG, "onDestroy");
 
-        if (mSession != null) {
-            mSession.disconnect();
-        }
+        disconnectSession();
+
         super.onDestroy();
     }
 
@@ -244,8 +247,9 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
 
     @Override
     public void onDisconnected(Session session) {
-        Log.d(LOG_TAG, "onDisconnected: Disconnected from session: " + session.getSessionId());
+        Log.d(TAG, "onDisconnected: disconnected from session " + session.getSessionId());
 
+        mSession = null;
     }
 
     @Override
@@ -264,11 +268,16 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     @Override
     public void onStreamDropped(Session session, Stream stream) {
 
-        Log.d(LOG_TAG, "onStreamDropped: Stream Dropped: " + stream.getStreamId() + " in session: " + session.getSessionId());
+        Log.d(TAG, "onStreamDropped: Stream " + stream.getStreamId() + " dropped from session " + session.getSessionId());
 
-        if (mSubscriber != null) {
+        if (mSubscriber == null) {
+            return;
+        }
+
+        if (mSubscriber.getStream().equals(stream)) {
+            subscriberContainer.removeView(mSubscriber.getView());
+            mSubscriber.destroy();
             mSubscriber = null;
-            subscriberContainer.removeAllViews();
         }
 
     }
@@ -344,13 +353,36 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
             mSession.sendSignal("101", "disconnect");
         }
 
-        if (mPublisher != null) {
-            mPublisher.destroy();
+
+
+
+        disconnectSession();
+
+
+    }
+
+
+
+    private void disconnectSession() {
+        if (mSession == null) {
+            return;
         }
 
-        getBaseActivity().popBackStack();
+        if (mSubscriber != null) {
+            subscriberContainer.removeView(mSubscriber.getView());
+            mSession.unsubscribe(mSubscriber);
+            mSubscriber.destroy();
+            mSubscriber = null;
+        }
 
-        getBaseActivity().popBackStack();
-        getCallActivity().finish();
+        if (mPublisher != null) {
+            publisherContainer.removeView(mPublisher.getView());
+            mSession.unpublish(mPublisher);
+            mPublisher.destroy();
+            mPublisher = null;
+        }
+        mSession.disconnect();
+
+        getBaseActivity().finish();
     }
 }
