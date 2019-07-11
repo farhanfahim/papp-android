@@ -322,7 +322,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
         if (getContext() == null)
             return;
 
-        Toast.makeText(getContext(), opentokError.getErrorDomain().name() + ": " + opentokError.getMessage() + " Please, see the logcat.", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getContext(), opentokError.getErrorDomain().name() + ": " + opentokError.getMessage() + " Please, see the logcat.", Toast.LENGTH_LONG).show();
         getCallActivity().finish();
     }
 
@@ -357,6 +357,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
 
 
         disconnectSession();
+        getBaseActivity().finish();
 
 
     }
@@ -382,7 +383,5 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
             mPublisher = null;
         }
         mSession.disconnect();
-
-        getBaseActivity().finish();
     }
 }
