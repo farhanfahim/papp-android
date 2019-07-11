@@ -68,6 +68,7 @@
                 android:background="@drawable/img_background_call_button_grey"
                 android:padding="@dimen/x10dp"
                 android:src="@drawable/img_mute"
+                android:tint="@color/white"
 
                 />
 

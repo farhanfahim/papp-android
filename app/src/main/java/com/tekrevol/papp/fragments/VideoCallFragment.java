@@ -330,6 +330,13 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgMute:
+                if (mPublisher.getPublishAudio()) {
+                    mPublisher.setPublishAudio(false);
+                    imgMute.setColorFilter(getBaseActivity().getResources().getColor(R.color.base_reddish));
+                } else {
+                    mPublisher.setPublishAudio(true);
+                    imgMute.setColorFilter(getBaseActivity().getResources().getColor(R.color.white));
+                }
                 break;
             case R.id.imgCancelCall:
                 endCall(true);
@@ -352,9 +359,6 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
         if (isSignalSender) {
             mSession.sendSignal("101", "disconnect");
         }
-
-
-
 
         disconnectSession();
         getBaseActivity().finish();
