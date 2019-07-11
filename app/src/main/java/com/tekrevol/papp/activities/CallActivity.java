@@ -3,6 +3,7 @@ package com.tekrevol.papp.activities;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 
@@ -19,7 +20,7 @@ import com.tekrevol.papp.models.receiving_model.OpenTokSessionRecModel;
 public class CallActivity extends BaseActivity {
 
     private NavigationView navigationView;
-//    public String API_KEY = WebServiceConstants.API_KEY;
+    //    public String API_KEY = WebServiceConstants.API_KEY;
 //    public String SESSION_ID = "2_MX40NjM1NDMxMn5-MTU2MTU0NTg2MjYxNn5WYlFjRkkydXNQSWwyM0wrUXVHSWJkUEp-fg";
 //    public String TOKEN = "T1==cGFydG5lcl9pZD00NjM1NDMxMiZzaWc9NDMxMGIwOGI2YTRhMmQ1ZTUzZmMwYmU3MjNiOWZlODVlZTQxMzUwMDpzZXNzaW9uX2lkPTJfTVg0ME5qTTFORE14TW41LU1UVTJNVFUwTlRnMk1qWXhObjVXWWxGalJra3lkWE5RU1d3eU0wd3JVWFZIU1dKa1VFcC1mZyZjcmVhdGVfdGltZT0xNTYxNTQ1ODkxJm5vbmNlPTAuMDgwMTQ2MzMxNDA2NjgzOTImcm9sZT1wdWJsaXNoZXImZXhwaXJlX3RpbWU9MTU2MjE1MDY5MCZpbml0aWFsX2xheW91dF9jbGFzc19saXN0PQ==";
     public final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -37,6 +38,7 @@ public class CallActivity extends BaseActivity {
 //        setContentView(R.layout.activity_main);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
     }
 
@@ -86,7 +88,7 @@ public class CallActivity extends BaseActivity {
     }
 
     private void initFragments(OpenTokSessionRecModel openTokSessionRecModel) {
-        if (openTokSessionRecModel.getSessionType() == AppConstants.SESSION_TYPE_VIDEO) {
+        if (openTokSessionRecModel.getSessionType().equals(String.valueOf(AppConstants.SESSION_TYPE_VIDEO))) {
             addDockableFragment(VideoCallFragment.newInstance(openTokSessionRecModel), false);
         } else {
             UIHelper.showToast(this, "This feature is in progress");

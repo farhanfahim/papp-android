@@ -52,6 +52,7 @@ import static com.tekrevol.papp.constatnts.AppConstants.KEY_FIREBASE_TOKEN_UPDAT
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private final String TAG = "Fcm";
+    private final String ACTION_TYPE_OPEN_TOK = "opentok_session";
 
 
 
@@ -70,19 +71,32 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         Log.e(TAG, "From: " + remoteMessage.getFrom());
 
+        if (SharedPreferenceManager.getInstance(this).getCurrentUser() == null) {
+            return;
+        }
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
 
-            OpenTokSessionRecModel openTokSessionRecModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.getNotification().getBody(), OpenTokSessionRecModel.class);
+            if (remoteMessage.getData() != null && remoteMessage.getData().get("extra_payload") != null) {
+                OpenTokSessionRecModel openTokSessionRecModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.getData().get("extra_payload"), OpenTokSessionRecModel.class);
 
-            if (openTokSessionRecModel == null) {
-                handleNotification(remoteMessage);
+                if (openTokSessionRecModel != null && openTokSessionRecModel.getActionType().equalsIgnoreCase(ACTION_TYPE_OPEN_TOK)) {
+                    openTokSessionRecModel.setCaller(false);
+                    openActivity(CallActivity.class, openTokSessionRecModel.toString());
+                } else {
+                    handleNotification(remoteMessage);
+                }
+
             } else {
-                openTokSessionRecModel.setCaller(false);
-                openActivity(CallActivity.class, openTokSessionRecModel.toString());
+
+                handleNotification(remoteMessage);
             }
+
+
+
+
         }
 
 

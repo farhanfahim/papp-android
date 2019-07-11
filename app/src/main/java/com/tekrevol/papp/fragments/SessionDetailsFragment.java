@@ -29,6 +29,7 @@ import com.tekrevol.papp.helperclasses.GooglePlaceHelper;
 import com.tekrevol.papp.helperclasses.Helper;
 import com.tekrevol.papp.helperclasses.StringHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.managers.DateManager;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.OpenTokSessionRecModel;
@@ -396,7 +397,9 @@ public class SessionDetailsFragment extends BaseFragment implements OnItemClickL
 
                             OpenTokSessionRecModel openTokSessionRecModel = getGson().fromJson(getGson().toJson(webResponse.result), OpenTokSessionRecModel.class);
                             openTokSessionRecModel.setCaller(true);
-                            openTokSessionRecModel.setSessionType(AppConstants.SESSION_TYPE_VIDEO);
+                            openTokSessionRecModel.setSessionType(String.valueOf(AppConstants.SESSION_TYPE_VIDEO));
+                            openTokSessionRecModel.setMentorName(sessionRecievingModel.getDependent().getUserDetails().getFullName());
+                            openTokSessionRecModel.setMentorImage(ImageLoaderHelper.getImageURLFromPath(sessionRecievingModel.getDependent().getUserDetails().getImage()));
 
 
                             Log.d(TAG, "requestDataResponse: " + openTokSessionRecModel.toString());

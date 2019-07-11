@@ -261,4 +261,16 @@ public  class SessionRecievingModel {
     public void setId(int id) {
         this.id = id;
     }
+
+
+    public UserModel getDependent() {
+        for (SessionUsers sessionUser : getSessionUsers()) {
+            for (UserModel dependant : getUser().getDependants()) {
+                if (dependant.getId() == sessionUser.getDependantId()) {
+                    return dependant;
+                }
+            }
+        }
+        return null;
+    }
 }

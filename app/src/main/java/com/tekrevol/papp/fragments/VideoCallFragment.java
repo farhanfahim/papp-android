@@ -2,6 +2,7 @@ package com.tekrevol.papp.fragments;
 
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
@@ -24,6 +25,8 @@ import com.opentok.android.Subscriber;
 import com.opentok.android.SubscriberKit;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.models.receiving_model.OpenTokSessionRecModel;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
@@ -32,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
@@ -58,10 +62,48 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     private static final String LOG_TAG = "Audio Call";
     @BindView(R.id.imgCameraSwitch)
     ImageView imgCameraSwitch;
+    @BindView(R.id.imgPickCall)
+    ImageView imgPickCall;
+    @BindView(R.id.imgDeclineCall)
+    ImageView imgDeclineCall;
+    @BindView(R.id.contCallComingOption)
+    LinearLayout contCallComingOption;
+    @BindView(R.id.contCallAcceptedOptions)
+    LinearLayout contCallAcceptedOptions;
+    @BindView(R.id.imgProfile)
+    CircleImageView imgProfile;
     private Session mSession;
     private Publisher mPublisher;
     private Subscriber mSubscriber;
     private OpenTokSessionRecModel openTokSessionRecModel;
+
+
+    long startTime = 0;
+    String END_CALL = "101";
+    String ACCEPT_CALL = "102";
+    String REJECT_CALL = "103";
+
+    //runs without a timer by reposting this handler at the end of the runnable
+    Handler timerHandler = new Handler();
+
+    Runnable timerRunnable = new Runnable() {
+
+        @Override
+        public void run() {
+            long millis = System.currentTimeMillis() - startTime;
+            int seconds = (int) (millis / 1000);
+            int minutes = seconds / 60;
+            int hour = minutes / 60;
+            seconds = seconds % 60;
+            minutes = minutes % 60;
+
+            if (txtTime != null) {
+                txtTime.setText(String.format("%d:%d:%02d", hour, minutes, seconds));
+            }
+
+            timerHandler.postDelayed(this, 500);
+        }
+    };
 
     public static VideoCallFragment newInstance(OpenTokSessionRecModel openTokSessionRecModel) {
 
@@ -114,6 +156,30 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
 
         initializeSession(openTokSessionRecModel.getApiKey(), openTokSessionRecModel.getOtkSessionId(), openTokSessionRecModel.getToken());
 
+        txtTime.setVisibility(View.GONE);
+        publisherContainer.setVisibility(View.GONE);
+        imgMute.setVisibility(View.GONE);
+        imgCameraSwitch.setVisibility(View.GONE);
+
+
+        txtCallerName.setText(openTokSessionRecModel.getMentorName());
+        ImageLoaderHelper.loadImageWithAnimations(imgProfile, openTokSessionRecModel.getMentorImage(), true);
+
+        if (openTokSessionRecModel.isCaller()) {
+            contCallAcceptedOptions.setVisibility(View.VISIBLE);
+            contCallComingOption.setVisibility(View.GONE);
+        } else {
+            contCallAcceptedOptions.setVisibility(View.GONE);
+            contCallComingOption.setVisibility(View.GONE);
+        }
+
+
+    }
+
+    private void startTimer() {
+        txtTime.setVisibility(View.VISIBLE);
+        startTime = System.currentTimeMillis();
+        timerHandler.postDelayed(timerRunnable, 0);
     }
 
 
@@ -155,7 +221,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
         Log.d(TAG, "onDestroy");
 
         disconnectSession();
-
+        timerHandler.removeCallbacks(timerRunnable);
         super.onDestroy();
     }
 
@@ -167,10 +233,17 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
             public void onSignalReceived(Session session, String s, String s1, Connection connection) {
 
                 if (isSignalSender) {
+                    isSignalSender = false;
                     return;
                 }
-                if (s.equals("101")) {
+                if (s.equals(END_CALL)) {
                     Log.d(TAG, "onSignalReceived: " + "End call");
+                    endCall(false);
+                } else if (s.equals(ACCEPT_CALL)) {
+                    startTimer();
+                    publishVideo();
+                } else if (s.equals(REJECT_CALL)) {
+                    UIHelper.showToast(getContext(), "User is busy");
                     endCall(false);
                 }
             }
@@ -228,6 +301,18 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     public void onConnected(Session session) {
 
         Log.d(LOG_TAG, "onConnected: Connected to session: " + session.getSessionId());
+
+        if (!openTokSessionRecModel.isCaller()) {
+            contCallAcceptedOptions.setVisibility(View.GONE);
+            contCallComingOption.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void publishVideo() {
+        publisherContainer.setVisibility(View.VISIBLE);
+        imgProfile.setVisibility(View.GONE);
+        imgMute.setVisibility(View.VISIBLE);
+        imgCameraSwitch.setVisibility(View.VISIBLE);
 
         // initialize Publisher and set this object to listen to Publisher events
         mPublisher = new Publisher.Builder(getContext()).build();
@@ -326,7 +411,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
         getCallActivity().finish();
     }
 
-    @OnClick({R.id.imgMute, R.id.imgCancelCall, R.id.imgCameraSwitch})
+    @OnClick({R.id.imgMute, R.id.imgCancelCall, R.id.imgCameraSwitch, R.id.imgDeclineCall, R.id.imgPickCall})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgMute:
@@ -338,6 +423,9 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
                     imgMute.setColorFilter(getBaseActivity().getResources().getColor(R.color.white));
                 }
                 break;
+            case R.id.imgDeclineCall:
+                rejectCall(true);
+                break;
             case R.id.imgCancelCall:
                 endCall(true);
                 break;
@@ -347,17 +435,53 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
                     mPublisher.startPreview();
                 }
                 break;
+
+
+            case R.id.imgPickCall:
+                isSignalSender = true;
+                mSession.sendSignal(ACCEPT_CALL, "accept");
+                contCallAcceptedOptions.setVisibility(View.VISIBLE);
+                contCallComingOption.setVisibility(View.GONE);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startTimer();
+                        publishVideo();
+                    }
+                }, 200);
+
+
+                break;
         }
     }
 
 
-    public void endCall(boolean isSignalSender) {
+    private void rejectCall(boolean isSignalSender) {
 
         this.isSignalSender = isSignalSender;
 
 
         if (isSignalSender) {
-            mSession.sendSignal("101", "disconnect");
+
+            mSession.sendSignal(REJECT_CALL, "reject");
+
+        }
+
+        disconnectSession();
+        getBaseActivity().finish();
+
+    }
+
+
+    private void endCall(boolean isSignalSender) {
+
+        this.isSignalSender = isSignalSender;
+
+
+        if (isSignalSender && mSession != null) {
+
+            mSession.sendSignal(END_CALL, "disconnect", true);
         }
 
         disconnectSession();
@@ -365,7 +489,6 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
 
 
     }
-
 
 
     private void disconnectSession() {
