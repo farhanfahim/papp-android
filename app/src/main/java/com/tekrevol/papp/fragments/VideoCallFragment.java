@@ -442,14 +442,8 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
                 mSession.sendSignal(ACCEPT_CALL, "accept");
                 contCallAcceptedOptions.setVisibility(View.VISIBLE);
                 contCallComingOption.setVisibility(View.GONE);
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        startTimer();
-                        publishVideo();
-                    }
-                }, 200);
+                startTimer();
+                publishVideo();
 
 
                 break;

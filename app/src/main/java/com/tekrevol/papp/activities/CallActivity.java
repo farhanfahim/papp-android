@@ -91,7 +91,7 @@ public class CallActivity extends BaseActivity {
         if (openTokSessionRecModel.getSessionType().equals(String.valueOf(AppConstants.SESSION_TYPE_VIDEO))) {
             addDockableFragment(VideoCallFragment.newInstance(openTokSessionRecModel), false);
         } else {
-            UIHelper.showToast(this, "This feature is in progress");
+            addDockableFragment(VideoCallFragment.newInstance(openTokSessionRecModel), false);
         }
     }
 
