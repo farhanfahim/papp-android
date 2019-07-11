@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/chat-sdk-profile-pictures/chat-sdk-profile-pictures.iml" filepath="$PROJECT_DIR$/chat-sdk-profile-pictures/chat-sdk-profile-pictures.iml" />
       <module fileurl="file://$PROJECT_DIR$/chat-sdk-ui/chat-sdk-ui.iml" filepath="$PROJECT_DIR$/chat-sdk-ui/chat-sdk-ui.iml" />
       <module fileurl="file://$PROJECT_DIR$/facebookloginsdk/facebookloginsdk.iml" filepath="$PROJECT_DIR$/facebookloginsdk/facebookloginsdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/papp-android.iml" filepath="$PROJECT_DIR$/papp-android.iml" />
     </modules>
   </component>
 </project>
