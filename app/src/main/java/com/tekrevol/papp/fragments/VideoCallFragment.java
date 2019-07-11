@@ -268,7 +268,9 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
 
         if (mSubscriber != null) {
             mSubscriber = null;
-            subscriberContainer.removeAllViews();
+            if (subscriberContainer != null) {
+                subscriberContainer.removeAllViews();
+            }
         }
 
     }
@@ -348,8 +350,9 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
             mPublisher.destroy();
         }
 
-        getBaseActivity().popBackStack();
-
+        if (mSession != null) {
+            mSession.disconnect();
+        }
         getBaseActivity().popBackStack();
         getCallActivity().finish();
     }

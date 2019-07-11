@@ -7,22 +7,13 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.navigation.NavigationView;
-
-import androidx.fragment.app.Fragment;
-
-import android.view.Gravity;
-
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.constatnts.AppConstants;
-import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.VideoCallFragment;
-import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.RunTimePermissions;
 import com.tekrevol.papp.helperclasses.StringHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.models.receiving_model.OpenTokSessionRecModel;
-
-import java.util.List;
 
 
 public class CallActivity extends BaseActivity {
@@ -114,19 +105,19 @@ public class CallActivity extends BaseActivity {
          * Show Close app popup if no or single fragment is in stack. otherwise check if drawer is open. Close it..
          */
 
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-
-            if (drawerLayout.isDrawerOpen(Gravity.START)) {
-                drawerLayout.closeDrawer(Gravity.START);
-            } else {
-                super.onBackPressed();
-                List<Fragment> fragments = getSupportFragmentManager().getFragments();
-                BaseFragment fragment = (BaseFragment) fragments.get(fragments.size() - 1);
-                fragment.setTitlebar(titleBar);
-            }
-        } else {
-            finish();
-        }
+//        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+//
+//            if (drawerLayout.isDrawerOpen(Gravity.START)) {
+//                drawerLayout.closeDrawer(Gravity.START);
+//            } else {
+//                super.onBackPressed();
+//                List<Fragment> fragments = getSupportFragmentManager().getFragments();
+//                BaseFragment fragment = (BaseFragment) fragments.get(fragments.size() - 1);
+//                fragment.setTitlebar(titleBar);
+//            }
+//        } else {
+//            finish();
+//        }
     }
 
 
