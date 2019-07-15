@@ -23,6 +23,7 @@ import com.tekrevol.papp.fragments.DashboardCivilianFragment;
 import com.tekrevol.papp.fragments.DashboardLEAFragment;
 import com.tekrevol.papp.fragments.RightSideMenuFragment;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.Helper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.libraries.residemenu.ResideMenu;
 import com.tekrevol.papp.managers.SharedPreferenceManager;
@@ -64,6 +65,7 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_main);
 
+        Helper.printHashKey(this);
     }
 
     @Override
