@@ -15,8 +15,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgProfile"
-        android:layout_width="@dimen/x150dp"
-        android:layout_height="@dimen/x150dp"
+        android:layout_width="@dimen/x200dp"
+        android:layout_height="@dimen/x200dp"
         android:src="@drawable/profile_placeholder"
         app:civ_border_color="@color/white"
         android:layout_centerHorizontal="true"
@@ -51,13 +51,7 @@
             android:orientation="vertical">
 
 
-            <FrameLayout
-                android:id="@+id/publisher_container"
-                android:layout_width="@dimen/x100dp"
-                android:layout_height="@dimen/x150dp"
-                android:background="@color/c_black"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img_placeholder_lea" />
+
 
 
         </LinearLayout>
@@ -158,12 +152,13 @@
 
 
             <ImageView
-                android:id="@+id/imgCameraSwitch"
+                android:id="@+id/imgLoudSpeaker"
                 android:layout_width="@dimen/x60dp"
                 android:layout_height="@dimen/x60dp"
                 android:background="@drawable/img_background_call_button_grey"
                 android:padding="@dimen/x10dp"
-                android:src="@drawable/img_camera_switch"
+                android:src="@drawable/img_speaker"
+                android:tint="@color/base_reddish"
 
                 />
 

@@ -1,8 +1,6 @@
 package com.tekrevol.papp.fragments;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +11,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
+
+import com.opentok.android.AudioDeviceManager;
+import com.opentok.android.BaseAudioDevice;
 import com.opentok.android.Connection;
 import com.opentok.android.OpentokError;
 import com.opentok.android.Publisher;
@@ -43,33 +45,35 @@ public class AudioCallFragment extends BaseFragment implements Session.SessionLi
 
 
     Unbinder unbinder;
-    @BindView(R.id.txtCallerName)
-    AnyTextView txtCallerName;
-    @BindView(R.id.publisher_container)
-    FrameLayout publisherContainer;
-    @BindView(R.id.imgMute)
-    ImageView imgMute;
-    @BindView(R.id.imgCancelCall)
-    ImageView imgCancelCall;
-    @BindView(R.id.txtTime)
-    AnyTextView txtTime;
     @BindView(R.id.subscriber_container)
     FrameLayout subscriberContainer;
-    boolean isSignalSender = false;
-
-    private static final String LOG_TAG = "Video Call";
-    @BindView(R.id.imgCameraSwitch)
-    ImageView imgCameraSwitch;
+    @BindView(R.id.imgProfile)
+    CircleImageView imgProfile;
+    @BindView(R.id.txtCallerName)
+    AnyTextView txtCallerName;
     @BindView(R.id.imgPickCall)
     ImageView imgPickCall;
     @BindView(R.id.imgDeclineCall)
     ImageView imgDeclineCall;
     @BindView(R.id.contCallComingOption)
     LinearLayout contCallComingOption;
+    @BindView(R.id.imgMute)
+    ImageView imgMute;
+    @BindView(R.id.imgCancelCall)
+    ImageView imgCancelCall;
+    @BindView(R.id.imgLoudSpeaker)
+    ImageView imgLoudSpeaker;
     @BindView(R.id.contCallAcceptedOptions)
     LinearLayout contCallAcceptedOptions;
-    @BindView(R.id.imgProfile)
-    CircleImageView imgProfile;
+    @BindView(R.id.txtTime)
+    AnyTextView txtTime;
+
+
+    private boolean isSignalSender = false;
+    private boolean isLoudSpeakerOn = true;
+    private static final String LOG_TAG = "Video Call";
+
+
     private Session mSession;
     private Publisher mPublisher;
     private Subscriber mSubscriber;
@@ -121,7 +125,7 @@ public class AudioCallFragment extends BaseFragment implements Session.SessionLi
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_video_call;
+        return R.layout.fragment_audio_call;
     }
 
     @Override
@@ -155,9 +159,8 @@ public class AudioCallFragment extends BaseFragment implements Session.SessionLi
         initializeSession(openTokSessionRecModel.getApiKey(), openTokSessionRecModel.getOtkSessionId(), openTokSessionRecModel.getToken());
 
         txtTime.setVisibility(View.GONE);
-        publisherContainer.setVisibility(View.GONE);
         imgMute.setVisibility(View.GONE);
-        imgCameraSwitch.setVisibility(View.GONE);
+        imgLoudSpeaker.setVisibility(View.GONE);
 
 
         txtCallerName.setText(openTokSessionRecModel.getMentorName());
@@ -310,7 +313,7 @@ public class AudioCallFragment extends BaseFragment implements Session.SessionLi
 //        publisherContainer.setVisibility(View.VISIBLE);
 //        imgProfile.setVisibility(View.GONE);
         imgMute.setVisibility(View.VISIBLE);
-        imgCameraSwitch.setVisibility(View.VISIBLE);
+        imgLoudSpeaker.setVisibility(View.VISIBLE);
 
         // initialize Publisher and set this object to listen to Publisher events
         mPublisher = new Publisher.Builder(getContext()).videoTrack(false).build();
@@ -399,7 +402,7 @@ public class AudioCallFragment extends BaseFragment implements Session.SessionLi
         getCallActivity().finish();
     }
 
-    @OnClick({R.id.imgMute, R.id.imgCancelCall, R.id.imgDeclineCall, R.id.imgPickCall})
+    @OnClick({R.id.imgMute, R.id.imgCancelCall, R.id.imgDeclineCall, R.id.imgPickCall, R.id.imgLoudSpeaker})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgMute:
@@ -425,8 +428,25 @@ public class AudioCallFragment extends BaseFragment implements Session.SessionLi
                 contCallComingOption.setVisibility(View.GONE);
                 startTimer();
                 publishAudio();
+                break;
 
 
+            case R.id.imgLoudSpeaker:
+                if (mPublisher != null) {
+
+                    if (isLoudSpeakerOn) {
+                        AudioDeviceManager.getAudioDevice().setOutputMode(
+                                BaseAudioDevice.OutputMode.Handset);
+                        imgLoudSpeaker.setColorFilter(getBaseActivity().getResources().getColor(R.color.white));
+                        isLoudSpeakerOn = false;
+                    } else {
+                        AudioDeviceManager.getAudioDevice().setOutputMode(
+                                BaseAudioDevice.OutputMode.SpeakerPhone);
+                        imgLoudSpeaker.setColorFilter(getBaseActivity().getResources().getColor(R.color.base_reddish));
+                        isLoudSpeakerOn = true;
+                    }
+
+                }
                 break;
         }
     }
@@ -471,14 +491,12 @@ public class AudioCallFragment extends BaseFragment implements Session.SessionLi
         }
 
         if (mSubscriber != null) {
-            subscriberContainer.removeView(mSubscriber.getView());
             mSession.unsubscribe(mSubscriber);
             mSubscriber.destroy();
             mSubscriber = null;
         }
 
         if (mPublisher != null) {
-            publisherContainer.removeView(mPublisher.getView());
             mSession.unpublish(mPublisher);
             mPublisher.destroy();
             mPublisher = null;
