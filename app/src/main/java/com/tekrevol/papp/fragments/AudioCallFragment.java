@@ -67,6 +67,8 @@ public class AudioCallFragment extends BaseFragment implements Session.SessionLi
     LinearLayout contCallAcceptedOptions;
     @BindView(R.id.txtTime)
     AnyTextView txtTime;
+    @BindView(R.id.txtStatus)
+    AnyTextView txtStatus;
 
 
     private boolean isSignalSender = false;
@@ -169,9 +171,12 @@ public class AudioCallFragment extends BaseFragment implements Session.SessionLi
         if (openTokSessionRecModel.isCaller()) {
             contCallAcceptedOptions.setVisibility(View.VISIBLE);
             contCallComingOption.setVisibility(View.GONE);
+            txtStatus.setText("Calling...");
         } else {
             contCallAcceptedOptions.setVisibility(View.GONE);
             contCallComingOption.setVisibility(View.GONE);
+            txtStatus.setText("Connecting...");
+            getCallActivity().playRingtone();
         }
 
 
@@ -179,8 +184,10 @@ public class AudioCallFragment extends BaseFragment implements Session.SessionLi
 
     private void startTimer() {
         txtTime.setVisibility(View.VISIBLE);
+        getCallActivity().stopRingtone();
         startTime = System.currentTimeMillis();
         timerHandler.postDelayed(timerRunnable, 0);
+        txtStatus.setVisibility(View.GONE);
     }
 
 
@@ -306,6 +313,7 @@ public class AudioCallFragment extends BaseFragment implements Session.SessionLi
         if (!openTokSessionRecModel.isCaller()) {
             contCallAcceptedOptions.setVisibility(View.GONE);
             contCallComingOption.setVisibility(View.VISIBLE);
+            txtStatus.setVisibility(View.GONE);
         }
     }
 

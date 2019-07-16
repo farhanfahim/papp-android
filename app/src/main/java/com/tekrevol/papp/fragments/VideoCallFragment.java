@@ -72,6 +72,8 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     LinearLayout contCallAcceptedOptions;
     @BindView(R.id.imgProfile)
     CircleImageView imgProfile;
+    @BindView(R.id.txtStatus)
+    AnyTextView txtStatus;
     private Session mSession;
     private Publisher mPublisher;
     private Subscriber mSubscriber;
@@ -168,9 +170,12 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
         if (openTokSessionRecModel.isCaller()) {
             contCallAcceptedOptions.setVisibility(View.VISIBLE);
             contCallComingOption.setVisibility(View.GONE);
+            txtStatus.setText("Calling...");
         } else {
             contCallAcceptedOptions.setVisibility(View.GONE);
             contCallComingOption.setVisibility(View.GONE);
+            txtStatus.setText("Connecting...");
+            getCallActivity().playRingtone();
         }
 
 
@@ -178,8 +183,10 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
 
     private void startTimer() {
         txtTime.setVisibility(View.VISIBLE);
+        getCallActivity().stopRingtone();
         startTime = System.currentTimeMillis();
         timerHandler.postDelayed(timerRunnable, 0);
+        txtStatus.setVisibility(View.GONE);
     }
 
 

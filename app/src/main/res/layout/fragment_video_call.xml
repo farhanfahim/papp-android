@@ -17,11 +17,24 @@
         android:id="@+id/imgProfile"
         android:layout_width="@dimen/x150dp"
         android:layout_height="@dimen/x150dp"
-        android:src="@drawable/profile_placeholder"
-        app:civ_border_color="@color/white"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/x80dp"
+        android:src="@drawable/profile_placeholder"
+        app:civ_border_color="@color/white"
         app:civ_border_width="@dimen/x2dp" />
+
+
+    <com.tekrevol.papp.widget.AnyTextView
+        android:id="@+id/txtStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgProfile"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/x10dp"
+        android:text="Status..."
+        android:textColor="@color/c_white"
+        android:textSize="@dimen/s18"
+        app:fontFamily="@string/font_medium" />
 
 
     <LinearLayout
