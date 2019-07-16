@@ -276,11 +276,6 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
 //                ChatSDK.db().fetchUserWithEntityID()
 
 
-
-
-
-
-
                  break;
             case R.id.contSessions:
                 getBaseActivity().popBackStack();

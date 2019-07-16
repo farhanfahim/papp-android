@@ -42,6 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import co.chatsdk.core.session.ChatSDK;
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
 public class ViewSessionFragment extends BaseFragment implements OnItemClickListener, SlyCalendarDialog.Callback {
@@ -209,8 +210,7 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.contChat:
-                getBaseActivity().popBackStack();
-                getBaseActivity().addDockableFragment(ChatListsFragment.newInstance(), false);
+                ChatSDK.ui().startMainActivity(getContext());
                 break;
             case R.id.contDate:
                 new SlyCalendarDialog()

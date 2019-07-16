@@ -59,7 +59,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     FrameLayout subscriberContainer;
     boolean isSignalSender = false;
 
-    private static final String LOG_TAG = "Audio Call";
+    private static final String LOG_TAG = "Video Call";
     @BindView(R.id.imgCameraSwitch)
     ImageView imgCameraSwitch;
     @BindView(R.id.imgPickCall)

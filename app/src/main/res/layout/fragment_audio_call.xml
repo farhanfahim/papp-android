@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:id="@+id/subscriber_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/img_background_sidebar" />
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgProfile"
+        android:layout_width="@dimen/x150dp"
+        android:layout_height="@dimen/x150dp"
+        android:src="@drawable/profile_placeholder"
+        app:civ_border_color="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/x80dp"
+        app:civ_border_width="@dimen/x2dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/x20dp">
+
+        <com.tekrevol.papp.widget.AnyTextView
+            android:id="@+id/txtCallerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Name"
+            android:textColor="@color/c_white"
+            android:textSize="@dimen/s18"
+            app:fontFamily="@string/font_medium"
+
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/x20dp"
+            android:layout_weight="1"
+            android:gravity="right|bottom"
+            android:orientation="vertical">
+
+
+            <FrameLayout
+                android:id="@+id/publisher_container"
+                android:layout_width="@dimen/x100dp"
+                android:layout_height="@dimen/x150dp"
+                android:background="@color/c_black"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_placeholder_lea" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/contCallComingOption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x20dp"
+            android:layout_marginRight="@dimen/x20dp"
+            android:visibility="gone">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+
+                <ImageView
+                    android:id="@+id/imgPickCall"
+                    android:layout_width="@dimen/x60dp"
+                    android:layout_height="@dimen/x60dp"
+                    android:background="@drawable/img_background_call_button_red"
+                    android:backgroundTint="@color/material_green500"
+                    android:padding="@dimen/x10dp"
+                    android:src="@drawable/img_call"
+                    android:tint="@color/white"
+
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+
+                <ImageView
+                    android:id="@+id/imgDeclineCall"
+                    android:layout_width="@dimen/x60dp"
+                    android:layout_height="@dimen/x60dp"
+                    android:background="@drawable/img_background_call_button_red"
+                    android:padding="@dimen/x10dp"
+                    android:src="@drawable/img_call_cancel"
+
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/contCallAcceptedOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x20dp"
+            android:layout_marginRight="@dimen/x20dp">
+
+
+            <ImageView
+                android:id="@+id/imgMute"
+                android:layout_width="@dimen/x60dp"
+                android:layout_height="@dimen/x60dp"
+                android:background="@drawable/img_background_call_button_grey"
+                android:padding="@dimen/x10dp"
+                android:src="@drawable/img_mute"
+                android:tint="@color/white"
+
+                />
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+
+                <ImageView
+                    android:id="@+id/imgCancelCall"
+                    android:layout_width="@dimen/x60dp"
+                    android:layout_height="@dimen/x60dp"
+                    android:background="@drawable/img_background_call_button_red"
+                    android:padding="@dimen/x10dp"
+                    android:src="@drawable/img_call_cancel"
+
+                    />
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/imgCameraSwitch"
+                android:layout_width="@dimen/x60dp"
+                android:layout_height="@dimen/x60dp"
+                android:background="@drawable/img_background_call_button_grey"
+                android:padding="@dimen/x10dp"
+                android:src="@drawable/img_camera_switch"
+
+                />
+
+
+        </LinearLayout>
+
+
+        <com.tekrevol.papp.widget.AnyTextView
+            android:id="@+id/txtTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/x10dp"
+            android:text="01:10"
+            android:textColor="@color/c_white"
+            android:textSize="@dimen/s14"
+            app:fontFamily="@string/font_medium"
+
+            />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

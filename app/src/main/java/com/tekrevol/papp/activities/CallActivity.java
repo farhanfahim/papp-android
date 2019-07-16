@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import com.google.android.material.navigation.NavigationView;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.fragments.AudioCallFragment;
 import com.tekrevol.papp.fragments.VideoCallFragment;
 import com.tekrevol.papp.helperclasses.RunTimePermissions;
 import com.tekrevol.papp.helperclasses.StringHelper;
@@ -91,7 +92,7 @@ public class CallActivity extends BaseActivity {
         if (openTokSessionRecModel.getSessionType().equals(String.valueOf(AppConstants.SESSION_TYPE_VIDEO))) {
             addDockableFragment(VideoCallFragment.newInstance(openTokSessionRecModel), false);
         } else {
-            addDockableFragment(VideoCallFragment.newInstance(openTokSessionRecModel), false);
+            addDockableFragment(AudioCallFragment.newInstance(openTokSessionRecModel), false);
         }
     }
 

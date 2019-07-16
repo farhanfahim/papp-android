@@ -206,7 +206,9 @@ public class SessionDetailsFragment extends BaseFragment implements OnItemClickL
             if (StringHelper.isNullOrEmpty(sessionRecievingModel.getStartDate())) {
                 contComplete.setVisibility(View.GONE);
             } else {
-                contComplete.setVisibility(View.VISIBLE);
+                if (isMentor()) {
+                    contComplete.setVisibility(View.VISIBLE);
+                }
             }
 
 
@@ -406,7 +408,9 @@ public class SessionDetailsFragment extends BaseFragment implements OnItemClickL
     }
 
     private void startCallActivity(int sessionId, int sessionType) {
-        contComplete.setVisibility(View.VISIBLE);
+        if (isMentor()) {
+            contComplete.setVisibility(View.VISIBLE);
+        }
 
         Map<String, Object> queryMap = new HashMap<>();
         queryMap.put(WebServiceConstants.Q_PARAM_SESSION_ID, sessionId);
@@ -423,7 +427,7 @@ public class SessionDetailsFragment extends BaseFragment implements OnItemClickL
 
                 OpenTokSessionRecModel openTokSessionRecModel = getGson().fromJson(getGson().toJson(webResponse.result), OpenTokSessionRecModel.class);
                 openTokSessionRecModel.setCaller(true);
-                openTokSessionRecModel.setSessionType(String.valueOf(AppConstants.SESSION_TYPE_VIDEO));
+                openTokSessionRecModel.setSessionType(String.valueOf(sessionType));
                 openTokSessionRecModel.setMentorName(sessionRecievingModel.getDependent().getUserDetails().getFullName());
                 openTokSessionRecModel.setMentorImage(ImageLoaderHelper.getImageURLFromPath(sessionRecievingModel.getDependent().getUserDetails().getImage()));
 
