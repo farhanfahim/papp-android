@@ -66,7 +66,7 @@ public class KeyboardHelper {
         editText.requestFocus();
     }
 
-    public static void showSoftKeyboardForcefully(Context context, EditText editText) {
+    public static void showSoftKeyboardForcefully(Context context, View editText) {
 
         if (context == null) {
             return;

@@ -488,7 +488,6 @@ public class WebServices {
             } else if (response.code() == WebServiceConstants.PARAMS_TOKEN_BLACKLIST) {
                 UIHelper.showAlertDialog(activity, "Token Authentication Failed, Kindly login again");
                 SharedPreferenceManager.getInstance(activity).clearDB();
-                clearAllActivitiesExceptThis(MainActivity.class);
             } else {
                 errorToastForObject(error, true);
             }
@@ -521,7 +520,6 @@ public class WebServices {
                         if (response.body() == null) {
                             UIHelper.showToast(activity, "Token Authentication Failed, Kindly login again");
                             SharedPreferenceManager.getInstance(activity).clearDB();
-                            clearAllActivitiesExceptThis(MainActivity.class);
                             return;
                         }
 
@@ -541,7 +539,6 @@ public class WebServices {
                         } else {
                             UIHelper.showToast(activity, "Token Authentication Failed, Kindly login again");
                             SharedPreferenceManager.getInstance(activity).clearDB();
-                            clearAllActivitiesExceptThis(MainActivity.class);
                         }
 
                     }
@@ -551,7 +548,6 @@ public class WebServices {
                         dismissDialog();
                         UIHelper.showToast(activity, "Token Authentication Failed, Kindly login again");
                         SharedPreferenceManager.getInstance(activity).clearDB();
-                        clearAllActivitiesExceptThis(MainActivity.class);
                     }
                 });
             } else {

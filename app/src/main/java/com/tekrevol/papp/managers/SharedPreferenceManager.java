@@ -1,13 +1,22 @@
 package com.tekrevol.papp.managers;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
+import com.tekrevol.papp.activities.BaseActivity;
+import com.tekrevol.papp.activities.MainActivity;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 
+import co.chatsdk.core.session.ChatSDK;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+
+import static android.content.Context.ACTIVITY_SERVICE;
 import static com.tekrevol.papp.constatnts.AppConstants.DEPENDENT_ROLE;
 import static com.tekrevol.papp.constatnts.AppConstants.PARENT_ROLE;
 
@@ -21,6 +30,7 @@ public class SharedPreferenceManager {
     private static SharedPreferences pref;
     private static SharedPreferenceManager factory;
     public final static String PREFS_NAME = "papp_pref";
+    private Context context;
 
     public static SharedPreferenceManager getInstance(Context context) {
         if (pref == null)
@@ -28,6 +38,9 @@ public class SharedPreferenceManager {
 
         if (factory == null)
             factory = new SharedPreferenceManager();
+
+
+        factory.context = context;
 
         return factory;
     }
@@ -37,13 +50,39 @@ public class SharedPreferenceManager {
 
         String firebaseToken = getString(AppConstants.KEY_FIREBASE_TOKEN);
 
-
-
-        pref.edit().clear().commit();
-
-        putValue(AppConstants.KEY_FIREBASE_TOKEN, firebaseToken);
+        ChatSDK.auth().logout()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                            Log.d("CLEAR DB: ", "clearDB: ");
+                            logoutProcess(firebaseToken);
+                        }
+                        ,
+                        throwable -> {
+                            ChatSDK.logError(throwable);
+                            logoutProcess(firebaseToken);
+                        }
+                );
 
     }
+
+    private void logoutProcess(String firebaseToken) {
+        pref.edit().clear().commit();
+        putValue(AppConstants.KEY_FIREBASE_TOKEN, firebaseToken);
+        clearAllActivitiesExceptThis(MainActivity.class);
+    }
+
+
+    public void clearAllActivitiesExceptThis(Class<?> cls) {
+        Intent intents = new Intent(context, cls);
+        intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(intents);
+        if (context instanceof BaseActivity) {
+            ((BaseActivity)context).finish();
+        }
+    }
+
 
     public void clearKey(String key) {
         pref.edit().remove(key).commit();

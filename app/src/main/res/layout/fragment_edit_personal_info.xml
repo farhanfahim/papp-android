@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+
+    <com.chinalwb.are.AREditor
+        android:id="@+id/areditor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:focusable="true"
+        android:focusedByDefault="true"
+        app:expandMode="FULL"
+        app:hideToolbar="false"
+        app:toolbarAlignment="TOP" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabDone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/areditor"
+        android:layout_alignBottom="@+id/areditor"
+        android:layout_marginEnd="10dp"
+        android:clickable="true"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_done_tick" />
+
+</RelativeLayout>

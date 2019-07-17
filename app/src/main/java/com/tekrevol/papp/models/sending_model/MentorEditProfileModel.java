@@ -35,9 +35,6 @@ public class MentorEditProfileModel {
     @SerializedName("first_name")
     private String firstName;
     @Expose
-    @SerializedName("about")
-    private String about;
-    @Expose
     @SerializedName("address")
     private String address;
     @Expose
@@ -109,14 +106,6 @@ public class MentorEditProfileModel {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public String getAbout() {
-        return about;
-    }
-
-    public void setAbout(String about) {
-        this.about = about;
     }
 
     public String getAddress() {

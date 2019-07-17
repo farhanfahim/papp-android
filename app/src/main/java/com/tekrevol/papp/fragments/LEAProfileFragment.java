@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -75,6 +76,8 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
     LinearLayout containerTitlebar1;
     @BindView(R.id.imgProfile)
     CircleImageView imgProfile;
+    @BindView(R.id.imgEdit)
+    ImageView imgEdit;
     @BindView(R.id.txtEdit)
     AnyTextView txtEdit;
     @BindView(R.id.txtName)
@@ -107,12 +110,13 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
     LinearLayout contReviews;
     @BindView(R.id.rvSpecialization)
     RecyclerView rvSpecialization;
-    @BindView(R.id.txtPersonalInfo)
-    AnyTextView txtPersonalInfo;
+    @BindView(R.id.contEditPersonalInfo)
+    LinearLayout contEditPersonalInfo;
+    @BindView(R.id.webViewInfo)
+    WebView webViewInfo;
     @BindView(R.id.txtScheduleMeeting)
     AnyTextView txtScheduleMeeting;
-    @BindView(R.id.imgEdit)
-    ImageView imgEdit;
+
 
     private UserModel mentorModel;
 
@@ -163,17 +167,26 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
         super.onViewCreated(view, savedInstanceState);
 
 
-        if (mentorModel == null) {
+        if (isMentor()) {
             mentorModel = getCurrentUser();
         }
         bindRecyclerView();
+        webViewInfo.getSettings().setJavaScriptEnabled(true);
+        if (StringHelper.isNullOrEmpty(getCurrentUser().getUserDetails().getAbout())) {
+            webViewInfo.loadData("No Info Available", "text", "UTF-8");
+        } else {
+            webViewInfo.loadData(getCurrentUser().getUserDetails().getAbout(), "text/html", "UTF-8");
+        }
+
 
         bindData();
 
 
+
+
     }
 
-    public void bindData() {
+    private void bindData() {
         if (isMentor()) {
             txtEdit.setVisibility(View.VISIBLE);
             imgEdit.setVisibility(View.VISIBLE);
@@ -192,11 +205,11 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
 
 
             contChat.setVisibility(View.VISIBLE);
-//            if (mentorModel.getChatEnabled()) {
-//                contChat.setVisibility(View.VISIBLE);
-//            } else {
-//                contChat.setVisibility(View.GONE);
-//            }
+            if (mentorModel.getChatEnabled()) {
+                contChat.setVisibility(View.VISIBLE);
+            } else {
+                contChat.setVisibility(View.GONE);
+            }
 
         } else {
             txtScheduleMeeting.setVisibility(View.VISIBLE);
@@ -205,7 +218,6 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
             imgEdit.setVisibility(View.GONE);
             txtTitle.setText("Mentor Profile");
             contPointsEarned.setVisibility(View.GONE);
-
 
 
             if (mentorModel.getChatEnabled()) {
@@ -226,7 +238,6 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
         txtPoints.setText(mentorModel.getUserDetails().getTotalPoints() + " pts");
         ratingbar.setRating((float) mentorModel.getUserDetails().getAvgRating());
         txtReviews.setText("(" + mentorModel.getUserDetails().getReview_count() + ")");
-        txtPersonalInfo.setText(mentorModel.getUserDetails().getAbout());
         arrSpecialization.clear();
 
         if (mentorModel.getSpecializations() != null && !mentorModel.getSpecializations().isEmpty()) {
@@ -291,7 +302,7 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
 
     }
 
-    @OnClick({R.id.btnLeft1, R.id.txtScheduleMeeting, R.id.contChat, R.id.btnRight1, R.id.contMilestones, R.id.contReviews, R.id.txtEdit, R.id.txtLocation})
+    @OnClick({R.id.btnLeft1, R.id.txtScheduleMeeting, R.id.contChat, R.id.btnRight1, R.id.contMilestones, R.id.contReviews, R.id.txtEdit, R.id.txtLocation, R.id.contEditPersonalInfo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txtScheduleMeeting:
@@ -345,6 +356,11 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
                     }
                 }
 
+                break;
+
+
+            case R.id.contEditPersonalInfo:
+                getBaseActivity().addDockableFragment(EditPersonalInfoFragment.newInstance(), false);
                 break;
         }
     }

@@ -105,8 +105,6 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
     ImageView imgAddSpecialization;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.edtPersonalInfo)
-    AnyEditTextView edtPersonalInfo;
     @BindView(R.id.contBtnUpdate)
     LinearLayout contBtnUpdate;
     @BindView(R.id.contLogin)
@@ -195,8 +193,6 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
         edtDesignation.setText(getCurrentUser().getUserDetails().getDesignation());
         arrSelectedSpecialization.clear();
         arrSelectedSpecialization.addAll(getCurrentUser().getSpecializations());
-        edtPersonalInfo.setText(getCurrentUser().getUserDetails().getAbout());
-
 
         selectedDepartment = new SpinnerModel(txtDepartment.getStringTrimmed(), getCurrentUser().getUserDetails().getDepartmentId());
         locationModel = new LocationModel(getCurrentUser().getUserDetails().getLat(), getCurrentUser().getUserDetails().getLng(), getCurrentUser().getUserDetails().getAddress());
@@ -437,7 +433,6 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
         mentorEditProfileModel.setLng(locationModel.getLng());
         mentorEditProfileModel.setDesignation(edtDesignation.getStringTrimmed());
         mentorEditProfileModel.setSpecialization(arrSelectedSpecialization);
-        mentorEditProfileModel.setAbout(edtPersonalInfo.getStringTrimmed());
 
         new WebServices(getBaseActivity(), getToken(), BaseURLTypes.BASE_URL, true)
                 .postMultipartAPI(WebServiceConstants.PATH_PROFILE, arrMultiFileModel, mentorEditProfileModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
@@ -471,7 +466,7 @@ public class EditLeaProfileFragment extends BaseFragment implements OnItemClickL
     }
 
 
-    public void getSpecializations() {
+    private void getSpecializations() {
         Map<String, Object> queryMap = new HashMap<>();
         queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
         queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
