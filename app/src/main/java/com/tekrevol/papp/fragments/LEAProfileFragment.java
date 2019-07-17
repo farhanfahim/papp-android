@@ -172,10 +172,10 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
         }
         bindRecyclerView();
         webViewInfo.getSettings().setJavaScriptEnabled(true);
-        if (StringHelper.isNullOrEmpty(getCurrentUser().getUserDetails().getAbout())) {
+        if (StringHelper.isNullOrEmpty(mentorModel.getUserDetails().getAbout())) {
             webViewInfo.loadData("No Info Available", "text", "UTF-8");
         } else {
-            webViewInfo.loadData(getCurrentUser().getUserDetails().getAbout(), "text/html", "UTF-8");
+            webViewInfo.loadData(mentorModel.getUserDetails().getAbout(), "text/html", "UTF-8");
         }
 
 
@@ -195,6 +195,7 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
             contChat.setVisibility(View.GONE);
             txtTitle.setText("My Profile");
             contPointsEarned.setVisibility(View.VISIBLE);
+            contEditPersonalInfo.setVisibility(View.VISIBLE);
         } else if (isDependent()) {
             txtScheduleMeeting.setVisibility(View.GONE);
             btnRight1.setVisibility(View.VISIBLE);
@@ -202,6 +203,7 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
             imgEdit.setVisibility(View.GONE);
             txtTitle.setText("Mentor Profile");
             contPointsEarned.setVisibility(View.GONE);
+            contEditPersonalInfo.setVisibility(View.GONE);
 
 
             contChat.setVisibility(View.VISIBLE);
@@ -218,6 +220,7 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
             imgEdit.setVisibility(View.GONE);
             txtTitle.setText("Mentor Profile");
             contPointsEarned.setVisibility(View.GONE);
+            contEditPersonalInfo.setVisibility(View.GONE);
 
 
             if (mentorModel.getChatEnabled()) {

@@ -55,7 +55,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private final String ACTION_TYPE_OPEN_TOK = "opentok_session";
 
 
-
     @Override
     public void onNewToken(String s) {
         super.onNewToken(s);
@@ -63,7 +62,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         SharedPreferenceManager.getInstance(this).putValue(KEY_FIREBASE_TOKEN, s);
         SharedPreferenceManager.getInstance(this).putValue(KEY_FIREBASE_TOKEN_UPDATED, true);
 
-        Log.d(TAG, "onNewToken: "  + s);
+        Log.d(TAG, "onNewToken: " + s);
     }
 
     @Override
@@ -76,27 +75,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
 
-
-
         // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
+        if (remoteMessage.getData() != null && remoteMessage.getData().get("extra_payload") != null) {
+            OpenTokSessionRecModel openTokSessionRecModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.getData().get("extra_payload"), OpenTokSessionRecModel.class);
 
-            if (remoteMessage.getData() != null && remoteMessage.getData().get("extra_payload") != null) {
-                OpenTokSessionRecModel openTokSessionRecModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.getData().get("extra_payload"), OpenTokSessionRecModel.class);
-
-                if (openTokSessionRecModel != null && openTokSessionRecModel.getActionType().equalsIgnoreCase(ACTION_TYPE_OPEN_TOK)) {
-                    openTokSessionRecModel.setCaller(false);
-                    openActivity(CallActivity.class, openTokSessionRecModel.toString());
-                } else {
-                    handleNotification(remoteMessage);
-                }
-
+            if (openTokSessionRecModel != null && openTokSessionRecModel.getActionType().equalsIgnoreCase(ACTION_TYPE_OPEN_TOK)) {
+                openTokSessionRecModel.setCaller(false);
+                openActivity(CallActivity.class, openTokSessionRecModel.toString());
             } else {
-
                 handleNotification(remoteMessage);
             }
 
+        } else {
+
+            handleNotification(remoteMessage);
         }
 
 
@@ -156,7 +148,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         showNotification(getApplicationContext(),
-                remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(),
+                "PAPP", "Offline",
                 resultIntent);
     }
 
