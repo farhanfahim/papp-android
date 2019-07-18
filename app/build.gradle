@@ -144,9 +144,7 @@ dependencies {
     implementation 'com.github.TutorialsAndroid:FilePicker:v1.0.19'
     implementation 'com.github.barteksc:pdfium-android:1.4.0'
     implementation 'com.opentok.android:opentok-android-sdk:2.16.1'
-    implementation 'com.github.chinalwb:are:0.1.7'
     implementation 'jp.wasabeef:richeditor-android:1.2.2'
-    implementation 'net.dankito.richtexteditor:richtexteditor-android:2.0.8'
 
     implementation project(path: ':facebookloginsdk')
 

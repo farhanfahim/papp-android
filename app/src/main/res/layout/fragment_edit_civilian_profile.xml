@@ -176,8 +176,7 @@
                                         android:textColor="@color/txtDarkGrey"
                                         android:textColorHint="@color/txtGrey"
                                         android:textSize="@dimen/s12"
-                                        app:fontFamily="@string/font_regular"
-                                        app:testType="personName" />
+                                        app:fontFamily="@string/font_regular"  />
 
 
                                 </LinearLayout>
@@ -241,8 +240,7 @@
                                         android:textColor="@color/txtDarkGrey"
                                         android:textColorHint="@color/txtGrey"
                                         android:textSize="@dimen/s12"
-                                        app:fontFamily="@string/font_regular"
-                                        app:testType="personName" />
+                                        app:fontFamily="@string/font_regular"  />
 
 
                                 </LinearLayout>

@@ -45,6 +45,8 @@ import com.tekrevol.papp.models.receiving_model.OpenTokSessionRecModel;
 
 import java.util.List;
 
+import co.chatsdk.core.session.ChatSDK;
+
 import static com.tekrevol.papp.constatnts.AppConstants.KEY_FIREBASE_TOKEN;
 import static com.tekrevol.papp.constatnts.AppConstants.KEY_FIREBASE_TOKEN_UPDATED;
 
@@ -53,6 +55,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private final String TAG = "Fcm";
     private final String ACTION_TYPE_OPEN_TOK = "opentok_session";
+    private final String ACTION_TYPE_OFFLINE_CHAT = "offline_message";
 
 
     @Override
@@ -83,12 +86,31 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 openTokSessionRecModel.setCaller(false);
                 openActivity(CallActivity.class, openTokSessionRecModel.toString());
             } else {
-                handleNotification(remoteMessage);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                handleNotification("PAPP", "ACTION TYPE UNDEFINED", intent);
+            }
+
+        } else if (remoteMessage.getData() != null && remoteMessage.getData().get("action_type") != null) {
+
+
+            if (remoteMessage.getData().get("action_type").equals(ACTION_TYPE_OFFLINE_CHAT)) {
+                String threadId = remoteMessage.getData().get("thread_id");
+                String msgId = remoteMessage.getData().get("msg_id");
+                String text = remoteMessage.getData().get("text");
+                String username = remoteMessage.getData().get("username");
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                intent.putExtra("thread_id", threadId);
+//                intent.putExtra("msg_id", msgId);
+
+                handleNotification(username, text, intent);
+
             }
 
         } else {
 
-            handleNotification(remoteMessage);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            handleNotification("PAPP", "ACTION TYPE UNDEFINED", intent);
         }
 
 
@@ -119,13 +141,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Log.d("ServiceScoring ", "Broadcast");
     }
 
-    private void handleNotification(RemoteMessage remoteMessage) {
+    private void handleNotification(String title, String message, Intent intentToOpen) {
         broadcastIntent();
 
         //if (remoteMessage.getData().size() > 0) {
         // GlobalHelperNormal.getInstance().vibrateAlert(this, 1000);
         playNotificationSound();
-        handleDataMessage(remoteMessage);
+        handleDataMessage(title, message, intentToOpen);
         // }
     }
 
@@ -138,18 +160,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-    private void handleDataMessage(RemoteMessage remoteMessage) {
-        Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+    private void handleDataMessage(String title, String message, Intent intentToOpen) {
         Bundle mBundle = new Bundle();
         //  mBundle.putString(getString(R.string.custom), remoteMessage.getData().values().toArray()[0].toString());
      /*   mBundle.putString(getString(R.string.gcm_notification_badge),
                 remoteMessage.toIntent().getStringExtra(getString(R.string.gcm_notification_badge)));*/
-        resultIntent.putExtras(mBundle);
-        resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        intentToOpen.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intentToOpen.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         showNotification(getApplicationContext(),
-                "PAPP", "Offline",
-                resultIntent);
+                title, message,
+                intentToOpen);
     }
 
 
@@ -174,7 +195,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.notification_logo)
                 .setContentTitle(title)
                 .setContentText(messageBody)
                 .setAutoCancel(true)
@@ -211,7 +232,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 , intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.notification_logo)
                 .setContentTitle(title)
                 .setContentText(messageBody)
                 .setAutoCancel(true)
@@ -271,9 +292,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(context,
                 sharedPreferenceManager.getInt(context.getString(R.string.notification_req_code)),
                 intent, PendingIntent.FLAG_ONE_SHOT);
-        String CHANNEL_ID = "my_channel_01";// The id of the channel.
+        String CHANNEL_ID = "papp_channel";// The id of the channel.
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.notification_logo)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
