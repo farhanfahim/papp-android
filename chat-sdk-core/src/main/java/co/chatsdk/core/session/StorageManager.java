@@ -6,12 +6,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import co.chatsdk.core.dao.ContactLink;
 import co.chatsdk.core.dao.DaoCore;
+import co.chatsdk.core.dao.FollowerLink;
 import co.chatsdk.core.dao.Message;
 import co.chatsdk.core.dao.MessageDao;
+import co.chatsdk.core.dao.MessageMetaValue;
+import co.chatsdk.core.dao.ReadReceiptUserLink;
 import co.chatsdk.core.dao.Thread;
 import co.chatsdk.core.dao.ThreadDao;
+import co.chatsdk.core.dao.ThreadMetaValue;
 import co.chatsdk.core.dao.User;
+import co.chatsdk.core.dao.UserMetaValue;
 import co.chatsdk.core.dao.UserThreadLink;
 import co.chatsdk.core.dao.UserThreadLinkDao;
 import co.chatsdk.core.interfaces.CoreEntity;
@@ -26,7 +32,7 @@ import static co.chatsdk.core.dao.DaoCore.fetchEntityWithProperty;
 
 public class StorageManager {
 
-    public List<Thread> fetchThreadsForUserWithID (Long userId) {
+    public List<Thread> fetchThreadsForUserWithID(Long userId) {
         List<Thread> threads = new ArrayList<>();
 
         List<UserThreadLink> links = DaoCore.fetchEntitiesWithProperty(UserThreadLink.class, UserThreadLinkDao.Properties.UserId, ChatSDK.currentUser().getId());
@@ -35,8 +41,7 @@ public class StorageManager {
             Thread thread = link.getThread();
             if (thread != null) {
                 threads.add(thread);
-            }
-            else {
+            } else {
                 // Delete the link - it's obviously corrupted
                 DaoCore.deleteEntity(link);
             }
@@ -44,18 +49,17 @@ public class StorageManager {
         return threads;
     }
 
-    public <T extends CoreEntity> T fetchOrCreateEntityWithEntityID(Class<T> c, String entityId){
+
+    public <T extends CoreEntity> T fetchOrCreateEntityWithEntityID(Class<T> c, String entityId) {
 
         T entity = DaoCore.fetchEntityWithEntityID(c, entityId);
 //
-        if (entity == null)
-        {
+        if (entity == null) {
             entity = DaoCore.getEntityForClass(c);
 
-            if(entityId instanceof String) {
+            if (entityId instanceof String) {
                 entity.setEntityID(entityId);
-            }
-            else {
+            } else {
                 entity.setEntityID(entityId.toString());
                 Timber.v("ERROR!!! The entity must always be a string");
             }
@@ -66,7 +70,7 @@ public class StorageManager {
         return entity;
     }
 
-    public <T extends CoreEntity> T createEntity (Class<T> c) {
+    public <T extends CoreEntity> T createEntity(Class<T> c) {
         T entity = DaoCore.getEntityForClass(c);
         DaoCore.createEntity(entity);
         return entity;
@@ -77,50 +81,50 @@ public class StorageManager {
     }
 
 
-    public User fetchUserWithEntityID (String entityID) {
+    public User fetchUserWithEntityID(String entityID) {
         return DaoCore.fetchEntityWithEntityID(User.class, entityID);
     }
 
-    public List<Thread> fetchThreadsWithType (int type) {
+    public List<Thread> fetchThreadsWithType(int type) {
         return DaoCore.fetchEntitiesWithProperty(Thread.class, ThreadDao.Properties.Type, type);
     }
 
-    public Thread fetchThreadWithID (long threadID) {
+    public Thread fetchThreadWithID(long threadID) {
         return fetchEntityWithProperty(Thread.class, ThreadDao.Properties.Id, threadID);
     }
 
-    public Thread fetchThreadWithEntityID (String entityID) {
-        if(entityID != null) {
+    public Thread fetchThreadWithEntityID(String entityID) {
+        if (entityID != null) {
             return fetchEntityWithProperty(Thread.class, ThreadDao.Properties.EntityID, entityID);
         }
         return null;
     }
 
-    public Thread fetchThreadWithUsers (List<User> users) {
-        for(Thread t : allThreads()) {
-            if(t.getUsers().equals(users)) {
+    public Thread fetchThreadWithUsers(List<User> users) {
+        for (Thread t : allThreads()) {
+            if (t.getUsers().equals(users)) {
                 return t;
             }
         }
         return null;
     }
 
-    public List<Thread> allThreads () {
-        List<UserThreadLink> links =  DaoCore.fetchEntitiesWithProperty(UserThreadLink.class, UserThreadLinkDao.Properties.UserId, ChatSDK.currentUser().getId());
+    public List<Thread> allThreads() {
+        List<UserThreadLink> links = DaoCore.fetchEntitiesWithProperty(UserThreadLink.class, UserThreadLinkDao.Properties.UserId, ChatSDK.currentUser().getId());
         ArrayList<Thread> threads = new ArrayList<>();
-        for(UserThreadLink link : links) {
+        for (UserThreadLink link : links) {
             threads.add(link.getThread());
         }
         return threads;
     }
 
 
-    public List<Message> fetchMessagesForThreadWithID (long threadID, int limit) {
+    public List<Message> fetchMessagesForThreadWithID(long threadID, int limit) {
         return fetchMessagesForThreadWithID(threadID, limit, null);
     }
 
-    public List<Message> fetchMessagesForThreadWithID (long threadID, int limit, Date olderThan) {
-        List<Message> list ;
+    public List<Message> fetchMessagesForThreadWithID(long threadID, int limit, Date olderThan) {
+        List<Message> list;
 
         QueryBuilder<Message> qb = daoSession.queryBuilder(Message.class);
         qb.where(MessageDao.Properties.ThreadId.eq(threadID));
@@ -129,7 +133,7 @@ public class StorageManager {
         qb.where(MessageDao.Properties.Date.isNotNull());
         qb.where(MessageDao.Properties.SenderId.isNotNull());
 
-        if(olderThan != null) {
+        if (olderThan != null) {
             qb.where(MessageDao.Properties.Date.lt(olderThan.getTime()));
         }
 
@@ -142,6 +146,20 @@ public class StorageManager {
 
         return list;
 
+    }
+
+
+    public void deleteAll() {
+        DaoCore.deleteAll(User.class);
+        DaoCore.deleteAll(Thread.class);
+        DaoCore.deleteAll(Message.class);
+        DaoCore.deleteAll(ContactLink.class);
+        DaoCore.deleteAll(FollowerLink.class);
+        DaoCore.deleteAll(MessageMetaValue.class);
+        DaoCore.deleteAll(ReadReceiptUserLink.class);
+        DaoCore.deleteAll(ThreadMetaValue.class);
+        DaoCore.deleteAll(UserMetaValue.class);
+        DaoCore.deleteAll(UserThreadLink.class);
     }
 
 }

@@ -35,7 +35,6 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-    <!--<item name="android:windowIsTranslucent">true</item>-->
 
 
     <!-- Custom Dialog Themes-->

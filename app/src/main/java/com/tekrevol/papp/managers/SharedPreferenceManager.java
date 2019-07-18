@@ -1,7 +1,6 @@
 package com.tekrevol.papp.managers;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,9 +13,9 @@ import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 
 import co.chatsdk.core.session.ChatSDK;
+import co.chatsdk.core.utils.DisposableList;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-import static android.content.Context.ACTIVITY_SERVICE;
 import static com.tekrevol.papp.constatnts.AppConstants.DEPENDENT_ROLE;
 import static com.tekrevol.papp.constatnts.AppConstants.PARENT_ROLE;
 
@@ -50,23 +49,31 @@ public class SharedPreferenceManager {
 
         String firebaseToken = getString(AppConstants.KEY_FIREBASE_TOKEN);
 
+        DisposableList disposableList = new DisposableList();
+
+//        disposableList.add();
+
+
         ChatSDK.auth().logout()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {
                             Log.d("CLEAR DB: ", "clearDB: ");
-                            logoutProcess(firebaseToken);
+                            logoutProcess(firebaseToken, disposableList);
                         }
                         ,
                         throwable -> {
                             ChatSDK.logError(throwable);
-                            logoutProcess(firebaseToken);
+                            logoutProcess(firebaseToken, disposableList);
                         }
                 );
 
+
     }
 
-    private void logoutProcess(String firebaseToken) {
+    private void logoutProcess(String firebaseToken, DisposableList disposableList) {
         pref.edit().clear().commit();
+        ChatSDK.shared().getPreferences().edit().clear().commit();
+        ChatSDK.db().deleteAll();
         putValue(AppConstants.KEY_FIREBASE_TOKEN, firebaseToken);
         clearAllActivitiesExceptThis(MainActivity.class);
     }
@@ -79,7 +86,7 @@ public class SharedPreferenceManager {
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intents);
         if (context instanceof BaseActivity) {
-            ((BaseActivity)context).finish();
+            ((BaseActivity) context).finish();
         }
     }
 

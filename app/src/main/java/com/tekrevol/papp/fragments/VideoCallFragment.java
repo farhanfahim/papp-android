@@ -312,6 +312,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
         if (!openTokSessionRecModel.isCaller()) {
             contCallAcceptedOptions.setVisibility(View.GONE);
             contCallComingOption.setVisibility(View.VISIBLE);
+            txtStatus.setVisibility(View.GONE);
         }
     }
 

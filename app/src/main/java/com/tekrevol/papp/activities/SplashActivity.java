@@ -3,6 +3,8 @@ package com.tekrevol.papp.activities;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +49,13 @@ public class SplashActivity extends AppCompatActivity {
         if (SharedPreferenceManager.getInstance(SplashActivity.this).isMentor()) {
             imgBackground.setImageResource(R.drawable.img_splash_mentor);
             contParentLayout.setVisibility(VISIBLE);
+        }
+
+
+        if (Build.VERSION.SDK_INT == 26) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
 
