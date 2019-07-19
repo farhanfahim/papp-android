@@ -35,12 +35,13 @@ public class WebServiceConstants {
      */
 
     // STAGING
-//    public static final String BASE_URL = "http://papp.servstaging.com/";
-//    public static final String IMAGE_BASE_URL = "http://papp.servstaging.com/api/resize/";
+    public static final String BASE_URL = "http://papp.servstaging.com/";
+    public static final String IMAGE_BASE_URL = "http://papp.servstaging.com/api/resize/";
 
     // DEV
-    public static final String BASE_URL = "http://papp.apps.fomarkmedia.com/";
-    public static final String IMAGE_BASE_URL = "http://papp.apps.fomarkmedia.com/api/resize/";
+//    public static final String BASE_URL = "http://papp.apps.fomarkmedia.com/";
+//    public static final String IMAGE_BASE_URL = "http://papp.apps.fomarkmedia.com/api/resize/";
+
 
     // LOCAL MACHINE
 //    public static final String BASE_URL = "http://192.168.29.49/papp/";
@@ -82,6 +83,7 @@ public class WebServiceConstants {
     public static final String PATH_SOCIAL_LOGIN= "social_login";
     public static final String PATH_VERIFY_COMPLETED_SESSION = "verify-completed-session/";
     public static final String PATH_CREATE_OPENTOK_SESSION = "create-opentok-session";
+    public static final String PATH_NOTIFICATIONS = "notifications";
 
 
     /**

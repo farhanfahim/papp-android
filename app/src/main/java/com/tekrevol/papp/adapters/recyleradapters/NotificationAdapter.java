@@ -9,7 +9,9 @@ import android.widget.LinearLayout;
 
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.managers.DateManager;
 import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.models.receiving_model.NotificationModel;
 import com.tekrevol.papp.widget.AnyTextView;
 
 import java.util.List;
@@ -25,9 +27,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
 
     private Context activity;
-    private List<SpinnerModel> arrData;
+    private List<NotificationModel> arrData;
 
-    public NotificationAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
+    public NotificationAdapter(Context activity, List<NotificationModel> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
@@ -44,19 +46,15 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        SpinnerModel model = arrData.get(i);
+        NotificationModel model = arrData.get(i);
 
-
-        if (i == 0) {
-            holder.txtNotification.setTextColor(activity.getResources().getColor(R.color.colorPrimaryDark));
-        } else {
-            holder.txtNotification.setTextColor(activity.getResources().getColor(R.color.txtBlack));
-
-        }
+        holder.txtNotification.setText(model.getMessage());
+        holder.txtDate.setText(DateManager.convertToUserTimeZone(model.getCreatedAt()));
+        holder.txtTime.setVisibility(View.GONE);
         setListener(holder, model);
     }
 
-    private void setListener(final ViewHolder holder, final SpinnerModel model) {
+    private void setListener(final ViewHolder holder, final NotificationModel model) {
 
     }
 

@@ -40,6 +40,16 @@
                 android:src="@drawable/redo"
                 android:visibility="gone" />
 
+
+            <ImageButton
+                android:id="@+id/action_insert_link"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:contentDescription="@null"
+                android:src="@drawable/insert_link" />
+
+
             <ImageButton
                 android:id="@+id/action_bold"
                 android:layout_width="48dp"
@@ -237,14 +247,6 @@
                 android:contentDescription="@null"
                 android:src="@drawable/insert_image"
                 android:visibility="gone" />
-
-            <ImageButton
-                android:id="@+id/action_insert_link"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@null"
-                android:contentDescription="@null"
-                android:src="@drawable/insert_link" />
 
             <ImageButton
                 android:id="@+id/action_insert_checkbox"

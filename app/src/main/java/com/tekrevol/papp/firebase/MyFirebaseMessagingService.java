@@ -41,6 +41,7 @@ import com.tekrevol.papp.activities.MainActivity;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.managers.SharedPreferenceManager;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
+import com.tekrevol.papp.models.receiving_model.GeneralPushReceivingModel;
 import com.tekrevol.papp.models.receiving_model.OpenTokSessionRecModel;
 
 import java.util.List;
@@ -80,14 +81,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         // Check if message contains a notification payload.
         if (remoteMessage.getData() != null && remoteMessage.getData().get("extra_payload") != null) {
-            OpenTokSessionRecModel openTokSessionRecModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.getData().get("extra_payload"), OpenTokSessionRecModel.class);
 
-            if (openTokSessionRecModel != null && openTokSessionRecModel.getActionType().equalsIgnoreCase(ACTION_TYPE_OPEN_TOK)) {
+            GeneralPushReceivingModel generalPushReceivingModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.getData().get("extra_payload"), GeneralPushReceivingModel.class);
+
+            if (generalPushReceivingModel != null && generalPushReceivingModel.getActionType().equalsIgnoreCase(ACTION_TYPE_OPEN_TOK)) {
+                OpenTokSessionRecModel openTokSessionRecModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.getData().get("extra_payload"), OpenTokSessionRecModel.class);
+
                 openTokSessionRecModel.setCaller(false);
                 openActivity(CallActivity.class, openTokSessionRecModel.toString());
             } else {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                handleNotification("PAPP", "ACTION TYPE UNDEFINED", intent);
+                handleNotification("PAPP", generalPushReceivingModel.getMessage() + "", intent);
             }
 
         } else if (remoteMessage.getData() != null && remoteMessage.getData().get("action_type") != null) {

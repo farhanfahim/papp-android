@@ -17,12 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.R;
+import com.tekrevol.papp.activities.HomeActivity;
 import com.tekrevol.papp.adapters.recyleradapters.CategoriesAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.SessionsAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.Constants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
+import com.tekrevol.papp.firebase.chat.FirebaseIntegration;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
@@ -44,6 +46,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import co.chatsdk.core.session.ChatSDK;
+import io.reactivex.CompletableObserver;
+import io.reactivex.disposables.Disposable;
 
 public class DashboardLEAFragment extends BaseFragment implements OnItemClickListener {
 
@@ -151,6 +155,7 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        getHomeActivity().firebaseUserSync();
         bindRecyclerView();
 
         if (arrSessionTypes.isEmpty()) {
@@ -456,6 +461,10 @@ public class DashboardLEAFragment extends BaseFragment implements OnItemClickLis
             }
         });
     }
+
+
+
+
 
 
 }

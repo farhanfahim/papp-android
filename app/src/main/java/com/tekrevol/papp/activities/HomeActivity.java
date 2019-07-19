@@ -83,31 +83,9 @@ public class HomeActivity extends BaseActivity {
 
         initFragments();
 
-
-        firebaseUserSync();
-
-
     }
 
-    private void firebaseUserSync() {
-        FirebaseIntegration.getInstance().saveUserDetail(this, sharedPreferenceManager.getCurrentUser()).subscribe(new CompletableObserver() {
-            @Override
-            public void onSubscribe(Disposable d) {
 
-            }
-
-            @Override
-            public void onComplete() {
-//                UIHelper.showToast(HomeActivity.this, "User synced successfully");
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                UIHelper.showAlertDialog(HomeActivity.this, e.getMessage());
-            }
-        });
-    }
 
 
     public ResideMenu getResideMenu() {
@@ -246,4 +224,25 @@ public class HomeActivity extends BaseActivity {
 //        getBlurImage().setVisibility(View.GONE);
 //    }
 
+
+
+    public void firebaseUserSync() {
+        FirebaseIntegration.getInstance().saveUserDetail(this, sharedPreferenceManager.getCurrentUser()).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+//                UIHelper.showToast(HomeActivity.this, "User synced successfully");
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                UIHelper.showAlertDialog(HomeActivity.this, e.getMessage());
+            }
+        });
+    }
 }
