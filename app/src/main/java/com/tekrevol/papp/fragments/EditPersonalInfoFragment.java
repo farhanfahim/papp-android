@@ -16,9 +16,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tekrevol.papp.R;
+import com.tekrevol.papp.callbacks.OnItemAdd;
+import com.tekrevol.papp.callbacks.OnLinkAdd;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.fragments.dialogs.HyperLinkDialogFragment;
 import com.tekrevol.papp.helperclasses.StringHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.KeyboardHelper;
 import com.tekrevol.papp.libraries.keyboardobserver.KeyboardHeightObserver;
@@ -99,6 +102,7 @@ public class EditPersonalInfoFragment extends BaseFragment implements KeyboardHe
         //richEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
         richEditor.setPlaceholder("Insert text here...");
         //richEditor.setInputEnabled(false);
+        richEditor.getSettings().setJavaScriptEnabled(true);
 
         if (StringHelper.checkNotNullAndNotEmpty(getCurrentUser().getUserDetails().getAbout())) {
             richEditor.setHtml(getCurrentUser().getUserDetails().getAbout());
@@ -291,7 +295,14 @@ public class EditPersonalInfoFragment extends BaseFragment implements KeyboardHe
         view.findViewById(R.id.action_insert_link).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                richEditor.insertLink("https://github.com/wasabeef", "wasabeef");
+                HyperLinkDialogFragment.newInstance(new OnLinkAdd() {
+                    @Override
+                    public void onItemAdd(String title, String link) {
+                        richEditor.insertLink(link, title);
+
+                    }
+                }).show(getBaseActivity().getSupportFragmentManager(), HyperLinkDialogFragment.class.getSimpleName());
+
             }
         });
         view.findViewById(R.id.action_insert_checkbox).setOnClickListener(new View.OnClickListener() {

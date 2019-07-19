@@ -16,6 +16,7 @@ import com.tekrevol.papp.R;
 
 import com.tekrevol.papp.fragments.LoginFragment;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.managers.SharedPreferenceManager;
 
 
 public class MainActivity extends BaseActivity {
@@ -73,14 +74,12 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initFragments() {
-//        if (SharedPreferenceManager.getInstance(getApplicationContext()).getCurrentUser() == null) {
-//            addDockableFragment(LoginFragment.newInstance(), false);
-//        } else {
-//            openActivity(HomeActivity.class);
-//            this.finish();
-//        }
-//
-       addDockableFragment(LoginFragment.newInstance(), false);
+        if (SharedPreferenceManager.getInstance(getApplicationContext()).getCurrentUser() == null) {
+            addDockableFragment(LoginFragment.newInstance(), false);
+        } else {
+            openActivity(HomeActivity.class);
+            this.finish();
+        }
     }
 
     @Override

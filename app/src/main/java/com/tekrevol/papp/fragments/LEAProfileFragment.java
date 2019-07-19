@@ -178,7 +178,6 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
             webViewInfo.loadData(mentorModel.getUserDetails().getAbout(), "text/html", "UTF-8");
         }
 
-
         bindData();
 
 
