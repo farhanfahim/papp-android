@@ -129,8 +129,4 @@ public class WebServiceConstants {
     public static final String WSC_KEY_ATTACHMENT = "attachment[]";
 
 
-    public static final String API_KEY = "46354312";
-    public static final String SECRET = "d3c4046485d6ef92672123f7a9926f2967361d09";
-
-
 }
