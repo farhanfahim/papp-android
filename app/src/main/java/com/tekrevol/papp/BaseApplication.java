@@ -66,7 +66,7 @@ public class BaseApplication extends MultiDexApplication implements Application.
 
         // TODO: Enable Crash Lytics and Never Crash feature before releasing the app
         Fabric.with(this, new Crashlytics());
-        neverCrash();
+//        neverCrash();
 
 
         chatSDKInit();
