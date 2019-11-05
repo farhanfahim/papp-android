@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.helperclasses.ui.helper.AnimationHelper;
@@ -36,6 +39,8 @@ public class SplashActivity extends AppCompatActivity {
     ImageView imgBackground;
     @BindView(R.id.imageView)
     ImageView imageView;
+    @BindView(R.id.txtVersionNumber)
+    TextView txtVersionNumber;
     private boolean hasAnimationStarted = false;
 
     @Override
@@ -61,6 +66,17 @@ public class SplashActivity extends AppCompatActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+
+        try {
+            PackageManager manager = getPackageManager();
+            PackageInfo info = manager.getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES);
+            txtVersionNumber.setText("Build Version: " + info.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            txtVersionNumber.setText("");
+            e.printStackTrace();
+        }
 
     }
 
