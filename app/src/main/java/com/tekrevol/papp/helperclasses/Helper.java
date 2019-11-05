@@ -92,6 +92,12 @@ public class Helper {
         gd.setStroke(2, color);
     }
 
+    public static void changeGradientDrawableBackgroundColor(View view, int color) {
+        GradientDrawable gd = (GradientDrawable) view.getBackground();
+        gd.setColor(color);
+    }
+
+
     public static void changeTransitionDrawableColor(TransitionDrawable td, int color, int index) {
         td.getDrawable(index).setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
     }

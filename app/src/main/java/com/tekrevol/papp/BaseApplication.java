@@ -32,6 +32,7 @@ import co.chatsdk.firebase.file_storage.FirebaseFileStorageModule;
 import co.chatsdk.firebase.push.FirebasePushModule;
 import co.chatsdk.profile.pictures.ProfilePicturesModule;
 import co.chatsdk.ui.manager.BaseInterfaceAdapter;
+import io.fabric.sdk.android.Fabric;
 import io.reactivex.subjects.PublishSubject;
 import io.realm.Realm;
 
@@ -64,7 +65,7 @@ public class BaseApplication extends MultiDexApplication implements Application.
 //                .build();
 
         // TODO: Enable Crash Lytics and Never Crash feature before releasing the app
-//        Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Crashlytics());
 //        neverCrash();
 
 

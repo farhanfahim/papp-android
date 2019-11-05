@@ -1,48 +1,113 @@
 package com.tekrevol.papp.fragments;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
+
+import com.opentok.android.AudioDeviceManager;
+import com.opentok.android.BaseAudioDevice;
+import com.opentok.android.Connection;
 import com.opentok.android.OpentokError;
 import com.opentok.android.Publisher;
 import com.opentok.android.PublisherKit;
 import com.opentok.android.Session;
 import com.opentok.android.Stream;
 import com.opentok.android.Subscriber;
+import com.opentok.android.SubscriberKit;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.helperclasses.RunTimePermissions;
+import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
+import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.models.receiving_model.OpenTokSessionRecModel;
+import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by hamza.ahmed on 7/19/2018.
  */
 
-public class AudioCallFragment extends BaseFragment implements Session.SessionListener, PublisherKit.PublisherListener {
+public class AudioCallFragment extends BaseFragment implements Session.SessionListener, PublisherKit.PublisherListener, SubscriberKit.SubscriberListener {
 
 
-    private static final String LOG_TAG = "Audio Call";
     Unbinder unbinder;
     @BindView(R.id.subscriber_container)
     FrameLayout subscriberContainer;
-    @BindView(R.id.publisher_container)
-    FrameLayout publisherContainer;
+    @BindView(R.id.imgProfile)
+    CircleImageView imgProfile;
+    @BindView(R.id.txtCallerName)
+    AnyTextView txtCallerName;
+    @BindView(R.id.imgPickCall)
+    ImageView imgPickCall;
+    @BindView(R.id.imgDeclineCall)
+    ImageView imgDeclineCall;
+    @BindView(R.id.contCallComingOption)
+    LinearLayout contCallComingOption;
+    @BindView(R.id.imgMute)
+    ImageView imgMute;
+    @BindView(R.id.imgCancelCall)
+    ImageView imgCancelCall;
+    @BindView(R.id.imgLoudSpeaker)
+    ImageView imgLoudSpeaker;
+    @BindView(R.id.contCallAcceptedOptions)
+    LinearLayout contCallAcceptedOptions;
+    @BindView(R.id.txtTime)
+    AnyTextView txtTime;
+    @BindView(R.id.txtStatus)
+    AnyTextView txtStatus;
+
+
+    private boolean isSignalSender = false;
+    private boolean isLoudSpeakerOn = true;
+    private static final String LOG_TAG = "Video Call";
+
 
     private Session mSession;
     private Publisher mPublisher;
     private Subscriber mSubscriber;
     private OpenTokSessionRecModel openTokSessionRecModel;
+
+
+    long startTime = 0;
+    String END_CALL = "101";
+    String ACCEPT_CALL = "102";
+    String REJECT_CALL = "103";
+
+    //runs without a timer by reposting this handler at the end of the runnable
+    Handler timerHandler = new Handler();
+
+    Runnable timerRunnable = new Runnable() {
+
+        @Override
+        public void run() {
+            long millis = System.currentTimeMillis() - startTime;
+            int seconds = (int) (millis / 1000);
+            int minutes = seconds / 60;
+            int hour = minutes / 60;
+            seconds = seconds % 60;
+            minutes = minutes % 60;
+
+            if (txtTime != null) {
+                txtTime.setText(String.format("%d:%d:%02d", hour, minutes, seconds));
+            }
+
+            timerHandler.postDelayed(this, 500);
+        }
+    };
 
     public static AudioCallFragment newInstance(OpenTokSessionRecModel openTokSessionRecModel) {
 
@@ -62,7 +127,7 @@ public class AudioCallFragment extends BaseFragment implements Session.SessionLi
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_audio_call_test;
+        return R.layout.fragment_audio_call;
     }
 
     @Override
@@ -93,17 +158,104 @@ public class AudioCallFragment extends BaseFragment implements Session.SessionLi
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (RunTimePermissions.isCallPermissionGiven(getContext(), getBaseActivity(), true)) {
-            mSession = new Session.Builder(getContext(), openTokSessionRecModel.getApiKey(), openTokSessionRecModel.getOtkSessionId()).build();
-            mSession.setSessionListener(this);
-            mSession.connect(openTokSessionRecModel.getToken());
+        initializeSession(openTokSessionRecModel.getApiKey(), openTokSessionRecModel.getOtkSessionId(), openTokSessionRecModel.getToken());
+
+        txtTime.setVisibility(View.GONE);
+        imgMute.setVisibility(View.GONE);
+        imgLoudSpeaker.setVisibility(View.GONE);
+
+
+        txtCallerName.setText(openTokSessionRecModel.getMentorName());
+        ImageLoaderHelper.loadImageWithAnimations(imgProfile, openTokSessionRecModel.getMentorImage(), true);
+
+        if (openTokSessionRecModel.isCaller()) {
+            contCallAcceptedOptions.setVisibility(View.VISIBLE);
+            contCallComingOption.setVisibility(View.GONE);
+            txtStatus.setText("Calling...");
+        } else {
+            contCallAcceptedOptions.setVisibility(View.GONE);
+            contCallComingOption.setVisibility(View.GONE);
+            txtStatus.setText("Connecting...");
+            getCallActivity().playRingtone();
         }
+
+
+    }
+
+    private void startTimer() {
+        txtTime.setVisibility(View.VISIBLE);
+        getCallActivity().stopRingtone();
+        startTime = System.currentTimeMillis();
+        timerHandler.postDelayed(timerRunnable, 0);
+        txtStatus.setVisibility(View.GONE);
+    }
+
+
+    /* Activity lifecycle methods */
+
+    @Override
+    public void onPause() {
+
+        Log.d(TAG, "onPause");
+
+        super.onPause();
+
+        if (mSession == null) {
+            return;
+        }
+        mSession.onPause();
+
+        if (getCallActivity().isFinishing()) {
+            disconnectSession();
+        }
+
+    }
+
+    @Override
+    public void onResume() {
+        Log.d(TAG, "onResume");
+
+        super.onResume();
+
+        if (mSession == null) {
+            return;
+        }
+        mSession.onResume();
     }
 
 
     @Override
+    public void onDestroy() {
+        Log.d(TAG, "onDestroy");
+
+        disconnectSession();
+        timerHandler.removeCallbacks(timerRunnable);
+        super.onDestroy();
+    }
+
+    @Override
     public void setListeners() {
 
+        mSession.setSignalListener(new Session.SignalListener() {
+            @Override
+            public void onSignalReceived(Session session, String s, String s1, Connection connection) {
+
+                if (isSignalSender) {
+                    isSignalSender = false;
+                    return;
+                }
+                if (s.equals(END_CALL)) {
+                    Log.d(TAG, "onSignalReceived: " + "End call");
+                    endCall(false);
+                } else if (s.equals(ACCEPT_CALL)) {
+                    startTimer();
+                    publishAudio();
+                } else if (s.equals(REJECT_CALL)) {
+                    UIHelper.showToast(getContext(), "User is busy");
+                    endCall(false);
+                }
+            }
+        });
     }
 
     @Override
@@ -118,79 +270,245 @@ public class AudioCallFragment extends BaseFragment implements Session.SessionLi
 
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-//
-//    @OnClick(R.id.imgCancelCall)
-//    public void onViewClicked() {
-//        getBaseActivity().onBackPressed();
-//    }
 
-    // SessionListener methods
+    private void initializeSession(String apiKey, String sessionId, String token) {
 
-    @Override
-    public void onConnected(Session session) {
-        Log.i(LOG_TAG, "Session Connected");
-
-        mPublisher = new Publisher.Builder(getContext()).build();
-        mPublisher.setPublisherListener(this);
-        publisherContainer.addView(mPublisher.getView());
-        mSession.publish(mPublisher);
-
+        mSession = new Session.Builder(getContext(), apiKey, sessionId).build();
+        mSession.setSessionListener(this);
+        mSession.connect(token);
     }
 
-    @Override
-    public void onDisconnected(Session session) {
-        Log.i(LOG_TAG, "Session Disconnected");
-    }
-
-    @Override
-    public void onStreamReceived(Session session, Stream stream) {
-        Log.i(LOG_TAG, "Stream Received");
-
-        if (mSubscriber == null) {
-            mSubscriber = new Subscriber.Builder(getContext(), stream).build();
-            mSession.subscribe(mSubscriber);
-            subscriberContainer.addView(mSubscriber.getView());
-        }
-    }
-
-    @Override
-    public void onStreamDropped(Session session, Stream stream) {
-        Log.i(LOG_TAG, "Stream Dropped");
-
-        if (mSubscriber != null) {
-            mSubscriber = null;
-            subscriberContainer.removeAllViews();
-        }
-    }
-
-    @Override
-    public void onError(Session session, OpentokError opentokError) {
-        Log.e(LOG_TAG, "Session error: " + opentokError.getMessage());
-    }
 
     @Override
     public void onStreamCreated(PublisherKit publisherKit, Stream stream) {
+        Log.d(LOG_TAG, "onStreamCreated: Publisher Stream Created. Own stream " + stream.getStreamId());
 
     }
 
     @Override
     public void onStreamDestroyed(PublisherKit publisherKit, Stream stream) {
 
+        Log.d(LOG_TAG, "onStreamDestroyed: Publisher Stream Destroyed. Own stream " + stream.getStreamId());
     }
 
     @Override
     public void onError(PublisherKit publisherKit, OpentokError opentokError) {
 
+        Log.e(LOG_TAG, "onError: " + opentokError.getErrorDomain() + " : " +
+                opentokError.getErrorCode() + " - " + opentokError.getMessage());
+        showOpenTokError(opentokError);
+    }
+
+
+    @Override
+    public void onConnected(Session session) {
+
+        Log.d(LOG_TAG, "onConnected: Connected to session: " + session.getSessionId());
+
+        if (!openTokSessionRecModel.isCaller()) {
+            contCallAcceptedOptions.setVisibility(View.GONE);
+            contCallComingOption.setVisibility(View.VISIBLE);
+            txtStatus.setVisibility(View.GONE);
+        }
+    }
+
+    private void publishAudio() {
+//        publisherContainer.setVisibility(View.VISIBLE);
+//        imgProfile.setVisibility(View.GONE);
+        imgMute.setVisibility(View.VISIBLE);
+        imgLoudSpeaker.setVisibility(View.VISIBLE);
+
+        // initialize Publisher and set this object to listen to Publisher events
+        mPublisher = new Publisher.Builder(getContext()).videoTrack(false).build();
+        mPublisher.setPublisherListener(this);
+
+        mSession.publish(mPublisher);
+    }
+
+    @Override
+    public void onDisconnected(Session session) {
+        Log.d(TAG, "onDisconnected: disconnected from session " + session.getSessionId());
+
+        mSession = null;
+    }
+
+    @Override
+    public void onStreamReceived(Session session, Stream stream) {
+        Log.d(LOG_TAG, "onStreamReceived: New Stream Received " + stream.getStreamId() + " in session: " + session.getSessionId());
+
+        if (mSubscriber == null) {
+            mSubscriber = new Subscriber.Builder(getContext(), stream).build();
+            mSubscriber.setSubscribeToVideo(false);
+            mSubscriber.setSubscribeToAudio(true);
+            mSubscriber.setSubscriberListener(this);
+            mSession.subscribe(mSubscriber);
+        }
+    }
+
+    @Override
+    public void onStreamDropped(Session session, Stream stream) {
+
+        Log.d(TAG, "onStreamDropped: Stream " + stream.getStreamId() + " dropped from session " + session.getSessionId());
+
+        if (mSubscriber == null) {
+            return;
+        }
+
+        if (mSubscriber.getStream().equals(stream)) {
+            mSubscriber.destroy();
+            mSubscriber = null;
+        }
+
+    }
+
+    @Override
+    public void onError(Session session, OpentokError opentokError) {
+        Log.e(LOG_TAG, "onError: " + opentokError.getErrorDomain() + " : " +
+                opentokError.getErrorCode() + " - " + opentokError.getMessage() + " in session: " + session.getSessionId());
+
+        showOpenTokError(opentokError);
+    }
+
+
+    @Override
+    public void onConnected(SubscriberKit subscriberKit) {
+
+        Log.d(LOG_TAG, "onConnected: Subscriber connected. Stream: " + subscriberKit.getStream().getStreamId());
+    }
+
+    @Override
+    public void onDisconnected(SubscriberKit subscriberKit) {
+
+        try {
+            Log.d(LOG_TAG, "onDisconnected: Subscriber disconnected. Stream: " + subscriberKit.getStream().getStreamId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void onError(SubscriberKit subscriberKit, OpentokError opentokError) {
+
+        Log.e(LOG_TAG, "onError: " + opentokError.getErrorDomain() + " : " +
+                opentokError.getErrorCode() + " - " + opentokError.getMessage());
+
+        showOpenTokError(opentokError);
+    }
+
+
+    private void showOpenTokError(OpentokError opentokError) {
+        if (getContext() == null)
+            return;
+
+//        Toast.makeText(getContext(), opentokError.getErrorDomain().name() + ": " + opentokError.getMessage() + " Please, see the logcat.", Toast.LENGTH_LONG).show();
+        getCallActivity().finish();
+    }
+
+    @OnClick({R.id.imgMute, R.id.imgCancelCall, R.id.imgDeclineCall, R.id.imgPickCall, R.id.imgLoudSpeaker})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.imgMute:
+                if (mPublisher.getPublishAudio()) {
+                    mPublisher.setPublishAudio(false);
+                    imgMute.setColorFilter(getBaseActivity().getResources().getColor(R.color.base_reddish));
+                } else {
+                    mPublisher.setPublishAudio(true);
+                    imgMute.setColorFilter(getBaseActivity().getResources().getColor(R.color.white));
+                }
+                break;
+            case R.id.imgDeclineCall:
+                rejectCall(true);
+                break;
+            case R.id.imgCancelCall:
+                endCall(true);
+                break;
+
+            case R.id.imgPickCall:
+                isSignalSender = true;
+                mSession.sendSignal(ACCEPT_CALL, "accept");
+                contCallAcceptedOptions.setVisibility(View.VISIBLE);
+                contCallComingOption.setVisibility(View.GONE);
+                startTimer();
+                publishAudio();
+                break;
+
+
+            case R.id.imgLoudSpeaker:
+                if (mPublisher != null) {
+
+                    if (isLoudSpeakerOn) {
+                        AudioDeviceManager.getAudioDevice().setOutputMode(
+                                BaseAudioDevice.OutputMode.Handset);
+                        imgLoudSpeaker.setColorFilter(getBaseActivity().getResources().getColor(R.color.white));
+                        isLoudSpeakerOn = false;
+                    } else {
+                        AudioDeviceManager.getAudioDevice().setOutputMode(
+                                BaseAudioDevice.OutputMode.SpeakerPhone);
+                        imgLoudSpeaker.setColorFilter(getBaseActivity().getResources().getColor(R.color.base_reddish));
+                        isLoudSpeakerOn = true;
+                    }
+
+                }
+                break;
+        }
+    }
+
+
+    private void rejectCall(boolean isSignalSender) {
+
+        this.isSignalSender = isSignalSender;
+
+
+        if (isSignalSender) {
+
+            mSession.sendSignal(REJECT_CALL, "reject");
+
+        }
+
+        disconnectSession();
+        getBaseActivity().finish();
+
+    }
+
+
+    private void endCall(boolean isSignalSender) {
+
+        this.isSignalSender = isSignalSender;
+
+
+        if (isSignalSender && mSession != null) {
+            mSession.sendSignal(END_CALL, "disconnect", true);
+        }
+
+        disconnectSession();
+        getBaseActivity().finish();
+
+
+    }
+
+
+    private void disconnectSession() {
+        if (mSession == null) {
+            return;
+        }
+
+        if (mSubscriber != null) {
+            mSession.unsubscribe(mSubscriber);
+            mSubscriber.destroy();
+            mSubscriber = null;
+        }
+
+        if (mPublisher != null) {
+            mSession.unpublish(mPublisher);
+            mPublisher.destroy();
+            mPublisher = null;
+        }
+        mSession.disconnect();
     }
 }

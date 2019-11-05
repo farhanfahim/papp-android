@@ -301,7 +301,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             public void click() {
                 genericDialogFragment.dismiss();
                 baseFragment.sharedPreferenceManager.clearDB();
-                baseFragment.getBaseActivity().clearAllActivitiesExceptThis(MainActivity.class);
             }
         });
 

@@ -59,7 +59,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     FrameLayout subscriberContainer;
     boolean isSignalSender = false;
 
-    private static final String LOG_TAG = "Audio Call";
+    private static final String LOG_TAG = "Video Call";
     @BindView(R.id.imgCameraSwitch)
     ImageView imgCameraSwitch;
     @BindView(R.id.imgPickCall)
@@ -72,6 +72,8 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
     LinearLayout contCallAcceptedOptions;
     @BindView(R.id.imgProfile)
     CircleImageView imgProfile;
+    @BindView(R.id.txtStatus)
+    AnyTextView txtStatus;
     private Session mSession;
     private Publisher mPublisher;
     private Subscriber mSubscriber;
@@ -168,9 +170,12 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
         if (openTokSessionRecModel.isCaller()) {
             contCallAcceptedOptions.setVisibility(View.VISIBLE);
             contCallComingOption.setVisibility(View.GONE);
+            txtStatus.setText("Calling...");
         } else {
             contCallAcceptedOptions.setVisibility(View.GONE);
             contCallComingOption.setVisibility(View.GONE);
+            txtStatus.setText("Connecting...");
+            getCallActivity().playRingtone();
         }
 
 
@@ -178,8 +183,10 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
 
     private void startTimer() {
         txtTime.setVisibility(View.VISIBLE);
+        getCallActivity().stopRingtone();
         startTime = System.currentTimeMillis();
         timerHandler.postDelayed(timerRunnable, 0);
+        txtStatus.setVisibility(View.GONE);
     }
 
 
@@ -305,6 +312,7 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
         if (!openTokSessionRecModel.isCaller()) {
             contCallAcceptedOptions.setVisibility(View.GONE);
             contCallComingOption.setVisibility(View.VISIBLE);
+            txtStatus.setVisibility(View.GONE);
         }
     }
 
@@ -442,14 +450,8 @@ public class VideoCallFragment extends BaseFragment implements Session.SessionLi
                 mSession.sendSignal(ACCEPT_CALL, "accept");
                 contCallAcceptedOptions.setVisibility(View.VISIBLE);
                 contCallComingOption.setVisibility(View.GONE);
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        startTimer();
-                        publishVideo();
-                    }
-                }, 200);
+                startTimer();
+                publishVideo();
 
 
                 break;

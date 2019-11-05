@@ -1,8 +1,16 @@
 package com.tekrevol.papp.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
@@ -10,11 +18,14 @@ import androidx.annotation.Nullable;
 import com.google.android.material.navigation.NavigationView;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.fragments.AudioCallFragment;
 import com.tekrevol.papp.fragments.VideoCallFragment;
 import com.tekrevol.papp.helperclasses.RunTimePermissions;
 import com.tekrevol.papp.helperclasses.StringHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.models.receiving_model.OpenTokSessionRecModel;
+
+import java.io.IOException;
 
 
 public class CallActivity extends BaseActivity {
@@ -26,6 +37,8 @@ public class CallActivity extends BaseActivity {
     public final String LOG_TAG = MainActivity.class.getSimpleName();
     public final int RC_SETTINGS_SCREEN_PERM = 123;
     public final int RC_VIDEO_APP_PERM = 124;
+    Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+    private MediaPlayer mMediaPlayer;
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -38,7 +51,33 @@ public class CallActivity extends BaseActivity {
 //        setContentView(R.layout.activity_main);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+        if (Build.VERSION.SDK_INT == 26) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            this.setTurnScreenOn(true);
+        } else {
+            final Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        }
+
+
+        mMediaPlayer = new MediaPlayer();
+        try {
+            mMediaPlayer.setDataSource(this, alert);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -91,7 +130,7 @@ public class CallActivity extends BaseActivity {
         if (openTokSessionRecModel.getSessionType().equals(String.valueOf(AppConstants.SESSION_TYPE_VIDEO))) {
             addDockableFragment(VideoCallFragment.newInstance(openTokSessionRecModel), false);
         } else {
-            UIHelper.showToast(this, "This feature is in progress");
+            addDockableFragment(AudioCallFragment.newInstance(openTokSessionRecModel), false);
         }
     }
 
@@ -122,5 +161,37 @@ public class CallActivity extends BaseActivity {
 //        }
     }
 
+    @Override
+    protected void onDestroy() {
+       stopRingtone();
+        super.onDestroy();
+    }
+
+    /**
+     * Stop Ringtone if playing
+     */
+
+    public void stopRingtone() {
+        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+            mMediaPlayer.stop();
+        }
+
+    }
+
+
+    /**
+     * Play default ringtone
+     */
+
+    public void playRingtone() {
+        try {
+            mMediaPlayer.setLooping(true);
+            mMediaPlayer.prepare();
+            mMediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }

@@ -33,6 +33,7 @@ public class GenericContentFragment extends BaseFragment {
     Unbinder unbinder;
     private String content = "";
     private String title = "";
+    private String url = "";
     private boolean isShowWebView;
 
 
@@ -66,7 +67,12 @@ public class GenericContentFragment extends BaseFragment {
         if (isShowWebView) {
             txtViewContentGenericContent.setVisibility(View.GONE);
             webView.getSettings().setJavaScriptEnabled(true);
-            webView.loadDataWithBaseURL("", content, "text/html", "UTF-8", "");
+
+            if (url.isEmpty()) {
+                webView.loadDataWithBaseURL("", content, "text/html", "UTF-8", "");
+            } else {
+                webView.loadUrl(url);
+            }
         } else {
             webView.setVisibility(View.GONE);
             txtViewContentGenericContent.setText(Html.fromHtml(content), TextView.BufferType.SPANNABLE);

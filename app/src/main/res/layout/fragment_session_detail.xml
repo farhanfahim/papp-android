@@ -91,7 +91,6 @@
         </LinearLayout>
 
 
-
         <LinearLayout
             android:id="@+id/contSessionType"
             android:layout_width="match_parent"
@@ -122,8 +121,8 @@
                     android:layout_width="@dimen/x12dp"
                     android:layout_height="@dimen/x12dp"
                     android:layout_marginRight="@dimen/x10dp"
-                    android:tint="@color/txtBlack"
-                    android:src="@drawable/img_session" />
+                    android:src="@drawable/img_session"
+                    android:tint="@color/txtBlack" />
 
 
                 <com.tekrevol.papp.widget.AnyTextView
@@ -142,7 +141,6 @@
 
 
         </LinearLayout>
-
 
 
         <com.tekrevol.papp.widget.AnyTextView
@@ -223,7 +221,7 @@
                     android:layout_weight="1"
                     android:background="@color/c_white"
                     android:gravity="start"
-                    android:hint="@string/lorem_ipsum"
+                    android:hint="No message available"
                     android:textColor="@color/txtDarkGrey"
                     android:textSize="@dimen/s14"
                     app:typeface="@string/font_regular" />
@@ -368,6 +366,31 @@
 
 
         </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/contComplete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/x20dp"
+            android:layout_marginBottom="@dimen/x20dp"
+            android:background="@drawable/img_button_blue_small"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <com.tekrevol.papp.widget.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/x3dp"
+                android:text="Complete Session"
+                android:textColor="@color/c_white"
+                android:textSize="@dimen/s14"
+                app:fontFamily="@string/font_regular" />
+
+
+        </LinearLayout>
 
 
         <com.tekrevol.papp.widget.AnyTextView

@@ -1,11 +1,13 @@
 package com.tekrevol.papp.fragments;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +44,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import co.chatsdk.core.session.ChatSDK;
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
 public class ViewSessionFragment extends BaseFragment implements OnItemClickListener, SlyCalendarDialog.Callback {
@@ -191,7 +194,7 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
 
         switch (view.getId()) {
             case R.id.contParentLayout:
-                    getBaseActivity().addDockableFragment(SessionDetailsFragment.newInstance((SessionRecievingModel) object), true);
+                getBaseActivity().addDockableFragment(SessionDetailsFragment.newInstance((SessionRecievingModel) object), true);
                 break;
 
             case R.id.imgDone:
@@ -209,8 +212,7 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.contChat:
-                getBaseActivity().popBackStack();
-                getBaseActivity().addDockableFragment(ChatListsFragment.newInstance(), false);
+                ChatSDK.ui().startMainActivity(getContext());
                 break;
             case R.id.contDate:
                 new SlyCalendarDialog()
@@ -267,7 +269,7 @@ public class ViewSessionFragment extends BaseFragment implements OnItemClickList
     }
 
 
-    public void getSessions() {
+    private void getSessions() {
 
         Map<String, Object> queryMap = new HashMap<>();
         queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);

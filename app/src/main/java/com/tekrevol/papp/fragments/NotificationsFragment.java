@@ -1,10 +1,12 @@
 package com.tekrevol.papp.fragments;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,19 +17,28 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.NotificationAdapter;
 import com.tekrevol.papp.callbacks.OnItemAdd;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.Constants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.managers.retrofit.GsonFactory;
+import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.models.receiving_model.NotificationModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 import com.github.clans.fab.FloatingActionButton;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,7 +73,7 @@ public class NotificationsFragment extends BaseFragment implements OnItemClickLi
 
 
     NotificationAdapter adapter;
-    ArrayList<SpinnerModel> arrData;
+    ArrayList<NotificationModel> arrData;
 
 
     public static NotificationsFragment newInstance() {
@@ -121,18 +132,8 @@ public class NotificationsFragment extends BaseFragment implements OnItemClickLi
         fab.setVisibility(View.GONE);
         bindRecyclerView();
 
+        getNotifications();
 
-        if (onCreated) {
-            adapter.notifyDataSetChanged();
-            return;
-        }
-
-
-        arrData.clear();
-        arrData.addAll(Constants.getAddDependentsArray2());
-        arrData.addAll(Constants.getAddDependentsArray2());
-        arrData.addAll(Constants.getAddDependentsArray2());
-        adapter.notifyDataSetChanged();
     }
 
 
@@ -196,4 +197,42 @@ public class NotificationsFragment extends BaseFragment implements OnItemClickLi
                 break;
         }
     }
+
+
+    private void getNotifications() {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
+        queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_NOTIFICATIONS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                Type type = new TypeToken<ArrayList<NotificationModel>>() {
+                }.getType();
+                ArrayList<NotificationModel> arrayList = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type);
+
+                arrData.clear();
+                arrData.addAll(arrayList);
+
+                if (arrData.isEmpty()) {
+                    emptyviewContainer.setVisibility(View.VISIBLE);
+                } else {
+                    emptyviewContainer.setVisibility(View.GONE);
+                }
+
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
+
 }

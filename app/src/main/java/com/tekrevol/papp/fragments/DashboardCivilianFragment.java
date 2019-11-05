@@ -26,6 +26,7 @@ import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.enums.MentorType;
+import com.tekrevol.papp.firebase.chat.FirebaseIntegration;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
@@ -47,6 +48,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import co.chatsdk.core.session.ChatSDK;
+import io.reactivex.CompletableObserver;
+import io.reactivex.disposables.Disposable;
 
 public class DashboardCivilianFragment extends BaseFragment implements OnItemClickListener {
 
@@ -155,7 +158,7 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        getHomeActivity().firebaseUserSync();
 
         dependentsAdapter = new DependentsAdapter(getContext(), getCurrentUser().getDependants(), this);
         bindRecyclerView();
@@ -276,12 +279,7 @@ public class DashboardCivilianFragment extends BaseFragment implements OnItemCli
 //                ChatSDK.db().fetchUserWithEntityID()
 
 
-
-
-
-
-
-                 break;
+                break;
             case R.id.contSessions:
                 getBaseActivity().popBackStack();
                 getBaseActivity().addDockableFragment(ViewSessionFragment.newInstance(), false);
