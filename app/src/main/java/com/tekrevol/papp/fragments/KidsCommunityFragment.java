@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -22,9 +23,11 @@ import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.enums.MentorType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.UserModel;
+import com.tekrevol.papp.models.wrappers.DependentDetailWrapper;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
@@ -59,8 +62,6 @@ public class KidsCommunityFragment extends BaseFragment implements OnItemClickLi
     private ArrayList<UserModel> arrAccess;
     private ArrayList<UserModel> arrNotAccess;
     private String text = "";
-
-
     public static KidsCommunityFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -166,7 +167,7 @@ public class KidsCommunityFragment extends BaseFragment implements OnItemClickLi
         UserModel userModel = (UserModel) object;
 
         if (userModel.getAccessable() == AppConstants.ACCESSIBLE) {
-
+            getDependantDetail(userModel.getId());
         } else {
             getBaseActivity().addDockableFragment(ChildProfileFragment.newInstance(userModel, null), true);
         }
@@ -290,6 +291,27 @@ public class KidsCommunityFragment extends BaseFragment implements OnItemClickLi
                 adapter.notifyDataSetChanged();
                 contAccessible.setVisibility(View.GONE);
                 contNotAccessible.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
+    }
+
+    private void getDependantDetail(int id) {
+
+        Map<String, Object> queryMap = new HashMap<>();
+
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS_SLASH + id, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                DependentDetailWrapper dependentDetailWrapper = getGson().fromJson(getGson().toJson(webResponse.result), DependentDetailWrapper.class);
+                getBaseActivity().addDockableFragment(ChildProfileFragment.newInstance(dependentDetailWrapper.getDependent(),dependentDetailWrapper.getParent()),true);
+
             }
 
             @Override

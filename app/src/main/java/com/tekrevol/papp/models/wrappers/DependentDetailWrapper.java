@@ -13,6 +13,21 @@ public class DependentDetailWrapper {
     @SerializedName("parent")
     private UserModel parent;
 
+    public UserModel getDependent() {
+        return dependent;
+    }
+
+    public void setDependent(UserModel dependent) {
+        this.dependent = dependent;
+    }
+
+    public UserModel getParent() {
+        return parent;
+    }
+
+    public void setParent(UserModel parent) {
+        this.parent = parent;
+    }
 
     @Override
     public String toString() {

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.AppConstants;
@@ -19,13 +20,20 @@ import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.models.sending_model.DependantIdSendingModel;
 import com.tekrevol.papp.models.sending_model.DependentChangePasswordSendingModel;
+import com.tekrevol.papp.models.wrappers.DependentDetailWrapper;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -128,7 +136,7 @@ public class ChildProfileFragment extends BaseFragment implements OnItemClickLis
         String firstName = userModel.getUserDetails().getFirstName();
         String lastName = userModel.getUserDetails().getLastName();
 
-        String childName = firstName+" "+lastName;
+        String childName = firstName + " " + lastName;
 
         txtName.setText(childName);
 
@@ -138,6 +146,7 @@ public class ChildProfileFragment extends BaseFragment implements OnItemClickLis
         txtAge.setText(childAge);
 
         txtGender.setText(AppConstants.getGenderString(userModel.getUserDetails().getGender()));
+
 
 
     }
@@ -173,4 +182,6 @@ public class ChildProfileFragment extends BaseFragment implements OnItemClickLis
             }
         });
     }
+
+
 }
