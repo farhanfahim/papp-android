@@ -107,6 +107,8 @@ public class AppConstants {
     public static int MENTOR_ROLE = 5;
     public static int SPONSOR_ROLE = 6;
     public static int DEPENDENT_ROLE = 4;
+    public static int ACCESSIBLE = 1;
+    public static int NOT_ACCESSIBLE = 0;
     public static int TASK_TYPE_USER = 10;
     public static int TASK_TYPE_MENTOR = 20;
     public static int TASK_STATUS_AVAILABLE = 0;

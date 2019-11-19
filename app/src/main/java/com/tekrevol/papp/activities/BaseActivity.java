@@ -4,29 +4,26 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.util.Pair;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.gson.Gson;
 import com.tekrevol.papp.BaseApplication;
+import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.GenericClickableInterface;
 import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.fragments.RightSideMenuFragment;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.fragments.abstracts.GenericDialogFragment;
-
-import com.tekrevol.papp.R;
-
 import com.tekrevol.papp.managers.SharedPreferenceManager;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.widget.TitleBar;
-import com.google.gson.Gson;
 
 
 public abstract class BaseActivity extends AppCompatActivity {

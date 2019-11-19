@@ -26,6 +26,9 @@ public class UserModel {
     @SerializedName("dependants")
     private List<UserModel> dependants;
     @Expose
+    @SerializedName("accessable")
+    private int accessable;
+    @Expose
     @SerializedName("details")
     private UserDetails userDetails;
     @Expose
@@ -143,6 +146,14 @@ public class UserModel {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getAccessable() {
+        return accessable;
+    }
+
+    public void setAccessable(int accessable) {
+        this.accessable = accessable;
     }
 
     @Override
