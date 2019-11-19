@@ -83,6 +83,7 @@ public abstract class AbstractThreadHandler implements ThreadHandler {
         return message;
     }
 
+
     public static Message newMessage (MessageType type, Thread thread) {
         return newMessage(type.ordinal(), thread);
     }

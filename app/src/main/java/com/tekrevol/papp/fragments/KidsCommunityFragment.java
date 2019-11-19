@@ -168,7 +168,7 @@ public class KidsCommunityFragment extends BaseFragment implements OnItemClickLi
         if (userModel.getAccessable() == AppConstants.ACCESSIBLE) {
 
         } else {
-            getBaseActivity().addDockableFragment(ChildProfileFragment.newInstance(userModel), true);
+            getBaseActivity().addDockableFragment(ChildProfileFragment.newInstance(userModel, null), true);
         }
 
 
