@@ -15,9 +15,15 @@ import androidx.annotation.Nullable;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.AppConstants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
+import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.UserModel;
+import com.tekrevol.papp.models.sending_model.DependantIdSendingModel;
+import com.tekrevol.papp.models.sending_model.DependentChangePasswordSendingModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 
@@ -26,6 +32,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.tekrevol.papp.constatnts.WebServiceConstants.PATH_CHANGE_DEPENDENT_PASSWORD;
+import static com.tekrevol.papp.constatnts.WebServiceConstants.PATH_MENTOR_REQUEST;
 
 public class ChildProfileFragment extends BaseFragment implements OnItemClickListener {
 
@@ -127,9 +136,6 @@ public class ChildProfileFragment extends BaseFragment implements OnItemClickLis
         txtGender.setText(AppConstants.getGenderString(userModel.getUserDetails().getGender()));
 
 
-
-
-
     }
 
     @OnClick({R.id.btnLeft1, R.id.txtRequestAccess})
@@ -139,6 +145,28 @@ public class ChildProfileFragment extends BaseFragment implements OnItemClickLis
                 getBaseActivity().popBackStack();
                 break;
             case R.id.txtRequestAccess:
+                sendDependantId();
+                //Toast.makeText(getContext(), "access request sent", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void sendDependantId() {
+
+
+        DependantIdSendingModel dependantIdSendingModel = new DependantIdSendingModel();
+        dependantIdSendingModel.setDependent_id(userModel.getId());
+
+        getBaseWebService().postAPIAnyObject(PATH_MENTOR_REQUEST, dependantIdSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {
+            @Override
+            public void requestDataResponse(WebResponse<Object> webResponse) {
+                UIHelper.showToast(getContext(), webResponse.message);
+                getBaseActivity().popBackStack();
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
     }
 }

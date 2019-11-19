@@ -69,6 +69,7 @@ public class WebServiceConstants {
     public static final String PATH_REVIEWS = "reviews";
     public static final String PATH_ADD_DEPENDENT = "addDependant";
     public static final String PATH_CANCEL_TASK = "cancel-task";
+    public static final String PATH_MENTOR_REQUEST = "mentor-requests";
     public static final String PATH_CHANGE_DEPENDENT_PASSWORD = "change-dependant-password";
     public static final String PATH_SESSIONS = "sessions";
     public static final String PATH_ACCEPT_SESSION = "accept-session-request/";
