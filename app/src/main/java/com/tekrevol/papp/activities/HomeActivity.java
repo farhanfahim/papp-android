@@ -1,23 +1,27 @@
 package com.tekrevol.papp.activities;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
+import android.media.RingtoneManager;
+import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.navigation.NavigationView;
 import com.tekrevol.papp.R;
-import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.firebase.chat.FirebaseIntegration;
 import com.tekrevol.papp.fragments.DashboardCivilianFragment;
 import com.tekrevol.papp.fragments.DashboardLEAFragment;
@@ -84,8 +88,6 @@ public class HomeActivity extends BaseActivity {
         initFragments();
 
     }
-
-
 
 
     public ResideMenu getResideMenu() {
@@ -225,7 +227,6 @@ public class HomeActivity extends BaseActivity {
 //    }
 
 
-
     public void firebaseUserSync() {
         FirebaseIntegration.getInstance().saveUserDetail(this, sharedPreferenceManager.getCurrentUser()).subscribe(new CompletableObserver() {
             @Override
@@ -245,4 +246,5 @@ public class HomeActivity extends BaseActivity {
             }
         });
     }
+
 }
