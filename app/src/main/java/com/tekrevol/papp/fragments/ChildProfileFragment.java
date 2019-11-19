@@ -25,6 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import co.chatsdk.core.dao.User;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChildProfileFragment extends BaseFragment implements OnItemClickListener {
@@ -51,14 +52,17 @@ public class ChildProfileFragment extends BaseFragment implements OnItemClickLis
     @BindView(R.id.txtRequestAccess)
     AnyTextView txtRequestAccess;
 
-
     UserModel userModel;
-    public static ChildProfileFragment newInstance(UserModel userModel) {
+    UserModel parentModel;
+
+
+    public static ChildProfileFragment newInstance(UserModel userModel, UserModel parentModel) {
 
         Bundle args = new Bundle();
 
         ChildProfileFragment fragment = new ChildProfileFragment();
         fragment.userModel = userModel;
+        fragment.parentModel = parentModel;
         fragment.setArguments(args);
         return fragment;
     }
