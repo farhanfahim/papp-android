@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content">
+
+        <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+            android:id="@+id/contAccessible"
+            android:layout_width="@dimen/x150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x10dp"
+            android:layout_marginRight="@dimen/x10dp"
+            android:layout_marginTop="@dimen/x10dp"
+            android:layout_marginBottom="@dimen/x10dp"
+            android:background="@color/base_amber"
+            android:elevation="@dimen/x5dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/x5dp"
+            app:corner_radius="@dimen/x15dp">
+
+
+            <com.tekrevol.papp.widget.AnyTextView
+                android:id="@+id/txtAccessible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLength="50"
+                android:layout_marginRight="@dimen/x8dp"
+                android:layout_marginLeft="@dimen/x8dp"
+                android:padding="@dimen/x3dp"
+                android:singleLine="true"
+                android:text="Accessible"
+                android:textColor="@color/c_white"
+                android:textSize="@dimen/s12"
+                app:fontFamily="@string/font_regular" />
+
+
+
+        </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+        <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+            android:id="@+id/contNotAccessible"
+            android:layout_width="@dimen/x150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x10dp"
+            android:layout_marginRight="@dimen/x10dp"
+            android:layout_marginTop="@dimen/x10dp"
+            android:layout_marginBottom="@dimen/x10dp"
+            android:background="@color/c_white"
+            android:elevation="@dimen/x5dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/x5dp"
+            app:corner_radius="@dimen/x15dp">
+
+
+            <com.tekrevol.papp.widget.AnyTextView
+                android:id="@+id/txtNotAccessible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLength="50"
+                android:layout_marginRight="@dimen/x8dp"
+                android:layout_marginLeft="@dimen/x8dp"
+                android:padding="@dimen/x3dp"
+                android:singleLine="true"
+                android:text="No Access"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/s12"
+                app:fontFamily="@string/font_regular" />
+
+
+
+        </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerView"/>
+
+
+</LinearLayout>

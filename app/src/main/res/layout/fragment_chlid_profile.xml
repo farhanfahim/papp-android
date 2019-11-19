@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_white"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x205dp"
+            android:id="@+id/contLayout"
+            android:background="@drawable/img_header_blue_background"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/containerTitlebar1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x50dp"
+                android:layout_marginBottom="@dimen/x15dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/x8dp"
+                android:paddingRight="@dimen/x8dp">
+
+                <TextView
+                    android:id="@+id/btnLeft1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x5dp"
+                    android:drawableStart="@drawable/img_back_profile"
+                    android:gravity="center"
+                    android:padding="@dimen/x5dp"
+                    android:scaleX="1.5"
+                    android:scaleY="1.5"
+                    android:textColor="@color/c_white" />
+
+
+                <com.tekrevol.papp.widget.AnyTextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="left|center_vertical"
+                    android:singleLine="true"
+                    android:text="Child Profile"
+                    android:textColor="@color/c_white"
+                    android:textSize="@dimen/s16"
+                    app:typeface="@string/font_medium" />
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x20dp"
+                android:layout_marginRight="@dimen/x20dp"
+                android:layout_marginBottom="@dimen/x5dp">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imgProfile"
+                        android:layout_width="@dimen/x80dp"
+                        android:layout_height="@dimen/x80dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_lea_placeholder2" />
+
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+
+                            <com.tekrevol.papp.widget.AnyTextView
+                                android:id="@+id/txtName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:text="Jason Brody"
+                                android:textColor="@color/c_white"
+                                android:textSize="@dimen/s18"
+                                app:typeface="@string/font_bold" />
+
+
+                            <com.tekrevol.papp.widget.AnyTextView
+                                android:id="@+id/txtDesignation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/x10dp"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:text="Traffic Police"
+                                android:textColor="@color/c_white"
+                                android:textSize="@dimen/s12"
+                                app:typeface="@string/font_light" />
+
+
+
+                        </LinearLayout>
+
+
+
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/contLayout"
+            android:orientation="vertical"
+            android:padding="@dimen/x20dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Age"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_regular" />
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:id="@+id/txtAge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="17 Years"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s14"
+                        app:typeface="@string/font_regular" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Gender"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_regular" />
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:id="@+id/txtGender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Male"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s14"
+                        app:typeface="@string/font_regular" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/contLayout"
+            android:orientation="vertical"
+            android:padding="@dimen/x20dp">
+
+
+            <com.tekrevol.papp.widget.AnyTextView
+                android:id="@+id/txtRequestAccess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/x20dp"
+                android:background="@drawable/img_button_blue"
+                android:gravity="center"
+                android:text="Request For Access"
+                android:textColor="@color/c_white"/>
+        </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</androidx.core.widget.NestedScrollView>

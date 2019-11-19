@@ -87,6 +87,8 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
     CircleImageView imgProfile;
     @BindView(R.id.contSponsors)
     LinearLayout contSponsors;
+    @BindView(R.id.kidsCommunity)
+    LinearLayout kidsCommunity;
 
 
     PagesModel about;
@@ -118,6 +120,7 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
             contMyProfile.setVisibility(View.VISIBLE);
             contTasks.setVisibility(View.VISIBLE);
             contMilestones.setVisibility(View.VISIBLE);
+            kidsCommunity.setVisibility(View.VISIBLE);
         } else if (isParent()) {
             contEditProfile.setVisibility(View.VISIBLE);
             contMyProfile.setVisibility(View.GONE);
@@ -125,12 +128,14 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
             contGiftsAndRewards.setVisibility(View.GONE);
             contMyGifts.setVisibility(View.GONE);
             contMilestones.setVisibility(View.GONE);
+            kidsCommunity.setVisibility(View.GONE);
         } else {
             contChangePassword.setVisibility(View.GONE);
             contEditProfile.setVisibility(View.GONE);
             contMyProfile.setVisibility(View.GONE);
             contTasks.setVisibility(View.VISIBLE);
             contMilestones.setVisibility(View.GONE);
+            kidsCommunity.setVisibility(View.VISIBLE);
 
         }
 
@@ -200,7 +205,7 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
 //    }
 
 
-    @OnClick({R.id.imgBack, R.id.contNofitications, R.id.contEditProfile, R.id.contMyProfile, R.id.contChangePassword, R.id.conSessionHistory, R.id.contSessionPayoutHistory, R.id.contMyGifts, R.id.contGiftsAndRewards, R.id.contMilestones, R.id.contTasks, R.id.contSponsors, R.id.contAboutApp, R.id.contTermsAndConditions, R.id.contLogout})
+    @OnClick({R.id.imgBack, R.id.contNofitications, R.id.contEditProfile, R.id.contMyProfile, R.id.contChangePassword, R.id.conSessionHistory, R.id.contSessionPayoutHistory, R.id.contMyGifts, R.id.contGiftsAndRewards, R.id.contMilestones, R.id.contTasks, R.id.contSponsors, R.id.contAboutApp, R.id.contTermsAndConditions, R.id.contLogout,R.id.kidsCommunity})
     public void onViewClicked(View view) {
 
         closeMenu();
@@ -216,6 +221,9 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
                 break;
             case R.id.contMyProfile:
                 getBaseActivity().addDockableFragment(LEAProfileFragment.newInstance(null), false);
+                break;
+            case R.id.kidsCommunity:
+                getBaseActivity().addDockableFragment(KidsCommunityFragment.newInstance(), false);
                 break;
 
             case R.id.contChangePassword:
