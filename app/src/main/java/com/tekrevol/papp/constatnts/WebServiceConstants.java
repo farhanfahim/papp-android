@@ -95,6 +95,7 @@ public class WebServiceConstants {
     public static final String Q_PARAM_LIMIT = "limit";
     public static final String Q_PARAM_OFFSET = "offset";
     public static final String Q_PARAM_ACCESSIBLE = "accessable";
+    public static final String Q_PARAM_IS_MINE = "is_mine";
     public static final String Q_PARAM_TOP_MENTOR = "top_mentor";
     public static final String Q_PARAM_MY_MENTOR = "my_mentor";
     public static final String Q_PARAM_SEARCH = "search";

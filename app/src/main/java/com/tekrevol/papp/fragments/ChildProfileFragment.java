@@ -159,13 +159,41 @@ public class ChildProfileFragment extends BaseFragment implements OnItemClickLis
         String childPoints = String.valueOf(userModel.getUserDetails().getTotalPoints());
         txtPoints.setText(childPoints);
 
+        if (userModel.getUserDetails().getAddress() == null){
+            txtLocation.setText("-");
+        }else{
+            txtLocation.setText(userModel.getUserDetails().getAddress());
+        }
+
         int checkAccessible = userModel.getAccessable();
         if (checkAccessible == 1 && parentModel != null) {
             contGuardianLayout.setVisibility(View.VISIBLE);
             txtRequestAccess.setVisibility(View.GONE);
 
+            ImageLoaderHelper.loadImageWithAnimationsByPath(imgGuardianProfile, parentModel.getUserDetails().getImage(), true);
 
-            
+            txtGuardianName.setText(parentModel.getUserDetails().getFullName());
+
+            txtGuardianEmail.setText(parentModel.getEmail());
+
+            if (parentModel.getUserDetails().getAddress() == null){
+                txtGuardianLocation.setText("-");
+            }else{
+                txtGuardianLocation.setText(parentModel.getUserDetails().getAddress());
+            }
+
+            if (parentModel.getUserDetails().getAddress() == null){
+                txtGuardianPhoneNo.setText("-");
+            }else{
+                String phoneNo = String.valueOf(parentModel.getUserDetails().getPhone());
+                txtGuardianLocation.setText(phoneNo);
+            }
+
+
+
+
+
+
         } else {
             contGuardianLayout.setVisibility(View.GONE);
             txtRequestAccess.setVisibility(View.VISIBLE);

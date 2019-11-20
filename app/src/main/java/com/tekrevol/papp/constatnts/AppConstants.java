@@ -121,6 +121,7 @@ public class AppConstants {
     public static int SESSION_STATUS_PENDING = 0;
     public static int SESSION_STATUS_ACCEPTED_BY_MENTOR = 1;
     public static int SESSION_STATUS_COMPLETED = 2;
+    public static int IS_MINE_ROLE = 1;
     public static String PAGE_SLUG_TERMS_AND_CONDITION = "terms-and-condition";
     public static String PAGE_SLUG_ABOUT = "about";
 

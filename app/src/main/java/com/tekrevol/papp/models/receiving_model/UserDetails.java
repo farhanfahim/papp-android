@@ -72,6 +72,9 @@ public class UserDetails {
     @Expose
     @SerializedName("lng")
     private double lng;
+    @Expose
+    @SerializedName("phone")
+    private double phone;
 
     public String getDob() {
         return dob;
@@ -247,6 +250,14 @@ public class UserDetails {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public double getPhone() {
+        return phone;
+    }
+
+    public void setPhone(double phone) {
+        this.phone = phone;
     }
 
     @Override
