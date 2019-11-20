@@ -5,6 +5,7 @@ import com.tekrevol.papp.models.general.SpinnerModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserModel {
@@ -117,6 +118,7 @@ public class UserModel {
     }
 
     public List<UserModel> getDependants() {
+        if (dependants == null) return new ArrayList<>();
         return dependants;
     }
 

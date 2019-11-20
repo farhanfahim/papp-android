@@ -73,6 +73,7 @@
             android:background="@drawable/shape_circle"
             android:elevation="@dimen/x5dp"
             android:padding="@dimen/x10dp"
+            android:clickable="true"
             android:visibility="gone"
             android:layout_margin="@dimen/x2dp"
             android:src="@drawable/img_chat2"
