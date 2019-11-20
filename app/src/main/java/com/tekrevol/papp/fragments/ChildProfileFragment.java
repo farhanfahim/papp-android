@@ -5,49 +5,39 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.google.gson.reflect.TypeToken;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.constatnts.AppConstants;
-import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
-import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.UserModel;
 import com.tekrevol.papp.models.sending_model.DependantIdSendingModel;
-import com.tekrevol.papp.models.sending_model.DependentChangePasswordSendingModel;
-import com.tekrevol.papp.models.wrappers.DependentDetailWrapper;
 import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import co.chatsdk.core.dao.User;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.tekrevol.papp.constatnts.WebServiceConstants.PATH_CHANGE_DEPENDENT_PASSWORD;
 import static com.tekrevol.papp.constatnts.WebServiceConstants.PATH_MENTOR_REQUEST;
 
 public class ChildProfileFragment extends BaseFragment implements OnItemClickListener {
 
     Unbinder unbinder;
+
     @BindView(R.id.btnLeft1)
     TextView btnLeft1;
     @BindView(R.id.txtTitle)
@@ -58,8 +48,6 @@ public class ChildProfileFragment extends BaseFragment implements OnItemClickLis
     CircleImageView imgProfile;
     @BindView(R.id.txtName)
     AnyTextView txtName;
-    @BindView(R.id.txtDesignation)
-    AnyTextView txtDesignation;
     @BindView(R.id.contLayout)
     LinearLayout contLayout;
     @BindView(R.id.txtAge)
@@ -68,9 +56,33 @@ public class ChildProfileFragment extends BaseFragment implements OnItemClickLis
     AnyTextView txtGender;
     @BindView(R.id.txtRequestAccess)
     AnyTextView txtRequestAccess;
+    @BindView(R.id.txtLocation)
+    AnyTextView txtLocation;
+    @BindView(R.id.txtPoints)
+    AnyTextView txtPoints;
+    @BindView(R.id.contPointsEarned)
+    LinearLayout contPointsEarned;
+    @BindView(R.id.txtGuardianTitle)
+    AnyTextView txtGuardianTitle;
+    @BindView(R.id.containerGuardianTitlebar1)
+    LinearLayout containerGuardianTitlebar1;
+    @BindView(R.id.imgGuardianProfile)
+    CircleImageView imgGuardianProfile;
+    @BindView(R.id.txtGuardianName)
+    AnyTextView txtGuardianName;
+    @BindView(R.id.txtGuardianLocation)
+    AnyTextView txtGuardianLocation;
+    @BindView(R.id.contGuardianLayout)
+    LinearLayout contGuardianLayout;
 
     UserModel userModel;
     UserModel parentModel;
+    @BindView(R.id.contChildLayout)
+    LinearLayout contChildLayout;
+    @BindView(R.id.txtGuardianEmail)
+    AnyTextView txtGuardianEmail;
+    @BindView(R.id.txtGuardianPhoneNo)
+    AnyTextView txtGuardianPhoneNo;
 
 
     public static ChildProfileFragment newInstance(UserModel userModel, UserModel parentModel) {
@@ -133,21 +145,31 @@ public class ChildProfileFragment extends BaseFragment implements OnItemClickLis
         super.onViewCreated(view, savedInstanceState);
 
 
-        String firstName = userModel.getUserDetails().getFirstName();
-        String lastName = userModel.getUserDetails().getLastName();
+        String fullName = userModel.getUserDetails().getFullName();
 
-        String childName = firstName + " " + lastName;
-
-        txtName.setText(childName);
+        txtName.setText(fullName);
 
         ImageLoaderHelper.loadImageWithAnimationsByPath(imgProfile, userModel.getUserDetails().getImage(), true);
         String childAge = userModel.getUserDetails().getDob();
 
-        txtAge.setText(childAge);
+        txtAge.setText(getBirthYear(childAge));
 
         txtGender.setText(AppConstants.getGenderString(userModel.getUserDetails().getGender()));
 
+        String childPoints = String.valueOf(userModel.getUserDetails().getTotalPoints());
+        txtPoints.setText(childPoints);
 
+        int checkAccessible = userModel.getAccessable();
+        if (checkAccessible == 1 && parentModel != null) {
+            contGuardianLayout.setVisibility(View.VISIBLE);
+            txtRequestAccess.setVisibility(View.GONE);
+
+
+            
+        } else {
+            contGuardianLayout.setVisibility(View.GONE);
+            txtRequestAccess.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -181,6 +203,24 @@ public class ChildProfileFragment extends BaseFragment implements OnItemClickLis
 
             }
         });
+    }
+
+    private String getBirthYear(String dob) {
+
+        String[] parts = dob.split("-");
+
+        String month = parts[1];
+        String year = parts[0];
+        String day = parts[2];
+
+        int dd = Integer.parseInt(day);
+        int mm = Integer.parseInt(month);
+        int yy = Integer.parseInt(year);
+
+        LocalDate birthDate = new LocalDate(yy, mm, dd);
+        LocalDate currentDate = new LocalDate();
+
+        return Years.yearsBetween(birthDate, currentDate).getYears() + " Years";
     }
 
 

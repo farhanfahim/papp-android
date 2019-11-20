@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -23,7 +23,6 @@ import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.enums.MentorType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
-import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.UserModel;
@@ -58,10 +57,14 @@ public class KidsCommunityFragment extends BaseFragment implements OnItemClickLi
     RoundKornerLinearLayout contAccessible;
     @BindView(R.id.contNotAccessible)
     RoundKornerLinearLayout contNotAccessible;
+    @BindView(R.id.contFilters)
+    LinearLayout contFilters;
     private MentorType mentorType;
     private ArrayList<UserModel> arrAccess;
     private ArrayList<UserModel> arrNotAccess;
     private String text = "";
+    boolean isAccessibleSelected = true;
+
     public static KidsCommunityFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -135,6 +138,11 @@ public class KidsCommunityFragment extends BaseFragment implements OnItemClickLi
 
 
         if (onCreated) {
+            if (isAccessibleSelected) {
+                filter(R.color.base_amber, R.color.white, R.color.white, R.color.dark_gray, arrAccess);
+            } else {
+                filter(R.color.white, R.color.base_amber, R.color.dark_gray, R.color.white, arrNotAccess);
+            }
             adapter.notifyDataSetChanged();
             return;
         }
@@ -143,10 +151,10 @@ public class KidsCommunityFragment extends BaseFragment implements OnItemClickLi
         if (isMentor()) {
             getAccessibleDependant();
             getNotAccessibleDependant();
-            adapter.notifyDataSetChanged();
-        } else if (isDependent()) {
+            contFilters.setVisibility(View.VISIBLE);
+         } else if (isDependent()) {
             getAllDependant();
-            adapter.notifyDataSetChanged();
+            contFilters.setVisibility(View.GONE);
         }
 
     }
@@ -227,11 +235,7 @@ public class KidsCommunityFragment extends BaseFragment implements OnItemClickLi
 
                 arrNotAccess.clear();
                 arrNotAccess.addAll(arrayList);
-
-                arrData.clear();
-                arrData.addAll(arrNotAccess);
-                adapter.notifyDataSetChanged();
-            }
+             }
 
             @Override
             public void onError(Object object) {
@@ -244,30 +248,25 @@ public class KidsCommunityFragment extends BaseFragment implements OnItemClickLi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.contAccessible:
-                contAccessible.setBackgroundColor(getBaseActivity().getResources().getColor(R.color.base_amber));
-                contNotAccessible.setBackgroundColor(getBaseActivity().getResources().getColor(R.color.white));
-                txtAccessible.setTextColor(getBaseActivity().getResources().getColor(R.color.white));
-                txtNotAccessible.setTextColor(getBaseActivity().getResources().getColor(R.color.dark_gray));
-
-
-                arrData.clear();
-                arrData.addAll(arrAccess);
-                adapter.notifyDataSetChanged();
-
+                filter(R.color.base_amber, R.color.white, R.color.white, R.color.dark_gray, arrAccess);
+                isAccessibleSelected = true;
                 break;
             case R.id.contNotAccessible:
-                contAccessible.setBackgroundColor(getBaseActivity().getResources().getColor(R.color.white));
-                contNotAccessible.setBackgroundColor(getBaseActivity().getResources().getColor(R.color.base_amber));
-                txtAccessible.setTextColor(getBaseActivity().getResources().getColor(R.color.dark_gray));
-                txtNotAccessible.setTextColor(getBaseActivity().getResources().getColor(R.color.white));
-
-
-                arrData.clear();
-                arrData.addAll(arrNotAccess);
-                adapter.notifyDataSetChanged();
-
+                filter(R.color.white, R.color.base_amber, R.color.dark_gray, R.color.white, arrNotAccess);
+                isAccessibleSelected = false;
                 break;
         }
+    }
+
+    private void filter(int p, int p2, int p3, int p4, ArrayList<UserModel> arrayFiltered) {
+        contAccessible.setBackgroundColor(getBaseActivity().getResources().getColor(p));
+        contNotAccessible.setBackgroundColor(getBaseActivity().getResources().getColor(p2));
+        txtAccessible.setTextColor(getBaseActivity().getResources().getColor(p3));
+        txtNotAccessible.setTextColor(getBaseActivity().getResources().getColor(p4));
+
+        arrData.clear();
+        arrData.addAll(arrayFiltered);
+        adapter.notifyDataSetChanged();
     }
 
     private void getAllDependant() {
@@ -310,7 +309,7 @@ public class KidsCommunityFragment extends BaseFragment implements OnItemClickLi
             public void requestDataResponse(WebResponse<Object> webResponse) {
 
                 DependentDetailWrapper dependentDetailWrapper = getGson().fromJson(getGson().toJson(webResponse.result), DependentDetailWrapper.class);
-                getBaseActivity().addDockableFragment(ChildProfileFragment.newInstance(dependentDetailWrapper.getDependent(),dependentDetailWrapper.getParent()),true);
+                getBaseActivity().addDockableFragment(ChildProfileFragment.newInstance(dependentDetailWrapper.getDependent(), dependentDetailWrapper.getParent()), true);
 
             }
 

@@ -122,13 +122,14 @@
 
 
                             <com.tekrevol.papp.widget.AnyTextView
-                                android:id="@+id/txtDesignation"
+                                android:id="@+id/txtLocation"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/x10dp"
+                                android:drawableLeft="@drawable/img_location"
+                                android:drawablePadding="@dimen/x5dp"
                                 android:ellipsize="end"
                                 android:singleLine="true"
-                                android:text="Traffic Police"
+                                android:text="N/A"
                                 android:textColor="@color/c_white"
                                 android:textSize="@dimen/s12"
                                 app:typeface="@string/font_light" />
@@ -159,6 +160,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/contChildLayout"
             android:layout_below="@id/contLayout"
             android:orientation="vertical"
             android:padding="@dimen/x20dp">
@@ -238,8 +240,310 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
 
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Year of experience"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_regular" />
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="08 Years"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s14"
+                        app:typeface="@string/font_regular" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/contPointsEarned"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Points Earned"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_regular" />
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:id="@+id/txtPoints"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="1087 pts"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s14"
+                        app:typeface="@string/font_regular" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/contGuardianLayout"
+            android:layout_below="@id/contChildLayout"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/s10"
+                android:background="@color/base_gray"/>
+
+
+            <LinearLayout
+                android:id="@+id/containerGuardianTitlebar1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x50dp"
+                android:layout_marginBottom="@dimen/x15dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="@dimen/s20"
+                android:layout_marginRight="@dimen/s20"
+                android:paddingRight="@dimen/x8dp">
+
+
+
+
+                <com.tekrevol.papp.widget.AnyTextView
+                    android:id="@+id/txtGuardianTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="left|center_vertical"
+                    android:singleLine="true"
+                    android:text="Guardian Profile"
+                    android:textColor="@color/txtBlack"
+                    android:textSize="@dimen/s16"
+                    app:typeface="@string/font_medium" />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/s20"
+                android:layout_marginRight="@dimen/s20"
+                android:layout_marginBottom="@dimen/x5dp">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imgGuardianProfile"
+                        android:layout_width="@dimen/x50dp"
+                        android:layout_height="@dimen/x50dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_lea_placeholder2" />
+
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+
+                            <com.tekrevol.papp.widget.AnyTextView
+                                android:id="@+id/txtGuardianName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:text="Jason Brody"
+                                android:textColor="@color/txtBlack"
+                                android:textSize="@dimen/s14"
+                                app:typeface="@string/font_bold" />
+
+
+                            <com.tekrevol.papp.widget.AnyTextView
+                                android:id="@+id/txtGuardianLocation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/img_location_black"
+                                android:drawablePadding="@dimen/x5dp"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:text="N/A"
+                                android:textColor="@color/txtBlack"
+                                android:textSize="@dimen/s10"
+                                app:typeface="@string/font_light" />
+
+
+
+                        </LinearLayout>
+
+
+
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/s20"
+                android:layout_marginRight="@dimen/s20"
+                android:layout_marginBottom="@dimen/x20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x5dp"
+                    android:layout_marginTop="@dimen/s10"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Email"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_regular" />
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:id="@+id/txtGuardianEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Jason_Brody@gmail.com"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s14"
+                        app:typeface="@string/font_regular" />
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/s20"
+                android:layout_marginRight="@dimen/s20"
+                android:layout_marginBottom="@dimen/x20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Phone No"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_regular" />
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:id="@+id/txtGuardianPhoneNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="123456423"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s14"
+                        app:typeface="@string/font_regular" />
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
 
 
 
@@ -247,7 +551,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/contLayout"
+            android:layout_marginLeft="@dimen/s20"
+            android:layout_marginRight="@dimen/s20"
+            android:layout_below="@id/contGuardianLayout"
             android:orientation="vertical"
             android:padding="@dimen/x20dp">
 
@@ -262,9 +568,6 @@
                 android:gravity="center"
                 android:text="Request For Access"
                 android:textColor="@color/c_white"/>
-        </LinearLayout>
-
-
         </LinearLayout>
 
 
