@@ -563,7 +563,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/x20dp"
                 android:background="@drawable/img_button_blue"
                 android:gravity="center"
                 android:text="Request For Access"
