@@ -1,6 +1,7 @@
 package com.tekrevol.papp.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.enums.MentorType;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
+import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.managers.retrofit.GsonFactory;
 import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.receiving_model.UserModel;
@@ -34,12 +36,24 @@ import com.tekrevol.papp.widget.TitleBar;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import co.chatsdk.core.dao.Keys;
+import co.chatsdk.core.dao.Thread;
+import co.chatsdk.core.dao.User;
+import co.chatsdk.core.interfaces.ThreadType;
+import co.chatsdk.core.session.ChatSDK;
+import co.chatsdk.core.types.ConnectionType;
+import io.reactivex.CompletableObserver;
+import io.reactivex.Observer;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 public class KidsCommunityFragment extends BaseFragment implements OnItemClickListener {
 
@@ -115,7 +129,7 @@ public class KidsCommunityFragment extends BaseFragment implements OnItemClickLi
         arrData = new ArrayList<>();
         arrAccess = new ArrayList<>();
         arrNotAccess = new ArrayList<>();
-        adapter = new KidsCommunityAdapter(getContext(), arrData, this);
+        adapter = new KidsCommunityAdapter(getContext(), arrData, this, isMentor());
         adapter.notifyDataSetChanged();
     }
 
@@ -152,7 +166,7 @@ public class KidsCommunityFragment extends BaseFragment implements OnItemClickLi
             getAccessibleDependant();
             getNotAccessibleDependant();
             contFilters.setVisibility(View.VISIBLE);
-         } else if (isDependent()) {
+        } else if (isDependent()) {
             getAllDependant();
             contFilters.setVisibility(View.GONE);
         }
@@ -174,10 +188,25 @@ public class KidsCommunityFragment extends BaseFragment implements OnItemClickLi
     public void onItemClick(int position, Object object, View view, Object type) {
         UserModel userModel = (UserModel) object;
 
-        if (userModel.getAccessable() == AppConstants.ACCESSIBLE) {
-            getDependantDetail(userModel.getId());
-        } else {
-            getBaseActivity().addDockableFragment(ChildProfileFragment.newInstance(userModel, null), true);
+        if (isMentor()) {
+            if (userModel.getAccessable() == AppConstants.ACCESSIBLE) {
+                getDependantDetail(userModel.getId());
+            } else {
+                getBaseActivity().addDockableFragment(ChildProfileFragment.newInstance(userModel, null), true);
+            }
+        } else if (isDependent()) {
+
+            final List<User> existingContacts = ChatSDK.contact().contacts();
+
+
+            for (User existingContact : existingContacts) {
+                if (Integer.valueOf(existingContact.getEntityID()) == userModel.getId()) {
+                    createThread(existingContact);
+                    return;
+                }
+            }
+
+            searchUser(userModel);
         }
 
 
@@ -235,7 +264,7 @@ public class KidsCommunityFragment extends BaseFragment implements OnItemClickLi
 
                 arrNotAccess.clear();
                 arrNotAccess.addAll(arrayList);
-             }
+            }
 
             @Override
             public void onError(Object object) {
@@ -318,5 +347,112 @@ public class KidsCommunityFragment extends BaseFragment implements OnItemClickLi
 
             }
         });
+    }
+
+
+    private void searchUser(UserModel dependentModel) {
+        ChatSDK.search().usersForIndex(dependentModel.getEmail(), Keys.Email).subscribe(new Observer<User>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(User user) {
+
+                addContactAndCreateThread(user);
+
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                UIHelper.showToast(getContext(), e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    private void addContactAndCreateThread(User user) {
+        Log.d(TAG, "onNext: " + user.toString());
+
+        ChatSDK.contact().addContact(user, ConnectionType.Contact).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                createThread(user);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
+
+    }
+
+    private void createThread(User user) {
+        Log.d(TAG, "onNext: " + user.toString());
+        List<User> userList = new ArrayList<>();
+        userList.add(ChatSDK.currentUser());
+        userList.add(user);
+//                        getCurrentUser().getId() + ":" + mentorModel.getId()
+//        mentorModel.getUserDetails().getFullName()
+        ChatSDK.thread()
+                .createThread("", userList, ThreadType.Private1to1, null)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Thread>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.e("abc", "onSubscribe");
+                    }
+
+                    @Override
+                    public void onSuccess(Thread thread) {
+                        Log.e("abc", "onSuccess");
+
+
+                        ChatSDK.ui().startChatActivityForID(getContext(), thread.getEntityID());
+
+//                                        ChatSDK.thread().sendMessageWithText("1010", thread)
+//                                                .observeOn(AndroidSchedulers.mainThread())
+//                                                .subscribe(new Observer<MessageSendProgress>() {
+//                                                    @Override
+//                                                    public void onSubscribe(Disposable d) {
+//
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onNext(MessageSendProgress messageSendProgress) {
+//
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onError(Throwable e) {
+//
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onComplete() {
+//
+//                                                    }
+//                                                });
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("abc", "onError");
+
+                    }
+                });
     }
 }

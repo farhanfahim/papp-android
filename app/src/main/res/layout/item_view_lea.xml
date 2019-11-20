@@ -57,11 +57,26 @@
 
 
         <ImageView
+            android:id="@+id/imgNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:rotation="-90"
             android:src="@drawable/img_drop_down" />
 
+
+
+
+        <ImageView
+            android:id="@+id/imgChat"
+            android:layout_width="@dimen/x35dp"
+            android:layout_height="@dimen/x35dp"
+            android:background="@drawable/shape_circle"
+            android:elevation="@dimen/x5dp"
+            android:padding="@dimen/x10dp"
+            android:visibility="gone"
+            android:layout_margin="@dimen/x2dp"
+            android:src="@drawable/img_chat2"
+            android:tint="@color/colorPrimaryDark" />
 
     </LinearLayout>
 
@@ -71,5 +86,7 @@
         android:layout_height="@dimen/x1dp"
         android:layout_marginTop="@dimen/x10dp"
         android:background="@color/seperator_light_gray" />
+
+
 
 </LinearLayout>
