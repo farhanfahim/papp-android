@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,16 +24,16 @@ import butterknife.ButterKnife;
 public class KidsCommunityAdapter extends RecyclerView.Adapter<KidsCommunityAdapter.ViewHolder> {
     private final OnItemClickListener onItemClick;
 
-
     private Context activity;
     private List<UserModel> arrData;
+    private boolean isLEA;
 
-    public KidsCommunityAdapter(Context activity, List<UserModel> arrData, OnItemClickListener onItemClickListener) {
+    public KidsCommunityAdapter(Context activity, List<UserModel> arrData, OnItemClickListener onItemClickListener, boolean isLEA) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
+        this.isLEA = isLEA;
     }
-
 
 
     @NonNull
@@ -49,23 +48,40 @@ public class KidsCommunityAdapter extends RecyclerView.Adapter<KidsCommunityAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull KidsCommunityAdapter.ViewHolder holder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
         UserModel model = arrData.get(i);
         holder.txtName.setText(model.getUserDetails().getFullName());
 
 
         ImageLoaderHelper.loadImageWithAnimationsByPath(holder.imgProfile, model.getUserDetails().getImage(), true);
+
+        if (isLEA) {
+            holder.imgNext.setVisibility(View.VISIBLE);
+            holder.imgChat.setVisibility(View.GONE);
+        } else {
+            holder.imgChat.setVisibility(View.VISIBLE);
+            holder.imgNext.setVisibility(View.GONE);
+
+        }
+
         setListener(holder, model);
     }
 
-    private void setListener(final KidsCommunityAdapter.ViewHolder holder, final UserModel model) {
-        holder.contParentLayout.
-                setOnClickListener(view -> {
-                    onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null);
-                });
+    private void setListener(final ViewHolder holder, final UserModel model) {
+
+        if (isLEA) {
+            holder.contParentLayout.
+                    setOnClickListener(view -> {
+                        onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null);
+                    });
+        } else {
+            holder.imgChat.
+                    setOnClickListener(view -> {
+                        onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null);
+                    });
+        }
 
     }
-
 
 
     @Override
@@ -78,6 +94,10 @@ public class KidsCommunityAdapter extends RecyclerView.Adapter<KidsCommunityAdap
         ImageView imgProfile;
         @BindView(R.id.txtName)
         AnyTextView txtName;
+        @BindView(R.id.imgNext)
+        ImageView imgNext;
+        @BindView(R.id.imgChat)
+        ImageView imgChat;
         @BindView(R.id.contParentLayout)
         LinearLayout contParentLayout;
 
