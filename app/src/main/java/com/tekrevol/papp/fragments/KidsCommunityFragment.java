@@ -301,7 +301,9 @@ public class KidsCommunityFragment extends BaseFragment implements OnItemClickLi
     private void getAllDependant() {
 
         Map<String, Object> queryMap = new HashMap<>();
-        queryMap.put(WebServiceConstants.Q_PARAM_IS_MINE, AppConstants.DEPENDENT_ROLE);
+        queryMap.put(WebServiceConstants.Q_PARAM_ROLE, AppConstants.DEPENDENT_ROLE);
+        queryMap.put(WebServiceConstants.Q_PARAM_IS_MINE, AppConstants.IS_MINE_ROLE);
+
 
 
         getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_USERS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
