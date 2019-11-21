@@ -245,7 +245,7 @@
                             android:layout_width="@dimen/x20dp"
                             android:layout_height="@dimen/x20dp"
                             android:layout_marginRight="@dimen/x10dp"
-                            android:src="@drawable/img_profile_icon" />
+                            android:src="@drawable/kids_community_icon" />
 
 
                         <com.tekrevol.papp.widget.AnyTextView
