@@ -83,6 +83,12 @@ public class ChildProfileFragment extends BaseFragment implements OnItemClickLis
     AnyTextView txtGuardianEmail;
     @BindView(R.id.txtGuardianPhoneNo)
     AnyTextView txtGuardianPhoneNo;
+    @BindView(R.id.txtChildAbout)
+    AnyTextView txtChildAbout;
+
+
+
+
 
 
     public static ChildProfileFragment newInstance(UserModel userModel, UserModel parentModel) {
@@ -164,6 +170,12 @@ public class ChildProfileFragment extends BaseFragment implements OnItemClickLis
         }else{
             txtLocation.setText(userModel.getUserDetails().getAddress());
         }
+        if (userModel.getUserDetails().getAbout() == null){
+            txtChildAbout.setText("-");
+        }else{
+            String childAboutUs = String.valueOf(userModel.getUserDetails().getAbout());
+            txtChildAbout.setText(childAboutUs);
+        }
 
         int checkAccessible = userModel.getAccessable();
         if (checkAccessible == 1 && parentModel != null) {
@@ -188,6 +200,8 @@ public class ChildProfileFragment extends BaseFragment implements OnItemClickLis
                 String phoneNo = String.valueOf(parentModel.getUserDetails().getPhone());
                 txtGuardianLocation.setText(phoneNo);
             }
+
+
 
 
 
