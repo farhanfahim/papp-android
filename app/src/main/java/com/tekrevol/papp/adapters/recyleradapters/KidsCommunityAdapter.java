@@ -1,6 +1,7 @@
 package com.tekrevol.papp.adapters.recyleradapters;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +78,20 @@ public class KidsCommunityAdapter extends RecyclerView.Adapter<KidsCommunityAdap
         } else {
             holder.imgChat.
                     setOnClickListener(view -> {
+
+                        holder.imgChat.setEnabled(false);
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (holder != null && holder.imgChat != null) {
+                                    holder.imgChat.setEnabled(true);
+                                }
+                            }
+                        }, 3000);
+
                         onItemClick.onItemClick(holder.getAdapterPosition(), model, view, null);
+
                     });
         }
 
@@ -107,4 +121,9 @@ public class KidsCommunityAdapter extends RecyclerView.Adapter<KidsCommunityAdap
             ButterKnife.bind(this, view);
         }
     }
+
+
+
+
+
 }

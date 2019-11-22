@@ -1,6 +1,7 @@
 package com.tekrevol.papp.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatRatingBar;
@@ -183,6 +185,8 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
 
 
 
+
+
     }
 
     private void bindData() {
@@ -322,6 +326,8 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
 //                getBaseActivity().openActivity(ChatActivity.class);
 
 
+                sleepThread();
+
                 final List<User> existingContacts = ChatSDK.contact().contacts();
 
 
@@ -333,6 +339,8 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
                 }
 
                 searchUser();
+
+
                 break;
             case R.id.contReviews:
 //                if (isMentor() || isDependent()) {
@@ -471,5 +479,19 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
 
                     }
                 });
+
+    }
+
+    private void sleepThread(){
+        contChat.setEnabled(false);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (contChat != null) {
+                    contChat.setEnabled(true);
+                }
+            }
+        }, 3000);
     }
 }

@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.ItemTouchHelper;
+
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -256,4 +258,6 @@ public class ChatListsFragment extends BaseFragment implements OnItemClickListen
     public void addItemWithAdapterPosition(Object item, int adapterPosition) {
         arrData.add(adapterPosition, (SpinnerModel) item);
     }
+
+
 }

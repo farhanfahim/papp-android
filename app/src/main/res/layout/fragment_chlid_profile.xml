@@ -313,7 +313,88 @@
                 </LinearLayout>
 
 
+
+
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Year of experience"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_regular" />
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="08 Years"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s14"
+                        app:typeface="@string/font_regular" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/contChildAboutUs"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="About"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_regular" />
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:id="@+id/txtChildAbout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="10"
+                        android:text="-"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s14"
+                        app:typeface="@string/font_regular" />
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+
 
 
 
