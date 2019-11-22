@@ -2,14 +2,15 @@ package com.tekrevol.papp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -75,6 +76,12 @@ public class EditCivilianProfileFragment extends BaseFragment {
     LinearLayout contBtnUpdate;
     @BindView(R.id.contLogin)
     LinearLayout contLogin;
+    @BindView(R.id.edtPhoneNumber)
+    AnyEditTextView edtPhoneNumber;
+    @BindView(R.id.edtLocation)
+    AnyEditTextView edtLocation;
+    @BindView(R.id.edtAbout)
+    AnyEditTextView edtAbout;
 
 
     private File fileTemporaryProfilePicture;
@@ -131,6 +138,9 @@ public class EditCivilianProfileFragment extends BaseFragment {
         edtFirstName.setText(getCurrentUser().getUserDetails().getFirstName());
         edtLastName.setText(getCurrentUser().getUserDetails().getLastName());
         edtEmailAddress.setText(getCurrentUser().getEmail());
+        edtPhoneNumber.setText(getCurrentUser().getUserDetails().getPhone());
+        edtLocation.setText(getCurrentUser().getUserDetails().getAddress());
+        edtAbout.setText(getCurrentUser().getUserDetails().getAbout());
 
     }
 
@@ -209,6 +219,9 @@ public class EditCivilianProfileFragment extends BaseFragment {
 
         parentEditProfileModel.setFirstName(edtFirstName.getStringTrimmed());
         parentEditProfileModel.setLastName(edtLastName.getStringTrimmed());
+        parentEditProfileModel.setAbout(edtAbout.getStringTrimmed());
+        parentEditProfileModel.setAddress(edtLocation.getStringTrimmed());
+        parentEditProfileModel.setPhone(edtPhoneNumber.getStringTrimmed());
 
         new WebServices(getBaseActivity(), getToken(), BaseURLTypes.BASE_URL, true)
                 .postMultipartAPI(WebServiceConstants.PATH_PROFILE, arrMultiFileModel, parentEditProfileModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {

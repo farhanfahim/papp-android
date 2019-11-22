@@ -15,7 +15,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/x205dp"
+            android:layout_height="@dimen/x180dp"
             android:id="@+id/contLayout"
             android:background="@drawable/img_header_blue_background"
             android:orientation="vertical">
@@ -197,7 +197,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="17 Years"
+                        android:text="-"
                         android:textColor="@color/txtBlack"
                         android:textSize="@dimen/s14"
                         app:typeface="@string/font_regular" />
@@ -230,7 +230,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="Male"
+                        android:text="-"
                         android:textColor="@color/txtBlack"
                         android:textSize="@dimen/s14"
                         app:typeface="@string/font_regular" />
@@ -305,7 +305,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="1087 pts"
+                        android:text="-"
                         android:textColor="@color/txtBlack"
                         android:textSize="@dimen/s14"
                         app:typeface="@string/font_regular" />
@@ -417,11 +417,9 @@
             <LinearLayout
                 android:id="@+id/containerGuardianTitlebar1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/x50dp"
-                android:layout_marginBottom="@dimen/x15dp"
+                android:layout_height="wrap_content"
+
                 android:gravity="center_vertical"
-                android:layout_marginLeft="@dimen/s20"
-                android:layout_marginRight="@dimen/s20"
                 android:paddingRight="@dimen/x8dp">
 
 
@@ -433,6 +431,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:ellipsize="end"
+                    android:padding="@dimen/x15dp"
                     android:gravity="left|center_vertical"
                     android:singleLine="true"
                     android:text="Guardian Profile"
@@ -498,7 +497,7 @@
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
                                 android:singleLine="true"
-                                android:text="Jason Brody"
+                                android:text="-"
                                 android:textColor="@color/txtBlack"
                                 android:textSize="@dimen/s14"
                                 app:typeface="@string/font_bold" />
@@ -567,7 +566,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="Jason_Brody@gmail.com"
+                        android:text="-"
                         android:textColor="@color/txtBlack"
                         android:textSize="@dimen/s14"
                         app:typeface="@string/font_regular" />
@@ -612,7 +611,54 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="123456423"
+                        android:text="-"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s14"
+                        app:typeface="@string/font_regular" />
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/s20"
+                android:layout_marginRight="@dimen/s20"
+                android:layout_marginBottom="@dimen/x20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="About"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textSize="@dimen/s10"
+                        app:typeface="@string/font_regular" />
+
+
+                    <com.tekrevol.papp.widget.AnyTextView
+                        android:id="@+id/txtGuardianAbout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="-"
                         android:textColor="@color/txtBlack"
                         android:textSize="@dimen/s14"
                         app:typeface="@string/font_regular" />

@@ -74,7 +74,7 @@ public class UserDetails {
     private double lng;
     @Expose
     @SerializedName("phone")
-    private double phone;
+    private String phone;
 
     public String getDob() {
         return dob;
@@ -252,11 +252,11 @@ public class UserDetails {
         this.id = id;
     }
 
-    public double getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(double phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

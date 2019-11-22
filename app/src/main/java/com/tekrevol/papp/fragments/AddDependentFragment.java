@@ -2,12 +2,13 @@ package com.tekrevol.papp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+
+import androidx.annotation.Nullable;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tekrevol.papp.R;
@@ -74,6 +75,10 @@ public class AddDependentFragment extends BaseFragment {
     AnyEditTextView edtEmailAddress;
     @BindView(R.id.contEmailPassword)
     LinearLayout contEmailPassword;
+    @BindView(R.id.edtLocation)
+    AnyEditTextView edtLocation;
+    @BindView(R.id.edtAbout)
+    AnyEditTextView edtAbout;
     private File fileTemporaryProfilePicture;
     private ArrayList<DependantSendingModel> arrData;
     private boolean isRegistrationProcess = false;
@@ -271,6 +276,9 @@ public class AddDependentFragment extends BaseFragment {
                 dependant.setLastName(edtLastName.getStringTrimmed());
                 dependant.setGender(AppConstants.getGenderInt(txtGender.getStringTrimmed()));
                 dependant.setDob(txtDOB.getStringTrimmed());
+                dependant.setAbout(edtAbout.getStringTrimmed());
+                dependant.setAddress(edtLocation.getStringTrimmed());
+
 
 
                 if (isRegistrationProcess && arrData != null) {

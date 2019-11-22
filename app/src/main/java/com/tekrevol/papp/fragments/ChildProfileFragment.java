@@ -85,10 +85,10 @@ public class ChildProfileFragment extends BaseFragment implements OnItemClickLis
     AnyTextView txtGuardianPhoneNo;
     @BindView(R.id.txtChildAbout)
     AnyTextView txtChildAbout;
-
-
-
-
+    @BindView(R.id.contChildAboutUs)
+    LinearLayout contChildAboutUs;
+    @BindView(R.id.txtGuardianAbout)
+    AnyTextView txtGuardianAbout;
 
 
     public static ChildProfileFragment newInstance(UserModel userModel, UserModel parentModel) {
@@ -165,19 +165,23 @@ public class ChildProfileFragment extends BaseFragment implements OnItemClickLis
         String childPoints = String.valueOf(userModel.getUserDetails().getTotalPoints());
         txtPoints.setText(childPoints);
 
-        if (userModel.getUserDetails().getAddress() == null){
+        if (userModel.getUserDetails().getAddress() == null) {
             txtLocation.setText("-");
-        }else{
+        } else {
             txtLocation.setText(userModel.getUserDetails().getAddress());
         }
-        if (userModel.getUserDetails().getAbout() == null){
+        if (userModel.getUserDetails().getAbout() == null) {
             txtChildAbout.setText("-");
-        }else{
+        } else {
             String childAboutUs = String.valueOf(userModel.getUserDetails().getAbout());
             txtChildAbout.setText(childAboutUs);
         }
 
         int checkAccessible = userModel.getAccessable();
+
+
+        // parent UI inside
+
         if (checkAccessible == 1 && parentModel != null) {
             contGuardianLayout.setVisibility(View.VISIBLE);
             txtRequestAccess.setVisibility(View.GONE);
@@ -188,25 +192,24 @@ public class ChildProfileFragment extends BaseFragment implements OnItemClickLis
 
             txtGuardianEmail.setText(parentModel.getEmail());
 
-            if (parentModel.getUserDetails().getAddress() == null){
+            if (parentModel.getUserDetails().getAddress() == null) {
                 txtGuardianLocation.setText("-");
-            }else{
+            } else {
                 txtGuardianLocation.setText(parentModel.getUserDetails().getAddress());
             }
 
-            if (parentModel.getUserDetails().getAddress() == null){
+            if (parentModel.getUserDetails().getAddress() == null) {
                 txtGuardianPhoneNo.setText("-");
-            }else{
-                String phoneNo = String.valueOf(parentModel.getUserDetails().getPhone());
-                txtGuardianLocation.setText(phoneNo);
+            } else {
+                txtGuardianPhoneNo.setText(parentModel.getUserDetails().getPhone());
             }
 
 
-
-
-
-
-
+            if (parentModel.getUserDetails().getAbout() == null) {
+                txtGuardianAbout.setText("-");
+            } else {
+                txtGuardianAbout.setText(parentModel.getUserDetails().getAbout());
+            }
 
         } else {
             contGuardianLayout.setVisibility(View.GONE);

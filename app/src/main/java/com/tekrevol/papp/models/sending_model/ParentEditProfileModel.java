@@ -14,6 +14,15 @@ public class ParentEditProfileModel {
     @Expose
     @SerializedName("first_name")
     private String firstName;
+    @Expose
+    @SerializedName("about")
+    private String about;
+    @Expose
+    @SerializedName("phone")
+    private String phone;
+    @Expose
+    @SerializedName("address")
+    private String address;
 
 
     public String getLastName() {
@@ -30,6 +39,30 @@ public class ParentEditProfileModel {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override

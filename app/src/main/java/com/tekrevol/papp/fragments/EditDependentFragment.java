@@ -2,12 +2,13 @@ package com.tekrevol.papp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+
+import androidx.annotation.Nullable;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tekrevol.papp.R;
@@ -77,6 +78,10 @@ public class EditDependentFragment extends BaseFragment {
     LinearLayout contAddMore;
     @BindView(R.id.contBtnSave)
     LinearLayout contBtnSave;
+    @BindView(R.id.edtLocation)
+    AnyEditTextView edtLocation;
+    @BindView(R.id.edtAbout)
+    AnyEditTextView edtAbout;
 
     private File fileTemporaryProfilePicture;
     private UserModel userModel;
@@ -140,6 +145,9 @@ public class EditDependentFragment extends BaseFragment {
         edtEmailAddress.setText(userModel.getEmail());
         txtDOB.setText(userModel.getUserDetails().getDob());
         txtGender.setText(AppConstants.getGenderString(userModel.getUserDetails().getGender()));
+        edtAbout.setText(userModel.getUserDetails().getAbout());
+        edtLocation.setText(userModel.getUserDetails().getAddress());
+
         if (userModel.getUserDetails().getImage() != null && !userModel.getUserDetails().getImage().isEmpty()) {
             imgDependentProfile.setVisibility(View.VISIBLE);
             ImageLoaderHelper.loadImageWithAnimationsByPath(imgDependentProfile, userModel.getUserDetails().getImage(), true);
@@ -301,6 +309,8 @@ public class EditDependentFragment extends BaseFragment {
         dependantSendingModel.setEmail(edtEmailAddress.getStringTrimmed());
         dependantSendingModel.setDob(txtDOB.getStringTrimmed());
         dependantSendingModel.setGender(AppConstants.getGenderInt(txtGender.getStringTrimmed()));
+        dependantSendingModel.setAbout(edtAbout.getStringTrimmed());
+        dependantSendingModel.setAddress(edtLocation.getStringTrimmed());
 
 
         getBaseWebService().putMultipartAPI(WebServiceConstants.PATH_GET_USERS + "/" + userModel.getId(), arrMultiFileModel, dependantSendingModel.toString(), new WebServices.IRequestWebResponseAnyObjectCallBack() {

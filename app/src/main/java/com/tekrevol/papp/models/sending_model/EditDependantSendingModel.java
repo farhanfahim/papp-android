@@ -20,6 +20,28 @@ public class EditDependantSendingModel {
     @Expose
     @SerializedName("email")
     private String email;
+    @Expose
+    @SerializedName("about")
+    private String about;
+    @Expose
+    @SerializedName("address")
+    private String address;
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public String getEmail() {
         return email;

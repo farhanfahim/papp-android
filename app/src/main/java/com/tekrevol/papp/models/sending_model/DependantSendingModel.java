@@ -17,6 +17,28 @@ public class DependantSendingModel {
     @Expose
     @SerializedName("first_name")
     private String firstName;
+    @Expose
+    @SerializedName("about")
+    private String about;
+    @Expose
+    @SerializedName("address")
+    private String address;
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public int getGender() {
         return gender;
