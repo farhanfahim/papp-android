@@ -53,6 +53,12 @@ public class SplashActivity extends AppCompatActivity {
 
         if (SharedPreferenceManager.getInstance(SplashActivity.this).isMentor()) {
             imgBackground.setImageResource(R.drawable.img_splash_mentor);
+            imageView.setImageResource(R.drawable.simple_logo);
+            contParentLayout.setVisibility(VISIBLE);
+        }
+        if(SharedPreferenceManager.getInstance(SplashActivity.this).isParent()){
+            imgBackground.setImageResource(R.drawable.img_splash_bg);
+            imageView.setImageResource(R.drawable.img_logo);
             contParentLayout.setVisibility(VISIBLE);
         }
 

@@ -10,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/x20dp">
+        android:paddingLeft="@dimen/x20dp"
+        android:paddingTop="@dimen/x20dp"
+        android:paddingRight="@dimen/x20dp">
 
 
         <LinearLayout
@@ -293,6 +295,14 @@
 
 
         </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/community_pic" />
+
 
 
     </LinearLayout>

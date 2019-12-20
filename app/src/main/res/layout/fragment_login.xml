@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/x5dp"
             android:layout_marginBottom="@dimen/x5dp"
-            android:src="@drawable/img_logo_white" />
+            android:src="@drawable/img_logo" />
 
 
         <com.tekrevol.papp.widget.AnyTextView
