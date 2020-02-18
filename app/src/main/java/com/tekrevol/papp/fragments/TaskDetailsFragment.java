@@ -172,7 +172,7 @@ public class TaskDetailsFragment extends BaseFragment implements OnItemClickList
         txtTitle.setText(taskReceivingModel.getTitle());
         ImageLoaderHelper.loadImageWithAnimationsByPath(imgTask, taskReceivingModel.getIcon(), false);
         txtDate.setText(DateManager.convertToUserTimeZone(taskReceivingModel.getTaskUsers().getStartDate()));
-        txtDuration.setText(taskReceivingModel.getDuration() + " days");
+        txtDuration.setText(taskReceivingModel.getDuration());
         txtPoints.setText(taskReceivingModel.getRewardPoints() + " points");
         txtDesc.setText(taskReceivingModel.getDescription());
 

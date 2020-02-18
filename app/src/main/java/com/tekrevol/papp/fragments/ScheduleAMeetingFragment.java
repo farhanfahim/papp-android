@@ -36,7 +36,11 @@ import com.tekrevol.papp.widget.AnyEditTextView;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -292,7 +296,8 @@ public class ScheduleAMeetingFragment extends BaseFragment implements OnItemClic
         // Setting model
 
         SessionSendingModel sessionSendingModel = new SessionSendingModel();
-        sessionSendingModel.setScheduleDate(txtSetDateTime.getStringTrimmed());
+        String date = DateManager.getFormattedDate(txtSetDateTime.getStringTrimmed());
+        sessionSendingModel.setScheduleDate(date);
 
         if (!txtLocation.getStringTrimmed().isEmpty()) {
             sessionSendingModel.setAddress(txtLocation.getStringTrimmed());

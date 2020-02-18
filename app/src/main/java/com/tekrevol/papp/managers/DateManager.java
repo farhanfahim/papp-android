@@ -40,6 +40,8 @@ public class DateManager {
     private static SimpleDateFormat sdfTimeOuput = new SimpleDateFormat(AppConstants.OUTPUT_TIME_FORMAT);
     private static SimpleDateFormat sdfUTCOutput = new SimpleDateFormat(AppConstants.OUTPUT_UTC);
 
+    public static SimpleDateFormat getSdfDateInputAmPm = new SimpleDateFormat(AppConstants.OUTPUT_DATE_FORMAT_AM_PM);
+
 
     // Custom
     public static SimpleDateFormat sdfDOB = new SimpleDateFormat(AppConstants.DOB_FORMAT);
@@ -60,7 +62,7 @@ public class DateManager {
             simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
             Date parsedDate = simpleDateFormat.parse(date);
 
-            SimpleDateFormat sdf = new SimpleDateFormat(AppConstants.INPUT_DATE_FORMAT, Locale.getDefault());
+            SimpleDateFormat sdf = new SimpleDateFormat(AppConstants.OUTPUT_DATE_FORMAT_AM_PM, Locale.getDefault());
             return sdf.format(parsedDate);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -135,7 +137,7 @@ public class DateManager {
 
     public static String getFormattedDate(String inputDate) {
         try {
-            return sdfDateOuput.format(sdfDateInput.parse(inputDate));
+            return sdfDateInput.format(getSdfDateInputAmPm.parse(inputDate));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -554,7 +556,8 @@ public class DateManager {
 
 
             if (textView != null) {
-                textView.setText(DateManager.sdfDateInput.format(myCalendar.getTime()));
+              //  textView.setText(DateManager.sdfDateInput.format(myCalendar.getTime()));
+                textView.setText(DateManager.getSdfDateInputAmPm.format(myCalendar.getTime()));
             }
 
             if (onCalendarUpdate != null) {
