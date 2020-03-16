@@ -25,6 +25,9 @@ public class TaskReceivingModel {
     @SerializedName("icon")
     private String icon;
     @Expose
+    @SerializedName("icon_url")
+    private String iconUrl;
+    @Expose
     @SerializedName("duration")
     private String duration;
     @Expose
@@ -47,6 +50,13 @@ public class TaskReceivingModel {
     private int id;
 
 
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
+    }
 
     public TaskUser getTaskUsers() {
         return taskUsers;

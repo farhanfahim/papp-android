@@ -10,8 +10,7 @@ import android.widget.LinearLayout;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
-import com.tekrevol.papp.models.general.SpinnerModel;
-
+import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,9 +27,9 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.ViewHolder> 
 
 
     private Context activity;
-    private List<SpinnerModel> arrData;
+    private List<TaskReceivingModel> arrData;
 
-    public MedalAdapter(Context activity, List<SpinnerModel> arrData, OnItemClickListener onItemClickListener) {
+    public MedalAdapter(Context activity, List<TaskReceivingModel> arrData, OnItemClickListener onItemClickListener) {
         this.arrData = arrData;
         this.activity = activity;
         this.onItemClick = onItemClickListener;
@@ -46,14 +45,12 @@ public class MedalAdapter extends RecyclerView.Adapter<MedalAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
-        SpinnerModel model = arrData.get(i);
-
-        ImageLoaderHelper.loadImageWithAnimations( holder.imgMedal, model.getText(), false);
-
+        TaskReceivingModel model = arrData.get(i);
+        ImageLoaderHelper.loadImageWithouAnimationByPath( holder.imgMedal, model.getIcon(), false);
         setListener(holder, model);
     }
 
-    private void setListener(final ViewHolder holder, final SpinnerModel model) {
+    private void setListener(final ViewHolder holder, final TaskReceivingModel model) {
         holder.contMedalLayout.
                 setOnClickListener(view -> onItemClick.onItemClick(holder.getAdapterPosition(), model, itemView, MedalAdapter.class.getSimpleName()));
     }

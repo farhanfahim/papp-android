@@ -20,25 +20,35 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.common.reflect.TypeToken;
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout;
 import com.tekrevol.papp.R;
 import com.tekrevol.papp.adapters.recyleradapters.MedalAdapter;
 import com.tekrevol.papp.adapters.recyleradapters.SpecialityAdapter;
 import com.tekrevol.papp.callbacks.OnItemClickListener;
+import com.tekrevol.papp.constatnts.AppConstants;
 import com.tekrevol.papp.constatnts.Constants;
+import com.tekrevol.papp.constatnts.WebServiceConstants;
 import com.tekrevol.papp.fragments.abstracts.BaseFragment;
 import com.tekrevol.papp.helperclasses.GooglePlaceHelper;
 import com.tekrevol.papp.helperclasses.StringHelper;
 import com.tekrevol.papp.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.papp.libraries.imageloader.ImageLoaderHelper;
 import com.tekrevol.papp.libraries.residemenu.ResideMenu;
+import com.tekrevol.papp.managers.retrofit.GsonFactory;
+import com.tekrevol.papp.managers.retrofit.WebServices;
 import com.tekrevol.papp.models.general.SpinnerModel;
+import com.tekrevol.papp.models.receiving_model.TaskReceivingModel;
 import com.tekrevol.papp.models.receiving_model.UserModel;
+import com.tekrevol.papp.models.wrappers.WebResponse;
 import com.tekrevol.papp.widget.AnyTextView;
 import com.tekrevol.papp.widget.TitleBar;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,7 +77,7 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
     ArrayList<SpinnerModel> arrSpecialization;
 
     MedalAdapter medalAdapter;
-    ArrayList<SpinnerModel> arrMedals;
+    ArrayList<TaskReceivingModel> arrMedals;
     @BindView(R.id.btnLeft1)
     TextView btnLeft1;
     @BindView(R.id.txtTitle)
@@ -183,10 +193,6 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
         bindData();
 
 
-
-
-
-
     }
 
     private void bindData() {
@@ -197,6 +203,7 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
             txtScheduleMeeting.setVisibility(View.GONE);
             contChat.setVisibility(View.GONE);
             txtTitle.setText("My Profile");
+            getMedals(mentorModel.getUserDetails().getUserId());
             contPointsEarned.setVisibility(View.VISIBLE);
             contEditPersonalInfo.setVisibility(View.VISIBLE);
         } else if (isDependent()) {
@@ -207,8 +214,7 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
             txtTitle.setText("Mentor Profile");
             contPointsEarned.setVisibility(View.GONE);
             contEditPersonalInfo.setVisibility(View.GONE);
-
-
+            getMedals(mentorModel.getUserDetails().getUserId());
             contChat.setVisibility(View.VISIBLE);
             if (mentorModel.getChatEnabled()) {
                 contChat.setVisibility(View.VISIBLE);
@@ -224,8 +230,7 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
             txtTitle.setText("Mentor Profile");
             contPointsEarned.setVisibility(View.GONE);
             contEditPersonalInfo.setVisibility(View.GONE);
-
-
+            getMedals(mentorModel.getUserDetails().getUserId());
             if (mentorModel.getChatEnabled()) {
                 contChat.setVisibility(View.VISIBLE);
             } else {
@@ -250,11 +255,39 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
             arrSpecialization.addAll(mentorModel.getSpecializations());
         }
 
-        arrMedals.clear();
+     /*   arrMedals.clear();
         arrMedals.addAll(Constants.getMedalURL());
-
-
+*/
         specialityAdapter.notifyDataSetChanged();
+    }
+
+    private void getMedals(int id) {
+
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put(WebServiceConstants.Q_USERID, id);
+
+        getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_TASKS, queryMap,
+                new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                    @Override
+                    public void requestDataResponse(WebResponse<Object> webResponse) {
+
+                        Type type = new TypeToken<ArrayList<TaskReceivingModel>>() {
+                        }.getType();
+                        ArrayList<TaskReceivingModel> arrayList = GsonFactory.getSimpleGson()
+                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                        , type);
+
+                        arrMedals.clear();
+                        arrMedals.addAll(arrayList);
+                        medalAdapter.notifyDataSetChanged();
+
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
     }
 
 
@@ -287,7 +320,6 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
         unbinder.unbind();
     }
 
-
     private void bindRecyclerView() {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvSpecialization.setLayoutManager(mLayoutManager);
@@ -301,7 +333,6 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
         rvMilestones.setAdapter(medalAdapter);
 
     }
-
 
     @Override
     public void onItemClick(int position, Object object, View view, Object type) {
@@ -482,7 +513,7 @@ public class LEAProfileFragment extends BaseFragment implements OnItemClickListe
 
     }
 
-    private void sleepThread(){
+    private void sleepThread() {
         contChat.setEnabled(false);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
