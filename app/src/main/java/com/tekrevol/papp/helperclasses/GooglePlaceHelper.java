@@ -6,15 +6,16 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
 
+import androidx.fragment.app.Fragment;
+
+import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
-import com.google.android.gms.common.api.Status;
 import com.tekrevol.papp.activities.MapsActivity;
 
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class GooglePlaceHelper {
     public static final int REQUEST_CODE_PLACE_HELPER = 6666;
     public static final int PLACE_PICKER = 0;
     public static final int PLACE_AUTOCOMPLETE = 1;
-    private static final String GEO_API_KEY = "AIzaSyCkoOvnd1_eougL23wAx7DP65C_duaJRjQ";
+    private static final String GEO_API_KEY = "AIzaSyC_gdqBPSc8tKMqxiuULEUqy-hDC6ob_bQ";
     private final boolean isFullScreen;
     private int apiType;
     private GooglePlaceDataInterface googlePlaceDataInterface;
