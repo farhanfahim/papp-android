@@ -2,16 +2,16 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PAPP.iml" filepath="$PROJECT_DIR$/PAPP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PAPP.iml" filepath="$PROJECT_DIR$/PAPP.iml" group="PAPP" />
       <module fileurl="file://$PROJECT_DIR$/Projects-papp-android.iml" filepath="$PROJECT_DIR$/Projects-papp-android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/chat-sdk-core/chat-sdk-core.iml" filepath="$PROJECT_DIR$/chat-sdk-core/chat-sdk-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/chat-sdk-firebase-adapter/chat-sdk-firebase-adapter.iml" filepath="$PROJECT_DIR$/chat-sdk-firebase-adapter/chat-sdk-firebase-adapter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/chat-sdk-firebase-file-storage/chat-sdk-firebase-file-storage.iml" filepath="$PROJECT_DIR$/chat-sdk-firebase-file-storage/chat-sdk-firebase-file-storage.iml" />
-      <module fileurl="file://$PROJECT_DIR$/chat-sdk-firebase-push/chat-sdk-firebase-push.iml" filepath="$PROJECT_DIR$/chat-sdk-firebase-push/chat-sdk-firebase-push.iml" />
-      <module fileurl="file://$PROJECT_DIR$/chat-sdk-profile-pictures/chat-sdk-profile-pictures.iml" filepath="$PROJECT_DIR$/chat-sdk-profile-pictures/chat-sdk-profile-pictures.iml" />
-      <module fileurl="file://$PROJECT_DIR$/chat-sdk-ui/chat-sdk-ui.iml" filepath="$PROJECT_DIR$/chat-sdk-ui/chat-sdk-ui.iml" />
-      <module fileurl="file://$PROJECT_DIR$/facebookloginsdk/facebookloginsdk.iml" filepath="$PROJECT_DIR$/facebookloginsdk/facebookloginsdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="PAPP/app" />
+      <module fileurl="file://$PROJECT_DIR$/chat-sdk-core/chat-sdk-core.iml" filepath="$PROJECT_DIR$/chat-sdk-core/chat-sdk-core.iml" group="PAPP/chat-sdk-core" />
+      <module fileurl="file://$PROJECT_DIR$/chat-sdk-firebase-adapter/chat-sdk-firebase-adapter.iml" filepath="$PROJECT_DIR$/chat-sdk-firebase-adapter/chat-sdk-firebase-adapter.iml" group="PAPP/chat-sdk-firebase-adapter" />
+      <module fileurl="file://$PROJECT_DIR$/chat-sdk-firebase-file-storage/chat-sdk-firebase-file-storage.iml" filepath="$PROJECT_DIR$/chat-sdk-firebase-file-storage/chat-sdk-firebase-file-storage.iml" group="PAPP/chat-sdk-firebase-file-storage" />
+      <module fileurl="file://$PROJECT_DIR$/chat-sdk-firebase-push/chat-sdk-firebase-push.iml" filepath="$PROJECT_DIR$/chat-sdk-firebase-push/chat-sdk-firebase-push.iml" group="PAPP/chat-sdk-firebase-push" />
+      <module fileurl="file://$PROJECT_DIR$/chat-sdk-profile-pictures/chat-sdk-profile-pictures.iml" filepath="$PROJECT_DIR$/chat-sdk-profile-pictures/chat-sdk-profile-pictures.iml" group="PAPP/chat-sdk-profile-pictures" />
+      <module fileurl="file://$PROJECT_DIR$/chat-sdk-ui/chat-sdk-ui.iml" filepath="$PROJECT_DIR$/chat-sdk-ui/chat-sdk-ui.iml" group="PAPP/chat-sdk-ui" />
+      <module fileurl="file://$PROJECT_DIR$/facebookloginsdk/facebookloginsdk.iml" filepath="$PROJECT_DIR$/facebookloginsdk/facebookloginsdk.iml" group="PAPP/facebookloginsdk" />
       <module fileurl="file://$PROJECT_DIR$/papp-android.iml" filepath="$PROJECT_DIR$/papp-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/papp-android-app.iml" filepath="$PROJECT_DIR$/app/papp-android-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/chat-sdk-core/papp-android-chat-sdk-core.iml" filepath="$PROJECT_DIR$/chat-sdk-core/papp-android-chat-sdk-core.iml" />
