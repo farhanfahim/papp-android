@@ -48,7 +48,7 @@
                     android:layout_marginBottom="@dimen/x10dp"
                     android:layout_marginRight="@dimen/x10dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_task_logo" />
+                    android:src="@mipmap/ic_launcher_round" />
 
 
                 <LinearLayout

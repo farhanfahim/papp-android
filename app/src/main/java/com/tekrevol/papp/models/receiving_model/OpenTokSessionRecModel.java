@@ -8,7 +8,6 @@ import com.tekrevol.papp.managers.retrofit.GsonFactory;
 
 public class OpenTokSessionRecModel {
 
-
     @Expose
     @SerializedName("ref_id")
     private int refId;

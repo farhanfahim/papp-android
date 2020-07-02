@@ -59,6 +59,7 @@ public class WebServiceConstants {
 
     public static final String PATH_REGISTER = "register";
     public static final String PATH_LOGIN = "login";
+    public static final String PATH_LOGOUT = "logout";
     public static final String PATH_GET_DEPARTMENTS = "departments";
     public static final String PATH_GET_SPECIALIZATIONS = "specializations";
     public static final String PATH_GET_USERS = "users";

@@ -30,6 +30,15 @@
       <module fileurl="file://$PROJECT_DIR$/chat-sdk-profile-pictures/papp-android-chat-sdk-profile-pictures.iml" filepath="$PROJECT_DIR$/chat-sdk-profile-pictures/papp-android-chat-sdk-profile-pictures.iml" />
       <module fileurl="file://$PROJECT_DIR$/chat-sdk-ui/papp-android-chat-sdk-ui.iml" filepath="$PROJECT_DIR$/chat-sdk-ui/papp-android-chat-sdk-ui.iml" />
       <module fileurl="file://$PROJECT_DIR$/facebookloginsdk/papp-android-facebookloginsdk.iml" filepath="$PROJECT_DIR$/facebookloginsdk/papp-android-facebookloginsdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/papp-android_gitlab.iml" filepath="$PROJECT_DIR$/.idea/modules/papp-android_gitlab.iml" group="papp-android_gitlab" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/papp-android_gitlab-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/papp-android_gitlab-app.iml" group="papp-android_gitlab/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chat-sdk-core/papp-android_gitlab-chat-sdk-core.iml" filepath="$PROJECT_DIR$/.idea/modules/chat-sdk-core/papp-android_gitlab-chat-sdk-core.iml" group="papp-android_gitlab/chat-sdk-core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chat-sdk-firebase-adapter/papp-android_gitlab-chat-sdk-firebase-adapter.iml" filepath="$PROJECT_DIR$/.idea/modules/chat-sdk-firebase-adapter/papp-android_gitlab-chat-sdk-firebase-adapter.iml" group="papp-android_gitlab/chat-sdk-firebase-adapter" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chat-sdk-firebase-file-storage/papp-android_gitlab-chat-sdk-firebase-file-storage.iml" filepath="$PROJECT_DIR$/.idea/modules/chat-sdk-firebase-file-storage/papp-android_gitlab-chat-sdk-firebase-file-storage.iml" group="papp-android_gitlab/chat-sdk-firebase-file-storage" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chat-sdk-firebase-push/papp-android_gitlab-chat-sdk-firebase-push.iml" filepath="$PROJECT_DIR$/.idea/modules/chat-sdk-firebase-push/papp-android_gitlab-chat-sdk-firebase-push.iml" group="papp-android_gitlab/chat-sdk-firebase-push" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chat-sdk-profile-pictures/papp-android_gitlab-chat-sdk-profile-pictures.iml" filepath="$PROJECT_DIR$/.idea/modules/chat-sdk-profile-pictures/papp-android_gitlab-chat-sdk-profile-pictures.iml" group="papp-android_gitlab/chat-sdk-profile-pictures" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chat-sdk-ui/papp-android_gitlab-chat-sdk-ui.iml" filepath="$PROJECT_DIR$/.idea/modules/chat-sdk-ui/papp-android_gitlab-chat-sdk-ui.iml" group="papp-android_gitlab/chat-sdk-ui" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/facebookloginsdk/papp-android_gitlab-facebookloginsdk.iml" filepath="$PROJECT_DIR$/.idea/modules/facebookloginsdk/papp-android_gitlab-facebookloginsdk.iml" group="papp-android_gitlab/facebookloginsdk" />
     </modules>
   </component>
 </project>

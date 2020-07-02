@@ -288,7 +288,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     }
 
 
-    public static void logoutClick(final BaseFragment baseFragment) {
+    public void logoutClick(final BaseFragment baseFragment) {
         Context context = baseFragment.getContext();
 
 
@@ -300,7 +300,22 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             @Override
             public void click() {
                 genericDialogFragment.dismiss();
-                baseFragment.sharedPreferenceManager.clearDB();
+
+                getBaseWebService().postAPIAnyObject(WebServiceConstants.PATH_LOGOUT, "", new WebServices.IRequestWebResponseAnyObjectCallBack() {
+                    @Override
+                    public void requestDataResponse(WebResponse<Object> webResponse) {
+                        baseFragment.sharedPreferenceManager.clearDB();
+                        //           UIHelper.showShortToastInCenter(getContext(), webResponse.message);
+
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
+
+
             }
         });
 

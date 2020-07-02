@@ -364,7 +364,7 @@ public class Helper {
         Intent shortcutintent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
         shortcutintent.putExtra("duplicate", false);
         shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_NAME, shortcutname);
-        Parcelable icon = Intent.ShortcutIconResource.fromContext(mContext, R.mipmap.ic_launcher);
+        Parcelable icon = Intent.ShortcutIconResource.fromContext(mContext, R.mipmap.ic_launcher_round);
         shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);
         shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, new Intent("com.tekrevol.papp"));
         mContext.sendBroadcast(shortcutintent);
