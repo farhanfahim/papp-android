@@ -19,6 +19,16 @@ repositories {
 
 
 android {
+
+    signingConfigs {
+        config {
+            storeFile file('D:\\Marium\\Projects\\papp-android_gitlab\\keystore.jks')
+            storePassword 'tekrevol123'
+            keyPassword 'tekrevol123'
+            keyAlias = 'thepappprogram'
+        }
+    }
+
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
     defaultConfig {
@@ -41,6 +51,7 @@ android {
             useProguard false
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
 
 //        debug {

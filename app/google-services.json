@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "88941191592-5q43aihbp5579t5fmh4eouk0cn0j4sl4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tekrevol.papp",
+            "certificate_hash": "3215d0316a16d8238cb480502653b0f87d1bd27a"
+          }
+        },
+        {
+          "client_id": "88941191592-cegigjhfomh00d9v6cgsvecn7hfqfbik.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tekrevol.papp",
+            "certificate_hash": "760d81b505652e39b5af2bd10055eb68f3a07d24"
+          }
+        },
+        {
           "client_id": "88941191592-p76frik9is8rt0u6mvo28r0u1i5ou93i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -38,6 +54,13 @@
             {
               "client_id": "88941191592-cuq1locofuk13h3s1ksacrjffnn2ik4b.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "88941191592-cp3rr9mmk54svnah6g7k8jqj0im5panl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tekrevol.thepappprogram"
+              }
             }
           ]
         }
