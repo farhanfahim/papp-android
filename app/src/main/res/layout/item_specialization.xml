@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contParentLayout"
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/x10dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <com.tekrevol.papp.widget.AnyTextView
+        android:id="@+id/txtSpecialization"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="Please Enter Specializations"
+        android:maxLength="50"
+        android:padding="@dimen/x3dp"
+        android:textColor="@color/txtDarkGrey"
+        android:textColorHint="@color/txtGrey"
+        android:textSize="@dimen/s12" />
+
+
+</LinearLayout>

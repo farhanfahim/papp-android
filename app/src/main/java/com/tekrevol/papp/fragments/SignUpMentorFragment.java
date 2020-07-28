@@ -11,9 +11,12 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -92,7 +95,7 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
     @BindView(R.id.edtDesignation)
     AnyEditTextView edtDesignation;
     @BindView(R.id.edtSpecialization)
-    KMPAutoComplTextView edtSpecialization;
+    AutoCompleteTextView edtSpecialization;
     @BindView(R.id.imgAddSpecialization)
     ImageView imgAddSpecialization;
     @BindView(R.id.recyclerView)
@@ -107,7 +110,6 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
     LinearLayout contTwitterLogin;
     @BindView(R.id.contSocialLogin)
     LinearLayout contSocialLogin;
-
 
     @BindView(R.id.imgProfile)
     CircleImageView imgProfile;
@@ -207,6 +209,13 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
         getDepartmentSpinnerList();
         getSpecializations();
 
+        if (getActivity()!= null) {
+            ArrayAdapter<SpinnerModel> adapter = new ArrayAdapter<SpinnerModel>(getActivity(),
+                    R.layout.item_specialization, R.id.txtSpecialization, arrDepartmentsSpinner);
+            edtSpecialization.setThreshold(1);
+            edtSpecialization.setAdapter(adapter);
+        }
+
         adapter.notifyDataSetChanged();
     }
 
@@ -216,7 +225,6 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
         queryMap.put(WebServiceConstants.Q_PARAM_LIMIT, 0);
         queryMap.put(WebServiceConstants.Q_PARAM_OFFSET, 0);
 
-
         getBaseWebService().getAPIAnyObject(WebServiceConstants.PATH_GET_DEPARTMENTS, queryMap, new WebServices.IRequestWebResponseAnyObjectCallBack() {
             @Override
             public void requestDataResponse(WebResponse<Object> webResponse) {
@@ -225,7 +233,6 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
                 ArrayList<SpinnerModel> arrayList = GsonFactory.getSimpleGson()
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , type);
-
 
                 arrDepartmentsSpinner.clear();
                 arrDepartmentsSpinner.addAll(arrayList);
@@ -258,7 +265,7 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
                 arrSpecializationSpinner.clear();
                 arrSpecializationSpinner.addAll(arrayList);
 
-                edtSpecialization.setDatas(arrSpecializationSpinner);
+                //edtSpecialization.setDatas(arrSpecializationSpinner);
 
             }
 
@@ -273,12 +280,13 @@ public class SignUpMentorFragment extends BaseFragment implements OnItemClickLis
     @Override
     public void setListeners() {
 
-        edtSpecialization.setOnPopupItemClickListener(new KMPAutoComplTextView.OnPopupItemClickListener() {
+      /*  edtSpecialization.setOnPopupItemClickListener(new KMPAutoComplTextView.OnPopupItemClickListener() {
             @Override
             public void onPopupItemClick(SpinnerModel spinnerModel) {
                 addSpecialization(spinnerModel);
             }
-        });
+        });*/
+
 
         edtPassword.addTextChangedListener(new TextWatcher() {
             @Override

@@ -181,6 +181,9 @@
         </LinearLayout>
 
 
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -358,6 +361,8 @@
         </LinearLayout>
 
 
+
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/x1dp"
@@ -475,6 +480,7 @@
             android:background="@color/seperator_light_gray" />
 
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -546,6 +552,7 @@
 
 
                 <com.tekrevol.papp.widget.AnyTextView
+                    android:id="@+id/tvSpecialization"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/x3dp"
@@ -555,20 +562,45 @@
                     app:fontFamily="@string/font_regular" />
 
 
-                <com.tekrevol.papp.libraries.kmpautotextview.KMPAutoComplTextView
+
+                <RelativeLayout
+                    android:id="@+id/dropdownAutoCompleteTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp">
+                    <AutoCompleteTextView
+                        android:id="@+id/edtSpecialization"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:dropDownAnchor="@+id/edtDesignation"
+                        android:dropDownHeight="200dp"
+                        android:textColor="@color/txtDarkGrey"
+                        android:textColorHint="@color/txtGrey"
+                        android:textSize="@dimen/s12"
+                        android:background="@null"
+                        android:hint="Please Enter Specializations"
+                        android:imeOptions="actionNext"
+                        android:padding="@dimen/x3dp"
+                        android:inputType="textEmailAddress|textCapWords"
+                        android:maxLength="50"
+                        android:nextFocusDown="@+id/editZipCode"/>
+                </RelativeLayout>
+
+               <!-- <AutoCompleteTextView
                     android:id="@+id/edtSpecialization"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="Please Enter Specializations"
                     android:maxLength="50"
+                    android:dropDownVerticalOffset="50dp"
+                    android:dropDownAnchor="@id/tvSpecialization"
+                    android:dropDownHeight="200dp"
                     android:padding="@dimen/x3dp"
                     android:textColor="@color/txtDarkGrey"
                     android:textColorHint="@color/txtGrey"
-                    android:textSize="@dimen/s12"
-                    app:completionHighlightColor="@color/colorPrimary"
-                    app:completionTextColor="@color/txtDarkGrey"
-                    app:completionTextSize="@dimen/s16" />
+                    android:textSize="@dimen/s12"/>-->
 
 
             </LinearLayout>
